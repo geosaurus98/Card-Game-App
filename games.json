@@ -2064,7 +2064,8 @@
         "matching",
         "wild",
         "family",
-        "kids"
+        "kids",
+        "uno"
       ],
       "tags": [
         "shedding",
@@ -2110,7 +2111,8 @@
       ],
       "variations": [
         "Action cards (as in Switch / Last Card / Mau-Mau): 2 = next player draws two; Jack = skip; Ace = reverse; Queen of Spades = draw five.",
-        "Must announce ‘Last card!’ when you have one card left, or draw a penalty card."
+        "Must announce ‘Last card!’ when you have one card left, or draw a penalty card.",
+        "The commercial game Uno is based on this family of games, using its own deck with Skip, Reverse, Draw Two and Wild cards."
       ],
       "scorekeeper": {
         "direction": "low",
@@ -4101,7 +4103,9 @@
         "real time",
         "simultaneous",
         "competitive patience",
-        "party"
+        "party",
+        "dutch blitz",
+        "nerts"
       ],
       "tags": [
         "real-time",
@@ -4150,7 +4154,8 @@
       ],
       "variations": [
         "Some groups subtract 2 per card left in the demon, or give a bonus to the player who called out.",
-        "Nerts and Pounce are close relatives with slightly different layouts."
+        "Nerts and Pounce are close relatives with slightly different layouts.",
+        "The commercial game Dutch Blitz is a close relative played with its own deck."
       ],
       "scorekeeper": {
         "direction": "high",
@@ -4682,7 +4687,9 @@
         "pot",
         "luck",
         "family",
-        "party"
+        "party",
+        "left center right",
+        "lcr"
       ],
       "tags": [
         "kids",
@@ -4727,7 +4734,7 @@
       ],
       "variations": [
         "Many groups roll one die per counter held (up to three) instead of always rolling three.",
-        "Left Centre Right is a commercial version with special dice marked L, C and R."
+        "Left Center Right (LCR) is a commercial version of this game, with special dice marked L, C and R."
       ],
       "scorekeeper": {
         "direction": "high",
@@ -6646,7 +6653,8 @@
         "rounds",
         "buying",
         "jokers",
-        "two decks"
+        "two decks",
+        "phase 10"
       ],
       "tags": [
         "rummy",
@@ -6691,7 +6699,8 @@
       ],
       "variations": [
         "Contract lists differ between families and in Liverpool/Shanghai rules — agree the list before you start.",
-        "Kalooki (popular in the UK and Jamaica) is a relative with 13-card hands, three decks and its own contract list."
+        "Kalooki (popular in the UK and Jamaica) is a relative with 13-card hands, three decks and its own contract list.",
+        "The commercial game Phase 10 uses the same idea — a fixed list of contracts (‘phases’) completed in order — with its own deck."
       ],
       "scorekeeper": {
         "direction": "low",
@@ -7752,7 +7761,10 @@
         "categories",
         "score sheet",
         "solo",
-        "family"
+        "family",
+        "yahtzee",
+        "yatzy",
+        "5 dice categories"
       ],
       "tags": [
         "kids",
@@ -7796,7 +7808,8 @@
         "Solo: try to beat your best score."
       ],
       "variations": [
-        "Yatzy and similar modern versions add an upper-section bonus (e.g. 35 or 50 for scoring 63+ in Ones–Sixes) and categories like One Pair, Two Pairs and Three of a Kind."
+        "Yahtzee-style scoring (the familiar modern rules): 13 categories. Upper section: Ones to Sixes (total of that number), with a 35-point bonus if they add up to 63 or more. Lower section: Three of a Kind and Four of a Kind (total of all dice), Full House 25, Small Straight (four in a row) 30, Large Straight (five in a row) 40, Yahtzee (five of a kind) 50, Chance (total of all dice). Each extra five of a kind after scoring 50 in that box earns a 100 bonus.",
+        "Yatzy (Nordic): 15 categories, adding One Pair, Two Pairs and Three of a Kind, with a 50 bonus for 63+ in the upper section."
       ],
       "scorekeeper": {
         "direction": "high",
@@ -7826,7 +7839,9 @@
         "five dice",
         "categories",
         "latin america",
-        "score sheet"
+        "score sheet",
+        "yahtzee",
+        "yatzy"
       ],
       "tags": [
         "push-your-luck"
@@ -8479,6 +8494,226 @@
         "unit": "points",
         "endCondition": "target",
         "hint": "Add the total of the tiles left open each round."
+      }
+    },
+    {
+      "id": "spite-and-malice",
+      "name": "Spite and Malice",
+      "type": "cards",
+      "aliases": [
+        "Cat and Mouse",
+        "Skip-Bo (commercial relative)"
+      ],
+      "keywords": [
+        "two player",
+        "building",
+        "pay-off pile",
+        "kings wild",
+        "skip-bo",
+        "skip bo"
+      ],
+      "tags": [
+        "multi-deck"
+      ],
+      "players": {
+        "min": 2,
+        "max": 4
+      },
+      "playerCounts": [
+        "2",
+        "3",
+        "4"
+      ],
+      "playTime": {
+        "minutes": [
+          20,
+          40
+        ],
+        "category": "medium"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "Two standard 52-card decks with different backs, plus four jokers (optional)"
+      ],
+      "objective": "Be the first to get rid of your pay-off pile by playing its cards onto shared centre stacks built from Ace to Queen.",
+      "setup": [
+        "Shuffle one deck (no jokers) and deal 20 cards face down to each player as their pay-off pile. Turn each player’s top pay-off card face up. Set the rest of that deck aside.",
+        "Shuffle the other deck (with any jokers) together with the leftover cards to form the stock. Deal five cards to each player’s hand.",
+        "Leave space in the middle for centre stacks, and in front of each player for four personal discard piles."
+      ],
+      "gameplay": [
+        "Centre stacks are started with an Ace and built upward regardless of suit: A, 2, 3 … up to Queen. Kings (and jokers) are wild and can stand for any card except an Ace in most rules.",
+        "At the start of your turn, draw from the stock until you have five cards in hand.",
+        "Play as many cards as you can to the centre stacks — from your hand, from the top of your pay-off pile, or from the top of any of your discard piles. When you play your top pay-off card, turn up the next one.",
+        "If you empty your hand during your turn, draw five more and carry on.",
+        "End your turn by placing one card from your hand face up on one of your four discard piles. Discard piles can’t be played onto by anyone else.",
+        "When a centre stack reaches the Queen, it is shuffled into the stock."
+      ],
+      "scoring": [
+        "The first player to play the last card of their pay-off pile wins.",
+        "Optional scoring: the winner scores 5 points per card left in the opponents’ pay-off piles; play to an agreed total."
+      ],
+      "variations": [
+        "Pay-off piles of 26 or 30 cards make a longer game.",
+        "Some rules require discards to go on a pile only if they are the same rank or one lower than its top card.",
+        "Skip-Bo is a commercial version played with a special numbered deck (1–12 plus Skip-Bo wild cards)."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 2,
+        "teams": false,
+        "quickAdd": [
+          1,
+          5,
+          10
+        ],
+        "unit": "wins",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "balut",
+      "name": "Balut",
+      "type": "dice",
+      "aliases": [],
+      "keywords": [
+        "dice",
+        "five dice",
+        "categories",
+        "score sheet",
+        "yahtzee",
+        "yacht family",
+        "danish"
+      ],
+      "tags": [
+        "push-your-luck"
+      ],
+      "players": {
+        "min": 1,
+        "max": 6
+      },
+      "playerCounts": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5+"
+      ],
+      "playTime": {
+        "minutes": [
+          30,
+          60
+        ],
+        "category": "long"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "Five six-sided dice",
+        "A score sheet with seven categories, each with four boxes"
+      ],
+      "objective": "Score the highest total by filling each of seven categories four times — a longer, more tactical cousin of Yacht.",
+      "setup": [
+        "Each player gets a score sheet. There are 28 turns each: seven categories × four boxes."
+      ],
+      "gameplay": [
+        "On your turn, roll all five dice, then set aside any and re-roll the rest, up to three rolls in total.",
+        "After your last roll, write a score in an empty box of any category (a zero if the dice don’t fit).",
+        "Fours, Fives, Sixes: the total of the dice showing that number.",
+        "Straight: 1-2-3-4-5 scores 15; 2-3-4-5-6 scores 20.",
+        "Full House (three of a kind plus a pair): total of all dice.",
+        "Choice: total of all dice (any roll).",
+        "Balut (five of a kind): 20 plus the total of the dice."
+      ],
+      "scoring": [
+        "Simple scoring: after 28 turns, the highest total wins.",
+        "Traditional scoring converts results to bonus points — for example for high category totals (such as 52+ in Fours) or filling every Straight box — so check the sheet you’re using."
+      ],
+      "variations": [
+        "Solo: play all 28 turns and try to beat your best total."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 2,
+        "teams": false,
+        "quickAdd": [
+          5,
+          10,
+          15,
+          20,
+          25
+        ],
+        "unit": "points",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "going-to-boston",
+      "name": "Going to Boston",
+      "type": "dice",
+      "aliases": [
+        "Newmarket",
+        "Yankee Grab"
+      ],
+      "keywords": [
+        "dice",
+        "three dice",
+        "quick",
+        "family",
+        "pub",
+        "set aside"
+      ],
+      "tags": [
+        "kids"
+      ],
+      "players": {
+        "min": 2,
+        "max": 10
+      },
+      "playerCounts": [
+        "2",
+        "3",
+        "4",
+        "5+"
+      ],
+      "playTime": {
+        "minutes": [
+          5,
+          10
+        ],
+        "category": "short"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "Three six-sided dice"
+      ],
+      "objective": "Get the highest three-dice total by keeping your best die after each roll.",
+      "setup": [
+        "Decide the order of play."
+      ],
+      "gameplay": [
+        "Roll all three dice and set aside the highest one.",
+        "Roll the other two dice and set aside the higher one.",
+        "Roll the last die.",
+        "Your score is the total of the three dice you kept (3 to 18)."
+      ],
+      "scoring": [
+        "After everyone has had a turn, the highest score wins the round. Ties roll off. Play several rounds and count wins."
+      ],
+      "variations": [
+        "Multiplication: multiply the kept die values instead of adding (e.g. 6 × 6 × 5 = 180)."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 4,
+        "teams": false,
+        "quickAdd": [
+          1
+        ],
+        "unit": "wins",
+        "endCondition": "target"
       }
     }
   ]
