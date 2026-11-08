@@ -1,5 +1,5 @@
 {
-  "id": "./",
+  "id": "card-game-rulebook",
   "name": "Card Game Rulebook",
   "short_name": "Card Rules",
   "description": "Offline card and dice game rules by player count, with a score tracker and a game picker.",
