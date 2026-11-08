@@ -72,6 +72,8 @@ To test it exactly as GitHub Pages serves it (from a subpath), serve the **paren
 
 GitHub Pages serves over HTTPS, which the service worker and the install prompt both need. No other configuration is required.
 
+> **Hosting several apps on the same `github.io` site?** Chrome identifies an installed app by the manifest's `id`, resolved against the site root. Each app needs a different `id` (this one uses `"id": "card-game-rulebook"`), otherwise Chrome reports the app as "already installed".
+
 ## Installing on Android (Chrome)
 
 1. Open the GitHub Pages URL in Chrome on your phone and let the home screen load once. This saves the app for offline use.

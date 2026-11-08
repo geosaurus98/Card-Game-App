@@ -3,7 +3,7 @@
  * Bump CACHE_VERSION whenever you change ANY file (including games.json)
  * so installed copies pick up the new content on their next visit.
  */
-const CACHE_VERSION = 'v1.2.0';
+const CACHE_VERSION = 'v1.2.1';
 const CACHE_NAME = `card-rules-${CACHE_VERSION}`;
 
 // Every file the app needs to run offline. Paths are relative to this file,
