@@ -5,7 +5,8 @@ An offline-first Progressive Web App (PWA) with card and dice game rules organis
 - 119 games (95 card games and 24 dice games), each with equipment, objective, setup, gameplay, scoring and variations
 - Searching a brand name such as Yahtzee, Uno, Phase 10, Skip-Bo or Dutch Blitz finds the traditional game it is based on
 - Separate **Card games** and **Dice games** sections on the home screen. Search and Favourites cover both, with dice games marked 🎲
-- Score tracker with quick-add buttons, custom amounts, round history, undo, target score and a winner banner
+- A three-line **Quick start** summary at the top of every rules page, for teaching a game at the table
+- Score tracker with quick-add buttons, custom amounts, round history, undo, target score and a winner banner. **Share / export scores** sends the final standings through the phone's share sheet, copies them as text, or downloads a CSV for spreadsheets
 - Tags (Good for kids, Party, Trick-taking, Patience, Betting…) shown on each game and usable as a filter on every list
 - Game picker filtered by game type (cards, dice or either), players, difficulty, play time, "Good for kids" and "No special equipment"
 - Search, favourites, dark mode (follows the system setting, with a manual toggle) and a text-size control
@@ -101,6 +102,7 @@ Add an object to the `games` array in `games.json`. The order doesn't matter (li
   "difficulty": "easy",
   "equipment": ["One standard 52-card deck", "Chips or counters"],
   "objective": "Beat the dealer by getting closer to 21 without going over.",
+  "quickStart": ["Goal: …", "On your turn: …", "To win: …"],
   "setup": ["Step one…", "Step two…"],
   "gameplay": ["Step one…", "Step two…"],
   "scoring": ["Point one…", "Point two…"],
@@ -133,6 +135,7 @@ Add an object to the `games` array in `games.json`. The order doesn't matter (li
 | `playTime.minutes` | [number, number] | yes | Typical range in minutes, shown as "20–45 min". |
 | `playTime.category` | `"short"` \| `"medium"` \| `"long"` | yes | Picker filter. Convention: short < 15 min, medium 15–45, long 45+. |
 | `difficulty` | `"easy"` \| `"medium"` \| `"hard"` | yes | Badge on the game page and a picker filter. |
+| `quickStart` | string[] | yes | Three short lines (goal, how a turn works, how to win), shown in the Quick start box at the top of the rules page. |
 | `equipment` | string[] | yes | Bulleted list. |
 | `objective` | string | yes | One paragraph. Also shown on the picker result. |
 | `setup` | string[] | yes | Numbered steps. |

@@ -20,7 +20,8 @@ const ok = (cond, msg) => { console.log(`${cond ? 'PASS' : 'FAIL'}  ${msg}`); if
 
 (async () => {
   const browser = await chromium.launch();
-  const context = await browser.newContext({ ...devices['Pixel 7'] });
+  const context = await browser.newContext({ ...devices['Pixel 7'], acceptDownloads: true });
+  await context.grantPermissions(['clipboard-read', 'clipboard-write'], { origin: new URL(BASE).origin });
   const page = await context.newPage();
   const errors = [];
   page.on('pageerror', (e) => errors.push(e.message));
@@ -87,7 +88,8 @@ const ok = (cond, msg) => { console.log(`${cond ? 'PASS' : 'FAIL'}  ${msg}`); if
   await page.click('.game-item a:has-text("Oh Hell")');
   await page.waitForSelector('article.rules h1');
   const sections = await page.locator('article.rules h2').allTextContents();
-  ok(['Equipment', 'Objective', 'Setup & dealing', 'Gameplay', 'Scoring & winning', 'Common variations'].every((s) => sections.includes(s)), 'game page has all rule sections');
+  ok((await page.locator('.quick-start li').count()) === 3, 'game page shows a 3-line quick start');
+  ok(['Quick start', 'Equipment', 'Objective', 'Setup & dealing', 'Gameplay', 'Scoring & winning', 'Common variations'].every((s) => sections.includes(s)), 'game page has all rule sections');
   await shot('03-game');
   await page.click('#fav-btn');
   ok((await page.getAttribute('#fav-btn', 'aria-pressed')) === 'true', 'favourite toggled on');
@@ -130,6 +132,21 @@ const ok = (cond, msg) => { console.log(`${cond ? 'PASS' : 'FAIL'}  ${msg}`); if
   const banner = (await page.textContent('.gameover')).trim().replace(/\s+/g, ' ');
   ok(/Player 3 & Player 4 share the win/.test(banner), `lowest score wins: "${banner}"`);
   await shot('04-score');
+  // Share / export results
+  await page.click('.gameover [data-act="share"]');
+  await page.waitForSelector('#ui-dialog[open]');
+  const shareText = await page.textContent('#ui-dialog-message');
+  ok(shareText.includes('Hearts — final scores') && shareText.includes('🏆') && shareText.includes('Alice — 103'), 'share dialog shows final standings');
+  await shot('04c-share');
+  await page.click('#ui-dialog-actions button[value="copy"]');
+  await page.waitForSelector('.toast.show');
+  const clip = await page.evaluate(() => navigator.clipboard.readText());
+  ok(clip === shareText, 'Copy puts the results on the clipboard');
+  await page.click('.sk-manage [data-act="share"]');
+  await page.waitForSelector('#ui-dialog[open]');
+  const [dl] = await Promise.all([page.waitForEvent('download'), page.click('#ui-dialog-actions button[value="csv"]')]);
+  const csv = require('fs').readFileSync(await dl.path(), 'utf8');
+  ok(dl.suggestedFilename().startsWith('hearts-scores-') && /Round,Alice,Player 2/.test(csv) && /Total,103,6,0,0/.test(csv), `CSV export downloads (${dl.suggestedFilename()})`);
   // Add player
   await page.click('[data-act="addPlayer"]');
   await page.click('#ui-dialog-actions button[value="add"]');

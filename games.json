@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 3,
+  "schemaVersion": 4,
   "games": [
     {
       "id": "klondike",
@@ -38,6 +38,11 @@
         "One standard 52-card deck, no jokers"
       ],
       "objective": "Move all 52 cards onto four foundation piles, one per suit, built up in order from Ace to King.",
+      "quickStart": [
+        "Goal: move all cards to four foundations, Ace up to King by suit.",
+        "Build tableau columns down in alternating colours; only Kings fill empty columns.",
+        "Turn stock cards to the waste when stuck. Win when all 52 are home."
+      ],
       "setup": [
         "Shuffle and deal seven tableau piles in a row from left to right. The first pile has 1 card, the second 2, and so on up to 7 cards in the seventh pile (28 cards in total).",
         "Turn the top card of each pile face up; all others stay face down.",
@@ -114,6 +119,11 @@
         "One standard 52-card deck, no jokers"
       ],
       "objective": "Move all cards onto four foundations, one per suit, built up from Ace to King.",
+      "quickStart": [
+        "Goal: move all cards to the foundations, Ace up to King by suit.",
+        "All cards are dealt face up; use four free cells to park single cards.",
+        "Build columns down in alternating colours. Almost every deal can be won."
+      ],
       "setup": [
         "Deal all 52 cards face up into eight columns: the first four columns get 7 cards each, the last four get 6 cards each.",
         "Leave room above for four ‘free cells’ (temporary single-card holding spaces) and four foundation piles."
@@ -184,6 +194,11 @@
         "Two standard 52-card decks shuffled together (104 cards), no jokers"
       ],
       "objective": "Assemble eight complete runs from King down to Ace in a single suit. Each completed run is removed from play; clear all eight to win.",
+      "quickStart": [
+        "Goal: build eight King-to-Ace runs in one suit; each completed run is removed.",
+        "Build down regardless of suit, but only same-suit runs move together.",
+        "Deal ten new cards from the stock when stuck. Clear all eight runs to win."
+      ],
       "setup": [
         "Deal 54 cards into ten tableau columns: the first four columns get 6 cards, the other six get 5 cards.",
         "Turn the top card of each column face up; the rest stay face down.",
@@ -260,6 +275,11 @@
         "One standard 52-card deck, no jokers"
       ],
       "objective": "Clear every card from the pyramid by removing pairs that add up to 13.",
+      "quickStart": [
+        "Goal: clear the 28-card pyramid.",
+        "Remove pairs of uncovered cards that add to 13 (J=11, Q=12, K=13 alone).",
+        "Use stock and waste cards as partners. Win when the pyramid is gone."
+      ],
       "setup": [
         "Deal 28 cards face up in a pyramid of seven rows: 1 card in the top row, 2 in the next, down to 7 in the bottom row. Each card overlaps the two cards above it.",
         "The remaining 24 cards form a face-down stock."
@@ -330,6 +350,11 @@
         "One standard 52-card deck, no jokers"
       ],
       "objective": "Move as many tableau cards as possible onto a single foundation pile. Like real golf, the lowest score wins.",
+      "quickStart": [
+        "Goal: move as many tableau cards as possible onto one waste pile.",
+        "Play any exposed card one rank above or below the top waste card.",
+        "When stuck, turn a stock card. Score = cards left; lowest over 9 holes wins."
+      ],
       "setup": [
         "Deal 35 cards face up into seven columns of five cards, overlapping so all are visible.",
         "Place the remaining 17 cards face down as the stock.",
@@ -403,6 +428,11 @@
         "Pen and paper or the score tracker"
       ],
       "objective": "Form your hand into melds (sets and runs) and reduce your unmatched ‘deadwood’, then knock or go gin to score points. First to 100 points wins.",
+      "quickStart": [
+        "Goal: form your 10 cards into sets and runs and reduce unmatched ‘deadwood’.",
+        "Each turn: draw from stock or discard pile, then discard one.",
+        "Knock with 10 or less deadwood, or go gin with none. First to 100 wins."
+      ],
       "setup": [
         "Deal 10 cards to each player, one at a time.",
         "Place the next card face up to start the discard pile; the rest of the deck is the stock.",
@@ -480,6 +510,11 @@
         "A cribbage board and pegs (or the score tracker)"
       ],
       "objective": "Be the first to score 121 points by pegging during play and by counting combinations in your hand and the crib.",
+      "quickStart": [
+        "Goal: be first to peg 121 points.",
+        "Discard two to the crib, then take turns playing cards, scoring 15s, pairs, runs and 31.",
+        "Then count your hand and the crib with the starter card."
+      ],
       "setup": [
         "Two-player game: deal 6 cards to each player.",
         "Each player discards 2 cards face down to form the ‘crib’, which belongs to the dealer and is scored at the end of the hand.",
@@ -559,6 +594,11 @@
         "One standard 52-card deck, no jokers"
       ],
       "objective": "Be the first player to get rid of all your cards by playing them onto the centre piles as fast as you can.",
+      "quickStart": [
+        "Goal: get rid of all your cards first.",
+        "No turns: both players play at once onto two centre piles, one rank up or down.",
+        "Keep five cards in hand. Flip new centre cards when nobody can play."
+      ],
       "setup": [
         "Each player is dealt 20 cards face down: 5 form their hand and 15 their draw pile.",
         "Deal two side piles of 5 cards face down in the middle (the ‘replacement’ piles).",
@@ -629,6 +669,11 @@
         "One standard 52-card deck, no jokers"
       ],
       "objective": "Win all 52 cards.",
+      "quickStart": [
+        "Goal: win all 52 cards.",
+        "Both players flip their top card; the higher card takes both.",
+        "On a tie, it’s war: put cards down and flip again — winner takes the lot."
+      ],
       "setup": [
         "Deal the whole deck face down so each player has 26 cards in a pile. Players do not look at their cards."
       ],
@@ -699,6 +744,11 @@
         "One standard 52-card deck, no jokers"
       ],
       "objective": "Collect the most ‘books’ — sets of all four cards of the same rank.",
+      "quickStart": [
+        "Goal: collect the most books (all four cards of a rank).",
+        "Ask a player for a rank you hold; if they have any, they hand them over and you go again.",
+        "If not, ‘Go fish!’ — draw from the pond. Most books when all 13 are made wins."
+      ],
       "setup": [
         "With 2 or 3 players deal 7 cards each; with 4 or more players deal 5 cards each.",
         "Spread the rest face down in a messy pile or stack — the ‘pond’ (or ‘ocean’)."
@@ -769,6 +819,11 @@
         "Pen and paper or the score tracker"
       ],
       "objective": "Score the most points over a ‘partie’ of six deals by declaring card combinations and winning tricks. This describes Rubicon Piquet, the standard modern form.",
+      "quickStart": [
+        "Goal: score most over six deals by declaring combinations and winning tricks.",
+        "Exchange cards with the talon, then compare point, sequences and sets.",
+        "Play 12 tricks with no trumps. Rubicon bonus at the end of six deals."
+      ],
       "setup": [
         "Cards rank A (high), K, Q, J, 10, 9, 8, 7. Players alternate dealing; the non-dealer is ‘elder’, the dealer ‘younger’.",
         "Deal 12 cards to each player in packets of two (or three). The remaining 8 cards form the ‘talon’, face down.",
@@ -848,6 +903,11 @@
         "One standard 52-card deck with the 2♦ removed (51 cards)"
       ],
       "objective": "Avoid taking hearts and the Queen of Spades in tricks. When someone reaches 100 points, the player with the lowest score wins.",
+      "quickStart": [
+        "Goal: avoid hearts (1 point each) and the Q♠ (13 points).",
+        "Remove the 2♦, deal 17 each, pass three cards, then play tricks; follow suit if you can.",
+        "Take everything to shoot the moon. Lowest score when someone hits 100 wins."
+      ],
       "setup": [
         "Remove the 2♦ so the deck divides evenly. Deal 17 cards to each player.",
         "Passing: each player passes 3 cards face down. Rotate the direction each hand: left, right, then no pass, and repeat."
@@ -925,6 +985,11 @@
         "Pen and paper or the score tracker"
       ],
       "objective": "The ‘picker’ (with a partner in the 5-player game) must take at least 61 of the 120 card points in tricks; everyone else tries to stop them.",
+      "quickStart": [
+        "Goal: the picker (and partner) needs 61 of 120 card points in tricks.",
+        "Queens, Jacks and diamonds are trumps; the picker takes the blind and buries two.",
+        "Follow suit (trumps count as one suit). Scores are zero-sum per hand."
+      ],
       "setup": [
         "Trump suit (14 cards, highest to lowest): Q♣, Q♠, Q♥, Q♦, J♣, J♠, J♥, J♦, A♦, 10♦, K♦, 9♦, 8♦, 7♦.",
         "Non-trump (‘fail’) suits — clubs, spades and hearts — rank A, 10, K, 9, 8, 7.",
@@ -1009,6 +1074,11 @@
         "Pen and paper or the score tracker"
       ],
       "objective": "Be the first to reach 500 points by winning bids and making contracts.",
+      "quickStart": [
+        "Goal: be first to 500 points.",
+        "Bid how many tricks you’ll take and in which suit; the winner takes the kitty.",
+        "Make your bid to score it, fail and lose it. Joker and bowers are top trumps."
+      ],
       "setup": [
         "Deal 10 cards to each player and 3 face down as the ‘kitty’.",
         "Trump order (highest first): Joker, right bower (Jack of trumps), left bower (other Jack of the same colour), then A, K, Q, 10, 9 … of trumps. Non-trump suits rank A, K, Q, (J), 10, 9 …",
@@ -1095,6 +1165,11 @@
         "Pen and paper or the score tracker"
       ],
       "objective": "Bid exactly the number of tricks you will take — no more, no fewer — and score the most over a series of hands.",
+      "quickStart": [
+        "Goal: bid exactly how many tricks you’ll take each hand.",
+        "Hand size changes every deal; the dealer can’t make the bids add up to the tricks.",
+        "Make your bid exactly for 10 + bid points. Highest total wins."
+      ],
       "setup": [
         "Hand size changes each deal. A common pattern: start with 1 card each, increase by one each hand up to the maximum (51 ÷ players, rounded down, or a chosen cap such as 10), then come back down to 1.",
         "After dealing, turn the next card of the stock face up: its suit is trumps for the hand. If no cards are left, the hand is played with no trumps."
@@ -1168,6 +1243,11 @@
         "One 24-card Euchre deck: 9, 10, J, Q, K, A of each suit"
       ],
       "objective": "Be the first to 10 points. Each hand, the ‘maker’ plays alone against the other two and needs at least 3 of the 5 tricks.",
+      "quickStart": [
+        "Goal: first to 10 points; the maker plays alone against the other two.",
+        "Order up the turned card or name a suit as trumps; Jacks (bowers) are top trumps.",
+        "Maker needs 3 of 5 tricks: 1 point, all 5 = 3. Euchred = 2 to each opponent."
+      ],
       "setup": [
         "Deal 5 cards to each player (in packets of 3 then 2, or 2 then 3). Turn the next card face up; the remaining cards are not used.",
         "Trump ranking (highest first): right bower (Jack of trumps), left bower (other Jack of the same colour, which counts as a trump), then A, K, Q, 10, 9 of trumps. Other suits rank A, K, Q, J, 10, 9."
@@ -1243,6 +1323,11 @@
         "Score pad (or the score tracker set up for two teams)"
       ],
       "objective": "Partnerships bid to set a contract, then try to make it (declarers) or defeat it (defenders). Win the rubber — the best of three games.",
+      "quickStart": [
+        "Goal: partnerships bid a contract, then try to make or defeat it.",
+        "Auction by level (tricks over six) and suit; declarer plays both hands once dummy is shown.",
+        "Make 100 below the line for a game; two games win the rubber."
+      ],
       "setup": [
         "Four players in two partnerships, partners sitting opposite (North–South vs East–West).",
         "Deal all 52 cards, 13 to each player.",
@@ -1324,6 +1409,11 @@
         "Pen and paper or the score tracker"
       ],
       "objective": "Partnerships bid how many tricks they’ll take, with spades always trumps. First team to 500 points wins.",
+      "quickStart": [
+        "Goal: first partnership to 500 points.",
+        "Bid tricks you’ll take; spades are always trumps and can’t be led until broken.",
+        "Make your bid for 10 per trick; overtricks are bags (10 bags = −100)."
+      ],
       "setup": [
         "Four players in two partnerships, partners sitting opposite.",
         "Deal all 52 cards, 13 to each player. Cards rank A (high) down to 2; spades are always trumps."
@@ -1400,6 +1490,11 @@
         "One standard 52-card deck, no jokers"
       ],
       "objective": "Avoid taking hearts and the Queen of Spades in tricks. When someone reaches 100 points, the lowest score wins.",
+      "quickStart": [
+        "Goal: avoid hearts (1 point each) and the Q♠ (13 points).",
+        "Pass three cards, then play tricks; 2♣ leads, and you must follow suit if you can.",
+        "Take everything to shoot the moon. Lowest score when someone hits 100 wins."
+      ],
       "setup": [
         "Four players, each playing for themselves. Deal all 52 cards, 13 each.",
         "Passing: before each hand, each player passes 3 cards face down. The direction rotates: left, right, across, then no pass (‘hold’), and repeat."
@@ -1476,6 +1571,11 @@
         "One 24-card Euchre deck: 9, 10, J, Q, K, A of each suit"
       ],
       "objective": "Partnerships compete to win at least 3 of 5 tricks in each hand. First team to 10 points wins.",
+      "quickStart": [
+        "Goal: first partnership to 10 points.",
+        "Order up the turned card or name trumps; Jack of trumps and same-colour Jack are top.",
+        "Makers need 3 of 5 tricks (1 point), all 5 = 2, alone = 4. Euchred = 2 to defenders."
+      ],
       "setup": [
         "Four players in two partnerships, partners sitting opposite.",
         "Deal 5 cards to each player in packets of 2 and 3. Place the remaining 4 cards (the ‘kitty’) face down and turn the top one face up.",
@@ -1551,6 +1651,11 @@
         "One standard 52-card deck, no jokers"
       ],
       "objective": "Partnerships try to win the most tricks. The first team to 5 points wins a game; two games win the rubber.",
+      "quickStart": [
+        "Goal: partnerships win the most tricks; first to 5 points wins a game.",
+        "The last card dealt sets trumps. Follow suit if you can.",
+        "Score 1 point for each trick over six, plus honours. Best of three games."
+      ],
       "setup": [
         "Four players in two partnerships, partners sitting opposite.",
         "Deal all 52 cards one at a time, 13 each. The dealer’s last card is turned face up: its suit is trumps. The dealer takes it into their hand when it’s their turn to play to the first trick."
@@ -1625,6 +1730,11 @@
         "Pen and paper or the score tracker"
       ],
       "objective": "Partnerships meld cards of the same rank, especially seven-card ‘canastas’. The first team to 5,000 points wins.",
+      "quickStart": [
+        "Goal: first partnership to 5,000 points.",
+        "Draw, meld sets of the same rank (2s and jokers wild), discard. Take the pile when you can use its top card.",
+        "Seven-card melds are canastas (500 natural, 300 mixed); you need one to go out."
+      ],
       "setup": [
         "Four players in two partnerships, partners opposite.",
         "Deal 11 cards to each player. Place the rest face down as the stock and turn the top card face up to start the discard pile (if it is a wild card or red 3, turn another on top — the pile is frozen).",
@@ -1710,6 +1820,11 @@
         "One standard 52-card deck (two decks for 8+ players)"
       ],
       "objective": "Be the first to get rid of all your cards and become President; avoid finishing last (the Scum).",
+      "quickStart": [
+        "Goal: get rid of your cards first and become President.",
+        "Play singles, pairs or triples higher than the last play, or pass.",
+        "Last out is the Scum, who gives their best cards to the President next hand."
+      ],
       "setup": [
         "Deal all the cards as evenly as possible (some players may have one more).",
         "Card ranking (common rule): 2 is highest, then A, K, Q, J, 10 … down to 3, the lowest. Suits don’t matter."
@@ -1788,6 +1903,11 @@
         "Pen and paper or the score tracker"
       ],
       "objective": "Be the first to get rid of all your cards by forming them into melds.",
+      "quickStart": [
+        "Goal: get rid of all your cards by melding them.",
+        "Draw, lay down sets (same rank) or runs (same suit in order) or add to melds, then discard.",
+        "First out wins the hand; others score penalty points for cards left."
+      ],
       "setup": [
         "Deal cards one at a time: 10 each for 2 players, 7 each for 3–4 players, 6 each for 5–6 players.",
         "Place the rest face down as the stock and turn the top card face up to start the discard pile."
@@ -1868,6 +1988,11 @@
         "One standard 52-card deck (shuffle two together for 7+ players)"
       ],
       "objective": "Be the first to get rid of all your cards — by bluffing when you need to and catching others who lie.",
+      "quickStart": [
+        "Goal: get rid of all your cards.",
+        "Play cards face down claiming the next rank in order — you may lie.",
+        "Anyone can call ‘Cheat!’: the liar, or the wrong accuser, picks up the pile."
+      ],
       "setup": [
         "Deal out the whole deck. It doesn’t matter if some players have one more card than others."
       ],
@@ -1943,6 +2068,11 @@
         "Spoons (or other small objects) — one fewer than the number of players"
       ],
       "objective": "Collect four of a kind and grab a spoon — and don’t be the one left without one.",
+      "quickStart": [
+        "Goal: get four of a kind and grab a spoon.",
+        "Everyone passes one card to the left at the same time, keeping four.",
+        "When someone takes a spoon, everyone grabs. No spoon = a letter of S-P-O-O-N-S."
+      ],
       "setup": [
         "Put the spoons in the centre of the table, within reach of everyone. Use one fewer spoon than there are players.",
         "Deal 4 cards to each player. The dealer keeps the rest of the deck face down beside them."
@@ -2018,6 +2148,11 @@
         "Three tokens or coins per player (lives)"
       ],
       "objective": "Avoid making the running total go over 99. Be the last player with any lives left.",
+      "quickStart": [
+        "Goal: don’t make the running total go over 99.",
+        "Play a card, call out the new total and draw. Some cards are special (4 reverses, 9 passes, K = 99).",
+        "Can’t play without busting? Lose a life. Last player with a life wins."
+      ],
       "setup": [
         "Give each player three tokens (lives).",
         "Deal 3 cards to each player. The rest of the deck forms a face-down draw pile."
@@ -2093,6 +2228,11 @@
         "One standard 52-card deck (two decks for 6+ players)"
       ],
       "objective": "Be the first to get rid of all your cards by matching the top card of the discard pile.",
+      "quickStart": [
+        "Goal: be first to get rid of all your cards.",
+        "Match the top card’s suit or rank; 8s are wild and change the suit.",
+        "Can’t play? Draw. Others score penalty points for cards left; lowest wins."
+      ],
       "setup": [
         "Deal 7 cards each with 2 players, or 5 cards each with 3 or more players.",
         "Place the rest face down as the stock and turn the top card face up to start the discard pile. If it’s an 8, bury it in the stock and turn another."
@@ -2169,6 +2309,11 @@
         "One standard 52-card deck, no jokers"
       ],
       "objective": "Be the first to get rid of all your cards by playing them onto shared solitaire-style piles.",
+      "quickStart": [
+        "Goal: be first to play all your cards.",
+        "Draw one, then play cards down in alternating colours on the piles; Kings go in the corners.",
+        "Move whole piles when they fit. First with an empty hand wins."
+      ],
       "setup": [
         "Deal 7 cards to each player (2–4 players is the classic game).",
         "Place the rest face down in the centre as the stock. Turn four cards face up, one on each side of the stock (north, south, east, west) — these are the foundation piles. The four diagonal ‘corner’ spaces start empty."
@@ -2243,6 +2388,11 @@
         "Plenty of table space (or wrap the line into rows)"
       ],
       "objective": "Squeeze the whole deck into a single pile by stacking cards onto matching neighbours.",
+      "quickStart": [
+        "Goal: squeeze the whole deck into one pile.",
+        "Deal cards in a line; move a card onto its neighbour or the card three to the left if suit or rank matches.",
+        "Fewer piles is better — one pile is a win."
+      ],
       "setup": [
         "Shuffle the deck.",
         "Deal cards face up one at a time in a line from left to right. If you run out of room, start a new row underneath, but treat it all as one continuous line."
@@ -2313,6 +2463,11 @@
         "One standard 52-card deck, no jokers"
       ],
       "objective": "Discard every card except the four Aces.",
+      "quickStart": [
+        "Goal: discard everything except the four Aces.",
+        "Deal four cards; discard any card that’s lower than another showing card of the same suit.",
+        "Move cards into empty columns, deal four more when stuck."
+      ],
       "setup": [
         "Shuffle and deal four cards face up in a row. These start four columns. The rest of the deck is the stock."
       ],
@@ -2380,6 +2535,11 @@
         "One standard 52-card deck, no jokers"
       ],
       "objective": "Build all four suits up from Ace to King on the foundations.",
+      "quickStart": [
+        "Goal: build all four suits from Ace to King.",
+        "Aces start in the middle; all other cards are dealt face up in eight rows.",
+        "Move outer cards one at a time, building down regardless of suit."
+      ],
       "setup": [
         "Take out the four Aces and place them in a vertical column in the middle of the table. These are the foundations.",
         "Deal the other 48 cards face up into eight rows of six cards, overlapping so all are visible. Four rows go to the left of the Aces and four to the right."
@@ -2449,6 +2609,11 @@
         "One standard 52-card deck, no jokers"
       ],
       "objective": "Build all four suits onto the foundations, starting from whatever rank the first foundation card happens to be.",
+      "quickStart": [
+        "Goal: build all four suits onto the foundations from the first card’s rank.",
+        "Build the tableau down in alternating colours; refill spaces from the 13-card reserve.",
+        "Turn the stock three at a time. Usually scored rather than won."
+      ],
       "setup": [
         "Count off 13 cards face down into a pile and turn the top one face up. This is the reserve.",
         "Turn the next card face up above it as the first foundation. Its rank is the starting rank for all four foundations.",
@@ -2521,6 +2686,11 @@
         "One standard 52-card deck, no jokers"
       ],
       "objective": "Build all four suits up from Ace to King on the foundations.",
+      "quickStart": [
+        "Goal: build all four suits from Ace to King.",
+        "All cards are dealt into 13 piles of four, top card face up.",
+        "Build down in alternating colours, one card at a time; any card fills a space."
+      ],
       "setup": [
         "Deal all 52 cards into 13 piles of four: three cards face down with the fourth face up on top.",
         "Leave room for four foundation piles. Aces go there as they become available."
@@ -2591,6 +2761,11 @@
         "One standard 52-card deck, no jokers"
       ],
       "objective": "Turn every card face up before the fourth King appears.",
+      "quickStart": [
+        "Goal: turn every card face up before the fourth King appears.",
+        "Deal 13 piles like a clock face; turn a card and place it under its hour.",
+        "No decisions — pure luck, about 1 in 13 deals win."
+      ],
       "setup": [
         "Deal the whole deck face down into 13 piles of four.",
         "Arrange twelve piles in a circle like a clock face (one o’clock to twelve o’clock) and put the thirteenth pile in the centre."
@@ -2660,6 +2835,11 @@
         "One standard 52-card deck, no jokers"
       ],
       "objective": "Build all four suits up from Ace to King on the foundations.",
+      "quickStart": [
+        "Goal: build all four suits from Ace to King.",
+        "Six ‘beds’ of six cards plus a 16-card ‘bouquet’ you can play from any time.",
+        "Build beds down regardless of suit, one card at a time."
+      ],
       "setup": [
         "Deal 36 cards face up into six columns (‘flower beds’) of six cards, overlapping so all are visible.",
         "The remaining 16 cards are the ‘bouquet’. Spread them face up below the beds. Every bouquet card is available."
@@ -2724,6 +2904,11 @@
         "One standard 52-card deck, no jokers"
       ],
       "objective": "Build all four suits up from Ace to King on the foundations.",
+      "quickStart": [
+        "Goal: build all four suits from Ace to King.",
+        "Deal 17 fans of three; only top cards are available.",
+        "Build fans up or down regardless of suit, max three cards per fan."
+      ],
       "setup": [
         "Deal the whole deck face up into 17 fans of three cards each, plus one fan of a single card.",
         "Before play starts, any King lying on top of a lower card of the same suit in its fan may be moved underneath that card."
@@ -2794,6 +2979,11 @@
         "Pen and paper or the score tracker"
       ],
       "objective": "Bid for and win the four scoring points — High, Low, Jack and Game — and be first to 7 points.",
+      "quickStart": [
+        "Goal: first to 7 points.",
+        "Bid 1–4; the high bidder leads, and that suit is trumps.",
+        "Score High, Low, Jack and Game. Miss your bid and you’re set back."
+      ],
       "setup": [
         "Best with four players, each playing alone. Deal six cards to each player in two rounds of three.",
         "Cards rank A (high) down to 2."
@@ -2873,6 +3063,11 @@
         "One standard 52-card deck (or a special Authors deck)"
       ],
       "objective": "Collect the most ‘books’ — all four cards of a rank.",
+      "quickStart": [
+        "Goal: collect the most books of four.",
+        "Ask any player for a specific card of a rank you hold; keep asking while you get it.",
+        "If they don’t have it, it’s their turn. Most books wins."
+      ],
       "setup": [
         "Deal out the whole deck. Some players may get one more card than others. There is no draw pile."
       ],
@@ -2943,6 +3138,11 @@
         "One standard 52-card deck, no jokers (two decks for 5+ players)"
       ],
       "objective": "Win all the cards.",
+      "quickStart": [
+        "Goal: win all the cards.",
+        "Take turns turning cards onto a pile; an Ace or court card means the next player must pay 4, 3, 2 or 1 cards.",
+        "If the payment has no court cards, the player who played the last one takes the pile."
+      ],
       "setup": [
         "Deal out all the cards face down. Each player squares up their cards into a pile without looking at them."
       ],
@@ -3014,6 +3214,11 @@
         "Chips or counters for betting"
       ],
       "objective": "Beat the dealer by finishing with a hand closer to 21 than theirs, without going over.",
+      "quickStart": [
+        "Goal: beat the dealer by getting closer to 21 without going over.",
+        "Hit for more cards or stand; you can double down or split pairs.",
+        "Dealer draws to 16 and stands on 17. Blackjack pays 3 to 2."
+      ],
       "setup": [
         "Choose a dealer (the bank). In home games the deal usually passes around the table.",
         "Each player places a bet.",
@@ -3090,6 +3295,11 @@
         "One standard 52-card deck, no jokers"
       ],
       "objective": "Avoid winning tricks that contain hearts or high spades. When someone reaches 100, the lowest score wins.",
+      "quickStart": [
+        "Goal: avoid penalty cards in tricks.",
+        "Pass three cards right, then play tricks; follow suit if you can.",
+        "Hearts 1, Q♠ 13, K♠ 10, A♠ 7. Lowest score when someone hits 100 wins."
+      ],
       "setup": [
         "Three players is the classic game: remove the 2♣ and deal 17 cards each.",
         "With more players, remove enough 2s (starting with the 2♣) so the deck divides evenly, and deal it all.",
@@ -3165,6 +3375,11 @@
         "Chips or counters for betting"
       ],
       "objective": "Win the pot, either by holding the best three-card hand at the showdown or by betting until everyone else folds.",
+      "quickStart": [
+        "Goal: win the pot with the best three-card hand, or by outbetting everyone.",
+        "Bet or fold in turn; you may bet ‘blind’ at half price.",
+        "Prial of 3s is best, then other prials, running flushes, runs, flushes, pairs."
+      ],
       "setup": [
         "Agree the ante and the minimum and maximum bets.",
         "Everyone puts the ante in the pot. Deal three cards face down to each player."
@@ -3241,6 +3456,11 @@
         "A 36-card deck: A, K, Q, J, 10, 9, 8, 7, 6 of each suit (remove the 2s to 5s)"
       ],
       "objective": "Capture high trumps — especially the Ten — and win more cards in tricks than you were dealt. First to 41 points wins.",
+      "quickStart": [
+        "Goal: first to 41 points.",
+        "36-card deck; Jack of trumps is highest. Follow suit if you can.",
+        "Score for capturing top trumps (especially the 10) and for extra cards won."
+      ],
       "setup": [
         "Best for four players in two partnerships, but 2–8 can play individually.",
         "Deal all the cards so everyone has the same number: 3, 4 or 6 players need no change; with 5 or 7 players remove one 6 (not of trumps); with 8 remove four 6s.",
@@ -3320,6 +3540,11 @@
         "Optional: chips or counters"
       ],
       "objective": "Be the first to get rid of all your cards by building the suits out from the 7s.",
+      "quickStart": [
+        "Goal: be first to play all your cards.",
+        "Start with the 7♦; build each suit up and down from its 7.",
+        "Play if you can, otherwise pass. First out wins."
+      ],
       "setup": [
         "Deal out the whole deck. Some players may have one more card than others.",
         "If playing for chips, everyone puts one chip in the pool."
@@ -3388,6 +3613,11 @@
         "One standard 52-card deck, no jokers"
       ],
       "objective": "Win the majority of the last 13 tricks, after using the first 13 tricks to improve your hand.",
+      "quickStart": [
+        "Goal: win most of the last 13 tricks.",
+        "First half: win tricks to collect the face-up stock card; the loser gets the hidden next card.",
+        "Second half: play out your hand. Only the last 13 tricks count."
+      ],
       "setup": [
         "Deal 13 cards to each player.",
         "Place the remaining 26 cards face down as the stock and turn the top card face up. Its suit is trumps for the whole hand."
@@ -3452,6 +3682,11 @@
         "One standard 52-card deck, no jokers"
       ],
       "objective": "Win tricks but avoid capturing the four Jacks (Knaves). First to 20 points wins.",
+      "quickStart": [
+        "Goal: first to 20 points.",
+        "Deal 17 each; the last card sets trumps. Follow suit if you can.",
+        "1 point per trick, minus penalties for Jacks taken (♥4, ♦3, ♣2, ♠1)."
+      ],
       "setup": [
         "Deal 17 cards to each player.",
         "Turn the last (52nd) card face up. Its suit is trumps. That card is not used in play."
@@ -3528,6 +3763,11 @@
         "One standard 52-card deck, no jokers"
       ],
       "objective": "Avoid being knocked out by winning at least one trick each hand. The last player left wins.",
+      "quickStart": [
+        "Goal: be the last player still in.",
+        "Play tricks; hands shrink by one card each round from 7 down to 1.",
+        "Win no tricks and you’re knocked out. Top trick-taker picks next trumps."
+      ],
       "setup": [
         "First hand: deal seven cards to each player. Turn the next card face up. Its suit is trumps."
       ],
@@ -3597,6 +3837,11 @@
         "Chips or counters"
       ],
       "objective": "Win tricks to collect your share of the pool — and avoid being ‘looed’ (staying in but winning nothing).",
+      "quickStart": [
+        "Goal: win tricks for a share of the pool, and don’t get ‘looed’.",
+        "Deal three cards each plus a spare ‘miss’ hand; play, swap for the miss, or drop.",
+        "Each trick wins a third of the pool. Stay in and win nothing: pay into the next pool."
+      ],
       "setup": [
         "The dealer puts 3 chips into the pool.",
         "Deal three cards to each player plus one extra three-card hand, the ‘miss’, face down.",
@@ -3672,6 +3917,11 @@
         "Chips or the score tracker"
       ],
       "objective": "Bid how many of the five tricks you can win, then win them against everyone else.",
+      "quickStart": [
+        "Goal: win the number of tricks you bid out of five.",
+        "Bid once; the highest bidder leads, and that suit is trumps.",
+        "Make it: collect from everyone. Fail: pay everyone. ‘Nap’ = all five tricks."
+      ],
       "setup": [
         "Best with 4 or 5 players. Deal five cards to each player."
       ],
@@ -3748,6 +3998,11 @@
         "One standard 52-card deck with one Queen removed (51 cards)"
       ],
       "objective": "Get rid of your cards by making pairs, and don’t be left holding the odd Queen — the Old Maid.",
+      "quickStart": [
+        "Goal: don’t get left holding the odd Queen.",
+        "Remove one Queen, deal all, and discard pairs.",
+        "Draw a card from your neighbour’s hand and discard pairs. Last with the Old Maid loses."
+      ],
       "setup": [
         "Remove one Queen (traditionally the Q♣) so one Queen has no partner.",
         "Deal out all the cards. It doesn’t matter if some players get one more.",
@@ -3822,6 +4077,11 @@
         "Chips for betting"
       ],
       "objective": "Win the pot by having the best five-card hand at the showdown, or by making everyone else fold.",
+      "quickStart": [
+        "Goal: win the pot with the best five-card hand, or make everyone fold.",
+        "Bet, swap up to three cards, then bet again.",
+        "Showdown: best poker hand wins (royal flush high, high card low)."
+      ],
       "setup": [
         "Agree the ante and the betting limits.",
         "Everyone antes. Deal five cards face down to each player."
@@ -3901,6 +4161,11 @@
         "Chips for betting"
       ],
       "objective": "Win the pot with the best five-card poker hand, using a mix of hidden and face-up cards.",
+      "quickStart": [
+        "Goal: win the pot with the best five-card hand.",
+        "One hidden card plus face-up cards dealt one at a time, with betting after each.",
+        "Showdown: best poker hand wins. Seven-card stud is the popular variant."
+      ],
       "setup": [
         "Agree the ante and the betting limits. Everyone antes.",
         "Five-Card Stud: deal each player one card face down (the ‘hole card’) and one card face up."
@@ -3975,6 +4240,11 @@
         "Chips for the pot"
       ],
       "objective": "Improve your poker hand by swapping cards with a shared ‘widow’ hand, and hold the best hand when play ends.",
+      "quickStart": [
+        "Goal: hold the best poker hand when someone knocks.",
+        "Swap your whole hand for the face-down widow, or swap cards with the face-up widow.",
+        "Knock when happy; everyone gets one more turn, then show hands."
+      ],
       "setup": [
         "Everyone puts an agreed ante into the pot.",
         "Deal five cards face down to each player, plus one extra five-card hand (the widow) face down in the middle."
@@ -4051,6 +4321,11 @@
         "Chips or counters"
       ],
       "objective": "Beat the banker by getting closer to 21 without going over (‘bust’).",
+      "quickStart": [
+        "Goal: beat the banker by getting closer to 21 without going over.",
+        "Twist for free cards, buy cards by raising your stake, or stick on 15+.",
+        "Pontoon (A + 10-card) and five-card tricks pay double. Banker wins ties."
+      ],
       "setup": [
         "Choose a banker. Card values: 2–10 face value, picture cards 10, Ace 1 or 11.",
         "The banker deals one card face down to each player and to themselves. Players look at their card and place a stake.",
@@ -4134,6 +4409,11 @@
         "One standard 52-card deck per player, each with a different back design"
       ],
       "objective": "Play as many of your cards as possible onto the shared foundations, and be first to empty your ‘demon’ pile.",
+      "quickStart": [
+        "Goal: play the most cards to shared foundations and empty your ‘demon’ pile.",
+        "Everyone plays at once with their own deck; build shared Aces up in suit.",
+        "Call ‘Out!’ when your demon is empty. +1 per card played, −1 per demon card left."
+      ],
       "setup": [
         "Each player shuffles their own deck.",
         "Deal 13 cards face down into a pile (the demon) and turn its top card face up.",
@@ -4214,6 +4494,11 @@
         "Paper and a pencil for each player"
       ],
       "objective": "Be the first to draw a complete beetle, one body part per roll.",
+      "quickStart": [
+        "Goal: be first to draw a complete beetle.",
+        "Roll one die; each number is a body part (6 = body first, 5 = head, 4 = leg…).",
+        "Need the body before anything else, and the head before eyes and feelers."
+      ],
       "setup": [
         "Each player has paper and a pencil. Decide who rolls first; play passes to the left.",
         "A complete beetle has 13 parts: 1 body, 1 head, 6 legs, 1 tail, 2 feelers and 2 eyes."
@@ -4286,6 +4571,11 @@
         "Three six-sided dice"
       ],
       "objective": "Score exactly 15 points by rolling the ‘point’ number.",
+      "quickStart": [
+        "Goal: score exactly 15 points.",
+        "Roll a die to set the ‘point’ number; then roll three dice, scoring 1 per die showing it.",
+        "Keep rolling while you score. Three of the point = 15 straight away."
+      ],
       "setup": [
         "Each player rolls one die to decide the order of play (highest goes first).",
         "The first player rolls one die. The number shown is the ‘point’ for the whole game."
@@ -4363,6 +4653,11 @@
         "Chips or counters for betting"
       ],
       "objective": "As the shooter, win by rolling a 7 or 11 straight away, or by repeating your ‘point’ before you roll a 7.",
+      "quickStart": [
+        "Goal: as shooter, win on 7 or 11, or by rolling your point again before a 7.",
+        "Come-out roll: 7 or 11 wins, 2, 3 or 12 loses, anything else becomes your point.",
+        "Others bet for or against the shooter."
+      ],
       "setup": [
         "Choose the first shooter. The shooter bets an amount, and other players ‘fade’ (cover) all or part of it.",
         "This describes private (non-casino) craps."
@@ -4438,6 +4733,11 @@
         "Pen and paper or the score tracker"
       ],
       "objective": "Score the highest total before all your dice ‘drop dead’.",
+      "quickStart": [
+        "Goal: score the highest total.",
+        "Roll five dice; if no 2s or 5s, add them up. Any 2s or 5s score nothing and are removed.",
+        "Keep rolling the remaining dice until all have dropped dead."
+      ],
       "setup": [
         "Decide the order of play. Each player’s turn uses all five dice."
       ],
@@ -4505,6 +4805,11 @@
         "Five six-sided dice"
       ],
       "objective": "Roll the best poker-style hand. Ones are wild, and the lowest hand loses.",
+      "quickStart": [
+        "Goal: don’t roll the lowest hand.",
+        "Up to three rolls with five dice, poker-style hands, 1s are wild, no straights.",
+        "The first player’s number of rolls is the limit for everyone. Lowest hand loses."
+      ],
       "setup": [
         "Decide the order of play."
       ],
@@ -4576,6 +4881,11 @@
         "One six-sided die"
       ],
       "objective": "Get a total as close to 21 as possible without going over.",
+      "quickStart": [
+        "Goal: get closest to 21 without going over.",
+        "Roll one die as many times as you like, adding it up.",
+        "Stop when you choose. Over 21 is bust. Highest total wins."
+      ],
       "setup": [
         "Decide the order of play. Each player’s turn uses the single die."
       ],
@@ -4642,6 +4952,11 @@
         "Counters or coins — two per player to start"
       ],
       "objective": "Be the last player holding any counters, and win the pot.",
+      "quickStart": [
+        "Goal: be the last player holding counters.",
+        "Roll one die per counter you hold (max two).",
+        "Each 1 puts a counter in the pot; each 6 passes a counter left. Last with counters wins."
+      ],
       "setup": [
         "Each player starts with two counters. Decide the order of play."
       ],
@@ -4717,6 +5032,11 @@
         "Counters or coins — three per player to start"
       ],
       "objective": "Be the last player holding any counters, and win the centre pot.",
+      "quickStart": [
+        "Goal: be the last player holding counters.",
+        "Roll three dice: 1 = counter to the centre, 2 = counter left, 5 = counter right.",
+        "No counters? You sit out but can get some back. Last with counters wins the pot."
+      ],
       "setup": [
         "Each player starts with three counters. Decide the order of play."
       ],
@@ -4790,6 +5110,11 @@
         "Chips or counters"
       ],
       "objective": "Beat the banker’s roll with three dice.",
+      "quickStart": [
+        "Goal: beat the banker with three dice.",
+        "4-5-6, triples, or a pair with a 6 win; 1-2-3 or a pair with a 1 lose.",
+        "A pair with anything else sets a point to beat."
+      ],
       "setup": [
         "Choose a banker, who puts up a bank. Each other player bets against the bank."
       ],
@@ -4857,6 +5182,11 @@
         "Five dice — special poker dice (9, 10, J, Q, K, A) or ordinary six-sided dice"
       ],
       "objective": "Roll the best poker hand with five dice.",
+      "quickStart": [
+        "Goal: roll the best poker hand with five dice.",
+        "Up to three rolls, keeping any dice between rolls.",
+        "Five of a kind beats four, then full house, straight, three of a kind, two pair, pair."
+      ],
       "setup": [
         "Decide the order of play. With ordinary dice, 1 counts as the highest (Ace) and 2–6 as 9, 10, J, Q, K."
       ],
@@ -4926,6 +5256,11 @@
         "Chips or counters"
       ],
       "objective": "Roll a better hand than the banker. This is a dice game, not the Klondike patience.",
+      "quickStart": [
+        "Goal: beat the banker’s roll.",
+        "Banker rolls five dice once, then each player rolls once.",
+        "Pairs and better count, no straights; 1s rank highest. Banker wins ties."
+      ],
       "setup": [
         "Choose a banker. Each other player places a bet against the bank."
       ],
@@ -4999,6 +5334,11 @@
         "Chips or counters"
       ],
       "objective": "As the caster, roll your ‘main’ or ‘chance’ number in the right order to win. This is the old English ancestor of craps.",
+      "quickStart": [
+        "Goal: as caster, roll your ‘main’ straight away, or your ‘chance’ before the main.",
+        "Call a main (5–9) and roll two dice; some totals win or lose instantly.",
+        "Any other total becomes your chance — then roll it again before the main to win."
+      ],
       "setup": [
         "Choose the first caster. The caster bets and other players cover the bet.",
         "The caster calls a ‘main’: any number from 5 to 9."
@@ -5071,6 +5411,11 @@
         "One standard 52-card deck, no jokers"
       ],
       "objective": "Clear all three peaks by playing cards one rank above or below the top waste card.",
+      "quickStart": [
+        "Goal: clear all three peaks.",
+        "Play any uncovered card one rank above or below the top waste card; K and A wrap.",
+        "Chain long runs; turn a stock card when stuck."
+      ],
       "setup": [
         "Deal 28 cards into three overlapping pyramids (‘peaks’) that share a bottom row. From top to bottom the rows have 3, 6, 9 and 10 cards. The bottom row of 10 is face up; all other cards are face down.",
         "The remaining 24 cards form the stock. Turn the top one face up to start the waste pile."
@@ -5143,6 +5488,11 @@
         "Two standard 52-card decks shuffled together (104 cards)"
       ],
       "objective": "Build all eight foundations up in suit from Ace to King.",
+      "quickStart": [
+        "Goal: build all eight foundations (two decks) up in suit.",
+        "Ten columns of four; build down in the same suit, one card at a time.",
+        "Turn the stock one card at a time, with no redeal. Hard to win."
+      ],
       "setup": [
         "Deal ten columns of four cards each, all face up and overlapping.",
         "The remaining 64 cards form the stock."
@@ -5209,6 +5559,11 @@
         "One standard 52-card deck, no jokers"
       ],
       "objective": "Assemble four complete runs from King down to Ace, each in a single suit, within the tableau.",
+      "quickStart": [
+        "Goal: build four King-to-Ace runs in suit in the tableau.",
+        "Move any face-up card along with everything on top of it onto the next-higher card of its suit.",
+        "Only Kings fill empty columns. Deal the three reserve cards when stuck."
+      ],
       "setup": [
         "Deal seven columns of seven cards (49 cards).",
         "In the first four columns, the first three cards are face down and the rest face up. All cards in the last three columns are face up.",
@@ -5277,6 +5632,11 @@
         "One standard 52-card deck, no jokers"
       ],
       "objective": "Build all four suits up from Ace to King on the foundations.",
+      "quickStart": [
+        "Goal: build all four suits from Ace to King.",
+        "Klondike layout with no stock — extra cards are dealt face up onto the piles.",
+        "Move any face-up card with everything on top of it; build down in alternating colours."
+      ],
       "setup": [
         "Deal seven piles as in Klondike: 1 card in the first pile, 2 in the second, up to 7 in the seventh, with only the top card of each face up.",
         "Deal the remaining 24 cards face up, four at a time, onto piles 2 to 7. There is no stock."
@@ -5346,6 +5706,11 @@
         "One standard 52-card deck, no jokers"
       ],
       "objective": "Build all four suits up from Ace to King on the foundations.",
+      "quickStart": [
+        "Goal: build all four suits from Ace to King.",
+        "Deal fans of three; build fans down in suit, one card at a time.",
+        "When stuck, gather, shuffle and redeal the fans — twice."
+      ],
       "setup": [
         "Deal the whole deck face up in 17 fans of three cards, plus one fan of a single card."
       ],
@@ -5413,6 +5778,11 @@
         "One standard 52-card deck, no jokers"
       ],
       "objective": "Build four foundations up to the King by counting in ones, twos, threes and fours. Suits don’t matter.",
+      "quickStart": [
+        "Goal: build four foundations to the King, counting in 1s, 2s, 3s and 4s.",
+        "Suits don’t matter; turn one card at a time and play it to a foundation or one of four waste piles.",
+        "Plan your waste piles well and most deals can be won."
+      ],
       "setup": [
         "Take out any Ace, 2, 3 and 4 and place them in a row. These start the four foundations.",
         "Leave room below them for four waste piles. The rest of the deck is the stock."
@@ -5480,6 +5850,11 @@
         "One standard 52-card deck, no jokers"
       ],
       "objective": "Build all four suits up from Ace to King on the foundations.",
+      "quickStart": [
+        "Goal: build all four suits from Ace to King.",
+        "Thirteen columns of four, with Kings moved to the bottom.",
+        "Build down regardless of suit, one card at a time. Empty columns stay empty."
+      ],
       "setup": [
         "Deal the whole deck face up into 13 columns of four, overlapping.",
         "Move any King in a column to the bottom of that column (the card furthest from you), so Kings never block other cards."
@@ -5548,6 +5923,11 @@
         "One standard 52-card deck, no jokers"
       ],
       "objective": "Remove every card from the table in pairs.",
+      "quickStart": [
+        "Goal: remove every card in pairs.",
+        "Lay out a 5×5 grid; remove neighbouring pairs of the same rank (including diagonals).",
+        "Close the gaps and refill from the stock. Keep going until stuck."
+      ],
       "setup": [
         "Deal 25 cards face up in a grid of five rows of five. The rest form the stock."
       ],
@@ -5617,6 +5997,11 @@
         "One standard 52-card deck, no jokers"
       ],
       "objective": "Arrange the cards into four rows, one per suit, in order from 2 to King.",
+      "quickStart": [
+        "Goal: sort four rows into suits, 2 to King in order.",
+        "Remove the Aces to make gaps; fill a gap with the next card up in suit from the card to its left.",
+        "A 2 fills a gap at the start of a row. Two redeals allowed."
+      ],
       "setup": [
         "Deal the whole deck face up in four rows of 13.",
         "Remove the four Aces, leaving four gaps. The Aces take no further part."
@@ -5684,6 +6069,11 @@
         "One standard 52-card deck, no jokers"
       ],
       "objective": "Move every card into four foundation rows, one per suit.",
+      "quickStart": [
+        "Goal: get every card into four foundation rows, one per suit.",
+        "A card can join its suit’s row only if that rank is already in the row above.",
+        "Play from the four reserve piles and the stock (three at a time)."
+      ],
       "setup": [
         "Deal four reserve piles of four cards in a column on the left, the top card of each face up.",
         "Turn the next card face up to the right of the first reserve pile. It starts the first foundation row, and its rank is the starting rank for the other three suits.",
@@ -5750,6 +6140,11 @@
         "One standard 52-card deck, no jokers"
       ],
       "objective": "Build each suit onto two foundations — up from the Ace and down from the King — until they meet.",
+      "quickStart": [
+        "Goal: build each suit up from its Ace and down from its King until they meet.",
+        "Aces start in the top row; all cards are dealt face up in 13 columns.",
+        "Build columns up or down in the same suit, one card at a time."
+      ],
       "setup": [
         "Take out the four Aces and place them in a row on the left of the top row.",
         "Deal the other 48 cards face up: nine more in the top row (next to the Aces), then three rows of 13 underneath, so there are 13 columns."
@@ -5817,6 +6212,11 @@
         "One standard 52-card deck (two decks mixed for more players or more snaps)"
       ],
       "objective": "Win all the cards by being first to shout ‘Snap!’ when two face-up cards match.",
+      "quickStart": [
+        "Goal: win all the cards.",
+        "Take turns turning cards onto your own face-up pile.",
+        "When two top cards match, shout ‘Snap!’ first to win both piles."
+      ],
       "setup": [
         "Deal out all the cards face down. Each player keeps their cards in a face-down pile without looking."
       ],
@@ -5886,6 +6286,11 @@
         "One standard 52-card deck, no jokers"
       ],
       "objective": "Win all the cards by being first to slap each Jack.",
+      "quickStart": [
+        "Goal: win all the cards.",
+        "Take turns turning cards onto one centre pile.",
+        "When a Jack appears, slap it first to win the pile. Wrong slaps cost a card."
+      ],
       "setup": [
         "Deal out all the cards face down. Players keep them in a pile without looking."
       ],
@@ -5955,6 +6360,11 @@
         "One standard 52-card deck (some add jokers)"
       ],
       "objective": "Win all the cards, by paying out penalty cards and slapping the pile at the right moments.",
+      "quickStart": [
+        "Goal: win all the cards.",
+        "Turn cards onto a centre pile; Aces and court cards force the next player to pay cards.",
+        "Slap doubles and sandwiches first to win the pile. Wrong slaps cost a card."
+      ],
       "setup": [
         "Deal out all the cards face down. Players keep them in a pile without looking."
       ],
@@ -6027,6 +6437,11 @@
         "One standard 52-card deck (or fewer pairs for young children)"
       ],
       "objective": "Remember where cards are and collect the most matching pairs.",
+      "quickStart": [
+        "Goal: collect the most pairs.",
+        "All cards face down in a grid; turn two over.",
+        "A pair: keep them and go again. No pair: turn them back and remember them."
+      ],
       "setup": [
         "Shuffle and lay all the cards face down in a grid (for example, four rows of 13)."
       ],
@@ -6097,6 +6512,11 @@
         "Or an ordinary deck, treating each rank as a family and each suit as a member"
       ],
       "objective": "Collect the most complete families of four.",
+      "quickStart": [
+        "Goal: collect the most complete families of four.",
+        "Ask any player politely for a family member you need.",
+        "If they have it, keep asking. If not, it’s their turn."
+      ],
       "setup": [
         "Deal out all the cards. Some players may have one more than others."
       ],
@@ -6164,6 +6584,11 @@
         "Four cards of one rank for each player (e.g. 5 players use the four Aces, Kings, Queens, Jacks and 10s)"
       ],
       "objective": "Be quick to collect four of a kind — or to notice when someone else has — and avoid spelling D-O-N-K-E-Y.",
+      "quickStart": [
+        "Goal: don’t be last to notice four of a kind.",
+        "Pass one card left at the same time, keeping four.",
+        "Got four of a kind? Hand in the middle. Last hand in gets a letter of D-O-N-K-E-Y."
+      ],
       "setup": [
         "Make a deck with one complete set of four for each player.",
         "Shuffle and deal four cards to each player."
@@ -6235,6 +6660,11 @@
         "Four cards of one rank for each player (e.g. 4 players use Aces, Kings, Queens and Jacks)"
       ],
       "objective": "Collect four of a kind and touch your nose — or spot the player who has, before you become the Pig.",
+      "quickStart": [
+        "Goal: don’t be the Pig.",
+        "Pass one card left at the same time, keeping four.",
+        "Got four of a kind? Touch your nose. Last to copy gets a letter of P-I-G."
+      ],
       "setup": [
         "Make a deck with one complete set of four for each player.",
         "Shuffle and deal four cards to each player."
@@ -6308,6 +6738,11 @@
         "One standard 52-card deck (two decks for 5+ players)"
       ],
       "objective": "Get rid of all your cards — your hand, then your face-up cards, then your face-down cards. The last player left holding cards loses.",
+      "quickStart": [
+        "Goal: don’t be the last player holding cards.",
+        "Play equal or higher cards (2 resets, 10 burns the pile); can’t play? Pick up the pile.",
+        "Then play your face-up cards, and finally your face-down cards blind."
+      ],
       "setup": [
         "Deal each player three cards face down in a row (don’t look at them), then three cards face up on top of those, then three cards to their hand.",
         "Before play, each player may swap cards between their hand and their face-up cards.",
@@ -6382,6 +6817,11 @@
         "One standard 52-card deck, no jokers"
       ],
       "objective": "Use a secret signal to tell your partner when you hold four of a kind, without the other team noticing.",
+      "quickStart": [
+        "Goal: signal your partner when you have four of a kind.",
+        "Everyone swaps cards with the four in the middle at the same time.",
+        "Partner calls ‘Kemps!’ to win the round; opponents call ‘Cut!’ if they spot the signal."
+      ],
       "setup": [
         "Play in teams of two (an even number of players). Partners sit opposite each other.",
         "Before the game, each team goes somewhere private and agrees a secret, subtle signal (e.g. a wink, touching an ear).",
@@ -6455,6 +6895,11 @@
         "One or two standard 52-card decks"
       ],
       "objective": "Get rid of all your cards in a game where the rules are secret, and new players must work them out from the penalties they receive.",
+      "quickStart": [
+        "Goal: get rid of your cards in a game with secret rules.",
+        "Play matching suit or rank, like Crazy Eights.",
+        "Break an unknown rule and you get a penalty card. The winner adds a new secret rule."
+      ],
       "setup": [
         "The dealer, or an experienced player, acts as the rule-keeper. Traditionally the only rule anyone may explain out loud is that you can’t explain the rules.",
         "Deal seven cards to each player. Turn the top card of the stock face up to start the discard pile."
@@ -6529,6 +6974,11 @@
         "A 36-card deck: A, K, Q, J, 10, 9, 8, 7, 6 of each suit"
       ],
       "objective": "Get rid of all your cards. There’s no winner — only a loser: the last player holding cards is the durak (fool).",
+      "quickStart": [
+        "Goal: don’t be the last player holding cards (the durak, or fool).",
+        "Attack the next player with cards; they must beat each with a higher card of the suit or a trump.",
+        "Can’t defend? Pick them all up. Refill to six after each attack."
+      ],
       "setup": [
         "Deal six cards to each player.",
         "Turn the next card face up and place it under the stock, sticking out. Its suit is trumps; it will be the last card drawn.",
@@ -6604,6 +7054,11 @@
         "Pen and paper or the score tracker"
       ],
       "objective": "Score points by melding sets and runs. The first player to 500 points wins.",
+      "quickStart": [
+        "Goal: first to 500 points.",
+        "Draw from the stock, or take any discard plus everything above it (you must use that card).",
+        "Meld sets and runs; score melded cards minus cards left in hand."
+      ],
       "setup": [
         "Deal 13 cards each with 2 players, or 7 cards each with 3 or more.",
         "Turn the next card face up to start the discard pile. Keep the discards spread out so every card is visible."
@@ -6682,6 +7137,11 @@
         "Pen and paper or the score tracker"
       ],
       "objective": "Complete each round’s required melds (the ‘contract’) and go out, keeping your penalty points low over seven rounds.",
+      "quickStart": [
+        "Goal: lowest penalty score after seven rounds.",
+        "Each round has a ‘contract’ (e.g. two sets, then a set and a run) you must complete before laying down.",
+        "Buy discards out of turn with a penalty card. First out ends the round."
+      ],
       "setup": [
         "Deal 10 cards each in rounds 1–3 and 12 cards each in rounds 4–7 (house rules vary).",
         "Jokers (and in many games 2s) are wild."
@@ -6757,6 +7217,11 @@
         "Pen and paper or the score tracker"
       ],
       "objective": "Play through two hands of cards — your ‘hand’ and then your ‘foot’ — building canasta-style piles with your partner.",
+      "quickStart": [
+        "Goal: highest partnership score after four rounds.",
+        "Play through your 11-card ‘hand’, then pick up your ‘foot’. Draw two, discard one.",
+        "Build 7-card books (clean 500, dirty 300). Need required books to go out."
+      ],
       "setup": [
         "Play in partnerships. Each player is dealt two piles of 11 cards: the ‘hand’ and the ‘foot’. Keep the foot face down for later.",
         "Jokers and 2s are wild. Red 3s are bonus or penalty cards; black 3s can only be melded when going out."
@@ -6834,6 +7299,11 @@
         "Pen and paper or the score tracker"
       ],
       "objective": "Have the lowest total over nine ‘holes’ (deals) by swapping your face-down cards for low cards and pairs.",
+      "quickStart": [
+        "Goal: lowest score over nine holes.",
+        "Six cards face down in two rows; swap drawn cards in to lower your total.",
+        "Matching pairs in a column score 0. Kings 0, 2s −2."
+      ],
       "setup": [
         "Deal six cards face down to each player, arranged in two rows of three in front of them.",
         "Each player turns any two of their cards face up.",
@@ -6905,6 +7375,11 @@
         "One standard 52-card deck, no jokers"
       ],
       "objective": "Capture cards from the table by matching or adding up to the cards in your hand. First to 21 points wins.",
+      "quickStart": [
+        "Goal: first to 21 points.",
+        "Play a card to capture matching cards or cards that add up to it, build, or trail.",
+        "Points for most cards, most spades, Big and Little Casino, Aces and sweeps."
+      ],
       "setup": [
         "Deal four cards to each player and four face up to the table (in twos).",
         "Card values for capturing: Ace 1, 2–10 face value. Face cards have no number and can only capture by pairing."
@@ -6978,6 +7453,11 @@
         "Pen and paper or the score tracker"
       ],
       "objective": "Score points by declaring melds and capturing Aces and 10s in tricks.",
+      "quickStart": [
+        "Goal: score points by declaring melds and winning Aces and 10s.",
+        "Win a trick, then declare a meld (e.g. Bezique Q♠+J♦ = 40) and draw.",
+        "Last eight tricks: follow suit and win if you can. Play to 1,000+."
+      ],
       "setup": [
         "Cards rank A (high), 10, K, Q, J, 9, 8, 7. Of two identical cards, the one played first beats the other.",
         "Deal eight cards to each player. Turn the next card face up for trumps; the rest is the stock.",
@@ -7051,6 +7531,11 @@
         "A 24-card deck: A, 10, K, Q, J, 9 of each suit"
       ],
       "objective": "Be first to collect 66 card points in a hand. First to 7 game points wins.",
+      "quickStart": [
+        "Goal: first to 66 card points in a hand; first to 7 game points overall.",
+        "24-card deck; no need to follow suit until the stock is gone or closed.",
+        "Declare King-Queen marriages for 20 (40 in trumps)."
+      ],
       "setup": [
         "Cards rank A (high), 10, K, Q, J, 9. Card points: A 11, 10 10, K 4, Q 3, J 2, 9 0 (120 in total).",
         "Deal six cards each in threes. Turn the next card face up for trumps and place it under the stock."
@@ -7123,6 +7608,11 @@
         "One standard 52-card deck, no jokers"
       ],
       "objective": "Get rid of all your cards over a series of rounds by playing them onto the centre piles as fast as you can.",
+      "quickStart": [
+        "Goal: get rid of all your cards over several rounds.",
+        "Both play at once from five stockpiles onto two centre piles, one rank up or down.",
+        "Clear your stockpiles, then slap the smaller centre pile."
+      ],
       "setup": [
         "Deal each player 26 cards.",
         "Each player lays out five ‘stockpiles’ in a row: of 1, 2, 3, 4 and 5 cards, with only the top card of each face up. The rest of your cards are your spit pile."
@@ -7194,6 +7684,11 @@
         "Pen and paper or the score tracker"
       ],
       "objective": "Partnerships bid, declare melds and win ‘counters’ in tricks. This is the common modern partnership auction game. First team to 1,500 wins.",
+      "quickStart": [
+        "Goal: first partnership to 1,500.",
+        "Bid, name trumps, show melds (runs, marriages, pinochles, arounds) and score them.",
+        "Win Aces, 10s and Kings in tricks. Fail your bid and you lose it."
+      ],
       "setup": [
         "Four players in two partnerships, partners opposite. Deal 12 cards each.",
         "Cards rank A (high), 10, K, Q, J, 9. Of two identical cards, the first played beats the second."
@@ -7269,6 +7764,11 @@
         "Pen and paper or the score tracker"
       ],
       "objective": "Partnerships bid for the right to name trumps and whether high or low cards win, then make their contract. First to 7 points wins.",
+      "quickStart": [
+        "Goal: first partnership to 7 points.",
+        "Bid books over six plus uptown (high wins), downtown (low wins) or no trump.",
+        "Winner takes the kitty and names trumps. Make it to score; fail to lose the bid."
+      ],
       "setup": [
         "Four players in two partnerships, partners opposite.",
         "Deal 12 cards to each player and six face down to the kitty."
@@ -7340,6 +7840,11 @@
         "A 40-card Italian deck, or a standard deck with the 8s, 9s and 10s removed"
       ],
       "objective": "Win more than half the card points (61 of 120) in tricks.",
+      "quickStart": [
+        "Goal: win 61 of the 120 card points.",
+        "Three cards in hand; no need to follow suit. Draw after each trick.",
+        "Aces (11) and 3s (10) are the big prizes; trumps beat everything."
+      ],
       "setup": [
         "Cards rank A (high), 3, K, Q (Horse), J, 7, 6, 5, 4, 2.",
         "Card points: Ace 11, 3 10, King 4, Queen 3, Jack 2; others 0.",
@@ -7407,6 +7912,11 @@
         "A 40-card Italian deck, or a standard deck with the 8s, 9s and 10s removed (suits: coins = diamonds)"
       ],
       "objective": "Capture cards from the table by matching or adding up. First to 11 points wins.",
+      "quickStart": [
+        "Goal: first to 11 points.",
+        "Capture table cards that match or add up to the card you play.",
+        "Clear the table for a scopa. Points for most cards, most coins, the 7 of coins and primiera."
+      ],
       "setup": [
         "Card values: Ace 1, 2–7 face value, Jack (Fante) 8, Queen (Cavallo) 9, King (Re) 10.",
         "Deal three cards to each player and four face up on the table."
@@ -7479,6 +7989,11 @@
         "Pen and paper or the score tracker"
       ],
       "objective": "The team that chooses trumps must take more points than the other team. First to 501 (or 1,000) wins.",
+      "quickStart": [
+        "Goal: first partnership to 501.",
+        "Take the turned card or name trumps; trump Jack and 9 are the top cards.",
+        "The taking team must score more than the defenders, or lose everything."
+      ],
       "setup": [
         "Four players in two partnerships, partners opposite.",
         "Trumps rank J (20 points), 9 (14), A (11), 10 (10), K (4), Q (3), 8, 7. Other suits rank A (11), 10 (10), K (4), Q (3), J (2), 9, 8, 7.",
@@ -7554,6 +8069,11 @@
         "Pen and paper or the score tracker"
       ],
       "objective": "Win the auction and, playing alone against the other two, take at least 61 of the 120 card points.",
+      "quickStart": [
+        "Goal: as declarer, take 61 of 120 card points playing alone.",
+        "Bid by game value; the winner may use the two-card skat and chooses the game.",
+        "Jacks are always the top trumps. Win to score the game value; lose to pay double."
+      ],
       "setup": [
         "Three active players (with four, the dealer sits out each hand). Deal ten cards each and two face down as the ‘skat’.",
         "Card points: A 11, 10 10, K 4, Q 3, J 2; others 0. Total 120."
@@ -7632,6 +8152,11 @@
         "Pen and paper or the score tracker"
       ],
       "objective": "Partnerships bid for the right to choose trumps, then capture counting cards. This is the popular ‘Kentucky Discard’ form. First to 500 wins.",
+      "quickStart": [
+        "Goal: first partnership to 500.",
+        "Bid for the nest and choose trumps; the Rook card is a trump.",
+        "Capture 5s, 10s, 14s and the Rook. Miss your bid and you lose it."
+      ],
       "setup": [
         "Four players in two partnerships, partners opposite. Remove the 1s–4s.",
         "Deal nine cards to each player and five face down to the ‘nest’.",
@@ -7711,6 +8236,11 @@
         "Pen and paper or the score tracker"
       ],
       "objective": "The ‘taker’ plays alone against everyone else and must collect enough card points, depending on how many key cards (‘oudlers’) they capture.",
+      "quickStart": [
+        "Goal: the taker must win enough card points against everyone else.",
+        "21 trumps plus the Excuse; you must trump if you can’t follow suit.",
+        "Points needed depend on how many oudlers (trump 1, trump 21, Excuse) you win."
+      ],
       "setup": [
         "Four players is standard. Deal 18 cards each in threes, setting six cards aside one at a time as the ‘dog’ (chien).",
         "Oudlers: trump 1 (le Petit), trump 21 and the Excuse."
@@ -7794,6 +8324,11 @@
         "A score sheet with the 12 categories for each player"
       ],
       "objective": "Score the most points by filling each of 12 scoring categories once.",
+      "quickStart": [
+        "Goal: highest total after filling all 12 categories.",
+        "Roll five dice up to three times, keeping any between rolls.",
+        "Score each turn in one empty category (sum of a number, full house, straights, Yacht = 50)."
+      ],
       "setup": [
         "Each player gets a score sheet column. Decide the order of play."
       ],
@@ -7869,6 +8404,11 @@
         "A score sheet"
       ],
       "objective": "Score the most points by filling 10 categories — or win instantly with a Generala on your first roll.",
+      "quickStart": [
+        "Goal: highest total after filling all categories.",
+        "Up to three rolls with five dice; score in one empty category each turn.",
+        "Straight 20, full 30, four of a kind 40, Generala 50. Generala on the first roll wins outright."
+      ],
       "setup": [
         "Each player gets a score sheet column. Decide the order of play."
       ],
@@ -7950,6 +8490,11 @@
         "Pen and paper or the score tracker"
       ],
       "objective": "Be the first to 10,000 points by rolling scoring dice and knowing when to stop.",
+      "quickStart": [
+        "Goal: first to 10,000 points.",
+        "Roll six dice, set aside scoring dice (1s, 5s, triples…), then bank or roll the rest.",
+        "Roll no scoring dice and you ‘Farkle’ — losing that turn’s points."
+      ],
       "setup": [
         "Decide the order of play. Agree your scoring table (common values below)."
       ],
@@ -8027,6 +8572,11 @@
         "Pen and paper or the score tracker"
       ],
       "objective": "Be the first to 100 points.",
+      "quickStart": [
+        "Goal: first to 100 points.",
+        "Roll a die as often as you like, adding up your turn total.",
+        "Roll a 1 and you lose the turn total. Hold to bank it."
+      ],
       "setup": [
         "Decide the order of play."
       ],
@@ -8100,6 +8650,11 @@
         "Five six-sided dice and one cup per player"
       ],
       "objective": "Make believable bids about all the hidden dice, call out liars, and be the last player with dice.",
+      "quickStart": [
+        "Goal: be the last player with dice.",
+        "Roll hidden dice, then bid how many of a face are on the whole table — or call ‘Liar!’.",
+        "Wrong call or false bid loses a die."
+      ],
       "setup": [
         "Each player has five dice and a cup. Everyone shakes their dice under their cup and peeks at their own dice only."
       ],
@@ -8172,6 +8727,11 @@
         "Five six-sided dice"
       ],
       "objective": "Roll a 6 (ship), a 5 (captain) and a 4 (crew), in that order, then score as much ‘cargo’ as you can with the other two dice.",
+      "quickStart": [
+        "Goal: roll a 6, 5 and 4 in that order, then score with the other two dice.",
+        "Three rolls with five dice; set aside ship (6), captain (5), crew (4).",
+        "The remaining two dice are your cargo score. Highest cargo wins."
+      ],
       "setup": [
         "Decide the order of play."
       ],
@@ -8240,6 +8800,11 @@
         "Counters or coins for lives (e.g. 6 each)"
       ],
       "objective": "Avoid having the lowest roll each round, and be the last player with lives left.",
+      "quickStart": [
+        "Goal: don’t have the lowest roll.",
+        "Two dice read as a number, higher first (5 and 3 = 53). 21 is Mexico, then doubles.",
+        "Lowest roll each round loses a life. Last with lives wins."
+      ],
       "setup": [
         "Each player starts with the same number of lives (e.g. 6 counters)."
       ],
@@ -8313,6 +8878,11 @@
         "Pen and paper or the score tracker"
       ],
       "objective": "Score the most points over 11 rounds by rolling each round’s target total.",
+      "quickStart": [
+        "Goal: most points over 11 rounds.",
+        "Round targets go from 2 to 12; roll two dice once each round.",
+        "Hit the round’s number to score it."
+      ],
       "setup": [
         "Decide the order of play. There are 11 rounds, with targets 2, 3, 4 … up to 12."
       ],
@@ -8387,6 +8957,11 @@
         "Score sheets and a bell for the head table"
       ],
       "objective": "A social party game: score points with partners by rolling each round’s target number, and win the most rounds (and Buncos).",
+      "quickStart": [
+        "Goal: score points with your partner and win the most rounds.",
+        "Roll three dice; score 1 per die showing the round number, and keep rolling while you score.",
+        "Three of the round number is a Bunco (21). Head table ends the round at 21."
+      ],
       "setup": [
         "Ideally 12 players at three tables of four; partners sit opposite each other. One table is the ‘head table’.",
         "There are six rounds; the target number is the round number (round 1 = 1s, and so on)."
@@ -8465,6 +9040,11 @@
         "Two six-sided dice"
       ],
       "objective": "Close (‘shut’) as many numbered tiles as possible, ideally all of them.",
+      "quickStart": [
+        "Goal: shut as many numbered tiles (1–9) as you can.",
+        "Roll two dice and shut tiles that add up to the total.",
+        "Can’t match the roll? Your score is the tiles left open — lowest wins."
+      ],
       "setup": [
         "Open all the tiles 1–9."
       ],
@@ -8536,6 +9116,11 @@
         "Two standard 52-card decks with different backs, plus four jokers (optional)"
       ],
       "objective": "Be the first to get rid of your pay-off pile by playing its cards onto shared centre stacks built from Ace to Queen.",
+      "quickStart": [
+        "Goal: be first to empty your pay-off pile.",
+        "Build shared centre stacks from Ace to Queen; Kings are wild.",
+        "Play from your hand, pay-off pile and discard piles; end each turn with a discard."
+      ],
       "setup": [
         "Shuffle one deck (no jokers) and deal 20 cards face down to each player as their pay-off pile. Turn each player’s top pay-off card face up. Set the rest of that deck aside.",
         "Shuffle the other deck (with any jokers) together with the leftover cards to form the stock. Deal five cards to each player’s hand.",
@@ -8613,6 +9198,11 @@
         "A score sheet with seven categories, each with four boxes"
       ],
       "objective": "Score the highest total by filling each of seven categories four times — a longer, more tactical cousin of Yacht.",
+      "quickStart": [
+        "Goal: highest total after filling seven categories four times each.",
+        "Up to three rolls with five dice, scoring in one empty box each turn.",
+        "Fours, Fives, Sixes, Straight, Full House, Choice and Balut (five of a kind)."
+      ],
       "setup": [
         "Each player gets a score sheet. There are 28 turns each: seven categories × four boxes."
       ],
@@ -8689,6 +9279,11 @@
         "Three six-sided dice"
       ],
       "objective": "Get the highest three-dice total by keeping your best die after each roll.",
+      "quickStart": [
+        "Goal: highest total of three dice.",
+        "Roll three, keep the highest; roll two, keep the highest; roll the last one.",
+        "Add up the three kept dice. Highest wins the round."
+      ],
       "setup": [
         "Decide the order of play."
       ],

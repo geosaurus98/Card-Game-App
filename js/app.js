@@ -23,6 +23,7 @@ CGR.ui = {
     title.textContent = opts.title || '';
     msg.textContent = opts.message || '';
     msg.hidden = !opts.message;
+    msg.classList.toggle('pre', !!opts.pre);
     field.hidden = !opts.input;
     if (opts.input) {
       label.textContent = opts.input.label || '';
@@ -62,6 +63,22 @@ CGR.ui = {
       ]
     });
     return r.action === 'ok';
+  },
+
+  /* Brief on-screen confirmation, also announced to screen readers. */
+  toast(text) {
+    let el = document.getElementById('toast');
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'toast';
+      el.className = 'toast';
+      el.setAttribute('role', 'status');
+      document.body.appendChild(el);
+    }
+    el.textContent = text;
+    el.classList.add('show');
+    clearTimeout(this._toastTimer);
+    this._toastTimer = setTimeout(() => el.classList.remove('show'), 2500);
   },
 
   announce(text) {
@@ -264,6 +281,10 @@ CGR.views.game = function (id) {
           ${CGR.data.tagsOf(g).length ? `<ul class="tags" aria-label="Tags">${CGR.data.tagsOf(g).map((t) => `<li>${esc(CGR.data.TAG_LABELS[t])}</li>`).join('')}</ul>` : ''}
           ${g.aliases && g.aliases.length ? `<p class="aliases">Also known as: ${esc(g.aliases.join(', '))}</p>` : ''}
         </div>
+
+        ${g.quickStart && g.quickStart.length ? `<section class="quick-start" aria-labelledby="qs-h">
+          <h2 id="qs-h">Quick start</h2>${ul(g.quickStart)}
+        </section>` : ''}
 
         <h2>Equipment</h2>${ul(g.equipment)}
         <h2>Objective</h2><p>${esc(g.objective)}</p>
