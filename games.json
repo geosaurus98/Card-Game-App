@@ -1,0 +1,2075 @@
+{
+  "schemaVersion": 1,
+  "games": [
+    {
+      "id": "klondike",
+      "name": "Klondike Solitaire",
+      "aliases": [
+        "Solitaire",
+        "Patience",
+        "Canfield (US name, incorrectly)"
+      ],
+      "keywords": [
+        "solitaire",
+        "patience",
+        "single player",
+        "foundations",
+        "tableau"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          5,
+          15
+        ],
+        "category": "short"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "One standard 52-card deck, no jokers"
+      ],
+      "objective": "Move all 52 cards onto four foundation piles, one per suit, built up in order from Ace to King.",
+      "setup": [
+        "Shuffle and deal seven tableau piles in a row from left to right. The first pile has 1 card, the second 2, and so on up to 7 cards in the seventh pile (28 cards in total).",
+        "Turn the top card of each pile face up; all others stay face down.",
+        "Place the remaining 24 cards face down as the stock. Leave space above the tableau for four foundation piles and next to the stock for a waste pile."
+      ],
+      "gameplay": [
+        "Any Ace that becomes available goes to its own foundation. Foundations are then built up in suit: A, 2, 3 … K.",
+        "On the tableau, build down in alternating colours (e.g. a red 6 onto a black 7).",
+        "You may move a single face-up card, or a whole run of face-up cards that is correctly sequenced, from one tableau pile to another.",
+        "When a face-down card is uncovered, turn it face up.",
+        "Only a King (or a run headed by a King) may be moved into an empty tableau space.",
+        "When you have no useful moves, turn cards from the stock onto the waste pile. The top waste card is available to play to the tableau or foundations.",
+        "When the stock runs out, turn the waste pile over to form a new stock (subject to any pass limit you are playing with)."
+      ],
+      "scoring": [
+        "You win when all 52 cards are on the foundations. Most people simply count wins.",
+        "Windows-style scoring: +10 for each card moved to a foundation, +5 for each card moved from the waste to the tableau, +5 for turning over a tableau card, −15 for moving a card back from a foundation to the tableau.",
+        "Vegas scoring: you ‘pay’ 52 points to play a deal and earn 5 points for every card that reaches a foundation; usually only one pass through the stock (draw-one) or three passes (draw-three)."
+      ],
+      "variations": [
+        "Draw one vs draw three: turning cards from the stock one at a time is easier; turning three at a time (only the top one playable) is the classic, harder game.",
+        "Number of passes through the stock is often unlimited in casual play; strict versions allow one (draw-one) or three (draw-three).",
+        "Some players allow moving cards back from foundations to the tableau; others forbid it."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          1,
+          5,
+          10,
+          52
+        ],
+        "unit": "points",
+        "hint": "Track wins (+1 per win) or Vegas totals.",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "freecell",
+      "name": "FreeCell",
+      "aliases": [
+        "Free Cell"
+      ],
+      "keywords": [
+        "solitaire",
+        "patience",
+        "single player",
+        "skill",
+        "free cells"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          5,
+          15
+        ],
+        "category": "short"
+      },
+      "difficulty": "medium",
+      "equipment": [
+        "One standard 52-card deck, no jokers"
+      ],
+      "objective": "Move all cards onto four foundations, one per suit, built up from Ace to King.",
+      "setup": [
+        "Deal all 52 cards face up into eight columns: the first four columns get 7 cards each, the last four get 6 cards each.",
+        "Leave room above for four ‘free cells’ (temporary single-card holding spaces) and four foundation piles."
+      ],
+      "gameplay": [
+        "Only the bottom (exposed) card of each column, and any card in a free cell, can be moved.",
+        "Move cards one at a time: onto a foundation (building up in suit from Ace), onto another column (building down in alternating colours), into an empty free cell, or into an empty column.",
+        "Any card may be placed in an empty column — not just Kings.",
+        "Moving a run of several cards is really a shortcut for single moves via free spaces: you can move up to (empty free cells + 1) × 2^(empty columns) cards at once, or half that if the destination is itself an empty column.",
+        "Plan ahead: almost every deal is winnable, so FreeCell is a game of skill rather than luck."
+      ],
+      "scoring": [
+        "No points — you either solve the deal or you don’t. Keep a tally of wins, or of wins vs losses.",
+        "Of the 32,000 numbered deals in the classic Microsoft version, only deal #11982 is known to be unsolvable."
+      ],
+      "variations": [
+        "Fewer free cells (e.g. three, two or one) make the game much harder.",
+        "Baker’s Game: the ancestor of FreeCell, where columns are built down in the same suit instead of alternating colours.",
+        "Eight Off: eight free cells (four start filled), building down in suit."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          1
+        ],
+        "unit": "wins",
+        "hint": "Add 1 for each deal you solve.",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "spider",
+      "name": "Spider Solitaire",
+      "aliases": [
+        "Spider"
+      ],
+      "keywords": [
+        "solitaire",
+        "patience",
+        "single player",
+        "two decks",
+        "suits"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          15,
+          30
+        ],
+        "category": "medium"
+      },
+      "difficulty": "hard",
+      "equipment": [
+        "Two standard 52-card decks shuffled together (104 cards), no jokers"
+      ],
+      "objective": "Assemble eight complete runs from King down to Ace in a single suit. Each completed run is removed from play; clear all eight to win.",
+      "setup": [
+        "Deal 54 cards into ten tableau columns: the first four columns get 6 cards, the other six get 5 cards.",
+        "Turn the top card of each column face up; the rest stay face down.",
+        "The remaining 50 cards form the stock, which will be dealt in five rounds of ten."
+      ],
+      "gameplay": [
+        "Build down on the tableau regardless of suit (e.g. any 8 onto any 9).",
+        "You can move a group of cards together only if it is a run in descending order and all of one suit. Mixed-suit runs must be moved one card at a time.",
+        "When a face-down card is uncovered, turn it over.",
+        "Any card or valid run may go into an empty column.",
+        "When you are stuck, deal ten cards from the stock — one face up onto every column. Standard rules require every column to have at least one card before you deal.",
+        "Whenever a full King-to-Ace run in one suit is built, it is removed from the tableau."
+      ],
+      "scoring": [
+        "Win by removing all eight runs.",
+        "Microsoft-style scoring: start with 500 points, lose 1 point per move, gain 100 points for each completed run."
+      ],
+      "variations": [
+        "One-suit Spider (all spades) is the easiest and very commonly won.",
+        "Two-suit Spider (spades and hearts) is intermediate.",
+        "Four-suit Spider (the normal game described here) is difficult and often not solvable.",
+        "Spiderette: a one-deck version with seven columns dealt like Klondike."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          1,
+          100,
+          500
+        ],
+        "unit": "points",
+        "hint": "Track wins, or the end-of-game Microsoft-style score.",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "pyramid",
+      "name": "Pyramid",
+      "aliases": [
+        "Pyramid Solitaire",
+        "Pyramid Patience"
+      ],
+      "keywords": [
+        "solitaire",
+        "patience",
+        "single player",
+        "thirteen",
+        "pairs"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          5,
+          10
+        ],
+        "category": "short"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "One standard 52-card deck, no jokers"
+      ],
+      "objective": "Clear every card from the pyramid by removing pairs that add up to 13.",
+      "setup": [
+        "Deal 28 cards face up in a pyramid of seven rows: 1 card in the top row, 2 in the next, down to 7 in the bottom row. Each card overlaps the two cards above it.",
+        "The remaining 24 cards form a face-down stock."
+      ],
+      "gameplay": [
+        "Card values: Ace = 1, number cards = face value, Jack = 11, Queen = 12, King = 13.",
+        "A pyramid card is available when no card in the row below covers it. At the start only the bottom row is available.",
+        "Remove any two available cards that total 13 (e.g. 6 + 7, 4 + 9, Ace + Queen, Jack + 2). Kings total 13 by themselves and are removed alone.",
+        "Turn cards from the stock one at a time onto a waste pile. The top waste card and the top of the stock can be paired with an available pyramid card, or with each other.",
+        "The game is won when the pyramid is cleared (some players require the stock and waste to be cleared too)."
+      ],
+      "scoring": [
+        "Win/lose per deal; keep a tally of wins.",
+        "If tracking points, a common method is to count the cards left in the pyramid at the end (lower is better)."
+      ],
+      "variations": [
+        "Number of passes through the stock: strict rules allow a single pass; many versions allow three passes (two redeals).",
+        "Some versions only require clearing the pyramid; others require clearing every card, including the stock and waste."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          1
+        ],
+        "unit": "wins",
+        "hint": "Add 1 for each pyramid you clear.",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "golf-solitaire",
+      "name": "Golf",
+      "aliases": [
+        "Golf Solitaire",
+        "Golf Patience"
+      ],
+      "keywords": [
+        "solitaire",
+        "patience",
+        "single player",
+        "holes",
+        "up or down"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          5,
+          10
+        ],
+        "category": "short"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "One standard 52-card deck, no jokers"
+      ],
+      "objective": "Move as many tableau cards as possible onto a single foundation pile. Like real golf, the lowest score wins.",
+      "setup": [
+        "Deal 35 cards face up into seven columns of five cards, overlapping so all are visible.",
+        "Place the remaining 17 cards face down as the stock.",
+        "Turn the top stock card face up to start the foundation (waste) pile."
+      ],
+      "gameplay": [
+        "Only the bottom (exposed) card of each column is available.",
+        "Move an available card onto the foundation if it is exactly one rank higher or lower than the top foundation card. Suits don’t matter (e.g. on a 7 you can play a 6 or an 8).",
+        "Keep chaining: after a card is played, the next card can go up or down from it.",
+        "Aces are low and Kings are high; there is no wrap-around between King and Ace.",
+        "Under the strict traditional rule nothing may be played on a King; many versions allow a Queen on a King. Agree beforehand.",
+        "When you can’t play, turn the next stock card onto the foundation. The game ends when the stock is exhausted and no more moves are possible, or the tableau is cleared."
+      ],
+      "scoring": [
+        "Your score for a ‘hole’ is the number of cards left in the tableau.",
+        "If you clear the tableau, your score is minus the number of cards still in the stock (e.g. −3).",
+        "A ‘round’ is usually nine holes (nine deals); lowest total wins."
+      ],
+      "variations": [
+        "Allowing King–Ace wrap-around (and Queen on King) makes the game easier.",
+        "Some players allow the bottom cards of columns to be played even if the stock is empty and only one move remains — check your rules."
+      ],
+      "scorekeeper": {
+        "direction": "low",
+        "target": null,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          1,
+          5
+        ],
+        "unit": "strokes",
+        "hint": "Add the cards left after each deal (a hole). Use a negative custom value if you cleared the tableau.",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "gin-rummy",
+      "name": "Gin Rummy",
+      "aliases": [
+        "Gin"
+      ],
+      "keywords": [
+        "rummy",
+        "melds",
+        "knock",
+        "deadwood",
+        "two player"
+      ],
+      "players": {
+        "min": 2,
+        "max": 2
+      },
+      "playerCounts": [
+        "2"
+      ],
+      "playTime": {
+        "minutes": [
+          30,
+          60
+        ],
+        "category": "medium"
+      },
+      "difficulty": "medium",
+      "equipment": [
+        "One standard 52-card deck, no jokers",
+        "Pen and paper or the score tracker"
+      ],
+      "objective": "Form your hand into melds (sets and runs) and reduce your unmatched ‘deadwood’, then knock or go gin to score points. First to 100 points wins.",
+      "setup": [
+        "Deal 10 cards to each player, one at a time.",
+        "Place the next card face up to start the discard pile; the rest of the deck is the stock.",
+        "Card values for deadwood: face cards 10, Aces 1, other cards their pip value."
+      ],
+      "gameplay": [
+        "First turn: the non-dealer may take the face-up card or pass. If they pass, the dealer may take it or pass. If both pass, the non-dealer draws the top card of the stock and play continues normally.",
+        "On each turn: draw one card (top of stock or top of discard pile), then discard one card face up. You may not discard the card you just took from the discard pile.",
+        "Melds are sets (3 or 4 cards of the same rank) or runs (3 or more consecutive cards of the same suit). Ace is low only: A-2-3 is a run, Q-K-A is not.",
+        "Knocking: after drawing, if your deadwood (cards not in melds) totals 10 or less, you may knock. Discard face down, then lay out your melds and deadwood.",
+        "Gin: if all 10 cards (after discarding) are in melds, you ‘go gin’.",
+        "After a knock (but not gin), the opponent lays out their melds and may ‘lay off’ deadwood cards onto the knocker’s melds to reduce their deadwood.",
+        "If the stock is down to two cards and the player who draws the third-last card discards without knocking, the hand is a draw and is redealt."
+      ],
+      "scoring": [
+        "Knock: if the knocker’s deadwood is lower, the knocker scores the difference between the two deadwood totals.",
+        "Undercut: if the opponent’s deadwood is equal to or lower than the knocker’s, the opponent scores the difference plus a 25-point bonus (some play 10 or 20).",
+        "Gin: the player going gin scores the opponent’s deadwood plus a 25-point bonus (some play 20). The opponent cannot lay off against gin.",
+        "Game ends when a player reaches 100 points. Common end-of-game bonuses: 100 points for winning the game, and 25 points (a ‘box’ or ‘line’ bonus) for each hand won. If the loser scored nothing at all, the game bonus is often doubled (a ‘shutout’)."
+      ],
+      "variations": [
+        "Oklahoma Gin: the first upcard’s value sets the maximum deadwood allowed for knocking that hand (an Ace means you must go gin).",
+        "Big Gin: going gin with all 11 cards after drawing, often worth a bigger bonus (31 points).",
+        "Hollywood Gin: three games are scored simultaneously."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": 100,
+        "defaultPlayers": 2,
+        "teams": false,
+        "quickAdd": [
+          1,
+          5,
+          10,
+          25
+        ],
+        "unit": "points",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "cribbage",
+      "name": "Cribbage",
+      "aliases": [
+        "Crib"
+      ],
+      "keywords": [
+        "pegging",
+        "fifteen",
+        "crib board",
+        "121",
+        "two player"
+      ],
+      "players": {
+        "min": 2,
+        "max": 4
+      },
+      "playerCounts": [
+        "2",
+        "3",
+        "4"
+      ],
+      "playTime": {
+        "minutes": [
+          20,
+          45
+        ],
+        "category": "medium"
+      },
+      "difficulty": "hard",
+      "equipment": [
+        "One standard 52-card deck, no jokers",
+        "A cribbage board and pegs (or the score tracker)"
+      ],
+      "objective": "Be the first to score 121 points by pegging during play and by counting combinations in your hand and the crib.",
+      "setup": [
+        "Two-player game: deal 6 cards to each player.",
+        "Each player discards 2 cards face down to form the ‘crib’, which belongs to the dealer and is scored at the end of the hand.",
+        "The non-dealer cuts the deck and the dealer turns up the top card of the lower half as the ‘starter’. If the starter is a Jack, the dealer pegs 2 (‘his heels’).",
+        "Card values for counting: Ace 1, number cards face value, face cards 10."
+      ],
+      "gameplay": [
+        "The play (pegging): starting with the non-dealer, players alternate laying one card face up in front of themselves, announcing the running total of all cards played. The total may not exceed 31.",
+        "Points during play: bringing the total to exactly 15 = 2; exactly 31 = 2; a pair (same rank as the previous card) = 2; three of a kind = 6; four of a kind = 12; a run of 3 or more (in any order among the most recent cards) = 1 per card.",
+        "If you cannot play without exceeding 31, say ‘Go’. The opponent continues playing any cards they can; whoever played the last card scores 1 for the Go (or 2 if they reached exactly 31). The count then restarts at zero.",
+        "When all cards are played, the hands are counted (‘the show’) in order: non-dealer’s hand, dealer’s hand, then the crib. Each uses the starter card as a fifth card.",
+        "Counting the show: each combination totalling 15 = 2; each pair = 2; each run of 3+ = 1 per card; a flush of 4 cards in the hand = 4 (5 if the starter matches too); the Jack of the same suit as the starter (‘his nob’) = 1. A crib flush only counts if all 5 cards (including starter) match = 5.",
+        "The deal alternates. Because the game can end mid-hand, the counting order matters: the first player to reach 121 wins immediately."
+      ],
+      "scoring": [
+        "Game is 121 points (‘twice around’ a standard board). A shorter game of 61 is also common.",
+        "Skunk: if the loser has fewer than 91 points, the winner wins a double game. Under 61 is a double skunk in some circles.",
+        "Maximum possible hand is 29 (three 5s and the Jack of the starter suit, with the fourth 5 as starter)."
+      ],
+      "variations": [
+        "Three players: deal 5 each and 1 card to the crib; each player discards 1 to the crib. Play continues clockwise.",
+        "Four players (partnerships): deal 5 each, each discards 1 to the crib; partners combine scores.",
+        "Muggins: if a player misses points in their count, the opponent may claim them (agree beforehand)."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": 121,
+        "defaultPlayers": 2,
+        "teams": false,
+        "quickAdd": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          8
+        ],
+        "unit": "points",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "speed",
+      "name": "Speed",
+      "aliases": [
+        "Spit (related)",
+        "Slam"
+      ],
+      "keywords": [
+        "fast",
+        "real time",
+        "reflex",
+        "simultaneous",
+        "two player"
+      ],
+      "players": {
+        "min": 2,
+        "max": 2
+      },
+      "playerCounts": [
+        "2"
+      ],
+      "playTime": {
+        "minutes": [
+          2,
+          10
+        ],
+        "category": "short"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "One standard 52-card deck, no jokers"
+      ],
+      "objective": "Be the first player to get rid of all your cards by playing them onto the centre piles as fast as you can.",
+      "setup": [
+        "Each player is dealt 20 cards face down: 5 form their hand and 15 their draw pile.",
+        "Deal two side piles of 5 cards face down in the middle (the ‘replacement’ piles).",
+        "Leave a space between them for two centre piles. The remaining 2 cards start the centre piles, or both players flip a card from the side piles at the same time to start."
+      ],
+      "gameplay": [
+        "Both players play at the same time — there are no turns.",
+        "Play a card from your hand onto either centre pile if it is one rank higher or lower than the top card, regardless of suit. Ace can be high or low, so K-A-2 wraps around.",
+        "You may hold no more than 5 cards in your hand. After playing, draw from your draw pile to get back to 5.",
+        "Play only one card at a time and with one hand.",
+        "When neither player can play, both flip the top card of a side pile onto the centre piles at the same moment, then continue.",
+        "If the side piles run out and both players are stuck, shuffle the centre piles (except the top cards) to make new side piles."
+      ],
+      "scoring": [
+        "The first player to empty both their hand and draw pile wins the round (in many versions they slap a centre pile and shout ‘Speed!’).",
+        "Track wins across several rounds."
+      ],
+      "variations": [
+        "Spit (British): each player lays out a row of five ‘stockpiles’ like a mini solitaire tableau, and the loser of each round must take the larger centre pile, so play continues over many rounds until one player has no cards.",
+        "Some groups play that a card must be same-suit or one rank apart; agree house rules before starting."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 2,
+        "teams": false,
+        "quickAdd": [
+          1
+        ],
+        "unit": "wins",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "war",
+      "name": "War",
+      "aliases": [
+        "Battle",
+        "Beggar-my-Neighbour (different game)"
+      ],
+      "keywords": [
+        "kids",
+        "luck",
+        "simple",
+        "two player",
+        "children"
+      ],
+      "players": {
+        "min": 2,
+        "max": 2
+      },
+      "playerCounts": [
+        "2"
+      ],
+      "playTime": {
+        "minutes": [
+          15,
+          60
+        ],
+        "category": "medium"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "One standard 52-card deck, no jokers"
+      ],
+      "objective": "Win all 52 cards.",
+      "setup": [
+        "Deal the whole deck face down so each player has 26 cards in a pile. Players do not look at their cards."
+      ],
+      "gameplay": [
+        "Both players turn up the top card of their pile at the same time.",
+        "The higher card wins both cards, which go face down at the bottom of the winner’s pile. Ace is high, 2 is low; suits don’t matter.",
+        "If the two cards are equal, it’s ‘war’: each player places one card face down and one card face up. The higher of the new face-up cards wins all cards on the table. If they tie again, repeat the war.",
+        "If a player runs out of cards during a war, they lose (or, in a common house rule, their last card is used as their face-up card)."
+      ],
+      "scoring": [
+        "The player who collects all the cards wins.",
+        "Games can be very long — many people set a time limit and the player with more cards at the end wins."
+      ],
+      "variations": [
+        "Three cards face down during a war instead of one (common in North America).",
+        "Three or more players: everyone flips; highest card wins; ties between top cards go to war.",
+        "Peace: the lowest card wins instead of the highest."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 2,
+        "teams": false,
+        "quickAdd": [
+          1
+        ],
+        "unit": "wins",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "go-fish",
+      "name": "Go Fish",
+      "aliases": [
+        "Fish",
+        "Authors (related)"
+      ],
+      "keywords": [
+        "kids",
+        "children",
+        "books",
+        "ask",
+        "family"
+      ],
+      "players": {
+        "min": 2,
+        "max": 6
+      },
+      "playerCounts": [
+        "2",
+        "3",
+        "4",
+        "5+"
+      ],
+      "playTime": {
+        "minutes": [
+          10,
+          20
+        ],
+        "category": "short"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "One standard 52-card deck, no jokers"
+      ],
+      "objective": "Collect the most ‘books’ — sets of all four cards of the same rank.",
+      "setup": [
+        "With 2 or 3 players deal 7 cards each; with 4 or more players deal 5 cards each.",
+        "Spread the rest face down in a messy pile or stack — the ‘pond’ (or ‘ocean’)."
+      ],
+      "gameplay": [
+        "On your turn, ask a specific player for a rank you already hold at least one of, e.g. ‘Sam, do you have any 9s?’.",
+        "If they have any cards of that rank, they must give you all of them, and you take another turn.",
+        "If they have none, they say ‘Go fish!’ and you draw the top card of the pond. If it is the rank you asked for, show it and take another turn; otherwise your turn ends and play passes left.",
+        "Whenever you hold all four cards of a rank, lay them face up in front of you as a book.",
+        "If you run out of cards, draw a card from the pond on your turn (if it’s empty, you are out of play).",
+        "The game ends when all 13 books have been made."
+      ],
+      "scoring": [
+        "The player with the most books wins."
+      ],
+      "variations": [
+        "Some play that your turn ends after a successful fish even if you drew the requested rank.",
+        "Pairs version (for young children): collect pairs instead of books of four.",
+        "Happy Families uses a special deck of family cards with the same mechanics."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 3,
+        "teams": false,
+        "quickAdd": [
+          1
+        ],
+        "unit": "books",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "piquet",
+      "name": "Piquet",
+      "aliases": [
+        "Rubicon Piquet"
+      ],
+      "keywords": [
+        "classic",
+        "french",
+        "declarations",
+        "tricks",
+        "32-card",
+        "two player"
+      ],
+      "players": {
+        "min": 2,
+        "max": 2
+      },
+      "playerCounts": [
+        "2"
+      ],
+      "playTime": {
+        "minutes": [
+          45,
+          75
+        ],
+        "category": "long"
+      },
+      "difficulty": "hard",
+      "equipment": [
+        "One 32-card piquet deck: A, K, Q, J, 10, 9, 8, 7 of each suit (remove 2–6 from a standard deck)",
+        "Pen and paper or the score tracker"
+      ],
+      "objective": "Score the most points over a ‘partie’ of six deals by declaring card combinations and winning tricks. This describes Rubicon Piquet, the standard modern form.",
+      "setup": [
+        "Cards rank A (high), K, Q, J, 10, 9, 8, 7. Players alternate dealing; the non-dealer is ‘elder’, the dealer ‘younger’.",
+        "Deal 12 cards to each player in packets of two (or three). The remaining 8 cards form the ‘talon’, face down.",
+        "Carte blanche: a player dealt no court cards (K, Q, J) may declare it immediately for 10 points."
+      ],
+      "gameplay": [
+        "Exchange: elder discards 1 to 5 cards and replaces them from the top of the talon (elder must exchange at least one). Younger may then exchange up to the number of cards remaining (usually 3).",
+        "Declarations happen in three categories, compared in order. Elder states their best, younger says ‘good’, ‘not good’ or ‘equal’. Only the player with the best combination in a category scores in it.",
+        "Point: the most cards in one suit — scores 1 per card. Ties are broken by the higher pip total in that suit (A = 11, courts = 10, others face value).",
+        "Sequence: 3 or more consecutive cards in a suit. The longest wins; ties broken by highest card. The winner scores all their sequences: tierce (3) = 3, quart (4) = 4, quint (5) = 15, sixième (6) = 16, septième (7) = 17, huitième (8) = 18.",
+        "Sets: three or four of a kind of rank 10 or higher. Four of a kind (quatorze) = 14; three of a kind (trio) = 3. Any quatorze beats any trio; otherwise higher rank wins. The winner scores all their sets.",
+        "Tricks: elder leads. You must follow suit if able; there are no trumps. The higher card of the suit led wins. Score 1 point for leading a card, 1 point for winning a trick led by the opponent, and 1 extra for winning the last trick.",
+        "After the tricks: winning the majority (7 or more) scores 10 points; winning all 12 tricks (capot) scores 40 instead."
+      ],
+      "scoring": [
+        "Repique: if you score 30 points from carte blanche and declarations alone before your opponent scores anything, add 60 (making 90).",
+        "Pique: if elder reaches 30 points from declarations and play before younger has scored anything in the hand, add 30.",
+        "At the end of six deals, if both players have 100 or more, the winner scores 100 plus the difference between the scores.",
+        "If the loser has fewer than 100 points, they are ‘rubiconed’ and the winner scores 100 plus the sum of both scores."
+      ],
+      "variations": [
+        "Older rules score 1 for leading only with a card of 10 or higher.",
+        "In some modern circles sets are counted from 10 upward (the norm) — older versions included 9s.",
+        "Piquet au cent: play to 100 points rather than six deals."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 2,
+        "teams": false,
+        "quickAdd": [
+          1,
+          3,
+          10,
+          14,
+          30,
+          60
+        ],
+        "unit": "points",
+        "hint": "Play six deals, then apply the Rubicon bonus manually.",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "hearts-3",
+      "name": "Hearts (3-player)",
+      "aliases": [
+        "Three-handed Hearts"
+      ],
+      "keywords": [
+        "hearts",
+        "trick taking",
+        "avoid",
+        "queen of spades",
+        "shoot the moon"
+      ],
+      "players": {
+        "min": 3,
+        "max": 3
+      },
+      "playerCounts": [
+        "3"
+      ],
+      "playTime": {
+        "minutes": [
+          30,
+          45
+        ],
+        "category": "medium"
+      },
+      "difficulty": "medium",
+      "equipment": [
+        "One standard 52-card deck with the 2♦ removed (51 cards)"
+      ],
+      "objective": "Avoid taking hearts and the Queen of Spades in tricks. When someone reaches 100 points, the player with the lowest score wins.",
+      "setup": [
+        "Remove the 2♦ so the deck divides evenly. Deal 17 cards to each player.",
+        "Passing: each player passes 3 cards face down. Rotate the direction each hand: left, right, then no pass, and repeat."
+      ],
+      "gameplay": [
+        "The player holding the 2♣ leads it to the first trick.",
+        "You must follow suit if you can. If you can’t, you may play any card — except that on the first trick you may not play a heart or the Q♠ unless you have no choice.",
+        "The highest card of the suit led wins the trick; there are no trumps. Ace is high.",
+        "Hearts cannot be led until a heart has been played on an earlier trick (‘hearts broken’), unless you hold only hearts.",
+        "The winner of each trick leads to the next."
+      ],
+      "scoring": [
+        "Each heart taken = 1 penalty point. The Q♠ = 13 penalty points. There are 26 points per hand.",
+        "Shooting the moon: if one player takes all 13 hearts and the Q♠, they score 0 and each opponent scores 26 instead.",
+        "The game ends when someone reaches or passes 100 points; the lowest total wins."
+      ],
+      "variations": [
+        "Kitty: instead of removing the 2♦, deal 17 each and place the extra card face down; whoever wins the first trick takes it (along with any points it contains).",
+        "Jack of Diamonds (Omnibus Hearts): taking the J♦ scores −10.",
+        "Some let the moon-shooter choose between scoring −26 themselves or +26 to everyone else."
+      ],
+      "scorekeeper": {
+        "direction": "low",
+        "target": 100,
+        "defaultPlayers": 3,
+        "teams": false,
+        "quickAdd": [
+          1,
+          5,
+          13,
+          26
+        ],
+        "unit": "points",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "sheepshead",
+      "name": "Sheepshead",
+      "aliases": [
+        "Schafkopf (related)",
+        "Sheephead"
+      ],
+      "keywords": [
+        "trick taking",
+        "picker",
+        "blind",
+        "wisconsin",
+        "german",
+        "32-card"
+      ],
+      "players": {
+        "min": 3,
+        "max": 5
+      },
+      "playerCounts": [
+        "3",
+        "4",
+        "5+"
+      ],
+      "playTime": {
+        "minutes": [
+          30,
+          60
+        ],
+        "category": "medium"
+      },
+      "difficulty": "hard",
+      "equipment": [
+        "One 32-card deck: 7, 8, 9, 10, J, Q, K, A of each suit (remove 2–6 from a standard deck)",
+        "Pen and paper or the score tracker"
+      ],
+      "objective": "The ‘picker’ (with a partner in the 5-player game) must take at least 61 of the 120 card points in tricks; everyone else tries to stop them.",
+      "setup": [
+        "Trump suit (14 cards, highest to lowest): Q♣, Q♠, Q♥, Q♦, J♣, J♠, J♥, J♦, A♦, 10♦, K♦, 9♦, 8♦, 7♦.",
+        "Non-trump (‘fail’) suits — clubs, spades and hearts — rank A, 10, K, 9, 8, 7.",
+        "Card points: Ace 11, Ten 10, King 4, Queen 3, Jack 2, others 0. Total 120.",
+        "3 players: deal 10 cards each and 2 face down as the ‘blind’. 5 players: deal 6 cards each and 2 to the blind."
+      ],
+      "gameplay": [
+        "Starting left of the dealer, each player may ‘pick’ (take the blind) or pass. The first to pick becomes the picker; they add the blind to their hand and ‘bury’ 2 cards face down. Buried points count for the picker.",
+        "3 players: the picker plays alone against the other two.",
+        "5 players: the picker ‘calls an ace’ — names a fail suit in which they hold at least one card but not the Ace. The holder of that Ace is the secret partner, revealed when the Ace is played.",
+        "The player left of the dealer leads. You must follow suit if able (trumps count as one suit, including all Queens and Jacks). If you can’t, play any card.",
+        "The highest trump wins, otherwise the highest card of the suit led.",
+        "If everyone passes, a common rule is to play a ‘Leaster’: everyone for themselves, and the player taking the fewest points (but at least one trick) wins."
+      ],
+      "scoring": [
+        "The picker’s side wins with 61 or more points; the opponents win with 60 or more.",
+        "Game points (5 players): if the picker wins, the picker gets +2, the partner +1, and each opponent −1. If the picker loses, those are reversed (picker −2, partner −1, opponents +1 each).",
+        "3 players: the picker wins or loses 1 unit from each opponent (picker ±2, each opponent ∓1).",
+        "Schneider: if the losing side takes 30 or fewer points, payments are doubled. Schwarz: if the losing side takes no tricks, payments are tripled.",
+        "Scores are cumulative and zero-sum; play for an agreed number of hands."
+      ],
+      "variations": [
+        "Many groups make the picker pay double when they lose (‘picker loses double’).",
+        "Jack of Diamonds partner: in 5-handed games the holder of the J♦ is the partner instead of calling an Ace.",
+        "Doublers: if everyone passes, redeal with all payments doubled for the next hand.",
+        "4 players: often played with the 7♣ and 7♠ removed (30 cards, 7 each and 2 in the blind) and partner by called Ace or J♦."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 3,
+        "teams": false,
+        "quickAdd": [
+          1,
+          2,
+          3,
+          4,
+          6
+        ],
+        "unit": "points",
+        "hint": "Scores can go negative — use the − buttons for losers.",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "five-hundred",
+      "name": "500",
+      "aliases": [
+        "Five Hundred"
+      ],
+      "keywords": [
+        "trick taking",
+        "bidding",
+        "joker",
+        "bowers",
+        "australia",
+        "kitty"
+      ],
+      "players": {
+        "min": 3,
+        "max": 4
+      },
+      "playerCounts": [
+        "3",
+        "4"
+      ],
+      "playTime": {
+        "minutes": [
+          45,
+          90
+        ],
+        "category": "long"
+      },
+      "difficulty": "hard",
+      "equipment": [
+        "3 players: 33 cards — A, K, Q, J, 10, 9, 8, 7 of each suit plus one joker",
+        "4 players (partnerships): 43 cards — remove the 2s, 3s and black 4s, add one joker",
+        "Pen and paper or the score tracker"
+      ],
+      "objective": "Be the first to reach 500 points by winning bids and making contracts.",
+      "setup": [
+        "Deal 10 cards to each player and 3 face down as the ‘kitty’.",
+        "Trump order (highest first): Joker, right bower (Jack of trumps), left bower (other Jack of the same colour), then A, K, Q, 10, 9 … of trumps. Non-trump suits rank A, K, Q, (J), 10, 9 …",
+        "In no-trumps the Joker is the only trump; its holder may assign it to any suit not yet played in."
+      ],
+      "gameplay": [
+        "Bidding goes clockwise from the dealer’s left. Each bid is a number of tricks (6 to 10) plus a trump suit or no-trumps, and must be higher than the previous bid. Once you pass you usually cannot re-enter.",
+        "Bid order within a level: spades < clubs < diamonds < hearts < no-trumps.",
+        "Misère (no tricks, playing alone, no trumps) can be bid after someone has bid 7; Open Misère (hand exposed after the first trick) outranks everything up to 10 no-trumps in most rules.",
+        "The highest bidder takes the kitty, discards 3 cards, and leads to the first trick.",
+        "You must follow suit if able (the left bower belongs to the trump suit). The highest trump wins, otherwise the highest card of the suit led.",
+        "In the 3-player game, the two non-bidders play together against the contractor for that hand."
+      ],
+      "scoring": [
+        "Bid values (Avondale schedule): 6♠ 40, 6♣ 60, 6♦ 80, 6♥ 100, 6NT 120. Each extra trick adds 100 (e.g. 7♠ 140, 8♥ 300, 10NT 520). Misère 250, Open Misère 500.",
+        "If the contractor makes their bid they score its value; if they fail, they lose its value.",
+        "Each opponent (or opposing team) scores 10 points per trick they win.",
+        "Slam: taking all 10 tricks on a bid worth less than 250 scores 250 instead.",
+        "Game: the first player/team to reach 500 wins, normally only by making a bid; reaching −500 loses."
+      ],
+      "variations": [
+        "5–6 players: use a 63-card deck (adding 11s, 12s and red 13s) — sold as ‘500 decks’.",
+        "Some rules let players who have passed re-enter the bidding, or allow bidding to continue multiple rounds.",
+        "In the US, opponents may not reach 500 by tricks alone."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": 500,
+        "defaultPlayers": 3,
+        "teams": false,
+        "quickAdd": [
+          10,
+          20,
+          40,
+          60,
+          80,
+          100
+        ],
+        "unit": "points",
+        "hint": "Use custom values for bigger bids (e.g. 140, 520) and the − button for failed contracts.",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "oh-hell",
+      "name": "Oh Hell",
+      "aliases": [
+        "Oh Heck",
+        "Up and Down the River",
+        "Contract Whist",
+        "Blackout",
+        "Nomination Whist"
+      ],
+      "keywords": [
+        "trick taking",
+        "bidding",
+        "exact",
+        "party",
+        "family"
+      ],
+      "players": {
+        "min": 3,
+        "max": 7
+      },
+      "playerCounts": [
+        "3",
+        "4",
+        "5+"
+      ],
+      "playTime": {
+        "minutes": [
+          45,
+          60
+        ],
+        "category": "long"
+      },
+      "difficulty": "medium",
+      "equipment": [
+        "One standard 52-card deck, no jokers",
+        "Pen and paper or the score tracker"
+      ],
+      "objective": "Bid exactly the number of tricks you will take — no more, no fewer — and score the most over a series of hands.",
+      "setup": [
+        "Hand size changes each deal. A common pattern: start with 1 card each, increase by one each hand up to the maximum (51 ÷ players, rounded down, or a chosen cap such as 10), then come back down to 1.",
+        "After dealing, turn the next card of the stock face up: its suit is trumps for the hand. If no cards are left, the hand is played with no trumps."
+      ],
+      "gameplay": [
+        "Bidding: starting left of the dealer, each player bids how many tricks they expect to take (zero is allowed).",
+        "The ‘hook’ rule: the dealer bids last and may not make a bid that makes the total of all bids equal the number of tricks available — so at least one player must fail.",
+        "Play: the player left of the dealer leads. Follow suit if able; otherwise play any card, including trumps.",
+        "The highest trump wins, otherwise the highest card of the suit led. Ace is high. The winner leads next."
+      ],
+      "scoring": [
+        "Most common: making your bid exactly scores 10 points plus 1 per trick bid (e.g. bid 3, take 3 = 13). Missing your bid scores 0.",
+        "Alternative: 1 point per trick taken, plus a 10-point bonus for making your bid exactly.",
+        "The highest total after the final hand wins."
+      ],
+      "variations": [
+        "Some groups play without the hook rule (‘screw the dealer’ rule removed).",
+        "Missing your bid may cost 1 point per trick over or under instead of scoring 0.",
+        "In the one-card hands, ‘Indian’ or ‘blind’ style: hold your single card to your forehead so everyone but you can see it."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 4,
+        "teams": false,
+        "quickAdd": [
+          1,
+          10,
+          11,
+          12,
+          13
+        ],
+        "unit": "points",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "euchre-3",
+      "name": "Three-Handed Euchre",
+      "aliases": [
+        "Cutthroat Euchre",
+        "Euchre (3-player)"
+      ],
+      "keywords": [
+        "euchre",
+        "trick taking",
+        "bowers",
+        "24-card",
+        "cutthroat"
+      ],
+      "players": {
+        "min": 3,
+        "max": 3
+      },
+      "playerCounts": [
+        "3"
+      ],
+      "playTime": {
+        "minutes": [
+          15,
+          30
+        ],
+        "category": "medium"
+      },
+      "difficulty": "medium",
+      "equipment": [
+        "One 24-card Euchre deck: 9, 10, J, Q, K, A of each suit"
+      ],
+      "objective": "Be the first to 10 points. Each hand, the ‘maker’ plays alone against the other two and needs at least 3 of the 5 tricks.",
+      "setup": [
+        "Deal 5 cards to each player (in packets of 3 then 2, or 2 then 3). Turn the next card face up; the remaining cards are not used.",
+        "Trump ranking (highest first): right bower (Jack of trumps), left bower (other Jack of the same colour, which counts as a trump), then A, K, Q, 10, 9 of trumps. Other suits rank A, K, Q, J, 10, 9."
+      ],
+      "gameplay": [
+        "Bidding round 1: starting left of the dealer, each player may pass or ‘order up’ the turned card as trumps. If ordered, the dealer adds that card to their hand and discards one.",
+        "Bidding round 2: if all passed, the card is turned down and each player in turn may name a different suit as trumps or pass. If everyone passes again, throw in and redeal.",
+        "The player who chose trumps (the maker) plays alone; the other two players play together against them.",
+        "The player left of the dealer leads. Follow suit if able (remember the left bower is a trump). Highest trump wins, otherwise highest of the suit led."
+      ],
+      "scoring": [
+        "Maker takes 3 or 4 tricks: 1 point.",
+        "Maker takes all 5 tricks (a ‘march’): 3 points.",
+        "Maker is ‘euchred’ (takes 2 or fewer): each opponent scores 2 points.",
+        "First player to 10 points wins."
+      ],
+      "variations": [
+        "Some play to 15 points.",
+        "Stick the dealer: if everyone passes twice, the dealer must name trumps.",
+        "Two-handed Euchre: deal 5 each; the remaining stock is unused, scoring as normal 2-team Euchre."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": 10,
+        "defaultPlayers": 3,
+        "teams": false,
+        "quickAdd": [
+          1,
+          2,
+          3
+        ],
+        "unit": "points",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "bridge",
+      "name": "Contract Bridge",
+      "aliases": [
+        "Bridge",
+        "Rubber Bridge"
+      ],
+      "keywords": [
+        "trick taking",
+        "bidding",
+        "auction",
+        "partnership",
+        "dummy",
+        "rubber"
+      ],
+      "players": {
+        "min": 4,
+        "max": 4
+      },
+      "playerCounts": [
+        "4"
+      ],
+      "playTime": {
+        "minutes": [
+          60,
+          120
+        ],
+        "category": "long"
+      },
+      "difficulty": "hard",
+      "equipment": [
+        "One standard 52-card deck, no jokers",
+        "Score pad (or the score tracker set up for two teams)"
+      ],
+      "objective": "Partnerships bid to set a contract, then try to make it (declarers) or defeat it (defenders). Win the rubber — the best of three games.",
+      "setup": [
+        "Four players in two partnerships, partners sitting opposite (North–South vs East–West).",
+        "Deal all 52 cards, 13 to each player.",
+        "Cards rank A (high) down to 2. Suits rank for bidding: clubs ♣ (lowest), diamonds ♦, hearts ♥, spades ♠, then no-trumps (NT) highest."
+      ],
+      "gameplay": [
+        "The auction: starting with the dealer and going clockwise, each player may bid, pass, double an opponent’s bid, or redouble a double.",
+        "A bid names a level (1–7) and a denomination. The level is tricks above six (‘book’), so ‘4♠’ promises 10 tricks with spades as trumps. Each bid must be higher than the last: a higher level, or the same level in a higher denomination.",
+        "The auction ends when a bid, double or redouble is followed by three passes. If all four players pass at the start, the hand is thrown in.",
+        "Declarer is the player on the winning side who first named the final denomination. The player to declarer’s left makes the opening lead.",
+        "After the opening lead, declarer’s partner (‘dummy’) lays their hand face up; declarer plays both hands.",
+        "Follow suit if able; otherwise play any card. Highest trump wins, otherwise highest card of the suit led. The winner leads next."
+      ],
+      "scoring": [
+        "Trick score (below the line), per trick over six bid and made: ♣/♦ 20, ♥/♠ 30, NT 40 for the first and 30 thereafter. Doubled ×2, redoubled ×4.",
+        "Game: 100 or more trick points below the line (may be over several hands). A side that has won a game is ‘vulnerable’. Win two games to win the rubber.",
+        "Rubber bonus: 700 if won 2–0, 500 if won 2–1.",
+        "Slams: small slam (12 tricks) 500 not vulnerable / 750 vulnerable; grand slam (13 tricks) 1000 / 1500.",
+        "Overtricks: trick value if undoubled; doubled 100 (not vul) / 200 (vul); redoubled 200 / 400. Making a doubled contract adds 50 (‘insult’), redoubled 100.",
+        "Undertricks (to the defenders): undoubled 50 per trick not vul, 100 vul. Doubled not vulnerable: 100, 300, 500, then 300 more per trick. Doubled vulnerable: 200 for the first, 300 each after. Redoubled is twice doubled.",
+        "Honours (any player): four of the top five trumps in one hand 100; all five 150; all four Aces in a NT contract 150."
+      ],
+      "variations": [
+        "Chicago (four-deal) bridge: exactly four hands with set vulnerability, 300/500 game bonuses — popular for social play.",
+        "Duplicate bridge: the same deals are played at several tables and compared; no rubbers or honours.",
+        "Bidding systems (e.g. Standard American, Acol) are conventions for what bids mean — not rules of the game."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 2,
+        "teams": true,
+        "quickAdd": [
+          20,
+          30,
+          40,
+          50,
+          100,
+          500
+        ],
+        "unit": "points",
+        "hint": "Enter totals (above + below the line) for each team.",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "spades",
+      "name": "Spades",
+      "aliases": [],
+      "keywords": [
+        "trick taking",
+        "bidding",
+        "partnership",
+        "nil",
+        "bags"
+      ],
+      "players": {
+        "min": 4,
+        "max": 4
+      },
+      "playerCounts": [
+        "4"
+      ],
+      "playTime": {
+        "minutes": [
+          45,
+          90
+        ],
+        "category": "long"
+      },
+      "difficulty": "medium",
+      "equipment": [
+        "One standard 52-card deck, no jokers",
+        "Pen and paper or the score tracker"
+      ],
+      "objective": "Partnerships bid how many tricks they’ll take, with spades always trumps. First team to 500 points wins.",
+      "setup": [
+        "Four players in two partnerships, partners sitting opposite.",
+        "Deal all 52 cards, 13 to each player. Cards rank A (high) down to 2; spades are always trumps."
+      ],
+      "gameplay": [
+        "Bidding: starting left of the dealer, each player bids the number of tricks they expect to win (0–13). Partners’ bids are added together to form the team’s contract.",
+        "A bid of ‘nil’ (zero) is a special promise to win no tricks at all; the partner’s bid stands on its own.",
+        "The player left of the dealer leads first (some rules: the holder of the 2♣ leads it).",
+        "Follow suit if able; otherwise play any card, including a spade. The highest spade wins, otherwise the highest card of the suit led.",
+        "Spades cannot be led until a spade has been played on an earlier trick (‘spades broken’), unless the leader holds only spades."
+      ],
+      "scoring": [
+        "Making the contract: 10 points per trick bid, plus 1 point for each extra trick (‘bag’ or ‘sandbag’).",
+        "Failing the contract: lose 10 points per trick bid.",
+        "Bag penalty: when a team accumulates 10 bags, it loses 100 points and the bag count resets.",
+        "Nil: +100 if the nil bidder takes no tricks, −100 if they take any. Tricks taken by a failed nil bidder do not count towards the partner’s bid.",
+        "First team to reach 500 wins; a team falling to −200 typically loses."
+      ],
+      "variations": [
+        "Blind nil: bid nil before looking at your cards, worth ±200 (often only allowed when behind by 100+).",
+        "Jokers: some games add two jokers (and remove the 2♣ and 2♦) as the highest trumps.",
+        "Cutthroat Spades for 3 players (17 cards each, one card removed), or 2-player Spades with a draw phase."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": 500,
+        "defaultPlayers": 2,
+        "teams": true,
+        "quickAdd": [
+          1,
+          10,
+          50,
+          100
+        ],
+        "unit": "points",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "hearts",
+      "name": "Hearts",
+      "aliases": [
+        "Black Lady",
+        "Black Maria (related)"
+      ],
+      "keywords": [
+        "trick taking",
+        "avoid",
+        "queen of spades",
+        "shoot the moon",
+        "passing"
+      ],
+      "players": {
+        "min": 3,
+        "max": 6
+      },
+      "playerCounts": [
+        "4",
+        "5+"
+      ],
+      "playTime": {
+        "minutes": [
+          30,
+          60
+        ],
+        "category": "medium"
+      },
+      "difficulty": "medium",
+      "equipment": [
+        "One standard 52-card deck, no jokers"
+      ],
+      "objective": "Avoid taking hearts and the Queen of Spades in tricks. When someone reaches 100 points, the lowest score wins.",
+      "setup": [
+        "Four players, each playing for themselves. Deal all 52 cards, 13 each.",
+        "Passing: before each hand, each player passes 3 cards face down. The direction rotates: left, right, across, then no pass (‘hold’), and repeat."
+      ],
+      "gameplay": [
+        "The player holding the 2♣ leads it to the first trick.",
+        "Follow suit if able; if not, play any card — except that on the first trick you may not play a heart or the Q♠ unless you have no alternative.",
+        "The highest card of the suit led wins the trick; there are no trumps. Ace is high.",
+        "Hearts may not be led until a heart (or, in many rules, the Q♠) has been played on a previous trick — ‘hearts are broken’ — unless the leader holds only hearts.",
+        "The winner of each trick leads to the next."
+      ],
+      "scoring": [
+        "Each heart taken = 1 penalty point; the Q♠ = 13. There are 26 points per hand.",
+        "Shooting the moon: take every heart and the Q♠ and you score 0 while each opponent scores 26.",
+        "When a player reaches or passes 100 points the game ends, and the player with the lowest score wins."
+      ],
+      "variations": [
+        "5 players: remove the 2♣ and 2♦ and deal 10 each; the 3♣ leads. 6 players: remove four low cards (2♣, 2♦, 3♦, 2♠ is common) and deal 8 each; lowest club leads.",
+        "Omnibus Hearts: the J♦ is worth −10 to whoever takes it.",
+        "Some let the moon-shooter subtract 26 from their own score instead of adding 26 to everyone else.",
+        "Spot Hearts: hearts score their face value (Ace 14) instead of 1 each."
+      ],
+      "scorekeeper": {
+        "direction": "low",
+        "target": 100,
+        "defaultPlayers": 4,
+        "teams": false,
+        "quickAdd": [
+          1,
+          5,
+          13,
+          26
+        ],
+        "unit": "points",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "euchre",
+      "name": "Euchre",
+      "aliases": [
+        "Eucre",
+        "Juker"
+      ],
+      "keywords": [
+        "trick taking",
+        "bowers",
+        "partnership",
+        "24-card",
+        "going alone",
+        "midwest"
+      ],
+      "players": {
+        "min": 4,
+        "max": 4
+      },
+      "playerCounts": [
+        "4"
+      ],
+      "playTime": {
+        "minutes": [
+          20,
+          45
+        ],
+        "category": "medium"
+      },
+      "difficulty": "medium",
+      "equipment": [
+        "One 24-card Euchre deck: 9, 10, J, Q, K, A of each suit"
+      ],
+      "objective": "Partnerships compete to win at least 3 of 5 tricks in each hand. First team to 10 points wins.",
+      "setup": [
+        "Four players in two partnerships, partners sitting opposite.",
+        "Deal 5 cards to each player in packets of 2 and 3. Place the remaining 4 cards (the ‘kitty’) face down and turn the top one face up.",
+        "Trump ranking (highest first): right bower (Jack of trumps), left bower (the other Jack of the same colour — it counts as a trump), then A, K, Q, 10, 9. Other suits rank A, K, Q, J, 10, 9."
+      ],
+      "gameplay": [
+        "Round 1: starting left of the dealer, each player may pass or ‘order up’ the turned card (making its suit trumps). The dealer may ‘pick it up’. If trumps are set, the dealer takes the card into their hand and discards one face down.",
+        "Round 2: if all four pass, the card is turned down. Each player may name any other suit as trumps or pass. If all pass again, the deal passes on (or ‘stick the dealer’: the dealer must choose).",
+        "The team that chose trumps is the ‘makers’. The player who chose may announce ‘going alone’; their partner then sits out the hand.",
+        "The player left of the dealer leads (or left of a lone player). Follow suit if able; the left bower counts as a trump, not its printed suit. Highest trump wins, otherwise highest card of the suit led."
+      ],
+      "scoring": [
+        "Makers take 3 or 4 tricks: 1 point.",
+        "Makers take all 5 (a ‘march’): 2 points.",
+        "Lone hand takes all 5: 4 points; lone hand takes 3 or 4: 1 point.",
+        "Makers are ‘euchred’ (take 2 or fewer): the defenders score 2 points.",
+        "The first team to 10 points wins."
+      ],
+      "variations": [
+        "Stick the dealer: the dealer is forced to name trumps if everyone passes twice.",
+        "Defending alone: a defender may go alone against a lone maker, scoring 4 for a euchre.",
+        "Some games play to 11 or 15 points, or use the 7s and 8s (32-card deck)."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": 10,
+        "defaultPlayers": 2,
+        "teams": true,
+        "quickAdd": [
+          1,
+          2,
+          4
+        ],
+        "unit": "points",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "whist",
+      "name": "Whist",
+      "aliases": [
+        "Short Whist",
+        "English Whist"
+      ],
+      "keywords": [
+        "trick taking",
+        "partnership",
+        "classic",
+        "trumps",
+        "rubber"
+      ],
+      "players": {
+        "min": 4,
+        "max": 4
+      },
+      "playerCounts": [
+        "4"
+      ],
+      "playTime": {
+        "minutes": [
+          30,
+          60
+        ],
+        "category": "medium"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "One standard 52-card deck, no jokers"
+      ],
+      "objective": "Partnerships try to win the most tricks. The first team to 5 points wins a game; two games win the rubber.",
+      "setup": [
+        "Four players in two partnerships, partners sitting opposite.",
+        "Deal all 52 cards one at a time, 13 each. The dealer’s last card is turned face up: its suit is trumps. The dealer takes it into their hand when it’s their turn to play to the first trick."
+      ],
+      "gameplay": [
+        "The player left of the dealer leads.",
+        "Follow suit if able; otherwise play any card, including a trump.",
+        "The highest trump wins, otherwise the highest card of the suit led. Ace is high. The winner of each trick leads to the next.",
+        "Play all 13 tricks."
+      ],
+      "scoring": [
+        "Tricks: the team with more than 6 tricks scores 1 point for each trick over six (the ‘book’).",
+        "Honours (Ace, King, Queen and Jack of trumps): if one team was dealt all four, it scores 4 points; if it held three of the four, 2 points. Honours are scored after tricks and cannot be used to win a game from 4 points.",
+        "Game is 5 points. A rubber is the best of three games."
+      ],
+      "variations": [
+        "American Whist: game is 7 points and honours are not counted.",
+        "Long Whist: game is 10 points.",
+        "Solo Whist and Contract (Knock-Out) Whist are distinct games built on the same trick-taking rules."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": 5,
+        "defaultPlayers": 2,
+        "teams": true,
+        "quickAdd": [
+          1,
+          2,
+          4
+        ],
+        "unit": "points",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "canasta",
+      "name": "Canasta (partnership)",
+      "aliases": [
+        "Canasta"
+      ],
+      "keywords": [
+        "rummy",
+        "melds",
+        "partnership",
+        "wild cards",
+        "red threes",
+        "two decks"
+      ],
+      "players": {
+        "min": 4,
+        "max": 4
+      },
+      "playerCounts": [
+        "4"
+      ],
+      "playTime": {
+        "minutes": [
+          60,
+          120
+        ],
+        "category": "long"
+      },
+      "difficulty": "hard",
+      "equipment": [
+        "Two standard 52-card decks plus four jokers (108 cards)",
+        "Pen and paper or the score tracker"
+      ],
+      "objective": "Partnerships meld cards of the same rank, especially seven-card ‘canastas’. The first team to 5,000 points wins.",
+      "setup": [
+        "Four players in two partnerships, partners opposite.",
+        "Deal 11 cards to each player. Place the rest face down as the stock and turn the top card face up to start the discard pile (if it is a wild card or red 3, turn another on top — the pile is frozen).",
+        "Wild cards: jokers and 2s. Red 3s are bonus cards. Black 3s are ‘stop’ cards.",
+        "Card values: joker 50; Ace and 2 20; K, Q, J, 10, 9, 8 10; 7, 6, 5, 4 and black 3 5."
+      ],
+      "gameplay": [
+        "Red 3s: immediately place any red 3 face up in front of your team and draw a replacement.",
+        "On your turn: draw the top card of the stock, or take the whole discard pile (see below); then optionally meld; then discard one card.",
+        "Melds are 3 or more cards of the same rank. A meld must contain at least two natural cards and no more than three wild cards. Teams share melds; you may add to your partner’s melds.",
+        "Initial meld minimum: the first meld your team makes in a hand must total at least 50 points (team score 0–1,495), 90 (1,500–2,995), 120 (3,000+), or 15 if the team score is negative.",
+        "Taking the discard pile: you must use the top card immediately in a meld — with two natural cards of the same rank from your hand, or (if the pile is not frozen) by adding it to your team’s existing meld or with one natural card plus a wild card.",
+        "The pile is ‘frozen’ (requiring two natural matching cards) if it contains a wild card or red 3, or if your team has not yet melded. A black 3 on top blocks the pile for the next player only.",
+        "A canasta is a meld of 7 or more cards. Going out (melding or discarding your last card) requires your team to have at least one canasta. You may ask your partner ‘May I go out?’ and must abide by the answer."
+      ],
+      "scoring": [
+        "Natural (‘red’) canasta: 500. Mixed (‘black’) canasta with wild cards: 300.",
+        "Going out: 100 (200 if ‘concealed’ — melding your whole hand in one turn without having melded before).",
+        "Red 3s: 100 each, 800 for all four. They count against a team that has not melded by the end of the hand.",
+        "Add the value of all melded cards; subtract the value of cards left in both partners’ hands.",
+        "The first team to reach 5,000 wins."
+      ],
+      "variations": [
+        "Draw two: many modern rules draw 2 cards from the stock instead of 1.",
+        "Two players: deal 15 each and draw 2 per turn; two canastas needed to go out.",
+        "Three players: deal 13 each, everyone for themselves. Six players: two teams of three, 11 cards each.",
+        "Hand and Foot, Samba and Bolivia are popular variants using more decks."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": 5000,
+        "defaultPlayers": 2,
+        "teams": true,
+        "quickAdd": [
+          50,
+          100,
+          300,
+          500
+        ],
+        "unit": "points",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "president",
+      "name": "President",
+      "aliases": [
+        "Scum",
+        "Arsehole",
+        "Kings and Peasants",
+        "Daifugō (related)"
+      ],
+      "keywords": [
+        "shedding",
+        "climbing",
+        "party",
+        "ranks",
+        "drinking game"
+      ],
+      "players": {
+        "min": 3,
+        "max": 8
+      },
+      "playerCounts": [
+        "3",
+        "4",
+        "5+"
+      ],
+      "playTime": {
+        "minutes": [
+          15,
+          30
+        ],
+        "category": "medium"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "One standard 52-card deck (two decks for 8+ players)"
+      ],
+      "objective": "Be the first to get rid of all your cards and become President; avoid finishing last (the Scum).",
+      "setup": [
+        "Deal all the cards as evenly as possible (some players may have one more).",
+        "Card ranking (common rule): 2 is highest, then A, K, Q, J, 10 … down to 3, the lowest. Suits don’t matter."
+      ],
+      "gameplay": [
+        "In the first hand the player with the 3♣ leads (or the player left of the dealer). They play a single card, a pair, three of a kind or four of a kind face up.",
+        "Going round, each player must either play the same number of cards of a higher rank, or pass.",
+        "When everyone passes in turn, the pile is cleared and the last player who played leads anything they like.",
+        "In many groups a player who has passed may still play when their turn comes round again; in others, passing takes you out until the pile is cleared.",
+        "Players drop out as they run out of cards. The first out is President, second Vice-President, … the last remaining is the Scum (second-last is Vice-Scum)."
+      ],
+      "scoring": [
+        "Card exchange for the next hand: after dealing, the Scum gives their two best cards to the President, who gives back any two cards. The Vice-Scum and Vice-President swap one card the same way.",
+        "In the next hand, the Scum leads first.",
+        "Optional points: e.g. President 2, Vice-President 1, Vice-Scum −1, Scum −2 (or simply the number of players beaten). Highest total after an agreed number of hands wins."
+      ],
+      "variations": [
+        "Playing an equal card skips the next player.",
+        "A 2 (or four of a kind — a ‘revolution’) clears the pile immediately.",
+        "Jokers as the highest cards; or ‘bombs’ that beat anything."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 5,
+        "teams": false,
+        "quickAdd": [
+          1,
+          2
+        ],
+        "unit": "points",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "rummy",
+      "name": "Rummy",
+      "aliases": [
+        "Rum",
+        "Basic Rummy",
+        "Straight Rummy"
+      ],
+      "keywords": [
+        "melds",
+        "sets",
+        "runs",
+        "lay off",
+        "family",
+        "draw and discard"
+      ],
+      "players": {
+        "min": 2,
+        "max": 6
+      },
+      "playerCounts": [
+        "2",
+        "3",
+        "4",
+        "5+"
+      ],
+      "playTime": {
+        "minutes": [
+          20,
+          45
+        ],
+        "category": "medium"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "One standard 52-card deck, no jokers (two decks for 6+ players)",
+        "Pen and paper or the score tracker"
+      ],
+      "objective": "Be the first to get rid of all your cards by forming them into melds.",
+      "setup": [
+        "Deal cards one at a time: 10 each for 2 players, 7 each for 3–4 players, 6 each for 5–6 players.",
+        "Place the rest face down as the stock and turn the top card face up to start the discard pile."
+      ],
+      "gameplay": [
+        "On your turn: draw one card (top of the stock or top of the discard pile).",
+        "Then you may meld: lay down a set (3 or 4 cards of the same rank) or a run (3 or more consecutive cards of the same suit). Ace is usually low (A-2-3, not Q-K-A).",
+        "You may also ‘lay off’ — add cards to any meld already on the table, whoever made it.",
+        "End your turn by discarding one card face up.",
+        "You go out when you have no cards left — either by melding/laying off everything, or with a final discard.",
+        "If the stock runs out, turn the discard pile over (without shuffling) to make a new stock."
+      ],
+      "scoring": [
+        "Card values: face cards 10, Aces 1, others pip value.",
+        "Penalty method (used by this tracker): when someone goes out, every other player adds the value of the cards left in their hand to their score. When a player reaches 100, the game ends and the lowest total wins.",
+        "Alternative method: the player who goes out scores the total value of everyone else’s hands; first to an agreed target (e.g. 100) wins.",
+        "Going out in one turn without having melded before (‘going rummy’) often doubles the score."
+      ],
+      "variations": [
+        "Ace high and low: Q-K-A allowed, sometimes K-A-2 (‘round the corner’).",
+        "Rummy! call: if a player discards a card that could have been laid off, the first to shout ‘Rummy!’ can claim it.",
+        "Rummy 500, Gin Rummy, Kalooki and Contract Rummy are popular relatives."
+      ],
+      "scorekeeper": {
+        "direction": "low",
+        "target": 100,
+        "defaultPlayers": 4,
+        "teams": false,
+        "quickAdd": [
+          1,
+          5,
+          10
+        ],
+        "unit": "points",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "cheat",
+      "name": "Cheat",
+      "aliases": [
+        "BS",
+        "I Doubt It",
+        "Bullshit"
+      ],
+      "keywords": [
+        "bluffing",
+        "party",
+        "shedding",
+        "lying",
+        "challenge"
+      ],
+      "players": {
+        "min": 3,
+        "max": 10
+      },
+      "playerCounts": [
+        "3",
+        "4",
+        "5+"
+      ],
+      "playTime": {
+        "minutes": [
+          10,
+          20
+        ],
+        "category": "short"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "One standard 52-card deck (shuffle two together for 7+ players)"
+      ],
+      "objective": "Be the first to get rid of all your cards — by bluffing when you need to and catching others who lie.",
+      "setup": [
+        "Deal out the whole deck. It doesn’t matter if some players have one more card than others."
+      ],
+      "gameplay": [
+        "The first player places one or more cards face down in the centre and announces them as Aces (e.g. ‘two Aces’).",
+        "The next player must play cards claimed to be 2s, the next 3s, and so on up to Kings, then back to Aces.",
+        "You must play at least one card on your turn and must claim the required rank — but the cards you actually play can be anything. That’s the cheating.",
+        "After any play, any player may call ‘Cheat!’. The cards just played are turned over.",
+        "If they were all truly the claimed rank, the challenger picks up the whole centre pile. If any card was not, the player who lied picks up the whole pile.",
+        "Play continues with the next player in turn and the next rank in sequence."
+      ],
+      "scoring": [
+        "The first player to get rid of all their cards wins — but their last play can still be challenged. If it was a lie, they pick up the pile and play on.",
+        "Track wins over several games."
+      ],
+      "variations": [
+        "Players may choose to play the rank one above, the same rank, or one below the previous claim.",
+        "Some groups allow passing, or require exactly one to four cards per play.",
+        "With two decks, a player may claim up to eight cards of one rank."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 5,
+        "teams": false,
+        "quickAdd": [
+          1
+        ],
+        "unit": "wins",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "spoons",
+      "name": "Spoons",
+      "aliases": [
+        "Pig (related)",
+        "Tongue"
+      ],
+      "keywords": [
+        "party",
+        "fast",
+        "grab",
+        "four of a kind",
+        "elimination",
+        "family"
+      ],
+      "players": {
+        "min": 3,
+        "max": 13
+      },
+      "playerCounts": [
+        "3",
+        "4",
+        "5+"
+      ],
+      "playTime": {
+        "minutes": [
+          10,
+          20
+        ],
+        "category": "short"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "One standard 52-card deck, no jokers",
+        "Spoons (or other small objects) — one fewer than the number of players"
+      ],
+      "objective": "Collect four of a kind and grab a spoon — and don’t be the one left without one.",
+      "setup": [
+        "Put the spoons in the centre of the table, within reach of everyone. Use one fewer spoon than there are players.",
+        "Deal 4 cards to each player. The dealer keeps the rest of the deck face down beside them."
+      ],
+      "gameplay": [
+        "The dealer draws a card from the deck, then passes one card face down to the player on their left, keeping 4 cards in hand.",
+        "Each player picks up the card passed to them, then passes one card to their left. Play happens continuously and quickly — no turns.",
+        "The last player discards into a pile. If the deck runs out, the dealer picks up the discard pile and uses it as the new deck.",
+        "As soon as a player has four cards of the same rank, they take a spoon. They can be sneaky about it.",
+        "As soon as anyone takes a spoon, everyone else may grab one too. The player left without a spoon loses the round."
+      ],
+      "scoring": [
+        "The loser of each round takes a letter, spelling S-P-O-O-N-S. A player who spells out the full word is eliminated.",
+        "Alternatively, the loser is eliminated immediately and a spoon is removed each round.",
+        "The last player remaining wins."
+      ],
+      "variations": [
+        "Pig: no spoons — the player with four of a kind quietly touches their nose, and the last to notice and copy loses.",
+        "Taking a spoon before you have four of a kind (a false grab) costs you a letter."
+      ],
+      "scorekeeper": {
+        "direction": "low",
+        "target": 6,
+        "defaultPlayers": 5,
+        "teams": false,
+        "quickAdd": [
+          1
+        ],
+        "unit": "letters",
+        "hint": "Add 1 letter to the round’s loser. Six letters spells SPOONS and you’re out.",
+        "endCondition": "elimination"
+      }
+    },
+    {
+      "id": "ninety-nine",
+      "name": "Ninety-Nine",
+      "aliases": [
+        "99",
+        "Ninety-Nine (adding game)"
+      ],
+      "keywords": [
+        "counting",
+        "adding",
+        "party",
+        "lives",
+        "elimination",
+        "family"
+      ],
+      "players": {
+        "min": 3,
+        "max": 10
+      },
+      "playerCounts": [
+        "3",
+        "4",
+        "5+"
+      ],
+      "playTime": {
+        "minutes": [
+          15,
+          30
+        ],
+        "category": "medium"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "One standard 52-card deck, no jokers",
+        "Three tokens or coins per player (lives)"
+      ],
+      "objective": "Avoid making the running total go over 99. Be the last player with any lives left.",
+      "setup": [
+        "Give each player three tokens (lives).",
+        "Deal 3 cards to each player. The rest of the deck forms a face-down draw pile."
+      ],
+      "gameplay": [
+        "Starting left of the dealer, players take turns playing one card face up onto a central pile and announcing the new running total, which starts at 0. After playing, draw a card to get back to 3.",
+        "Card values (one widely played set): Ace 1; 2, 3, 5, 6, 7, 8 face value; 4 = 0 and reverses the direction of play; 9 = 0 (a pass); 10 = minus 10; Jack and Queen = 10; King = the total becomes 99 immediately.",
+        "If you cannot play any card without taking the total over 99, you lose a life and the hand ends.",
+        "Collect all the cards, reshuffle and deal a new hand. A player with no lives left is out."
+      ],
+      "scoring": [
+        "Each player starts with 3 lives; the last player with a life remaining wins."
+      ],
+      "variations": [
+        "There are many local value sets: for example Ace = 1 or 11, 10 = +10 or −10, Jack = 0, Queen = 10, King = 70 or 99. Agree the values before you start.",
+        "Some groups let a player who runs out of lives continue ‘on the bike’ for one more round.",
+        "Ninety-Nine is also the name of an unrelated 3-player trick-taking game invented by David Parlett; this entry is the adding game."
+      ],
+      "scorekeeper": {
+        "direction": "low",
+        "target": 3,
+        "defaultPlayers": 5,
+        "teams": false,
+        "quickAdd": [
+          1
+        ],
+        "unit": "lives lost",
+        "hint": "Add 1 each time a player loses a life. Reaching 3 means they’re out.",
+        "endCondition": "elimination"
+      }
+    },
+    {
+      "id": "crazy-eights",
+      "name": "Crazy Eights",
+      "aliases": [
+        "Switch",
+        "Mau-Mau (related)",
+        "Last Card",
+        "Swedish Rummy"
+      ],
+      "keywords": [
+        "shedding",
+        "matching",
+        "wild",
+        "family",
+        "kids"
+      ],
+      "players": {
+        "min": 2,
+        "max": 7
+      },
+      "playerCounts": [
+        "2",
+        "3",
+        "4",
+        "5+"
+      ],
+      "playTime": {
+        "minutes": [
+          10,
+          30
+        ],
+        "category": "short"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "One standard 52-card deck (two decks for 6+ players)"
+      ],
+      "objective": "Be the first to get rid of all your cards by matching the top card of the discard pile.",
+      "setup": [
+        "Deal 7 cards each with 2 players, or 5 cards each with 3 or more players.",
+        "Place the rest face down as the stock and turn the top card face up to start the discard pile. If it’s an 8, bury it in the stock and turn another."
+      ],
+      "gameplay": [
+        "Starting left of the dealer, each player plays one card face up on the discard pile that matches the top card’s suit or rank (e.g. on 7♥ you may play any heart or any 7).",
+        "Eights are wild: an 8 may be played on anything, and the player names a suit that the next player must follow.",
+        "If you can’t (or choose not to) play, draw from the stock until you can play — or, in many rules, draw just one card (or up to three) and pass if you still can’t play.",
+        "If the stock runs out, shuffle the discard pile (except the top card) to form a new stock.",
+        "The first player to play their last card wins the hand."
+      ],
+      "scoring": [
+        "Penalty values for cards left in hand: 8 = 50; K, Q, J = 10; Ace = 1; other cards face value.",
+        "Penalty method (used by this tracker): every player who didn’t go out adds the value of their remaining cards. When someone reaches 100, the player with the lowest total wins.",
+        "Alternative: the player who goes out scores the total of everyone else’s cards; first to an agreed total wins."
+      ],
+      "variations": [
+        "Action cards (as in Switch / Last Card / Mau-Mau): 2 = next player draws two; Jack = skip; Ace = reverse; Queen of Spades = draw five.",
+        "Must announce ‘Last card!’ when you have one card left, or draw a penalty card."
+      ],
+      "scorekeeper": {
+        "direction": "low",
+        "target": 100,
+        "defaultPlayers": 4,
+        "teams": false,
+        "quickAdd": [
+          1,
+          5,
+          10,
+          50
+        ],
+        "unit": "points",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "kings-corner",
+      "name": "Kings Corner",
+      "aliases": [
+        "Kings in the Corner",
+        "King’s Corners"
+      ],
+      "keywords": [
+        "solitaire style",
+        "shedding",
+        "family",
+        "kids",
+        "foundations"
+      ],
+      "players": {
+        "min": 2,
+        "max": 6
+      },
+      "playerCounts": [
+        "2",
+        "3",
+        "4",
+        "5+"
+      ],
+      "playTime": {
+        "minutes": [
+          10,
+          20
+        ],
+        "category": "short"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "One standard 52-card deck, no jokers"
+      ],
+      "objective": "Be the first to get rid of all your cards by playing them onto shared solitaire-style piles.",
+      "setup": [
+        "Deal 7 cards to each player (2–4 players is the classic game).",
+        "Place the rest face down in the centre as the stock. Turn four cards face up, one on each side of the stock (north, south, east, west) — these are the foundation piles. The four diagonal ‘corner’ spaces start empty."
+      ],
+      "gameplay": [
+        "At the start of your turn, draw one card from the stock. Then make as many of the following plays as you like, in any order.",
+        "Play a card from your hand onto any pile if it is one rank lower and the opposite colour (e.g. a red 9 on a black 10).",
+        "Play a King into an empty corner space. Kings may only start piles in the corners.",
+        "Move an entire pile onto another pile if its bottom card fits on that pile’s top card (one rank lower, opposite colour). This frees up a side space.",
+        "Play any card from your hand into an empty side space.",
+        "When you can’t or don’t want to play any more, your turn ends.",
+        "The first player to play all their cards wins."
+      ],
+      "scoring": [
+        "Usually played just for the win.",
+        "Common scoring option: when someone goes out, each other player scores 10 penalty points for every King still in their hand and 1 point for every other card. Lowest total after an agreed number of deals wins."
+      ],
+      "variations": [
+        "5–6 players: a common house adaptation is to deal 5 cards each so the stock lasts.",
+        "Some require the first card played each turn to be from your hand rather than moving piles.",
+        "If the stock runs out and nobody can play, the player with the fewest cards wins."
+      ],
+      "scorekeeper": {
+        "direction": "low",
+        "target": null,
+        "defaultPlayers": 4,
+        "teams": false,
+        "quickAdd": [
+          1,
+          5,
+          10
+        ],
+        "unit": "points",
+        "endCondition": "target"
+      }
+    }
+  ]
+}
