@@ -96,7 +96,8 @@ CGR.views.home = function (type) {
   type = type === 'dice' ? 'dice' : 'cards';
   CGR.state.lastType = type;
   CGR.state.lastCount = null;
-  CGR.state.favOnly = false; // the favourites filter is per browsing session from home
+  CGR.state.favOnly = false; // list filters are per browsing session from home
+  CGR.state.tag = null;
   const base = CGR.data.base(type);
   // Only show player counts that have at least one game of this type
   // (no dice game is played solo, so dice has no "1" button).
@@ -135,7 +136,7 @@ CGR.views.home = function (type) {
       </div>
       <div id="search-results" aria-live="polite"></div>
       <div id="home-main">
-        <nav class="count-grid${type === 'dice' ? ' four' : ''}" aria-label="Browse ${type === 'dice' ? 'dice' : 'card'} games by number of players">${counts}</nav>
+        <nav class="count-grid${CGR.data.COUNTS.filter((c) => CGR.data.forCount(c, type).length).length === 4 ? ' four' : ''}" aria-label="Browse ${type === 'dice' ? 'dice' : 'card'} games by number of players">${counts}</nav>
         <a class="btn btn-block pick-btn" href="#/pick?type=${type}">🎲 Pick a game for us</a>
         <div class="home-links">
           <a class="btn btn-secondary" href="#/favourites">★ Favourites (${favCount})</a>
@@ -164,19 +165,35 @@ CGR.views.home = function (type) {
 
 function listView({ title, subtitle, list, emptyHTML, allowFavFilter, back }) {
   const favOnly = allowFavFilter && CGR.state.favOnly;
-  const shown = favOnly ? list.filter((g) => CGR.favs.has(g.id)) : list;
+  // Tag filter: only offer tags that appear in this list.
+  const present = Object.keys(CGR.data.TAG_LABELS).filter((t) => list.some((g) => CGR.data.tagsOf(g).indexOf(t) !== -1));
+  const tag = present.indexOf(CGR.state.tag) !== -1 ? CGR.state.tag : null;
+  const shown = list.filter((g) => (!favOnly || CGR.favs.has(g.id)) && (!tag || CGR.data.tagsOf(g).indexOf(tag) !== -1));
+  const subtitleText = tag || favOnly ? `${shown.length} of ${subtitle}` : subtitle;
   return {
     title,
     back: back || '#/',
     html: `
-      <div class="page-head"><h1 tabindex="-1">${esc(title)}</h1><p class="muted">${esc(subtitle)}</p></div>
-      ${allowFavFilter ? `<div class="filter-bar">
-        <button type="button" class="chip" id="fav-filter" aria-pressed="${favOnly}">★ Favourites only</button>
+      <div class="page-head"><h1 tabindex="-1">${esc(title)}</h1><p class="muted" id="list-count">${esc(subtitleText)}</p></div>
+      ${allowFavFilter || present.length > 1 ? `<div class="filter-bar" role="group" aria-label="Filter games">
+        ${allowFavFilter ? `<button type="button" class="chip" id="fav-filter" aria-pressed="${favOnly}">★ Favourites only</button>` : ''}
+        ${present.length > 1 ? present.map((t) => `<button type="button" class="chip chip-tag" data-tag="${esc(t)}" aria-pressed="${t === tag}">${esc(CGR.data.TAG_LABELS[t])}</button>`).join('') : ''}
       </div>` : ''}
-      ${gameListHTML(shown, favOnly ? 'None of these games are favourites yet. Tap ☆ on a game page to add one.' : emptyHTML)}`,
+      ${gameListHTML(shown, favOnly && !shown.length ? 'None of these games are favourites yet. Tap ☆ on a game page to add one.' : tag ? 'No games match this filter.' : emptyHTML)}`,
     onMount(root) {
       const b = root.querySelector('#fav-filter');
-      if (b) b.addEventListener('click', () => { CGR.state.favOnly = !CGR.state.favOnly; CGR.router.render(); });
+      if (b) b.addEventListener('click', () => { CGR.state.favOnly = !CGR.state.favOnly; CGR.router.render({ keepScroll: true }); });
+      const active = root.querySelector('.chip-tag[aria-pressed="true"]');
+      if (active) {
+        const bar = active.parentElement;
+        bar.scrollLeft = Math.max(0, active.offsetLeft - bar.clientWidth / 2 + active.offsetWidth / 2);
+      }
+      root.querySelectorAll('.chip-tag').forEach((c) => c.addEventListener('click', () => {
+        CGR.state.tag = CGR.state.tag === c.dataset.tag ? null : c.dataset.tag;
+        CGR.router.render({ keepScroll: true });
+        const again = document.querySelector(`.chip-tag[data-tag="${CSS.escape(c.dataset.tag)}"]`);
+        if (again) again.focus({ preventScroll: true });
+      }));
     }
   };
 }
@@ -244,6 +261,7 @@ CGR.views.game = function (id) {
             <li class="badge">⏱ ${esc(CGR.data.timeLabel(g))}</li>
             <li class="badge ${esc(g.difficulty)}">${DIFF_LABEL[g.difficulty]}</li>
           </ul>
+          ${CGR.data.tagsOf(g).length ? `<ul class="tags" aria-label="Tags">${CGR.data.tagsOf(g).map((t) => `<li>${esc(CGR.data.TAG_LABELS[t])}</li>`).join('')}</ul>` : ''}
           ${g.aliases && g.aliases.length ? `<p class="aliases">Also known as: ${esc(g.aliases.join(', '))}</p>` : ''}
         </div>
 

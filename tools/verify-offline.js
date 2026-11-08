@@ -156,11 +156,14 @@ const ok = (cond, msg) => { console.log(`${cond ? 'PASS' : 'FAIL'}  ${msg}`); if
   await page.waitForSelector('#pick-form');
   await page.click('label:has(input[name="count"][value="1"])');
   await page.click('label:has(input[name="difficulty"][value="hard"])');
+  const hardSolo = await page.evaluate(() => CGR.data.filter({ count: '1', difficulty: 'hard', type: 'cards' }).map((g) => g.name).sort());
   await page.click('#pick-go');
-  ok((await page.textContent('#pick-name')) === 'Spider Solitaire', 'picker: 1 player + hard = Spider Solitaire');
+  const p1 = await page.textContent('#pick-name');
+  ok(hardSolo.includes(p1), `picker: 1 player + hard picks one of ${hardSolo.join(', ')} (${p1})`);
   await shot('05-picker');
   await page.click('#pick-go');
-  ok((await page.textContent('#pick-name')) === 'Spider Solitaire', 'pick again works with a single match');
+  const p2 = await page.textContent('#pick-name');
+  ok(hardSolo.length < 2 ? p2 === p1 : p2 !== p1, 'pick again shows a different game when there is one');
   await page.click('label:has(input[name="time"][value="long"])');
   ok(await page.locator('text=No matching games').isVisible(), 'picker: zero-match message shown');
   await shot('06-picker-none');
@@ -180,10 +183,11 @@ const ok = (cond, msg) => { console.log(`${cond ? 'PASS' : 'FAIL'}  ${msg}`); if
   await page.goto(BASE + '#/');
   await page.waitForSelector('.type-tabs');
   await page.click('.type-tabs a[href="#/dice"]');
-  await page.waitForSelector('.count-grid.four');
-  ok((await page.locator('.count-btn').count()) === 4, 'dice home: four player-count buttons (no solo dice games)');
+  await page.waitForSelector('.type-tabs a[href="#/dice"][aria-current="page"]');
+  const diceCounts = await page.evaluate(() => CGR.data.COUNTS.filter((c) => CGR.data.forCount(c, 'dice').length).length);
+  ok((await page.locator('.count-btn').count()) === diceCounts, `dice home: ${diceCounts} player-count buttons`);
   await shot('09-dice-home');
-  await page.click('.count-btn:has-text("3")');
+  await page.click('.count-btn[href="#/dice/players/3"]');
   await page.waitForURL('**/#/dice/players/3');
   await page.waitForSelector('.filter-bar');
   ok(page.url().endsWith('#/dice/players/3') && await page.locator('.game-item', { hasText: 'Beetle' }).count() === 1, 'dice list for 3 players includes Beetle');
@@ -201,9 +205,37 @@ const ok = (cond, msg) => { console.log(`${cond ? 'PASS' : 'FAIL'}  ${msg}`); if
   await page.waitForSelector('#pick-form');
   ok(await page.isChecked('input[name="type"][value="dice"]'), 'picker opened from dice home defaults to dice');
   await page.click('label:has(input[name="count"][value="1"])');
-  ok(await page.locator('text=No matching games').isVisible(), 'picker: no solo dice games → zero-match message');
+  await page.click('label:has(input[name="difficulty"][value="hard"])');
+  ok(await page.locator('text=No matching games').isVisible(), 'picker: no hard solo dice games → zero-match message');
   await page.click('[data-clear="type"]');
   ok(await page.locator('#pick-name').isVisible(), 'picker: switching to "Either" finds a game');
+  await page.click('label:has(input[name="difficulty"][value=""])');
+  await page.click('label:has(input[name="count"][value="4"])');
+  await page.click('label:has(input[name="kids"])');
+  for (let i = 0; i < 5; i++) {
+    await page.click('#pick-go');
+    const nm = await page.textContent('#pick-name');
+    const isKids = await page.evaluate((n) => CGR.data.all().find((g) => g.name === n).tags.includes('kids'), nm);
+    if (!isKids) { ok(false, `"Good for kids" picked a non-kids game: ${nm}`); break; }
+    if (i === 4) ok(true, '"Good for kids" option only picks kids games');
+  }
+  await page.click('label:has(input[name="kids"])');
+
+  // Tag filter on a list
+  await page.goto(BASE + '#/players/4');
+  await page.waitForSelector('.chip-tag');
+  await page.click('.chip-tag[data-tag="trick-taking"]');
+  const nTrick = await page.evaluate(() => CGR.data.forCount('4', 'cards').filter((g) => g.tags.includes('trick-taking')).length);
+  ok((await page.locator('.game-item').count()) === nTrick && (await page.getAttribute('.chip-tag[data-tag="trick-taking"]', 'aria-pressed')) === 'true', `tag filter: Trick-taking shows ${nTrick} four-player games`);
+  await shot('11-tag-filter');
+  await page.click('.chip-tag[data-tag="trick-taking"]');
+  const n4 = await page.evaluate(() => CGR.data.forCount('4', 'cards').length);
+  ok((await page.locator('.game-item').count()) === n4, 'tapping the tag again clears the filter');
+  await page.goto(BASE + '#/game/scopa');
+  await page.waitForSelector('article.rules');
+  await page.goto(BASE + '#/game/shut-the-box');
+  await page.waitForSelector('article.rules .tags');
+  ok((await page.textContent('article.rules .tags')).includes('Special equipment'), 'game page shows tags');
   await page.goto(BASE + '#/');
   await page.waitForSelector('#q');
   await page.fill('#q', 'dice');

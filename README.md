@@ -2,10 +2,11 @@
 
 An offline-first Progressive Web App (PWA) with card and dice game rules organised by number of players (1, 2, 3, 4, 5+). It also has a per-game score tracker and a "pick a game for us" button.
 
-- 68 games (56 card games and 12 dice games), each with equipment, objective, setup, gameplay, scoring and variations
+- 116 games (94 card games and 22 dice games), each with equipment, objective, setup, gameplay, scoring and variations
 - Separate **Card games** and **Dice games** sections on the home screen. Search and Favourites cover both, with dice games marked 🎲
 - Score tracker with quick-add buttons, custom amounts, round history, undo, target score and a winner banner
-- Game picker filtered by game type (cards, dice or either), players, difficulty and play time
+- Tags (Good for kids, Party, Trick-taking, Patience, Betting…) shown on each game and usable as a filter on every list
+- Game picker filtered by game type (cards, dice or either), players, difficulty, play time, "Good for kids" and "No special equipment"
 - Search, favourites, dark mode (follows the system setting, with a manual toggle) and a text-size control
 - Works fully offline after the first visit, and can be installed on Android
 
@@ -90,6 +91,7 @@ Add an object to the `games` array in `games.json`. The order doesn't matter (li
   "type": "cards",
   "aliases": ["Twenty-One", "Pontoon (related)"],
   "keywords": ["casino", "21", "banking"],
+  "tags": ["betting"],
   "players": { "min": 2, "max": 7 },
   "playerCounts": ["2", "3", "4", "5+"],
   "playTime": { "minutes": [10, 30], "category": "short" },
@@ -122,6 +124,7 @@ Add an object to the `games` array in `games.json`. The order doesn't matter (li
 | `type` | `"cards"` \| `"dice"` | no (default `"cards"`) | Which section the game appears in. Dice games are listed under **Dice games** and marked 🎲. |
 | `aliases` | string[] | no | Other names. Shown on the game page and searchable. |
 | `keywords` | string[] | no | Extra search terms (e.g. "trick taking", "kids"). |
+| `tags` | string[] | no | Shown as chips on the game page and used by the list filter and picker. Allowed values: `kids`, `party`, `trick-taking`, `rummy`, `patience`, `shedding`, `bluffing`, `betting`, `real-time`, `partnership`, `push-your-luck`, `multi-deck`, `special-equipment`. To add a new tag, also give it a label in `TAG_LABELS` in `js/data.js`. `kids` drives the picker's "Good for kids" option; `special-equipment` (anything beyond standard cards, dice, pen and counters) drives "No special equipment". |
 | `players.min` / `players.max` | number | yes | Supported player range, shown as "3–7 players". Also limits the scorekeeper's pre-set player count. |
 | `playerCounts` | string[] | yes | Which home-screen buttons list the game: any of `"1"`, `"2"`, `"3"`, `"4"`, `"5+"`. A count button only appears when at least one game of that type uses it. Set explicitly, so a game can be left out of a count it technically supports (e.g. Hearts has a separate 3-player entry). Also used by the picker's player filter. |
 | `playTime.minutes` | [number, number] | yes | Typical range in minutes, shown as "20–45 min". |

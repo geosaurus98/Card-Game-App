@@ -11,7 +11,9 @@ CGR.views.pick = function (params) {
     type: typeParam !== null ? typeParam : (saved.type != null ? saved.type : (CGR.state.lastType || 'cards')),
     count: params.get('players') || saved.count || CGR.state.lastCount || '4',
     difficulty: saved.difficulty || '',
-    time: saved.time || ''
+    time: saved.time || '',
+    kids: !!saved.kids,
+    noSpecial: !!saved.noSpecial
   };
   if (CGR.data.COUNTS.indexOf(f.count) === -1) f.count = '4';
   if (['', 'cards', 'dice'].indexOf(f.type) === -1) f.type = 'cards';
@@ -34,6 +36,11 @@ CGR.views.pick = function (params) {
       ${radios('difficulty', 'Difficulty <span class="muted small">(optional)</span>', [['', 'Any'], ['easy', 'Easy'], ['medium', 'Medium'], ['hard', 'Hard']])}
       ${radios('time', 'Play time <span class="muted small">(optional)</span>', [['', 'Any'], ['short', 'Short'], ['medium', 'Medium'], ['long', 'Long']])}
       <p class="muted small">Short is under 15 minutes, medium 15–45, long 45+.</p>
+      <fieldset class="chip-group checks">
+        <legend>Options</legend>
+        <label><input type="checkbox" name="kids" ${f.kids ? 'checked' : ''}><span>Good for kids</span></label>
+        <label><input type="checkbox" name="noSpecial" ${f.noSpecial ? 'checked' : ''}><span>No special equipment</span></label>
+      </fieldset>
     </form>
     <p class="match-count" id="match-count" aria-live="polite"></p>
     <div id="pick-result"></div>
@@ -70,6 +77,7 @@ CGR.views.pick = function (params) {
       function renderNone() {
         const tips = [];
         if (f.type) tips.push('<button type="button" class="btn btn-secondary" data-clear="type">Cards or dice</button>');
+        if (f.kids) tips.push('<button type="button" class="btn btn-secondary" data-clear="kids">Not just for kids</button>');
         if (f.difficulty) tips.push('<button type="button" class="btn btn-secondary" data-clear="difficulty">Any difficulty</button>');
         if (f.time) tips.push('<button type="button" class="btn btn-secondary" data-clear="time">Any play time</button>');
         result.innerHTML = `<div class="card pop" role="status">
@@ -79,9 +87,13 @@ CGR.views.pick = function (params) {
           <p class="small" style="margin-top:.75rem"><a href="${CGR.data.base(f.type === 'dice' ? 'dice' : 'cards')}players/${encodeURIComponent(f.count)}">See all ${f.type === 'dice' ? 'dice' : 'card'} games for ${esc(CGR.data.countLabel(f.count))}</a></p>
         </div>`;
         result.querySelectorAll('[data-clear]').forEach((b) => b.addEventListener('click', () => {
-          f[b.dataset.clear] = '';
-          const input = form.querySelector(`input[name="${b.dataset.clear}"][value=""]`);
-          if (input) input.checked = true;
+          const k = b.dataset.clear;
+          if (k === 'kids') { f.kids = false; form.querySelector('input[name="kids"]').checked = false; }
+          else {
+            f[k] = '';
+            const input = form.querySelector(`input[name="${k}"][value=""]`);
+            if (input) input.checked = true;
+          }
           persist();
           pick();
         }));
@@ -118,11 +130,11 @@ CGR.views.pick = function (params) {
         CGR.ui.announce('Picked ' + g.name);
       }
 
-      function persist() { CGR.store.set('picker', { type: f.type, count: f.count, difficulty: f.difficulty, time: f.time }); }
+      function persist() { CGR.store.set('picker', { type: f.type, count: f.count, difficulty: f.difficulty, time: f.time, kids: f.kids, noSpecial: f.noSpecial }); }
 
       form.addEventListener('change', (e) => {
         if (!e.target.name) return;
-        f[e.target.name] = e.target.value;
+        f[e.target.name] = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
         if (e.target.name === 'count') CGR.state.lastCount = f.count;
         if (e.target.name === 'type' && f.type) CGR.state.lastType = f.type;
         persist();
