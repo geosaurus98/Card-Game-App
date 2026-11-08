@@ -6,12 +6,15 @@ CGR.views = CGR.views || {};
 CGR.views.pick = function (params) {
   const esc = CGR.esc;
   const saved = CGR.store.get('picker', {});
+  const typeParam = params.get('type');
   const f = {
+    type: typeParam !== null ? typeParam : (saved.type != null ? saved.type : (CGR.state.lastType || 'cards')),
     count: params.get('players') || saved.count || CGR.state.lastCount || '4',
     difficulty: saved.difficulty || '',
     time: saved.time || ''
   };
   if (CGR.data.COUNTS.indexOf(f.count) === -1) f.count = '4';
+  if (['', 'cards', 'dice'].indexOf(f.type) === -1) f.type = 'cards';
 
   let bag = [];       // shuffled ids not yet shown for the current filters
   let current = null;
@@ -26,6 +29,7 @@ CGR.views.pick = function (params) {
     <div class="page-head"><h1 tabindex="-1">Pick a game for us</h1>
       <p class="muted">Choose your group size, and optionally narrow it down.</p></div>
     <form id="pick-form" onsubmit="return false">
+      ${radios('type', 'Game type', [['cards', '🃏 Cards'], ['dice', '🎲 Dice'], ['', 'Either']])}
       ${radios('count', 'Number of players', CGR.data.COUNTS.map((c) => [c, c]))}
       ${radios('difficulty', 'Difficulty <span class="muted small">(optional)</span>', [['', 'Any'], ['easy', 'Easy'], ['medium', 'Medium'], ['hard', 'Hard']])}
       ${radios('time', 'Play time <span class="muted small">(optional)</span>', [['', 'Any'], ['short', 'Short'], ['medium', 'Medium'], ['long', 'Long']])}
@@ -49,7 +53,7 @@ CGR.views.pick = function (params) {
 
   return {
     title: 'Pick a game',
-    back: '#/',
+    back: f.type === 'dice' ? '#/dice' : '#/',
     html,
     onMount(root) {
       const form = root.querySelector('#pick-form');
@@ -65,13 +69,14 @@ CGR.views.pick = function (params) {
 
       function renderNone() {
         const tips = [];
+        if (f.type) tips.push('<button type="button" class="btn btn-secondary" data-clear="type">Cards or dice</button>');
         if (f.difficulty) tips.push('<button type="button" class="btn btn-secondary" data-clear="difficulty">Any difficulty</button>');
         if (f.time) tips.push('<button type="button" class="btn btn-secondary" data-clear="time">Any play time</button>');
         result.innerHTML = `<div class="card pop" role="status">
           <h2>No matching games</h2>
-          <p>None of our games fit ${esc(CGR.data.countLabel(f.count))}${f.difficulty ? ', ' + esc(f.difficulty) : ''}${f.time ? ', ' + esc(f.time) + ' play time' : ''}. Try loosening a filter:</p>
+          <p>None of our ${f.type === 'dice' ? 'dice games' : f.type === 'cards' ? 'card games' : 'games'} fit ${esc(CGR.data.countLabel(f.count))}${f.difficulty ? ', ' + esc(f.difficulty) : ''}${f.time ? ', ' + esc(f.time) + ' play time' : ''}. Try loosening a filter:</p>
           <div class="btn-row">${tips.join('')}</div>
-          <p class="small" style="margin-top:.75rem"><a href="#/players/${encodeURIComponent(f.count)}">See all games for ${esc(CGR.data.countLabel(f.count))}</a></p>
+          <p class="small" style="margin-top:.75rem"><a href="${CGR.data.base(f.type === 'dice' ? 'dice' : 'cards')}players/${encodeURIComponent(f.count)}">See all ${f.type === 'dice' ? 'dice' : 'card'} games for ${esc(CGR.data.countLabel(f.count))}</a></p>
         </div>`;
         result.querySelectorAll('[data-clear]').forEach((b) => b.addEventListener('click', () => {
           f[b.dataset.clear] = '';
@@ -96,7 +101,7 @@ CGR.views.pick = function (params) {
         current = CGR.data.get(bag.pop());
         const g = current;
         result.innerHTML = `<article class="card pick-result pop" aria-labelledby="pick-name">
-          <p class="muted small">How about…</p>
+          <p class="muted small">How about${CGR.data.typeOf(g) === 'dice' ? ' this dice game' : ''}…</p>
           <h2 id="pick-name">${esc(g.name)}</h2>
           <ul class="badges">
             <li class="badge">👥 ${esc(CGR.data.playersLabel(g))}</li>
@@ -113,12 +118,13 @@ CGR.views.pick = function (params) {
         CGR.ui.announce('Picked ' + g.name);
       }
 
-      function persist() { CGR.store.set('picker', { count: f.count, difficulty: f.difficulty, time: f.time }); }
+      function persist() { CGR.store.set('picker', { type: f.type, count: f.count, difficulty: f.difficulty, time: f.time }); }
 
       form.addEventListener('change', (e) => {
         if (!e.target.name) return;
         f[e.target.name] = e.target.value;
         if (e.target.name === 'count') CGR.state.lastCount = f.count;
+        if (e.target.name === 'type' && f.type) CGR.state.lastType = f.type;
         persist();
         bag = [];
         current = null;

@@ -2,7 +2,7 @@
   "id": "./",
   "name": "Card Game Rulebook",
   "short_name": "Card Rules",
-  "description": "Offline card game rules by player count, with a score tracker and a game picker.",
+  "description": "Offline card and dice game rules by player count, with a score tracker and a game picker.",
   "lang": "en",
   "start_url": "./",
   "scope": "./",

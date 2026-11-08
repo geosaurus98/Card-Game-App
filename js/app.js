@@ -1,7 +1,7 @@
 /* Card Game Rulebook — router, views and app shell. */
 window.CGR = window.CGR || {};
 CGR.views = CGR.views || {};
-CGR.state = { query: '', favOnly: false, lastCount: null };
+CGR.state = { query: '', favOnly: false, lastCount: null, lastType: 'cards' };
 
 const esc = CGR.esc;
 
@@ -83,7 +83,7 @@ function gameListHTML(list, emptyHTML) {
     const inProgress = CGR.score && CGR.score.hasSaved(g.id);
     return `<li class="game-item"><a href="#/game/${esc(g.id)}">
       <span class="name">${esc(g.name)}${fav ? '<span class="star" aria-label="favourite">★</span>' : ''}</span>
-      <span class="meta">${esc(CGR.data.playersLabel(g))} · ${esc(CGR.data.timeLabel(g))} · ${DIFF_LABEL[g.difficulty]}</span>
+      <span class="meta">${CGR.data.typeOf(g) === 'dice' ? '🎲 Dice · ' : ''}${esc(CGR.data.playersLabel(g))} · ${esc(CGR.data.timeLabel(g))} · ${DIFF_LABEL[g.difficulty]}</span>
       ${inProgress ? '<span class="resume">● Score in progress</span>' : ''}
     </a></li>`;
   }).join('')}</ul>`;
@@ -92,12 +92,26 @@ function gameListHTML(list, emptyHTML) {
 /* ---------------------------------------------------------------------------
  * Views. Each returns { title, html, back, onMount }.
  * ------------------------------------------------------------------------- */
-CGR.views.home = function () {
+CGR.views.home = function (type) {
+  type = type === 'dice' ? 'dice' : 'cards';
+  CGR.state.lastType = type;
+  CGR.state.lastCount = null;
+  CGR.state.favOnly = false; // the favourites filter is per browsing session from home
+  const base = CGR.data.base(type);
+  // Only show player counts that have at least one game of this type
+  // (no dice game is played solo, so dice has no "1" button).
   const counts = CGR.data.COUNTS.map((c) => {
-    const n = CGR.data.forCount(c).length;
-    return `<a class="count-btn" href="#/players/${encodeURIComponent(c)}">
+    const n = CGR.data.forCount(c, type).length;
+    if (!n) return '';
+    return `<a class="count-btn" href="${base}players/${encodeURIComponent(c)}">
       <span class="num">${esc(c)}</span><span class="lbl">${c === '1' ? 'player' : 'players'} · ${n} games</span></a>`;
   }).join('');
+  const nCards = CGR.data.ofType('cards').length;
+  const nDice = CGR.data.ofType('dice').length;
+  const tabs = `<nav class="type-tabs" aria-label="Game type">
+      <a href="#/" ${type === 'cards' ? 'aria-current="page"' : ''}><span aria-hidden="true">🃏</span> Card games <span class="n">${nCards}</span></a>
+      <a href="#/dice" ${type === 'dice' ? 'aria-current="page"' : ''}><span aria-hidden="true">🎲</span> Dice games <span class="n">${nDice}</span></a>
+    </nav>`;
 
   const saved = CGR.score.savedGames();
   const resume = saved.length ? `<section class="section" aria-labelledby="resume-h">
@@ -110,21 +124,22 @@ CGR.views.home = function () {
   const favCount = CGR.favs.all().filter((id) => CGR.data.get(id)).length;
 
   return {
-    title: 'Card Rules',
+    title: type === 'dice' ? 'Dice games' : 'Card Rules',
     back: null,
     html: `
-      <div class="page-head"><h1 tabindex="-1">How many players?</h1></div>
+      ${tabs}
+      <div class="page-head"><h1 tabindex="-1">${type === 'dice' ? 'Dice games: how many players?' : 'How many players?'}</h1></div>
       <div class="search" role="search">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 14h-.8l-.3-.3A6.5 6.5 0 1 0 9.5 16a6.5 6.5 0 0 0 4.2-1.6l.3.3v.8l5 5 1.5-1.5zm-6 0a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9z"/></svg>
         <input type="search" id="q" placeholder="Search games or keywords" aria-label="Search all games by name or keyword" autocomplete="off" enterkeyhint="search" value="${esc(CGR.state.query)}">
       </div>
       <div id="search-results" aria-live="polite"></div>
       <div id="home-main">
-        <nav class="count-grid" aria-label="Browse by number of players">${counts}</nav>
-        <a class="btn btn-block pick-btn" href="#/pick">🎲 Pick a game for us</a>
+        <nav class="count-grid${type === 'dice' ? ' four' : ''}" aria-label="Browse ${type === 'dice' ? 'dice' : 'card'} games by number of players">${counts}</nav>
+        <a class="btn btn-block pick-btn" href="#/pick?type=${type}">🎲 Pick a game for us</a>
         <div class="home-links">
           <a class="btn btn-secondary" href="#/favourites">★ Favourites (${favCount})</a>
-          <a class="btn btn-secondary" href="#/all">All games (${CGR.data.all().length})</a>
+          <a class="btn btn-secondary" href="${base}all">All ${type === 'dice' ? 'dice' : 'card'} games (${type === 'dice' ? nDice : nCards})</a>
         </div>
         ${resume}
       </div>`,
@@ -147,12 +162,12 @@ CGR.views.home = function () {
   };
 };
 
-function listView({ title, subtitle, list, emptyHTML, allowFavFilter }) {
+function listView({ title, subtitle, list, emptyHTML, allowFavFilter, back }) {
   const favOnly = allowFavFilter && CGR.state.favOnly;
   const shown = favOnly ? list.filter((g) => CGR.favs.has(g.id)) : list;
   return {
     title,
-    back: '#/',
+    back: back || '#/',
     html: `
       <div class="page-head"><h1 tabindex="-1">${esc(title)}</h1><p class="muted">${esc(subtitle)}</p></div>
       ${allowFavFilter ? `<div class="filter-bar">
@@ -166,21 +181,30 @@ function listView({ title, subtitle, list, emptyHTML, allowFavFilter }) {
   };
 }
 
-CGR.views.players = function (count) {
+CGR.views.players = function (count, type) {
+  type = type === 'dice' ? 'dice' : 'cards';
   if (CGR.data.COUNTS.indexOf(count) === -1) return CGR.views.notFound();
   CGR.state.lastCount = count;
-  const list = CGR.data.forCount(count);
+  CGR.state.lastType = type;
+  const list = CGR.data.forCount(count, type);
+  const kind = type === 'dice' ? 'dice games' : 'card games';
   return listView({
-    title: CGR.data.countLabel(count),
-    subtitle: `${list.length} games${count === '5+' ? ' for five or more players' : ''}`,
-    list, allowFavFilter: true
+    title: (type === 'dice' ? 'Dice: ' : '') + CGR.data.countLabel(count),
+    subtitle: `${list.length} ${kind}${count === '5+' ? ' for five or more players' : ''}`,
+    list, allowFavFilter: true, back: type === 'dice' ? '#/dice' : '#/',
+    emptyHTML: `No ${kind} for ${esc(CGR.data.countLabel(count))}.`
   });
 };
 
-CGR.views.all = function () {
+CGR.views.all = function (type) {
+  type = type === 'dice' ? 'dice' : 'cards';
   CGR.state.lastCount = null;
-  const list = CGR.data.all();
-  return listView({ title: 'All games', subtitle: `${list.length} games, A–Z`, list, allowFavFilter: true });
+  CGR.state.lastType = type;
+  const list = CGR.data.ofType(type);
+  return listView({
+    title: type === 'dice' ? 'All dice games' : 'All card games',
+    subtitle: `${list.length} games, A–Z`, list, allowFavFilter: true, back: type === 'dice' ? '#/dice' : '#/'
+  });
 };
 
 CGR.views.favourites = function () {
@@ -205,14 +229,17 @@ CGR.views.game = function (id) {
     sk.target ? `game ends at ${sk.target.toLocaleString()}` : null
   ].filter(Boolean).join(', ');
 
+  const gType = CGR.data.typeOf(g);
+  const gBase = CGR.data.base(gType);
   return {
     title: g.name,
-    back: CGR.state.lastCount ? '#/players/' + encodeURIComponent(CGR.state.lastCount) : '#/',
+    back: CGR.state.lastCount ? gBase + 'players/' + encodeURIComponent(CGR.state.lastCount) : (gType === 'dice' ? '#/dice' : '#/'),
     html: `
       <article class="rules">
         <div class="page-head">
           <h1 tabindex="-1">${esc(g.name)}</h1>
           <ul class="badges" aria-label="Game details">
+            ${gType === 'dice' ? '<li class="badge">🎲 Dice game</li>' : ''}
             <li class="badge">👥 ${esc(CGR.data.playersLabel(g))}</li>
             <li class="badge">⏱ ${esc(CGR.data.timeLabel(g))}</li>
             <li class="badge ${esc(g.difficulty)}">${DIFF_LABEL[g.difficulty]}</li>
@@ -229,7 +256,7 @@ CGR.views.game = function (id) {
         ${g.variations && g.variations.length ? `<h2>Common variations</h2>${ul(g.variations)}` : ''}
 
         <p class="also muted">Listed under: ${g.playerCounts.map((c) =>
-          `<a href="#/players/${encodeURIComponent(c)}">${esc(CGR.data.countLabel(c))}</a>`).join(' · ')}</p>
+          `<a href="${gBase}players/${encodeURIComponent(c)}">${esc(CGR.data.countLabel(c))}</a>`).join(' · ')}${gType === 'dice' ? ' (dice games)' : ''}</p>
       </article>
       <div class="action-bar"><div class="action-bar-inner">
         <button type="button" class="btn btn-secondary fav-btn" id="fav-btn" aria-pressed="${fav}">
@@ -277,9 +304,14 @@ CGR.router = (function () {
   function resolve() {
     const { parts, params } = parse();
     switch (parts[0]) {
-      case undefined: return CGR.views.home();
-      case 'players': return CGR.views.players(parts[1]);
-      case 'all': return CGR.views.all();
+      case undefined: return CGR.views.home('cards');
+      case 'dice':
+        if (parts[1] === undefined) return CGR.views.home('dice');
+        if (parts[1] === 'players') return CGR.views.players(parts[2], 'dice');
+        if (parts[1] === 'all') return CGR.views.all('dice');
+        return CGR.views.notFound();
+      case 'players': return CGR.views.players(parts[1], 'cards');
+      case 'all': return CGR.views.all('cards');
       case 'favourites': return CGR.views.favourites();
       case 'game': return CGR.views.game(parts[1]);
       case 'score': return CGR.views.score(parts[1], params);
@@ -293,7 +325,7 @@ CGR.router = (function () {
     const y = window.scrollY;
     current = resolve();
     view.innerHTML = current.html;
-    document.title = current.title === 'Card Rules' ? 'Card Game Rulebook' : current.title + ' · Card Rules';
+    document.title = current.title === 'Card Rules' ? 'Card & Dice Rulebook' : current.title + ' · Card Rules';
     backBtn.hidden = !current.back;
     if (current.onMount) current.onMount(view);
     if (keepScroll) { window.scrollTo(0, y); return; }
@@ -385,11 +417,17 @@ CGR.router = (function () {
 
   function showUpdate(worker) {
     banner.hidden = false;
-    document.getElementById('update-reload').onclick = () => worker.postMessage('SKIP_WAITING');
+    document.getElementById('update-reload').onclick = () => {
+      updateRequested = true;
+      worker.postMessage('SKIP_WAITING');
+    };
   }
 
+  // Reload only when the user asked for the update. The first install also
+  // fires controllerchange (via clients.claim) and must not reload the page.
+  let updateRequested = false;
   navigator.serviceWorker.addEventListener('controllerchange', () => {
-    if (refreshing) return;
+    if (refreshing || !updateRequested) return;
     refreshing = true;
     location.reload();
   });

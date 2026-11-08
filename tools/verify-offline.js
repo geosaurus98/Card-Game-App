@@ -168,12 +168,48 @@ const ok = (cond, msg) => { console.log(`${cond ? 'PASS' : 'FAIL'}  ${msg}`); if
   ok(await page.locator('#pick-name').isVisible(), 'picker: loosening a filter recovers a pick');
   await page.click('label:has(input[name="count"][value="5+"])');
   await page.click('label:has(input[name="difficulty"][value=""])');
+  const n5 = await page.evaluate(() => CGR.data.filter({ count: '5+', type: 'cards' }).length);
   const seen = new Set();
-  for (let i = 0; i < 11; i++) { await page.click('#pick-go'); seen.add(await page.textContent('#pick-name')); }
-  ok(seen.size === 11, `picker cycles through all 11 games for 5+ without repeats (${seen.size})`);
+  for (let i = 0; i < n5; i++) { await page.click('#pick-go'); seen.add(await page.textContent('#pick-name')); }
+  ok(seen.size === n5, `picker cycles through all ${n5} card games for 5+ without repeats (${seen.size})`);
   await page.click('.pick-result a:has-text("Read the rules")');
   await page.waitForSelector('article.rules');
   ok(true, 'picker link opens the rules');
+
+  // Dice games
+  await page.goto(BASE + '#/');
+  await page.waitForSelector('.type-tabs');
+  await page.click('.type-tabs a[href="#/dice"]');
+  await page.waitForSelector('.count-grid.four');
+  ok((await page.locator('.count-btn').count()) === 4, 'dice home: four player-count buttons (no solo dice games)');
+  await shot('09-dice-home');
+  await page.click('.count-btn:has-text("3")');
+  await page.waitForURL('**/#/dice/players/3');
+  await page.waitForSelector('.filter-bar');
+  ok(page.url().endsWith('#/dice/players/3') && await page.locator('.game-item', { hasText: 'Beetle' }).count() === 1, 'dice list for 3 players includes Beetle');
+  ok(await page.locator('.game-item', { hasText: 'Hearts' }).count() === 0, 'dice list contains no card games');
+  await page.click('.game-item a:has-text("Craps")');
+  await page.waitForSelector('article.rules');
+  ok(await page.locator('.badge:has-text("Dice game")').count() === 1, 'dice game page shows a dice badge');
+  await shot('10-dice-game');
+  await page.click('#back-btn');
+  await page.waitForSelector('.filter-bar');
+  ok(page.url().endsWith('#/dice/players/3'), 'back from a dice game returns to the dice list');
+  await page.goto(BASE + '#/dice');
+  await page.waitForSelector('.pick-btn');
+  await page.click('.pick-btn');
+  await page.waitForSelector('#pick-form');
+  ok(await page.isChecked('input[name="type"][value="dice"]'), 'picker opened from dice home defaults to dice');
+  await page.click('label:has(input[name="count"][value="1"])');
+  ok(await page.locator('text=No matching games').isVisible(), 'picker: no solo dice games → zero-match message');
+  await page.click('[data-clear="type"]');
+  ok(await page.locator('#pick-name').isVisible(), 'picker: switching to "Either" finds a game');
+  await page.goto(BASE + '#/');
+  await page.waitForSelector('#q');
+  await page.fill('#q', 'dice');
+  const nd = await page.locator('#search-results .game-item').count();
+  ok(nd >= 12, `search "dice" finds the dice games (${nd})`);
+  await page.fill('#q', '');
 
   // Deep link in a brand-new tab while offline
   const page2 = await context.newPage();

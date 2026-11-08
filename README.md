@@ -1,10 +1,11 @@
 # Card Game Rulebook
 
-An offline-first Progressive Web App (PWA) with card game rules organised by number of players (1, 2, 3, 4, 5+). It also has a per-game score tracker and a "pick a game for us" button.
+An offline-first Progressive Web App (PWA) with card and dice game rules organised by number of players (1, 2, 3, 4, 5+). It also has a per-game score tracker and a "pick a game for us" button.
 
-- 29 games, each with equipment, objective, setup, gameplay, scoring and variations
+- 68 games (56 card games and 12 dice games), each with equipment, objective, setup, gameplay, scoring and variations
+- Separate **Card games** and **Dice games** sections on the home screen. Search and Favourites cover both, with dice games marked 🎲
 - Score tracker with quick-add buttons, custom amounts, round history, undo, target score and a winner banner
-- Game picker filtered by players, difficulty and play time
+- Game picker filtered by game type (cards, dice or either), players, difficulty and play time
 - Search, favourites, dark mode (follows the system setting, with a manual toggle) and a text-size control
 - Works fully offline after the first visit, and can be installed on Android
 
@@ -33,7 +34,7 @@ Card-Game-App/
     └── verify-offline.js   Playwright script that tests every screen offline
 ```
 
-Screens (URL hash routes): `#/` home · `#/players/3` games for a player count · `#/all` · `#/favourites` · `#/game/<id>` rules · `#/score/<id>` scorekeeper · `#/pick` picker.
+Screens (URL hash routes): `#/` card games home · `#/players/3` card games for a player count · `#/all` all card games · `#/dice`, `#/dice/players/3`, `#/dice/all` the same for dice games · `#/favourites` · `#/game/<id>` rules · `#/score/<id>` scorekeeper · `#/pick` picker (`#/pick?type=dice` starts on dice).
 
 All paths are relative (`./games.json`, `css/styles.css`, …) and the service worker lives at the project root, so its scope is the folder the app is served from. That is why it works from a GitHub Pages subpath such as `https://<user>.github.io/<repo>/`.
 
@@ -86,6 +87,7 @@ Add an object to the `games` array in `games.json`. The order doesn't matter (li
 {
   "id": "blackjack",
   "name": "Blackjack",
+  "type": "cards",
   "aliases": ["Twenty-One", "Pontoon (related)"],
   "keywords": ["casino", "21", "banking"],
   "players": { "min": 2, "max": 7 },
@@ -117,10 +119,11 @@ Add an object to the `games` array in `games.json`. The order doesn't matter (li
 |---|---|---|---|
 | `id` | string | yes | Unique, URL-safe slug (lowercase, hyphens). Used in `#/game/<id>` and as the storage key for scores. Don't change it later, or saved scores and favourites for that game are lost. |
 | `name` | string | yes | Display name. |
+| `type` | `"cards"` \| `"dice"` | no (default `"cards"`) | Which section the game appears in. Dice games are listed under **Dice games** and marked 🎲. |
 | `aliases` | string[] | no | Other names. Shown on the game page and searchable. |
 | `keywords` | string[] | no | Extra search terms (e.g. "trick taking", "kids"). |
 | `players.min` / `players.max` | number | yes | Supported player range, shown as "3–7 players". Also limits the scorekeeper's pre-set player count. |
-| `playerCounts` | string[] | yes | Which home-screen buttons list the game: any of `"1"`, `"2"`, `"3"`, `"4"`, `"5+"`. Set explicitly, so a game can be left out of a count it technically supports (e.g. Hearts has a separate 3-player entry). Also used by the picker's player filter. |
+| `playerCounts` | string[] | yes | Which home-screen buttons list the game: any of `"1"`, `"2"`, `"3"`, `"4"`, `"5+"`. A count button only appears when at least one game of that type uses it. Set explicitly, so a game can be left out of a count it technically supports (e.g. Hearts has a separate 3-player entry). Also used by the picker's player filter. |
 | `playTime.minutes` | [number, number] | yes | Typical range in minutes, shown as "20–45 min". |
 | `playTime.category` | `"short"` \| `"medium"` \| `"long"` | yes | Picker filter. Convention: short < 15 min, medium 15–45, long 45+. |
 | `difficulty` | `"easy"` \| `"medium"` \| `"hard"` | yes | Badge on the game page and a picker filter. |
@@ -203,5 +206,8 @@ In Chrome itself, **DevTools → Application → Manifest** shows any installabi
 The icons are simple generated placeholders. To redraw them, run `python3 tools/make_icons.py` (needs `pip install pillow`), or drop in your own PNGs with the same file names and sizes. Maskable icons should keep important content inside the central 80% circle. Bump the cache version afterwards.
 
 ## A note on the rules
+
+Some games from common rule-book contents pages were left out because their rules differ too much between sources to describe one standard version: **Tower of Pisa** (patience), **American Brag**, **Honest John** and **Straight Shooter** (dice). They can be added later in `games.json` using the schema above.
+
 
 The rules follow the most widely played version of each game. Where common versions differ (scoring schemes, pass limits, house rules), the alternatives are listed under **Common variations**, or noted inline.

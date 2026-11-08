@@ -227,6 +227,21 @@ a.btn-secondary { color: var(--text) !important; }
 :root:not([data-theme="dark"]) .count-btn .num { color: var(--accent); }
 .count-btn .lbl { font-size: .9rem; color: var(--muted); margin-top: .35rem; }
 .count-grid .count-btn:last-child { grid-column: 1 / -1; }
+.count-grid.four .count-btn:last-child { grid-column: auto; }
+.type-tabs {
+  display: grid; grid-template-columns: 1fr 1fr; gap: .25rem;
+  padding: .25rem; margin-bottom: 1rem;
+  background: var(--surface-2); border-radius: 16px;
+}
+.type-tabs a {
+  display: flex; align-items: center; justify-content: center; gap: .4rem;
+  min-height: var(--tap); padding: .4rem .5rem;
+  border-radius: 12px; text-decoration: none; font-weight: 700;
+  color: var(--text) !important;
+}
+.type-tabs a[aria-current="page"] { background: var(--surface); box-shadow: var(--shadow); color: var(--accent-strong) !important; }
+:root:not([data-theme="dark"]) .type-tabs a[aria-current="page"] { color: var(--accent) !important; }
+.type-tabs .n { font-size: .8rem; font-weight: 600; color: var(--muted); }
 .pick-btn {
   margin-top: 1rem;
   min-height: 64px; font-size: 1.15rem; border-radius: 20px;
