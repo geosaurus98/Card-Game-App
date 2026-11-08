@@ -2,7 +2,8 @@
 
 An offline-first Progressive Web App (PWA) with card and dice game rules organised by number of players (1, 2, 3, 4, 5+). It also has a per-game score tracker and a "pick a game for us" button.
 
-- 119 games (95 card games and 24 dice games). Searching brand names such as Yahtzee, Uno, Phase 10, Skip-Bo or Dutch Blitz finds the traditional game they are based on, each with equipment, objective, setup, gameplay, scoring and variations
+- 119 games (95 card games and 24 dice games), each with equipment, objective, setup, gameplay, scoring and variations
+- Searching a brand name such as Yahtzee, Uno, Phase 10, Skip-Bo or Dutch Blitz finds the traditional game it is based on
 - Separate **Card games** and **Dice games** sections on the home screen. Search and Favourites cover both, with dice games marked 🎲
 - Score tracker with quick-add buttons, custom amounts, round history, undo, target score and a winner banner
 - Tags (Good for kids, Party, Trick-taking, Patience, Betting…) shown on each game and usable as a filter on every list
