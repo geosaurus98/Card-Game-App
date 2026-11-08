@@ -209,6 +209,113 @@ CGR.score = (function () {
   function fmtDelta(n) { return (n > 0 ? '+' : n < 0 ? '−' : '') + Math.abs(n).toLocaleString(); }
   function fmt(n) { return (n < 0 ? '−' : '') + Math.abs(n).toLocaleString(); }
 
+  /* ---------- Share / export ---------- */
+  // Players sorted best-first, with tied players sharing a rank (1, 1, 3 …).
+  function standings(state) {
+    const low = state.direction === 'low';
+    const rows = state.players.map((p) => ({ name: p.name, total: total(state, p.id) }))
+      .sort((a, b) => (low ? a.total - b.total : b.total - a.total));
+    rows.forEach((r, i) => { r.rank = i > 0 && r.total === rows[i - 1].total ? rows[i - 1].rank : i + 1; });
+    return rows;
+  }
+
+  // Rounds that actually have scores (the empty "current" round is skipped).
+  function playedRounds(state) {
+    return state.rounds.filter((r, i) => Object.keys(r).length || i < state.rounds.length - 1);
+  }
+
+  function resultsText(game, state) {
+    const st = status(state, game);
+    const rows = standings(state);
+    const rounds = playedRounds(state);
+    const unit = game.scorekeeper.unit || 'points';
+    const lines = [];
+    lines.push(`${game.name} — ${st.over ? 'final scores' : 'scores so far'} (${new Date().toLocaleDateString()})`);
+    lines.push(`${state.direction === 'low' ? 'Lowest' : 'Highest'} wins${state.target != null ? ' · target ' + state.target.toLocaleString() : ''} · ${rounds.length} ${rounds.length === 1 ? 'round' : 'rounds'}`);
+    lines.push('');
+    rows.forEach((r) => {
+      const medal = r.rank === 1 ? (st.over ? '🏆' : '⭐') : `${r.rank}.`;
+      lines.push(`${medal} ${r.name} — ${fmt(r.total)} ${unit}`);
+    });
+    if (st.over && st.winners.length) {
+      lines.push('');
+      lines.push(`Winner: ${st.winners.map((w) => w.p.name).join(' & ')}`);
+    }
+    if (rounds.length) {
+      lines.push('');
+      lines.push('Round by round:');
+      rounds.forEach((r, i) => {
+        lines.push(`${i + 1}: ` + state.players.map((p) => `${p.name} ${r[p.id] == null ? '0' : fmtDelta(r[p.id])}`).join(', '));
+      });
+    }
+    lines.push('');
+    lines.push('Scored with Card Rules');
+    return lines.join('\n');
+  }
+
+  function csvCell(v) {
+    const s = String(v);
+    return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+  }
+
+  function resultsCSV(game, state) {
+    const rows = [['Round'].concat(state.players.map((p) => p.name))];
+    playedRounds(state).forEach((r, i) => rows.push([i + 1].concat(state.players.map((p) => (r[p.id] == null ? 0 : r[p.id])))));
+    rows.push(['Total'].concat(state.players.map((p) => total(state, p.id))));
+    return rows.map((r) => r.map(csvCell).join(',')).join('\r\n');
+  }
+
+  async function copyText(text) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch (e) {
+      // Fallback for browsers without the async clipboard API.
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      let ok = false;
+      try { ok = document.execCommand('copy'); } catch (e2) { ok = false; }
+      ta.remove();
+      return ok;
+    }
+  }
+
+  function downloadCSV(game, state) {
+    const blob = new Blob(['\ufeff' + resultsCSV(game, state)], { type: 'text/csv;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${game.id}-scores-${new Date().toISOString().slice(0, 10)}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+
+  async function shareResults(game, state) {
+    const text = resultsText(game, state);
+    const canShare = typeof navigator.share === 'function';
+    const actions = [{ label: 'Close', value: 'cancel', style: 'secondary' },
+      { label: 'Download CSV', value: 'csv', style: 'secondary' },
+      { label: 'Copy', value: 'copy', style: canShare ? 'secondary' : '', primary: !canShare }];
+    if (canShare) actions.push({ label: 'Share…', value: 'share', primary: true });
+    const r = await CGR.ui.dialog({ title: 'Share results', message: text, pre: true, actions });
+    if (r.action === 'share') {
+      try { await navigator.share({ title: `${game.name} scores`, text }); }
+      catch (e) { if (e && e.name !== 'AbortError' && await copyText(text)) CGR.ui.toast('Copied to clipboard'); }
+    } else if (r.action === 'copy') {
+      CGR.ui.toast((await copyText(text)) ? 'Copied to clipboard' : 'Couldn’t copy — try Share or Download');
+    } else if (r.action === 'csv') {
+      downloadCSV(game, state);
+      CGR.ui.toast('Scores downloaded as CSV');
+    }
+  }
+
   /* ---------- Rendering ---------- */
   function bodyHTML(game, state) {
     const sk = game.scorekeeper;
@@ -224,7 +331,10 @@ CGR.score = (function () {
       const score = st.winners[0] ? fmt(st.winners[0].t) : '';
       banner = `<div class="gameover" role="status">
         <span class="trophy" aria-hidden="true">🏆</span> Game over! ${st.winners.length > 1 ? 'Tie: ' : ''}${names} ${st.winners.length > 1 ? 'share the win' : 'wins'} with ${score}.
-        <div class="btn-row" style="margin-top:.75rem"><button type="button" class="btn" data-act="new">Start a new game</button></div>
+        <div class="btn-row" style="margin-top:.75rem">
+          <button type="button" class="btn" data-act="share" data-key="share-over">📤 Share results</button>
+          <button type="button" class="btn btn-secondary" data-act="new">New game</button>
+        </div>
       </div>`;
     } else if (st.out.length) {
       const names = state.players.filter((p) => st.out.indexOf(p.id) !== -1).map((p) => esc(p.name)).join(', ');
@@ -281,6 +391,7 @@ CGR.score = (function () {
         <button type="button" class="btn btn-secondary" data-act="addPlayer" data-key="addPlayer" ${state.players.length >= MAX_PLAYERS ? 'disabled' : ''}>＋ Add ${sk.teams ? 'team' : 'player'}</button>
         <button type="button" class="btn btn-secondary" data-act="new" data-key="new">New game</button>
         <button type="button" class="btn btn-danger" data-act="reset" data-key="reset">Reset</button>
+        <button type="button" class="btn btn-secondary share" data-act="share" data-key="share">📤 Share / export scores</button>
       </div>
       ${history}
       <details class="sk-settings card">
@@ -444,6 +555,10 @@ CGR.score = (function () {
               }
               break;
             }
+            case 'share': {
+              await shareResults(game, state);
+              break;
+            }
             case 'defaults': {
               state.target = sk.target;
               state.direction = sk.direction;
@@ -472,5 +587,5 @@ CGR.score = (function () {
   }
 
   CGR.views.score = view;
-  return { hasSaved, savedGames, status, total, _create: create };
+  return { hasSaved, savedGames, status, total, resultsText, resultsCSV, _create: create };
 })();
