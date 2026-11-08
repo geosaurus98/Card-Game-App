@@ -1,0 +1,20 @@
+{
+  "id": "./",
+  "name": "Card Game Rulebook",
+  "short_name": "Card Rules",
+  "description": "Offline card and dice game rules by player count, with a score tracker and a game picker.",
+  "lang": "en",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#156546",
+  "background_color": "#156546",
+  "categories": ["games", "entertainment", "reference"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

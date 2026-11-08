@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Card Game Rulebook</title>
+  <meta name="description" content="Offline card game rules organised by number of players, with a score tracker and a game picker.">
+  <meta name="theme-color" content="#156546">
+  <meta name="color-scheme" content="light dark">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Card Rules">
+  <script>
+    /* Apply saved theme and font size before first paint to avoid a flash. */
+    (function () {
+      try {
+        var s = JSON.parse(localStorage.getItem('cgr:settings') || '{}');
+        if (s.theme === 'light' || s.theme === 'dark') document.documentElement.dataset.theme = s.theme;
+        if (s.fontScale) document.documentElement.style.setProperty('--font-scale', s.fontScale);
+      } catch (e) { /* storage unavailable: use defaults */ }
+    })();
+  </script>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#view">Skip to content</a>
+
+  <header class="app-header">
+    <button type="button" class="icon-btn" id="back-btn" aria-label="Back" hidden>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.4 5.4 14 4l-8 8 8 8 1.4-1.4L8.8 12z"/></svg>
+    </button>
+    <a href="#/" class="app-title" id="app-title">
+      <span aria-hidden="true">♠</span> Card Rules
+    </a>
+    <button type="button" class="icon-btn" id="theme-btn" aria-label="Toggle dark mode">
+      <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.3 22A10 10 0 0 1 9 2.6a8 8 0 0 0 12.4 10.1A10 10 0 0 1 12.3 22z"/></svg>
+      <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zm0 19h2v3h-2zM1 11h3v2H1zm19 0h3v2h-3zM4.2 2.8l2.1 2.1-1.4 1.4-2.1-2.1zm14.9 14.9 2.1 2.1-1.4 1.4-2.1-2.1zM2.8 19.8l2.1-2.1 1.4 1.4-2.1 2.1zM17.7 4.9l2.1-2.1 1.4 1.4-2.1 2.1z"/></svg>
+    </button>
+    <button type="button" class="icon-btn" id="settings-btn" aria-label="Settings: theme and text size">
+      <span class="aa" aria-hidden="true">Aa</span>
+    </button>
+  </header>
+
+  <main id="view" tabindex="-1" aria-live="off">
+    <p class="loading">Loading…</p>
+  </main>
+
+  <!-- Screen-reader announcements (score changes, picks) -->
+  <div id="announcer" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Update-available banner, shown by app.js when a new service worker is waiting -->
+  <div id="update-banner" class="update-banner" role="status" hidden>
+    <span>A new version is available.</span>
+    <button type="button" class="btn btn-small" id="update-reload">Update</button>
+  </div>
+
+  <!-- Settings sheet -->
+  <dialog id="settings-dialog" class="sheet" aria-labelledby="settings-title">
+    <form method="dialog">
+      <h2 id="settings-title">Settings</h2>
+      <fieldset class="field">
+        <legend>Theme</legend>
+        <div class="segmented" role="radiogroup">
+          <label><input type="radio" name="theme" value="system"><span>System</span></label>
+          <label><input type="radio" name="theme" value="light"><span>Light</span></label>
+          <label><input type="radio" name="theme" value="dark"><span>Dark</span></label>
+        </div>
+      </fieldset>
+      <fieldset class="field">
+        <legend>Text size</legend>
+        <div class="stepper">
+          <button type="button" class="btn btn-secondary" id="font-down" aria-label="Smaller text">A−</button>
+          <output id="font-value" aria-live="polite">100%</output>
+          <button type="button" class="btn btn-secondary" id="font-up" aria-label="Larger text">A+</button>
+        </div>
+      </fieldset>
+      <p class="muted small" id="offline-status"></p>
+      <div class="dialog-actions">
+        <button class="btn" value="close">Done</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Generic dialog used for prompts and confirmations -->
+  <dialog id="ui-dialog" class="sheet" aria-labelledby="ui-dialog-title">
+    <form method="dialog" id="ui-dialog-form">
+      <h2 id="ui-dialog-title"></h2>
+      <p id="ui-dialog-message"></p>
+      <label class="field" id="ui-dialog-field" hidden>
+        <span id="ui-dialog-label"></span>
+        <input id="ui-dialog-input" autocomplete="off">
+      </label>
+      <div class="dialog-actions" id="ui-dialog-actions"></div>
+    </form>
+  </dialog>
+
+  <noscript><p class="loading">This app needs JavaScript enabled.</p></noscript>
+
+  <script src="js/storage.js" defer></script>
+  <script src="js/data.js" defer></script>
+  <script src="js/scorekeeper.js" defer></script>
+  <script src="js/picker.js" defer></script>
+  <script src="js/app.js" defer></script>
+</body>
+</html>
