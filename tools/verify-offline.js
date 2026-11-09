@@ -266,6 +266,98 @@ const ok = (cond, msg) => { console.log(`${cond ? 'PASS' : 'FAIL'}  ${msg}`); if
   ok(nd >= 12, `search "dice" finds the dice games (${nd})`);
   await page.fill('#q', '');
 
+  // ---------- Impostor word game (offline) ----------
+  await page.goto(BASE + '#/');
+  await page.waitForSelector('.party-btn');
+  await page.click('.party-btn');
+  await page.waitForSelector('#imp-setup');
+  ok((await page.locator('.imp-name input').count()) === 4, 'impostor: setup defaults to 4 players');
+  const impNames = ['Ann', 'Ben', 'Cat', 'Dan'];
+  for (let i = 0; i < 4; i++) await page.fill(`[data-name="${i}"]`, impNames[i]);
+  await page.selectOption('#imp-cat', 'Animals');
+  await page.selectOption('#imp-timer', '1');
+  await shot('12-impostor-setup');
+  await page.click('#imp-start');
+  await page.waitForSelector('.imp-pass');
+  ok((await page.textContent('.imp-pass h1')).includes('Ann'), 'impostor: "Pass to Ann" first');
+  const animals = await page.evaluate(() => CGR.impostorWords.Animals);
+  const rootText = () => page.evaluate(() => document.getElementById('imp-root').innerText);
+  const roles = [];
+  for (let i = 0; i < 4; i++) {
+    await page.click('#imp-ready');
+    await page.waitForSelector('#imp-card');
+    ok(await page.isDisabled('#imp-done'), `impostor: player ${i + 1}'s Done is disabled until the card is held`);
+    const box = await page.locator('#imp-card').boundingBox();
+    await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+    await page.mouse.down();
+    const held = await page.textContent('#imp-card');
+    if (i === 0) await shot('13-impostor-held');
+    if (i === 1) {
+      // App goes to background while the card is held → role hidden, back to "Pass to".
+      await page.evaluate(() => {
+        Object.defineProperty(document, 'visibilityState', { configurable: true, get: () => 'hidden' });
+        document.dispatchEvent(new Event('visibilitychange'));
+        Object.defineProperty(document, 'visibilityState', { configurable: true, get: () => 'visible' });
+      });
+      await page.mouse.up();
+      await page.waitForSelector('.imp-pass');
+      const t = await rootText();
+      ok(t.includes('Pass to') && !animals.some((w) => t.includes(w)) && !t.includes('IMPOSTOR'), 'impostor: going to background hides the role and returns to "Pass to"');
+      await page.click('#imp-ready');
+      await page.waitForSelector('#imp-card');
+      const b2 = await page.locator('#imp-card').boundingBox();
+      await page.mouse.move(b2.x + b2.width / 2, b2.y + b2.height / 2);
+      await page.mouse.down();
+    }
+    const heldNow = await page.textContent('#imp-card');
+    roles.push(heldNow);
+    await page.mouse.up();
+    const after = await rootText();
+    ok(after.includes('Hold to reveal') && !animals.some((w) => after.includes(w)) && !after.includes('IMPOSTOR'), `impostor: player ${i + 1}'s role disappears on release`);
+    await page.click('#imp-done');
+  }
+  const impCount = roles.filter((t) => t.includes('YOU ARE THE IMPOSTOR')).length;
+  const words = roles.filter((t) => !t.includes('IMPOSTOR')).map((t) => t.replace('The secret word is', '').trim());
+  ok(impCount === 1, 'impostor: exactly one impostor');
+  ok(roles.filter((t) => t.includes('IMPOSTOR')).every((t) => t.includes('Hint: Animals')), 'impostor: impostor sees the category hint');
+  ok(words.length === 3 && words.every((w) => w === words[0]) && animals.includes(words[0]), `impostor: everyone else sees the same Animals word (${words[0]})`);
+  const impName = impNames[roles.findIndex((t) => t.includes('IMPOSTOR'))];
+
+  await page.waitForSelector('.imp-circle');
+  ok((await page.textContent('h1')).includes('starts') && (await page.locator('.imp-seat').count()) === 4, 'impostor: shows who starts and a 4-seat circle');
+  const cw = await page.textContent('.imp-order');
+  await page.click('label:has(input[value="anticlockwise"])');
+  const acw = await page.textContent('.imp-order');
+  const orderNames = (t) => t.split('→').map((x) => x.trim());
+  ok(orderNames(cw)[0] === orderNames(acw)[0] && orderNames(cw)[1] === orderNames(acw)[3], `impostor: direction toggle reverses the order (${cw} / ${acw})`);
+  await shot('14-impostor-start');
+  await page.click('#imp-discuss');
+  await page.waitForSelector('#imp-time');
+  ok((await page.textContent('#imp-time')) === '1:00', 'impostor: 1-minute timer shown');
+  await page.click('#imp-timer-toggle');
+  await page.waitForTimeout(1300);
+  ok((await page.textContent('#imp-time')) !== '1:00', 'impostor: timer counts down');
+  await page.click('#imp-reveal-imp');
+  await page.click('#ui-dialog-actions button[value="ok"]');
+  await page.waitForSelector('.imp-result-names');
+  ok((await page.textContent('.imp-result-names')).includes(impName) && (await page.textContent('.imp-word')) === words[0], 'impostor: reveal shows the impostor and the secret word');
+  await shot('15-impostor-result');
+  await page.click('#imp-again');
+  await page.waitForSelector('.imp-pass');
+  ok((await page.textContent('.imp-pass h1')).includes('Ann'), 'impostor: Play again keeps players and restarts the reveal');
+  await page.click('#back-btn');
+  await page.waitForSelector('#ui-dialog[open]');
+  await page.click('#ui-dialog-actions button[value="cancel"]');
+  ok(await page.locator('.imp-pass').isVisible(), 'impostor: cancelling quit keeps the game');
+  await page.click('#back-btn');
+  await page.click('#ui-dialog-actions button[value="ok"]');
+  await page.waitForSelector('.count-btn');
+  ok(true, 'impostor: quitting returns to the menu');
+  await page.goto(BASE + '#/impostor');
+  await page.reload();
+  await page.waitForSelector('#imp-setup');
+  ok((await page.inputValue('[data-name="0"]')) === 'Ann' && (await page.inputValue('#imp-cat')) === 'Animals' && (await page.inputValue('#imp-timer')) === '1', 'impostor: names and settings are remembered');
+
   // Deep link in a brand-new tab while offline
   const page2 = await context.newPage();
   await page2.goto(BASE + '#/game/cribbage');

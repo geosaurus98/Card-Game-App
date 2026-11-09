@@ -155,6 +155,7 @@ CGR.views.home = function (type) {
       <div id="home-main">
         <nav class="count-grid${CGR.data.COUNTS.filter((c) => CGR.data.forCount(c, type).length).length === 4 ? ' four' : ''}" aria-label="Browse ${type === 'dice' ? 'dice' : 'card'} games by number of players">${counts}</nav>
         <a class="btn btn-block pick-btn" href="#/pick?type=${type}">🎲 Pick a game for us</a>
+        <a class="btn btn-secondary btn-block party-btn" href="#/impostor">🕵️ Impostor <span class="muted small">· party word game</span></a>
         <div class="home-links">
           <a class="btn btn-secondary" href="#/favourites">★ Favourites (${favCount})</a>
           <a class="btn btn-secondary" href="${base}all">All ${type === 'dice' ? 'dice' : 'card'} games (${type === 'dice' ? nDice : nCards})</a>
@@ -355,6 +356,7 @@ CGR.router = (function () {
       case 'game': return CGR.views.game(parts[1]);
       case 'score': return CGR.views.score(parts[1], params);
       case 'pick': return CGR.views.pick(params);
+      case 'impostor': return CGR.views.impostor();
       default: return CGR.views.notFound();
     }
   }
@@ -362,6 +364,7 @@ CGR.router = (function () {
   function render(opts) {
     const keepScroll = opts && opts.keepScroll;
     const y = window.scrollY;
+    if (current && current.onUnmount) current.onUnmount(); // let the old screen clean up
     current = resolve();
     view.innerHTML = current.html;
     document.title = current.title === 'Card Rules' ? 'Card & Dice Rulebook' : current.title + ' · Card Rules';
@@ -381,7 +384,9 @@ CGR.router = (function () {
     render({ focus: true });
   }
 
-  function back() {
+  async function back() {
+    // A screen can ask before leaving (e.g. a game in progress).
+    if (current && current.confirmLeave && !(await current.confirmLeave())) return;
     if (depth > 0) history.back();
     else location.hash = current && current.back ? current.back : '#/';
   }
