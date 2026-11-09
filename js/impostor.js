@@ -403,7 +403,7 @@ CGR.views = CGR.views || {};
     });
     root.querySelector('#imp-menu').addEventListener('click', () => {
       game = null;
-      location.hash = '#/';
+      location.hash = '#/party';
     });
   }
 
@@ -416,7 +416,7 @@ CGR.views = CGR.views || {};
     if (game && game.phase === 'reveal') { game.phase = 'pass'; game.revealedOnce = false; }
     return {
       title: 'Impostor',
-      back: '#/',
+      back: '#/party',
       html: '<div id="imp-root" class="imp"></div>',
       onMount(view) {
         const root = view.querySelector('#imp-root');

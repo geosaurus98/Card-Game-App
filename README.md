@@ -5,7 +5,7 @@ An offline-first Progressive Web App (PWA) with card and dice game rules organis
 - 119 games (95 card games and 24 dice games), each with equipment, objective, setup, gameplay, scoring and variations
 - Searching a brand name such as Yahtzee, Uno, Phase 10, Skip-Bo or Dutch Blitz finds the traditional game it is based on
 - Separate **Card games** and **Dice games** sections on the home screen. Search and Favourites cover both, with dice games marked 🎲
-- **Impostor**, a pass-the-phone party word game for 3–12 players (on the home screen). Hold to reveal your role, hidden the moment you let go
+- A **🎉 Party** tab with seven pass-the-phone games and tools: Impostor, Werewolf / Mafia, Hot Potato, Charades, Fishbowl, a finger chooser and a party toolkit (dice, coin, scoreboard)
 - A three-line **Quick start** summary at the top of every rules page, for teaching a game at the table
 - Score tracker with quick-add buttons, custom amounts, round history, undo, target score and a winner banner. **Share / export scores** sends the final standings through the phone's share sheet, copies them as text, or downloads a CSV for spreadsheets
 - Tags (Good for kids, Party, Trick-taking, Patience, Betting…) shown on each game and usable as a filter on every list
@@ -42,9 +42,27 @@ Screens (URL hash routes): `#/` card games home · `#/players/3` card games for 
 
 All paths are relative (`./games.json`, `css/styles.css`, …) and the service worker lives at the project root, so its scope is the folder the app is served from. That is why it works from a GitHub Pages subpath such as `https://<user>.github.io/<repo>/`.
 
+## Party games
+
+The **🎉 Party** tab (`#/party`) lists the party games. Each one's scripts load only when it is opened, which keeps app start-up fast; the service worker precaches them, so they all work offline. The list of games and the files each one needs is `CGR.PARTY_GAMES` in `js/app.js`.
+
+| Game | Route | What it does |
+|---|---|---|
+| Impostor | `#/impostor` | Secret-word bluffing game (details below). |
+| Werewolf / Mafia | `#/werewolf` | 5–18 players plus a narrator. Deals roles with the hold-to-reveal card (Werewolf/Mafia, Villager, Seer/Detective, Doctor, optional Hunter), then gives the narrator a step-by-step night script, a day checklist, and a player list for marking eliminations. It detects the winner automatically. |
+| Hot Potato | `#/hot-potato` | Shows a prompt ("Name a fruit", optionally "…starting with B"). A hidden random fuse ticks, speeding up near the end; when it goes off, record who was holding the phone. |
+| Charades | `#/charades` | Teams take timed turns acting out things from chosen decks (Actions plus word-list categories). Got it / Skip, scores, a set number of rounds. |
+| Fishbowl | `#/fishbowl` | Players secretly add words, or add random ones. Three rounds with the same words (describe, one word, act it out); leftover time carries over when the bowl empties. |
+| Finger chooser | `#/chooser` | Everyone touches the screen; it picks one player or splits players into 2–4 teams. |
+| Party toolkit | `#/toolkit` | 1–10 dice (d4–d20), coin flip with tally, and a saved scoreboard. |
+
+Party-game code follows the same pattern as Impostor: pure logic modules (`js/werewolf-logic.js`, `js/guess-logic.js`, `js/party-logic.js`) separate from the screens (`js/werewolf.js`, `js/hot-potato.js`, `js/guess-games.js`, `js/party-tools.js`). Shared screen helpers, such as the hold-to-reveal card, the timer and beeps, are in `js/party-common.js`, and the Charades actions and Hot Potato prompts are in `js/party-words.js`. Unit tests: `node tools/test-party-logic.js`.
+
+Timed turns pause, and hide the word, if the phone locks or the app goes to the background.
+
 ## Impostor word game
 
-Route `#/impostor` (button on both home screens). Fully offline: the words are bundled in the app.
+Route `#/impostor` (on the Party tab). Fully offline: the words are bundled in the app.
 
 1. **Setup:** 3–12 players with optional names, number of impostors (always a minority), category or Random, an optional category hint for the impostor, and an optional discussion timer (off by default). Names and settings are remembered (`cgr:impostor`). The current round is kept in memory only, so secrets are never saved.
 2. **Reveal:** for each player it shows "Pass to [Name]", then **Ready**. The player presses and holds the card to see the word, or "YOU ARE THE IMPOSTOR" plus the hint. Releasing hides it at once. **Done** stays disabled until the card has been held. If the app goes to the background or the screen locks, the role is hidden and the game returns to "Pass to…".

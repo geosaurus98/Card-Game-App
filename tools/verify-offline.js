@@ -268,8 +268,13 @@ const ok = (cond, msg) => { console.log(`${cond ? 'PASS' : 'FAIL'}  ${msg}`); if
 
   // ---------- Impostor word game (offline) ----------
   await page.goto(BASE + '#/');
-  await page.waitForSelector('.party-btn');
-  await page.click('.party-btn');
+  await page.waitForSelector('.type-tabs a[href="#/party"]');
+  ok(await page.evaluate(() => !CGR.views.impostor && !CGR.views.werewolf), 'party games are not loaded at start-up (lazy loading)');
+  await page.click('.type-tabs a[href="#/party"]');
+  await page.waitForSelector('.party-list');
+  ok((await page.locator('.party-list .game-item').count()) === 7, 'Party tab lists 7 party games');
+  await shot('16-party-home');
+  await page.click('.party-list a[href="#/impostor"]');
   await page.waitForSelector('#imp-setup');
   ok((await page.locator('.imp-name input').count()) === 4, 'impostor: setup defaults to 4 players');
   const impNames = ['Ann', 'Ben', 'Cat', 'Dan'];
@@ -351,12 +356,132 @@ const ok = (cond, msg) => { console.log(`${cond ? 'PASS' : 'FAIL'}  ${msg}`); if
   ok(await page.locator('.imp-pass').isVisible(), 'impostor: cancelling quit keeps the game');
   await page.click('#back-btn');
   await page.click('#ui-dialog-actions button[value="ok"]');
-  await page.waitForSelector('.count-btn');
-  ok(true, 'impostor: quitting returns to the menu');
+  await page.waitForSelector('.party-list');
+  ok(true, 'impostor: quitting returns to the party menu');
   await page.goto(BASE + '#/impostor');
   await page.reload();
   await page.waitForSelector('#imp-setup');
   ok((await page.inputValue('[data-name="0"]')) === 'Ann' && (await page.inputValue('#imp-cat')) === 'Animals' && (await page.inputValue('#imp-timer')) === '1', 'impostor: names and settings are remembered');
+
+  // ---------- Werewolf ----------
+  await page.goto(BASE + '#/werewolf');
+  await page.waitForSelector('#ww-setup');
+  await page.click('[data-step="playerCount"][data-d="-1"]');
+  await page.click('[data-step="playerCount"][data-d="-1"]');
+  ok((await page.locator('#ww-setup .imp-name input').count()) === 5, 'werewolf: player stepper (down to 5)');
+  await page.click('#ww-start');
+  const wwRoles = [];
+  for (let i = 0; i < 5; i++) {
+    await page.click('#ww-ready');
+    await page.waitForSelector('#ww-card');
+    ok(await page.isDisabled('#ww-done'), `werewolf: player ${i + 1}'s Done locked until the card is held`);
+    const b = await page.locator('#ww-card').boundingBox();
+    await page.mouse.move(b.x + b.width / 2, b.y + b.height / 2);
+    await page.mouse.down();
+    wwRoles.push(await page.textContent('#ww-card'));
+    if (i === 0) await shot('17-werewolf-role');
+    await page.mouse.up();
+    if (i === 0) ok((await page.textContent('#ww-card')).trim() === 'Hold to reveal', 'werewolf: role hidden on release');
+    await page.click('#ww-done');
+  }
+  ok(wwRoles.filter((t) => t.includes('Werewolf')).length === 1 && wwRoles.every((t) => t.includes('You are')), 'werewolf: 5 players get 1 werewolf plus village roles');
+  await page.click('#ww-narrate');
+  await page.waitForSelector('.ww-script');
+  ok((await page.textContent('.ww-line')).startsWith('Night 1'), 'werewolf: narrator script starts at night 1');
+  while (await page.locator('#ww-next').count()) await page.click('#ww-next');
+  ok((await page.textContent('h1')).includes('Day 1'), 'werewolf: stepping through the night leads to day');
+  await page.click('label:has(#ww-show-roles)');
+  await shot('18-werewolf-day');
+  const wolfIdx = await page.evaluate(() => [...document.querySelectorAll('.ww-player')].findIndex((b) => b.textContent.includes('Werewolf')));
+  await page.click(`[data-player="${wolfIdx}"]`);
+  await page.click('#ui-dialog-actions button[value="ok"]');
+  await page.waitForSelector('#ww-again');
+  ok((await page.textContent('h1')).includes('village wins'), 'werewolf: eliminating the only wolf → village wins');
+
+  // ---------- Hot Potato ----------
+  await page.goto(BASE + '#/hot-potato');
+  await page.waitForSelector('#hp-setup');
+  await page.click('#hp-start');
+  await page.waitForSelector('.hp-prompt');
+  ok((await page.textContent('.hp-prompt')).startsWith('Name'), 'hot potato: shows a prompt');
+  await page.evaluate(() => { CGR.partyLogic.fuseSeconds = () => 1.2; }); // short fuse for the test
+  await page.click('#hp-go');
+  await page.waitForSelector('.hp-live');
+  ok(!(await page.textContent('.hp-live')).match(/\d:\d\d/), 'hot potato: fuse time is hidden');
+  await page.waitForSelector('.hp-boom', { timeout: 5000 });
+  await shot('19-hot-potato-boom');
+  await page.click('[data-loser="0"]');
+  await page.waitForSelector('.hp-scores');
+  ok((await page.textContent('.hp-scores')).includes('💥'), 'hot potato: BOOM, loser recorded on the scoreboard');
+
+  // ---------- Charades ----------
+  await page.goto(BASE + '#/charades');
+  await page.waitForSelector('#gg-setup');
+  await page.click('#gg-next');
+  await page.waitForSelector('#gg-go');
+  ok((await page.textContent('h1')).includes('Team A'), 'charades: Team A goes first');
+  await page.click('#gg-go');
+  await page.waitForSelector('.gg-word');
+  const w1 = await page.textContent('.gg-word');
+  await page.click('#gg-got');
+  await page.click('#gg-got');
+  await page.click('#gg-skip');
+  ok(w1.length > 0 && (await page.textContent('.gg-live')).includes('2 so far'), 'charades: Got it scores, Skip does not');
+  await shot('20-charades-live');
+  await page.evaluate(() => { const real = Date.now; Date.now = () => real() + 120000; });
+  await page.waitForSelector('#gg-continue', { timeout: 5000 });
+  ok((await page.textContent('.page-head')).includes('got 2'), 'charades: turn ends when the timer runs out');
+  await page.click('#gg-continue');
+  await page.waitForSelector('#gg-go');
+  ok((await page.textContent('h1')).includes('Team B'), 'charades: next team’s turn');
+  await page.click('#back-btn');
+  await page.click('#ui-dialog-actions button[value="ok"]');
+  await page.reload(); // restore the real clock
+
+  // ---------- Fishbowl ----------
+  await page.goto(BASE + '#/fishbowl');
+  await page.waitForSelector('#gg-setup');
+  await page.click('#gg-next');
+  await page.waitForSelector('#gg-word');
+  for (const w of ['Eiffel Tower', 'Pizza', 'Dracula', 'Rainbow', 'Pizza', 'Kangaroo']) { await page.fill('#gg-word', w); await page.press('#gg-word', 'Enter'); }
+  ok((await page.textContent('#gg-count')).startsWith('5 words'), 'fishbowl: words added, duplicates ignored');
+  ok(!(await page.textContent('#gg-root')).includes('Dracula'), 'fishbowl: added words stay hidden');
+  await page.click('#gg-play');
+  await page.click('#gg-go');
+  for (let i = 0; i < 5; i++) await page.click('#gg-got');
+  await page.waitForSelector('#gg-continue');
+  ok((await page.textContent('h1')).includes('Bowl empty'), 'fishbowl: round ends when the bowl is empty');
+  await page.click('#gg-continue');
+  await page.waitForSelector('.gg-rule');
+  ok((await page.textContent('.page-head')).includes('Round 2 of 3') && (await page.textContent('.gg-rule')).includes('single word'), 'fishbowl: round 2 is one-word clues, same team continues');
+  await page.click('#back-btn');
+  await page.click('#ui-dialog-actions button[value="ok"]');
+  await page.waitForFunction(() => !location.hash.includes('fishbowl'));
+
+  // ---------- Finger chooser (multi-touch) ----------
+  await page.goto(BASE + '#/chooser');
+  await page.waitForSelector('#ch-area');
+  const cdp = await context.newCDPSession(page);
+  const ab = await page.locator('#ch-area').boundingBox();
+  const pts = [[60, 80], [200, 150], [120, 260]].map(([x, y], i) => ({ x: ab.x + x, y: ab.y + y, id: i + 1 }));
+  await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: pts });
+  await page.waitForSelector('.ch-dot.winner', { timeout: 6000 });
+  ok((await page.locator('.ch-dot').count()) === 3 && (await page.locator('.ch-dot.winner').count()) === 1, 'chooser: three fingers, one chosen');
+  await shot('21-chooser');
+  await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+  await page.waitForFunction(() => !document.querySelector('.ch-dot'), null, { timeout: 4000 });
+  ok(true, 'chooser: resets after fingers lift');
+
+  // ---------- Toolkit ----------
+  await page.goto(BASE + '#/toolkit');
+  await page.waitForSelector('#tk-roll');
+  await page.click('#tk-roll');
+  ok((await page.locator('.tk-die').count()) === 2, 'toolkit: rolls two dice');
+  await page.click('#tk-flip');
+  ok(['Heads', 'Tails'].includes((await page.textContent('#tk-coin')).trim()), 'toolkit: coin flip');
+  await page.click('[data-add="0"][data-amt="5"]');
+  ok((await page.textContent('.tk-score')).trim() === '5', 'toolkit: scoreboard +5');
+  await shot('22-toolkit');
 
   // Deep link in a brand-new tab while offline
   const page2 = await context.newPage();
