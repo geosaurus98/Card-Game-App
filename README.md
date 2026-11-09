@@ -55,7 +55,7 @@ Code layout:
 
 | File | What it holds |
 |---|---|
-| `js/impostor-words.js` | Word list: 15 categories × 50 words. Edit freely; keep each category's words unique. |
+| `js/impostor-words.js` | Word list: 15 categories × 100 words (1,500 in total). Edit freely; keep each category's words unique. |
 | `js/impostor-logic.js` | Pure game logic, no DOM: settings validation, names, word picking, impostor assignment, turn order. Randomness is injectable for tests. |
 | `js/impostor.js` | The screens and the hold-to-reveal gesture. |
 | `tools/test-impostor-logic.js` | Unit tests: `node tools/test-impostor-logic.js` (no dependencies). |

@@ -12,9 +12,9 @@ function test(name, fn) {
 const CATS = Object.keys(WORDS);
 
 // ---------- Word list ----------
-test('word list has 15 categories of 50 words', () => {
+test('word list has 15 categories of 100 words', () => {
   assert.strictEqual(CATS.length, 15);
-  CATS.forEach((c) => assert.strictEqual(WORDS[c].length, 50, `${c} has ${WORDS[c].length}`));
+  CATS.forEach((c) => assert.strictEqual(WORDS[c].length, 100, `${c} has ${WORDS[c].length}`));
 });
 test('no blank or duplicate words within a category', () => {
   CATS.forEach((c) => {
@@ -81,8 +81,8 @@ test('"random" uses many different categories', () => {
 });
 test('recently used words are avoided', () => {
   const rng = L.createRng(3);
-  const recent = WORDS.Food.slice(0, 49).map((w) => 'Food|' + w);
-  for (let i = 0; i < 20; i++) assert.strictEqual(L.pickWord(WORDS, 'Food', rng, recent).word, WORDS.Food[49]);
+  const recent = WORDS.Food.slice(0, 99).map((w) => 'Food|' + w);
+  for (let i = 0; i < 20; i++) assert.strictEqual(L.pickWord(WORDS, 'Food', rng, recent).word, WORDS.Food[99]);
 });
 test('if every word was used recently, it still picks one', () => {
   const recent = WORDS.Food.map((w) => 'Food|' + w);
