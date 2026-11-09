@@ -89,6 +89,59 @@ CGR.ui = {
 };
 
 /* ---------------------------------------------------------------------------
+ * On-demand script loading for party games (keeps app start-up fast).
+ * The service worker precaches these files, so this works offline.
+ * ------------------------------------------------------------------------- */
+CGR.loadScripts = (function () {
+  const loaded = {};
+  return function (files) {
+    return files.reduce((p, f) => p.then(() => loaded[f] || (loaded[f] = new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = f;
+      s.onload = resolve;
+      s.onerror = () => { delete loaded[f]; reject(new Error('Failed to load ' + f)); };
+      document.head.appendChild(s);
+    }))), Promise.resolve());
+  };
+})();
+
+const PC = 'js/party-common.js';
+CGR.PARTY_GAMES = [
+  { id: 'impostor', emoji: '🕵️', name: 'Impostor', players: '3–12 players', desc: 'Everyone gets the secret word except the impostor. Give clues and find the bluffer.',
+    files: ['js/impostor-words.js', 'js/impostor-logic.js', 'js/impostor.js'] },
+  { id: 'werewolf', emoji: '🐺', name: 'Werewolf / Mafia', players: '5–18 players + narrator', desc: 'Secret roles, night and day. The app deals roles and guides the narrator.',
+    files: [PC, 'js/werewolf-logic.js', 'js/werewolf.js'] },
+  { id: 'hot-potato', emoji: '🥔', name: 'Hot Potato', players: '2–16 players', desc: 'Answer the prompt and pass the phone before the hidden fuse goes off.',
+    files: [PC, 'js/party-logic.js', 'js/party-words.js', 'js/hot-potato.js'] },
+  { id: 'charades', emoji: '🎭', name: 'Charades', players: '4+ players in teams', desc: 'Act it out with no talking. Beat the clock for points.',
+    files: [PC, 'js/impostor-words.js', 'js/party-words.js', 'js/guess-logic.js', 'js/guess-games.js'] },
+  { id: 'fishbowl', emoji: '🐟', name: 'Fishbowl', players: '4+ players in teams', desc: 'Everyone adds words; guess them all three times: describe, one word, act.',
+    files: [PC, 'js/impostor-words.js', 'js/party-words.js', 'js/guess-logic.js', 'js/guess-games.js'] },
+  { id: 'chooser', emoji: '👆', name: 'Finger chooser', players: 'Any group', desc: 'Everyone touches the screen; it picks a player or splits you into teams.',
+    files: [PC, 'js/party-logic.js', 'js/party-tools.js'] },
+  { id: 'toolkit', emoji: '🧰', name: 'Party toolkit', players: 'Any group', desc: 'Dice roller, coin flip and a quick scoreboard.',
+    files: [PC, 'js/party-logic.js', 'js/party-tools.js'] }
+];
+
+/* Return the view if its scripts are loaded; otherwise load them, then re-render. */
+function lazyView(id) {
+  const def = CGR.PARTY_GAMES.find((g) => g.id === id);
+  if (CGR.views[id]) return CGR.views[id]();
+  return {
+    title: def.name, back: '#/party',
+    html: '<p class="loading">Loading…</p>',
+    onMount(view) {
+      const hash = location.hash;
+      CGR.loadScripts(def.files).then(() => { if (location.hash === hash) CGR.router.render(); }).catch(() => {
+        view.innerHTML = `<div class="page-head"><h1 tabindex="-1">Couldn’t load ${CGR.esc(def.name)}</h1></div>
+          <p>Connect to the internet once so the app can save this game for offline use.</p>
+          <button class="btn" onclick="location.reload()">Try again</button>`;
+      });
+    }
+  };
+}
+
+/* ---------------------------------------------------------------------------
  * Shared view fragments
  * ------------------------------------------------------------------------- */
 const DIFF_LABEL = { easy: 'Easy', medium: 'Medium', hard: 'Hard' };
@@ -109,6 +162,31 @@ function gameListHTML(list, emptyHTML) {
 /* ---------------------------------------------------------------------------
  * Views. Each returns { title, html, back, onMount }.
  * ------------------------------------------------------------------------- */
+function typeTabsHTML(type) {
+  const tab = (href, t, emoji, label, n) => `<a href="${href}" ${type === t ? 'aria-current="page"' : ''}><span aria-hidden="true">${emoji}</span> ${label} <span class="n">${n}</span></a>`;
+  return `<nav class="type-tabs three" aria-label="Game type">
+      ${tab('#/', 'cards', '🃏', 'Cards', CGR.data.ofType('cards').length)}
+      ${tab('#/dice', 'dice', '🎲', 'Dice', CGR.data.ofType('dice').length)}
+      ${tab('#/party', 'party', '🎉', 'Party', CGR.PARTY_GAMES.length)}
+    </nav>`;
+}
+
+CGR.views.party = function () {
+  CGR.state.lastCount = null;
+  return {
+    title: 'Party games',
+    back: null,
+    html: `${typeTabsHTML('party')}
+      <div class="page-head"><h1 tabindex="-1">Party games</h1>
+        <p class="muted">Play on one phone — pass it round. Everything works offline.</p></div>
+      <ul class="game-list party-list">${CGR.PARTY_GAMES.map((g) => `<li class="game-item"><a href="#/${g.id}">
+        <span class="name"><span aria-hidden="true">${g.emoji}</span> ${CGR.esc(g.name)}</span>
+        <span class="meta">${CGR.esc(g.players)}</span>
+        <span class="party-desc">${CGR.esc(g.desc)}</span>
+      </a></li>`).join('')}</ul>`
+  };
+};
+
 CGR.views.home = function (type) {
   type = type === 'dice' ? 'dice' : 'cards';
   CGR.state.lastType = type;
@@ -126,10 +204,7 @@ CGR.views.home = function (type) {
   }).join('');
   const nCards = CGR.data.ofType('cards').length;
   const nDice = CGR.data.ofType('dice').length;
-  const tabs = `<nav class="type-tabs" aria-label="Game type">
-      <a href="#/" ${type === 'cards' ? 'aria-current="page"' : ''}><span aria-hidden="true">🃏</span> Card games <span class="n">${nCards}</span></a>
-      <a href="#/dice" ${type === 'dice' ? 'aria-current="page"' : ''}><span aria-hidden="true">🎲</span> Dice games <span class="n">${nDice}</span></a>
-    </nav>`;
+  const tabs = typeTabsHTML(type);
 
   const saved = CGR.score.savedGames();
   const resume = saved.length ? `<section class="section" aria-labelledby="resume-h">
@@ -355,13 +430,17 @@ CGR.router = (function () {
       case 'game': return CGR.views.game(parts[1]);
       case 'score': return CGR.views.score(parts[1], params);
       case 'pick': return CGR.views.pick(params);
-      default: return CGR.views.notFound();
+      case 'party': return CGR.views.party();
+      default:
+        if (CGR.PARTY_GAMES.some((g) => g.id === parts[0])) return lazyView(parts[0]);
+        return CGR.views.notFound();
     }
   }
 
   function render(opts) {
     const keepScroll = opts && opts.keepScroll;
     const y = window.scrollY;
+    if (current && current.onUnmount) current.onUnmount(); // let the old screen clean up
     current = resolve();
     view.innerHTML = current.html;
     document.title = current.title === 'Card Rules' ? 'Card & Dice Rulebook' : current.title + ' · Card Rules';
@@ -381,7 +460,9 @@ CGR.router = (function () {
     render({ focus: true });
   }
 
-  function back() {
+  async function back() {
+    // A screen can ask before leaving (e.g. a game in progress).
+    if (current && current.confirmLeave && !(await current.confirmLeave())) return;
     if (depth > 0) history.back();
     else location.hash = current && current.back ? current.back : '#/';
   }
