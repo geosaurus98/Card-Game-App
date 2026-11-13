@@ -281,6 +281,7 @@ const ok = (cond, msg) => { console.log(`${cond ? 'PASS' : 'FAIL'}  ${msg}`); if
   for (let i = 0; i < 4; i++) await page.fill(`[data-name="${i}"]`, impNames[i]);
   await page.selectOption('#imp-cat', 'Animals');
   await page.selectOption('#imp-timer', '1');
+  ok((await page.inputValue('#imp-hint')) === 'shortlist-6', 'impostor: default hint is a 6-word shortlist');
   await shot('12-impostor-setup');
   await page.click('#imp-start');
   await page.waitForSelector('.imp-pass');
@@ -288,6 +289,7 @@ const ok = (cond, msg) => { console.log(`${cond ? 'PASS' : 'FAIL'}  ${msg}`); if
   const animals = await page.evaluate(() => CGR.impostorWords.Animals);
   const rootText = () => page.evaluate(() => document.getElementById('imp-root').innerText);
   const roles = [];
+  let impShortlist = [];
   for (let i = 0; i < 4; i++) {
     await page.click('#imp-ready');
     await page.waitForSelector('#imp-card');
@@ -315,6 +317,7 @@ const ok = (cond, msg) => { console.log(`${cond ? 'PASS' : 'FAIL'}  ${msg}`); if
       await page.mouse.down();
     }
     const heldNow = await page.textContent('#imp-card');
+    if (heldNow.includes('IMPOSTOR')) impShortlist = await page.locator('.imp-shortlist span').allTextContents();
     roles.push(heldNow);
     await page.mouse.up();
     const after = await rootText();
@@ -324,9 +327,10 @@ const ok = (cond, msg) => { console.log(`${cond ? 'PASS' : 'FAIL'}  ${msg}`); if
   const impCount = roles.filter((t) => t.includes('YOU ARE THE IMPOSTOR')).length;
   const words = roles.filter((t) => !t.includes('IMPOSTOR')).map((t) => t.replace('The secret word is', '').trim());
   ok(impCount === 1, 'impostor: exactly one impostor');
-  ok(roles.filter((t) => t.includes('IMPOSTOR')).every((t) => t.includes('Hint: Animals')), 'impostor: impostor sees the category hint');
+  ok(roles.filter((t) => t.includes('IMPOSTOR')).every((t) => t.includes('Category: Animals')), 'impostor: impostor sees the category');
   ok(words.length === 3 && words.every((w) => w === words[0]) && animals.includes(words[0]), `impostor: everyone else sees the same Animals word (${words[0]})`);
   const impName = impNames[roles.findIndex((t) => t.includes('IMPOSTOR'))];
+  ok(impShortlist.length === 6 && impShortlist.includes(words[0]) && impShortlist.every((w) => animals.includes(w)), `impostor: shortlist of 6 animals includes the real word (${impShortlist.join(', ')})`);
 
   await page.waitForSelector('.imp-circle');
   ok((await page.textContent('h1')).includes('starts') && (await page.locator('.imp-seat').count()) === 4, 'impostor: shows who starts and a 4-seat circle');
@@ -361,7 +365,7 @@ const ok = (cond, msg) => { console.log(`${cond ? 'PASS' : 'FAIL'}  ${msg}`); if
   await page.goto(BASE + '#/impostor');
   await page.reload();
   await page.waitForSelector('#imp-setup');
-  ok((await page.inputValue('[data-name="0"]')) === 'Ann' && (await page.inputValue('#imp-cat')) === 'Animals' && (await page.inputValue('#imp-timer')) === '1', 'impostor: names and settings are remembered');
+  ok((await page.inputValue('[data-name="0"]')) === 'Ann' && (await page.inputValue('#imp-cat')) === 'Animals' && (await page.inputValue('#imp-timer')) === '1' && (await page.inputValue('#imp-hint')) === 'shortlist-6', 'impostor: names and settings are remembered');
 
   // ---------- Werewolf ----------
   await page.goto(BASE + '#/werewolf');

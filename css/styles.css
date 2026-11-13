@@ -679,3 +679,11 @@ dialog.sheet::backdrop { background: rgba(0,0,0,.5); }
 .tk-name { background: none; border: 0; text-align: left; font-weight: 700; font-size: 1.05rem; min-height: var(--tap); cursor: pointer; color: var(--text); }
 .tk-score { font-size: 1.8rem; font-variant-numeric: tabular-nums; text-align: right; padding-right: .25rem; }
 .tk-btns { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, 1fr); gap: .4rem; }
+
+/* Impostor shortlist hint */
+.imp-hint-help { display: block; margin-top: .35rem; font-weight: 400; }
+.imp-shortlist { display: flex; flex-wrap: wrap; justify-content: center; gap: .4rem; max-width: 30rem; }
+.imp-shortlist span {
+  padding: .3rem .7rem; border-radius: 999px; border: 2px solid var(--border);
+  background: var(--surface-2); color: var(--text); font-size: 1rem; font-weight: 700;
+}

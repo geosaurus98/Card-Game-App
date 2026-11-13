@@ -16,6 +16,31 @@
   const TIMER_CHOICES = [0, 1, 2, 3, 5, 10]; // minutes; 0 = off
   const RECENT_LIMIT = 40; // words remembered to avoid quick repeats
 
+  /* How much help the impostor gets, easiest first.
+   * shortlist-N: the category plus N possible words, one of which is the real word. */
+  const HINT_LEVELS = [
+    { id: 'shortlist-4', label: 'Category + 4 possible words (easiest)' },
+    { id: 'shortlist-6', label: 'Category + 6 possible words' },
+    { id: 'shortlist-10', label: 'Category + 10 possible words' },
+    { id: 'letter', label: 'Category + first letter' },
+    { id: 'category', label: 'Category only (hard)' },
+    { id: 'none', label: 'No hint (hardest)' }
+  ];
+  const DEFAULT_HINT = 'shortlist-6';
+  const HINT_IDS = HINT_LEVELS.map((h) => h.id);
+
+  /* Accepts the current hint ids and the old true/false setting. */
+  function normalizeHint(h) {
+    if (h === false) return 'none';
+    if (HINT_IDS.indexOf(h) !== -1) return h;
+    return DEFAULT_HINT; // includes the old `true` (category only), now upgraded to the easier default
+  }
+
+  function shortlistSize(hint) {
+    const m = /^shortlist-(\d+)$/.exec(hint);
+    return m ? Number(m[1]) : 0;
+  }
+
   /* Small seeded PRNG (mulberry32) for reproducible tests. */
   function createRng(seed) {
     let a = (seed >>> 0) || 1;
@@ -77,7 +102,7 @@
       playerCount,
       impostorCount,
       category,
-      hint: s.hint !== false, // default: impostor sees the category
+      hint: normalizeHint(s.hint),
       timerMinutes,
       direction: s.direction === 'anticlockwise' ? 'anticlockwise' : 'clockwise',
       names: Array.isArray(s.names) ? s.names.slice(0, MAX_PLAYERS).map((n) => String(n == null ? '' : n)) : [],
@@ -123,18 +148,36 @@
     return out;
   }
 
+  /* The real word plus (size - 1) other words from the same category, shuffled.
+   * Words used as decoys are distinct; the real word appears exactly once. */
+  function makeShortlist(list, word, size, rng) {
+    const others = list.filter((w) => w !== word);
+    for (let i = others.length - 1; i > 0; i--) {
+      const j = randomInt(i + 1, rng);
+      const t = others[i]; others[i] = others[j]; others[j] = t;
+    }
+    const out = others.slice(0, Math.max(0, size - 1)).concat(word);
+    for (let i = out.length - 1; i > 0; i--) {
+      const j = randomInt(i + 1, rng);
+      const t = out[i]; out[i] = out[j]; out[j] = t;
+    }
+    return out;
+  }
+
   /* Create a full round from settings. Returns plain data:
-   * { players, word, category, impostors: [indices], hint, starter } */
+   * { players, word, category, impostors: [indices], hint, shortlist, starter } */
   function createRound(settings, words, rng) {
     const s = normalizeSettings(settings, Object.keys(words));
     const players = normalizeNames(s.names, s.playerCount);
     const picked = pickWord(words, s.category, rng, s.recent);
+    const size = shortlistSize(s.hint);
     return {
       players,
       word: picked.word,
       category: picked.category,
       impostors: assignImpostors(players.length, s.impostorCount, rng),
       hint: s.hint,
+      shortlist: size ? makeShortlist(words[picked.category], picked.word, size, rng) : null,
       starter: pickStarter(players.length, rng)
     };
   }
@@ -142,7 +185,13 @@
   /* What player `i` should see during the reveal. */
   function roleFor(round, i) {
     if (round.impostors.indexOf(i) !== -1) {
-      return { impostor: true, hint: round.hint ? round.category : null };
+      const h = normalizeHint(round.hint);
+      return {
+        impostor: true,
+        category: h === 'none' ? null : round.category,
+        shortlist: h.indexOf('shortlist-') === 0 ? round.shortlist : null,
+        letter: h === 'letter' ? round.word.charAt(0).toUpperCase() : null
+      };
     }
     return { impostor: false, word: round.word };
   }
@@ -158,7 +207,8 @@
   }
 
   return {
-    MIN_PLAYERS, MAX_PLAYERS, MAX_NAME_LENGTH, RANDOM, TIMER_CHOICES, RECENT_LIMIT,
+    MIN_PLAYERS, MAX_PLAYERS, MAX_NAME_LENGTH, RANDOM, TIMER_CHOICES, RECENT_LIMIT, HINT_LEVELS, DEFAULT_HINT,
+    normalizeHint, shortlistSize, makeShortlist,
     createRng, maxImpostors, defaultName, normalizeNames, normalizeSettings,
     pickWord, assignImpostors, pickStarter, turnOrder, createRound, roleFor, rememberWord, formatTime
   };

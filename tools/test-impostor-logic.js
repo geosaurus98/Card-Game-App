@@ -28,11 +28,17 @@ test('no blank or duplicate words within a category', () => {
 });
 
 // ---------- Settings ----------
-test('defaults: 4 players, 1 impostor, random category, hint on, timer off, clockwise', () => {
+test('defaults: 4 players, 1 impostor, random category, 6-word shortlist hint, timer off, clockwise', () => {
   const s = L.normalizeSettings({}, CATS);
   assert.deepStrictEqual(
     [s.playerCount, s.impostorCount, s.category, s.hint, s.timerMinutes, s.direction],
-    [4, 1, 'random', true, 0, 'clockwise']);
+    [4, 1, 'random', 'shortlist-6', 0, 'clockwise']);
+});
+test('old saved hint settings are upgraded (true → shortlist, false → none)', () => {
+  assert.strictEqual(L.normalizeSettings({ hint: true }, CATS).hint, 'shortlist-6');
+  assert.strictEqual(L.normalizeSettings({ hint: false }, CATS).hint, 'none');
+  assert.strictEqual(L.normalizeSettings({ hint: 'letter' }, CATS).hint, 'letter');
+  assert.strictEqual(L.normalizeSettings({ hint: 'bogus' }, CATS).hint, 'shortlist-6');
 });
 test('player count is clamped to 3–12', () => {
   assert.strictEqual(L.normalizeSettings({ playerCount: 1 }, CATS).playerCount, 3);
@@ -50,7 +56,6 @@ test('impostors are always a minority', () => {
 test('unknown category and timer values fall back safely', () => {
   const s = L.normalizeSettings({ category: 'Nope', timerMinutes: 7, direction: 'sideways' }, CATS);
   assert.deepStrictEqual([s.category, s.timerMinutes, s.direction], ['random', 0, 'clockwise']);
-  assert.strictEqual(L.normalizeSettings({ hint: false }, CATS).hint, false);
 });
 
 // ---------- Names ----------
@@ -114,11 +119,38 @@ test('every player is equally likely to be the impostor', () => {
   for (let i = 0; i < runs; i++) counts[L.assignImpostors(6, 1, rng)[0]]++;
   counts.forEach((c) => assert.ok(Math.abs(c / runs - 1 / 6) < 0.01, `skewed: ${counts}`));
 });
-test('roleFor: impostor sees the hint only when enabled; others see the word', () => {
-  const round = { players: ['A', 'B', 'C'], word: 'Pizza', category: 'Food', impostors: [1], hint: true, starter: 0 };
-  assert.deepStrictEqual(L.roleFor(round, 0), { impostor: false, word: 'Pizza' });
-  assert.deepStrictEqual(L.roleFor(round, 1), { impostor: true, hint: 'Food' });
-  assert.deepStrictEqual(L.roleFor(Object.assign({}, round, { hint: false }), 1), { impostor: true, hint: null });
+test('roleFor: what the impostor sees at each hint level; others always see the word', () => {
+  const base = { players: ['A', 'B', 'C'], word: 'Pizza', category: 'Food', impostors: [1], shortlist: ['Soup', 'Pizza', 'Toast', 'Jam'], starter: 0 };
+  const as = (hint) => L.roleFor(Object.assign({}, base, { hint }), 1);
+  assert.deepStrictEqual(L.roleFor(Object.assign({}, base, { hint: 'none' }), 0), { impostor: false, word: 'Pizza' });
+  assert.deepStrictEqual(as('shortlist-4'), { impostor: true, category: 'Food', shortlist: base.shortlist, letter: null });
+  assert.deepStrictEqual(as('letter'), { impostor: true, category: 'Food', shortlist: null, letter: 'P' });
+  assert.deepStrictEqual(as('category'), { impostor: true, category: 'Food', shortlist: null, letter: null });
+  assert.deepStrictEqual(as('none'), { impostor: true, category: null, shortlist: null, letter: null });
+});
+test('shortlist: right size, same category, real word exactly once, no repeats', () => {
+  const rng = L.createRng(21);
+  for (const size of [4, 6, 10]) {
+    for (let i = 0; i < 200; i++) {
+      const r = L.createRound({ playerCount: 4, category: 'random', hint: 'shortlist-' + size }, WORDS, rng);
+      assert.strictEqual(r.shortlist.length, size);
+      assert.strictEqual(r.shortlist.filter((w) => w === r.word).length, 1);
+      assert.strictEqual(new Set(r.shortlist).size, size);
+      r.shortlist.forEach((w) => assert.ok(WORDS[r.category].includes(w), `${w} not in ${r.category}`));
+    }
+  }
+});
+test('shortlist: the real word is not always in the same position', () => {
+  const rng = L.createRng(22);
+  const pos = new Array(6).fill(0);
+  for (let i = 0; i < 6000; i++) {
+    const r = L.createRound({ playerCount: 4, hint: 'shortlist-6' }, WORDS, rng);
+    pos[r.shortlist.indexOf(r.word)]++;
+  }
+  pos.forEach((c) => assert.ok(Math.abs(c / 6000 - 1 / 6) < 0.02, `skewed: ${pos}`));
+});
+test('no shortlist is made for the non-shortlist hint levels', () => {
+  ['letter', 'category', 'none'].forEach((hint) => assert.strictEqual(L.createRound({ hint }, WORDS, L.createRng(23)).shortlist, null));
 });
 test('createRound builds a consistent round from saved settings', () => {
   const r = L.createRound({ playerCount: 5, impostorCount: 2, names: ['Ann', 'Bo'], category: 'Sports', hint: false }, WORDS, L.createRng(7));
@@ -126,7 +158,7 @@ test('createRound builds a consistent round from saved settings', () => {
   assert.strictEqual(r.category, 'Sports');
   assert.ok(WORDS.Sports.includes(r.word));
   assert.strictEqual(r.impostors.length, 2);
-  assert.strictEqual(r.hint, false);
+  assert.strictEqual(r.hint, 'none');
   assert.ok(r.starter >= 0 && r.starter < 5);
 });
 test('same seed gives the same round (reproducible)', () => {
