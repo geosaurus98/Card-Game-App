@@ -64,7 +64,7 @@ Timed turns pause, and hide the word, if the phone locks or the app goes to the 
 
 Route `#/impostor` (on the Party tab). Fully offline: the words are bundled in the app.
 
-1. **Setup:** 3–12 players with optional names, number of impostors (always a minority), category or Random, an optional category hint for the impostor, and an optional discussion timer (off by default). Names and settings are remembered (`cgr:impostor`). The current round is kept in memory only, so secrets are never saved.
+1. **Setup:** 3–12 players with optional names, number of impostors (always a minority), category or Random, how much help the impostor gets (by default the category plus a shortlist of 6 possible words, one of which is right; also 4 or 10 words, the first letter, the category only, or nothing), and an optional discussion timer (off by default). Names and settings are remembered (`cgr:impostor`). The current round is kept in memory only, so secrets are never saved.
 2. **Reveal:** for each player it shows "Pass to [Name]", then **Ready**. The player presses and holds the card to see the word, or "YOU ARE THE IMPOSTOR" plus the hint. Releasing hides it at once. **Done** stays disabled until the card has been held. If the app goes to the background or the screen locks, the role is hidden and the game returns to "Pass to…".
 3. **Start:** shows a random starting player and the turn order as a circle, with a clockwise/anticlockwise toggle.
 4. **Discussion:** optional countdown timer, then **Reveal impostor** (with confirmation) shows who it was and the secret word. **Play again** keeps the same players with a new word and roles; recent words are avoided. **Back to menu** ends the game. The header back button asks before quitting a round.

@@ -80,10 +80,9 @@ CGR.views = CGR.views || {};
           ${max === 1 ? '<p class="muted small">Add more players to allow extra impostors.</p>' : `<p class="muted small">Up to ${max} with ${s.playerCount} players.</p>`}
         </fieldset>
         <label class="field"><span>Category</span><select id="imp-cat">${catOpts}</select></label>
-        <label class="switch-row field">
-          <input type="checkbox" id="imp-hint" role="switch" ${s.hint ? 'checked' : ''}>
-          <span><strong>Impostor gets a hint</strong><br><span class="muted small">They see the category name instead of the word.</span></span>
-        </label>
+        <label class="field"><span>Impostor’s hint</span>
+          <select id="imp-hint">${L.HINT_LEVELS.map((h) => `<option value="${h.id}" ${s.hint === h.id ? 'selected' : ''}>${esc(h.label)}</option>`).join('')}</select>
+          <span class="muted small imp-hint-help">With a shortlist, the impostor sees a few possible words — one of them is right — so they can work it out from the clues.</span></label>
         <label class="field"><span>Discussion timer</span><select id="imp-timer">${timerOpts}</select></label>
       </form>
       <details class="card imp-howto">
@@ -246,7 +245,7 @@ CGR.views = CGR.views || {};
       form.querySelectorAll('[data-name]').forEach((inp) => { names[Number(inp.dataset.name)] = inp.value; });
       s.names = names;
       s.category = root.querySelector('#imp-cat').value;
-      s.hint = root.querySelector('#imp-hint').checked;
+      s.hint = root.querySelector('#imp-hint').value;
       s.timerMinutes = Number(root.querySelector('#imp-timer').value);
       return s;
     };
@@ -281,6 +280,19 @@ CGR.views = CGR.views || {};
     });
   }
 
+  /* What the impostor sees under "YOU ARE THE IMPOSTOR", depending on the hint level. */
+  function impostorHintHTML(role) {
+    if (!role.category) return '<span class="imp-hint">No hint — listen carefully!</span>';
+    let out = `<span class="imp-hint">Category: ${esc(role.category)}</span>`;
+    if (role.shortlist) {
+      out += `<span class="imp-label">The word is one of these:</span>
+        <span class="imp-shortlist">${role.shortlist.map((w) => `<span>${esc(w)}</span>`).join('')}</span>`;
+    } else if (role.letter) {
+      out += `<span class="imp-hint">It starts with “${esc(role.letter)}”</span>`;
+    }
+    return out;
+  }
+
   function wireReveal(root) {
     const card = root.querySelector('#imp-card');
     const text = card.querySelector('.imp-card-text');
@@ -295,7 +307,7 @@ CGR.views = CGR.views || {};
       card.classList.toggle('impostor', role.impostor);
       // Content is only in the DOM while the card is held.
       text.innerHTML = role.impostor
-        ? `<span class="imp-role">YOU ARE THE IMPOSTOR</span>${role.hint ? `<span class="imp-hint">Hint: ${esc(role.hint)}</span>` : '<span class="imp-hint">No hint — listen carefully!</span>'}`
+        ? `<span class="imp-role">YOU ARE THE IMPOSTOR</span>${impostorHintHTML(role)}`
         : `<span class="imp-label">The secret word is</span><span class="imp-secret">${esc(role.word)}</span>`;
       if (!game.revealedOnce) {
         game.revealedOnce = true;
