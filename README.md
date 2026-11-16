@@ -2,7 +2,7 @@
 
 An offline-first Progressive Web App (PWA) with card and dice game rules organised by number of players (1, 2, 3, 4, 5+). It also has a per-game score tracker and a "pick a game for us" button.
 
-- 119 games (95 card games and 24 dice games), each with equipment, objective, setup, gameplay, scoring and variations
+- 244 games (220 card games, including 72 one-player solitaires, and 24 dice games), each with equipment, objective, setup, gameplay, scoring and variations
 - Searching a brand name such as Yahtzee, Uno, Phase 10, Skip-Bo or Dutch Blitz finds the traditional game it is based on
 - Separate **Card games** and **Dice games** sections on the home screen. Search and Favourites cover both, with dice games marked 🎲
 - A **🎉 Party** tab with seven pass-the-phone games and tools: Impostor, Werewolf / Mafia, Hot Potato, Charades, Fishbowl, a finger chooser and a party toolkit (dice, coin, scoreboard)
@@ -255,5 +255,7 @@ The icons are simple generated placeholders. To redraw them, run `python3 tools/
 
 Some games from common rule-book contents pages were left out because their rules differ too much between sources to describe one standard version: **Tower of Pisa** (patience), **American Brag**, **Honest John** and **Straight Shooter** (dice). They can be added later in `games.json` using the schema above.
 
+
+Games marked as invented (for example the solitaires from Pagat.com's invented-games section, Brian Stovel's Twenty or David Parlett's Penguin) credit their designer in the objective. The rules are summarised in the app's own words; a few loosely written originals (Lockout, Twist Solitaire) are given as a cleaned-up reading. **Spiralling Shape** was left out because its rules survive only on an archived page that this project's network can't reach, and Pagat's links to externally hosted games (Boardwalk, Byzantium, Elemental and similar) and to commercially published games such as Sid Sackson's Bowling Solitaire were not copied.
 
 The rules follow the most widely played version of each game. Where common versions differ (scoring schemes, pass limits, house rules), the alternatives are listed under **Common variations**, or noted inline.

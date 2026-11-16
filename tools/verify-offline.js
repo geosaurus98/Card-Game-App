@@ -60,7 +60,7 @@ const ok = (cond, msg) => { console.log(`${cond ? 'PASS' : 'FAIL'}  ${msg}`); if
   ok(searchN >= 8, `search "trick" finds ${searchN} games`);
   await shot('01b-search');
   // Brand names lead to the traditional equivalent
-  for (const [q, expect] of [['yahtzee', 'Yacht'], ['uno', 'Crazy Eights'], ['phase 10', 'Contract Rummy'], ['skip-bo', 'Spite and Malice'], ['dutch blitz', 'Racing Demon'], ['left center right', 'Aces to the Centre']]) {
+  for (const [q, expect] of [['yahtzee', 'Yacht'], ['uno', 'Crazy Eights'], ['phase 10', 'Contract Rummy'], ['skip-bo', 'Spite and Malice'], ['dutch blitz', 'Racing Demon'], ['left center right', 'Aces to the Centre'], ['nertz', 'Racing Demon'], ['thirty-one', 'Blitz'], ['goofspiel', 'GOPS'], ['tien len', 'Tiến Lên'], ['yaniv', 'Jhyap'], ['fight the landlord', 'Dou Dizhu'], ['bela', 'Klaberjass'], ['shithead', 'Palace'], ['agurk', 'Cucumber'], ['chase the pig', 'Gong Zhu'], ['thousand', '1000'], ['parlett penguin', 'Penguin'], ['seahaven', 'Seahaven Towers'], ['toby ord', 'Autumn Leaves'], ['old patience', 'Sir Tommy'], ['magic square', 'Diamond Heist']]) {
     await page.fill('#q', q);
     const names = await page.locator('#search-results .game-item .name').allTextContents();
     ok(names.some((n) => n.startsWith(expect)), `search "${q}" finds ${expect}`);
@@ -187,7 +187,10 @@ const ok = (cond, msg) => { console.log(`${cond ? 'PASS' : 'FAIL'}  ${msg}`); if
   await page.click('#pick-go');
   const p2 = await page.textContent('#pick-name');
   ok(hardSolo.length < 2 ? p2 === p1 : p2 !== p1, 'pick again shows a different game when there is one');
-  await page.click('label:has(input[name="time"][value="long"])');
+  // Choose a play time with no hard one-player card games, so the zero-match message appears
+  const emptyTime = await page.evaluate(() => ['short', 'medium', 'long'].find((time) => CGR.data.filter({ count: '1', difficulty: 'hard', time, type: 'cards' }).length === 0));
+  ok(!!emptyTime, `some play time has no hard 1-player card games (${emptyTime})`);
+  await page.click(`label:has(input[name="time"][value="${emptyTime}"])`);
   ok(await page.locator('text=No matching games').isVisible(), 'picker: zero-match message shown');
   await shot('06-picker-none');
   await page.click('[data-clear="time"]');
