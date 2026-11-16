@@ -15219,6 +15219,3569 @@
         "unit": "points",
         "endCondition": "target"
       }
+    },
+    {
+      "id": "australian-patience",
+      "name": "Australian Patience",
+      "type": "cards",
+      "aliases": [
+        "Australian Solitaire"
+      ],
+      "keywords": [
+        "solitaire",
+        "patience",
+        "yukon",
+        "klondike",
+        "scorpion",
+        "one deck"
+      ],
+      "tags": [
+        "patience"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          10,
+          20
+        ],
+        "category": "medium"
+      },
+      "difficulty": "medium",
+      "equipment": [
+        "One standard 52-card deck, no jokers",
+        "A table with room to lay out the cards"
+      ],
+      "objective": "Move all 52 cards to four foundations, built up by suit from Ace to King.",
+      "quickStart": [
+        "Deal 7 piles of 4 face-up cards; the rest is the stock.",
+        "Build down in suit; any face-up card can move, taking the cards on top of it.",
+        "Turn the stock one card at a time, once only. Only Kings fill empty piles."
+      ],
+      "setup": [
+        "Shuffle and deal seven piles of four cards each, all face up and overlapping so you can see every card. This is the tableau.",
+        "The remaining 24 cards form the stock, face down. Leave room for four foundations and a waste pile."
+      ],
+      "gameplay": [
+        "Aces go to the foundations as they become available; build each foundation up in suit to the King.",
+        "On the tableau, build down in the same suit (e.g. 7♥ onto 8♥).",
+        "As in Yukon, you may move any face-up card to another pile if it fits, and every card lying on top of it moves with it, even if those cards are not in sequence.",
+        "Only a King (with whatever is on top of it) may be moved into an empty pile.",
+        "Turn cards from the stock one at a time to the waste pile. The top waste card may be played to the tableau or a foundation.",
+        "You get only one pass through the stock."
+      ],
+      "scoring": [
+        "You win if all 52 cards reach the foundations. Only about 1 game in 5 can be won, so count wins over a session."
+      ],
+      "variations": [
+        "Canberra: you may redeal the stock once.",
+        "Tasmanian Solitaire: unlimited redeals.",
+        "Brisbane: a different starting tableau.",
+        "Australian Patience can also be played as a race between two players, each with their own deck."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          1
+        ],
+        "unit": "wins",
+        "hint": "Add 1 for each deal you win; keep a running win count.",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "eight-off",
+      "name": "Eight Off",
+      "type": "cards",
+      "aliases": [],
+      "keywords": [
+        "solitaire",
+        "patience",
+        "free cells",
+        "freecell ancestor",
+        "one deck",
+        "open"
+      ],
+      "tags": [
+        "patience"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          10,
+          20
+        ],
+        "category": "medium"
+      },
+      "difficulty": "medium",
+      "equipment": [
+        "One standard 52-card deck, no jokers",
+        "A table with room to lay out the cards"
+      ],
+      "objective": "Move all cards to four foundations built up by suit from Ace to King, using eight free cells to shuffle cards around.",
+      "quickStart": [
+        "Deal 8 columns of 6 face up; the last 4 cards go into 4 of the 8 cells.",
+        "Build columns down in suit; a cell holds one card. Only Kings fill empty columns.",
+        "Build foundations Ace to King by suit. Every card is visible, so plan ahead."
+      ],
+      "setup": [
+        "Shuffle and deal eight columns of six cards each, all face up and overlapping.",
+        "Put the remaining four cards face up into four of the eight cells (a row of eight single-card spaces). The other four cells start empty.",
+        "Leave room for four foundation piles."
+      ],
+      "gameplay": [
+        "Aces go to the foundations when free, and each foundation is built up in suit to the King.",
+        "The bottom (exposed) card of each column can be moved to a foundation, onto another column, or into an empty cell.",
+        "Tableau columns are built down in the same suit (e.g. 9♣ onto 10♣).",
+        "Officially you move one card at a time; in practice you can move a run of cards in sequence as long as you have enough empty cells to do it one card at a time (with 3 empty cells you can move 4 cards).",
+        "Cards in cells may be played to a foundation or onto a column at any time.",
+        "Only a King, or a run headed by a King, may fill an empty column."
+      ],
+      "scoring": [
+        "You win when all 52 cards are on the foundations. Most deals are winnable with careful play."
+      ],
+      "variations": [
+        "Easier: allow any card into an empty column (as in FreeCell).",
+        "Different: build down in alternating colours instead of by suit.",
+        "Eight Off was one of the inspirations for FreeCell and is very close to Baker’s Game."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          1
+        ],
+        "unit": "wins",
+        "hint": "Add 1 for each deal you win; keep a running win count.",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "seahaven-towers",
+      "name": "Seahaven Towers",
+      "type": "cards",
+      "aliases": [
+        "Seahaven"
+      ],
+      "keywords": [
+        "solitaire",
+        "patience",
+        "free cells",
+        "freecell",
+        "one deck",
+        "open"
+      ],
+      "tags": [
+        "patience"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          10,
+          20
+        ],
+        "category": "medium"
+      },
+      "difficulty": "medium",
+      "equipment": [
+        "One standard 52-card deck, no jokers",
+        "A table with room to lay out the cards"
+      ],
+      "objective": "Move all cards to four foundations built up by suit from Ace to King, with the help of four free cells.",
+      "quickStart": [
+        "Deal 10 columns of 5 face up; put the last 2 cards in 2 of 4 free cells.",
+        "Build down in suit; move one card at a time. Only Kings fill empty columns.",
+        "Build foundations Ace to King by suit. Good players win most deals."
+      ],
+      "setup": [
+        "Shuffle and deal ten columns of five cards each, all face up and overlapping.",
+        "Put the remaining two cards into two of the four free cells (single-card holding spaces).",
+        "Leave room for four foundations."
+      ],
+      "gameplay": [
+        "Aces go to the foundations as soon as they are free; build each one up in suit to the King.",
+        "The exposed card at the end of each column may be moved to a foundation, to a free cell, or onto a column.",
+        "On the tableau, build down in the same suit.",
+        "Move one card at a time. A run can be moved only if you have enough empty cells (and spaces) to move it card by card.",
+        "Only a King, or a run headed by a King, may fill an empty column."
+      ],
+      "scoring": [
+        "You win when all 52 cards are on the foundations. With skill you can expect to win around three-quarters of deals."
+      ],
+      "variations": [
+        "Easier: allow any card into an empty column.",
+        "Seahaven Towers is closely related to FreeCell (alternating colours, 8 columns) and Eight Off (8 cells)."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          1
+        ],
+        "unit": "wins",
+        "hint": "Add 1 for each deal you win; keep a running win count.",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "gypsy-solitaire",
+      "name": "Gypsy",
+      "type": "cards",
+      "aliases": [
+        "Gypsy Solitaire"
+      ],
+      "keywords": [
+        "solitaire",
+        "patience",
+        "two decks",
+        "double deck",
+        "alternating colours"
+      ],
+      "tags": [
+        "patience",
+        "multi-deck"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          20,
+          40
+        ],
+        "category": "medium"
+      },
+      "difficulty": "medium",
+      "equipment": [
+        "Two standard 52-card decks shuffled together, no jokers (104 cards)",
+        "A large table"
+      ],
+      "objective": "Build all 104 cards onto eight foundations, one for each Ace, going up in suit to the King.",
+      "quickStart": [
+        "Deal 8 piles of 3 (top card face up); the rest is the stock.",
+        "Build down in alternating colours; move runs freely; any card fills a space.",
+        "When stuck, deal 8 more cards, one onto each pile. No redeal."
+      ],
+      "setup": [
+        "Shuffle the two decks together.",
+        "Deal eight piles of three cards: two face down and one face up on top of each.",
+        "The remaining 80 cards are the stock. Leave room above for eight foundations."
+      ],
+      "gameplay": [
+        "Each Ace goes to its own foundation when it becomes available; build foundations up in suit to the King.",
+        "On the tableau, build down in alternating colours (e.g. a black 6 onto a red 7).",
+        "You may move a run of correctly sequenced cards, in whole or in part, to another pile.",
+        "When a face-down card is uncovered, turn it face up.",
+        "An empty pile may be filled with any card or run.",
+        "When you have no useful moves left, deal eight cards from the stock, one face up onto each pile, then carry on.",
+        "There is no redeal once the stock is used up."
+      ],
+      "scoring": [
+        "You win when all 104 cards are on the foundations."
+      ],
+      "variations": [
+        "Some versions allow a card to be played back from a foundation onto the tableau.",
+        "Similar two-deck games include Forty Thieves and Miss Milligan."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          1
+        ],
+        "unit": "wins",
+        "hint": "Add 1 for each deal you win; keep a running win count.",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "miss-milligan",
+      "name": "Miss Milligan",
+      "type": "cards",
+      "aliases": [],
+      "keywords": [
+        "solitaire",
+        "patience",
+        "two decks",
+        "waiving",
+        "weaving",
+        "alternating colours"
+      ],
+      "tags": [
+        "patience",
+        "multi-deck"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          20,
+          40
+        ],
+        "category": "medium"
+      },
+      "difficulty": "hard",
+      "equipment": [
+        "Two standard 52-card decks shuffled together, no jokers (104 cards)",
+        "A large table"
+      ],
+      "objective": "Build all 104 cards onto eight foundations, going up in suit from Ace to King.",
+      "quickStart": [
+        "Deal 8 cards in a row; deal 8 more (one per column) whenever you are stuck.",
+        "Build down in alternating colours; only Kings fill empty columns.",
+        "When the stock is gone you may set aside one card or run (‘waiving’)."
+      ],
+      "setup": [
+        "Shuffle the two decks together.",
+        "Deal one row of eight cards face up. These start eight columns.",
+        "The rest of the cards are the stock. Leave room for eight foundations."
+      ],
+      "gameplay": [
+        "Aces go to the foundations as they become available; build each foundation up in suit to the King.",
+        "On the columns, build down in alternating colours.",
+        "You can move one card, or a run in sequence (whole or part), from one column to another.",
+        "Only a King, or a run headed by a King, may go into an empty column.",
+        "When you have made all the moves you want, deal another eight cards from the stock, one onto each column (including empty ones), and continue.",
+        "Waiving: once the stock is exhausted (there is no redeal), you may pick up one card or one run and set it aside. You may put it back onto the tableau (or foundations) whenever it can legally go there. Only one card or run may be set aside at a time.",
+        "The game ends when no useful moves remain."
+      ],
+      "scoring": [
+        "You win when all 104 cards reach the foundations. With good play roughly 1 game in 20 can be won, though it often recovers from hopeless-looking positions."
+      ],
+      "variations": [
+        "Millie: no waiving.",
+        "Giant: no waiving, but any card may fill an empty column.",
+        "Imperial Guards: any card may fill an empty column (easier).",
+        "Some rule sets allow only a single card, not a run, to be waived."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          1
+        ],
+        "unit": "wins",
+        "hint": "Add 1 for each deal you win; keep a running win count.",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "grandfathers-clock",
+      "name": "Grandfather’s Clock",
+      "type": "cards",
+      "aliases": [
+        "Grandfather's Clock"
+      ],
+      "keywords": [
+        "solitaire",
+        "patience",
+        "clock",
+        "clock face",
+        "one deck"
+      ],
+      "tags": [
+        "patience"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          10,
+          15
+        ],
+        "category": "short"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "One standard 52-card deck, no jokers",
+        "A table with room to lay out the cards"
+      ],
+      "objective": "Build twelve foundations, laid out like a clock face, until the top card of each shows the hour it stands at.",
+      "quickStart": [
+        "Take out 2♥ 3♠ 4♦ 5♣ 6♥ 7♠ 8♦ 9♣ 10♥ J♠ Q♦ K♣ and lay them as a clock.",
+        "Deal the rest as 8 columns of 5. Build columns down regardless of suit.",
+        "Build each clock card up in suit until it shows its hour (J = 11, Q = 12)."
+      ],
+      "setup": [
+        "Remove these twelve cards: 2♥, 3♠, 4♦, 5♣, 6♥, 7♠, 8♦, 9♣, 10♥, J♠, Q♦, K♣.",
+        "Arrange them in a circle like a clock face: 2♥ at 5 o’clock, 3♠ at 6, 4♦ at 7, 5♣ at 8, 6♥ at 9, 7♠ at 10, 8♦ at 11, 9♣ at 12, 10♥ at 1, J♠ at 2, Q♦ at 3 and K♣ at 4. These are the foundations.",
+        "Shuffle the other 40 cards and deal them face up into eight columns of five cards, below or around the clock."
+      ],
+      "gameplay": [
+        "Only the top (exposed) card of each column is available. Move one card at a time.",
+        "Build each foundation up in its own suit, going round the corner from King to Ace where needed, until its top card matches the hour where it sits. Jack counts as 11 and Queen as 12. (So the 9♣ at 12 o’clock needs 10♣, J♣, Q♣; the K♣ at 4 o’clock needs A♣, 2♣, 3♣, 4♣.)",
+        "On the tableau, build down regardless of suit (e.g. any 6 onto any 7).",
+        "An empty column may be filled with any available card."
+      ],
+      "scoring": [
+        "You win when all twelve clock positions show their correct hour (every card is on the foundations). About three games in four can be won."
+      ],
+      "variations": [
+        "Big Ben is a similar but larger game played with two decks.",
+        "For a pure-luck clock game, see Clock Patience."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          1
+        ],
+        "unit": "wins",
+        "hint": "Add 1 for each deal you win; keep a running win count.",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "royal-cotillion",
+      "name": "Royal Cotillion",
+      "type": "cards",
+      "aliases": [
+        "Lords and Ladies"
+      ],
+      "keywords": [
+        "solitaire",
+        "patience",
+        "two decks",
+        "build by twos",
+        "odds and evens",
+        "kings and queens"
+      ],
+      "tags": [
+        "patience",
+        "multi-deck"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          20,
+          30
+        ],
+        "category": "medium"
+      },
+      "difficulty": "medium",
+      "equipment": [
+        "Two standard 52-card decks shuffled together, no jokers (104 cards)",
+        "A large table"
+      ],
+      "objective": "Build eight foundations by twos so that, if you win, each suit’s King and Queen end up side by side.",
+      "quickStart": [
+        "Put one Ace and one 2 of each suit out as foundations.",
+        "Build up in suit by twos: A-3-5-7-9-J-K-2-4-…-Q and 2-4-6-…-Q-A-3-…-K.",
+        "Use the 3×4 ‘ladies’ and 4×4 ‘lords’ reserves and a single pass through the stock."
+      ],
+      "setup": [
+        "Take out one Ace and one 2 of each suit. Put the four Aces in a column on the left of centre and the four 2s in a column to their right. These are the eight foundations.",
+        "Shuffle the rest. To the left of the Aces, deal twelve cards in four columns of three (the ladies’ side).",
+        "To the right of the 2s, deal sixteen cards in a 4×4 grid (the lords’ side).",
+        "The remaining cards are the stock."
+      ],
+      "gameplay": [
+        "Build all foundations up in suit, going up by two each time.",
+        "Ace foundations run A, 3, 5, 7, 9, J, K, 2, 4, 6, 8, 10, Q.",
+        "2 foundations run 2, 4, 6, 8, 10, Q, A, 3, 5, 7, 9, J, K.",
+        "Lords’ side: every card is available. When you play one to a foundation, fill its gap at once with the top card of the waste pile (or from the stock if there is no waste yet).",
+        "Ladies’ side: only the lowest (exposed) card of each column is available, and gaps here are not refilled.",
+        "Cards can never be built on each other in the reserves; they can only go to the foundations.",
+        "When stuck, turn the stock one card at a time onto a waste pile; the top waste card is available. There is only one pass through the stock."
+      ],
+      "scoring": [
+        "You win if all cards reach the foundations: the Ace piles end with Queens and the 2 piles end with Kings."
+      ],
+      "variations": [
+        "Gavotte (also called Odds and Evens or Palace) is a related variant.",
+        "Cotillion and the one-deck game Quadrille are similar but have no reserve and are pure luck."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          1
+        ],
+        "unit": "wins",
+        "hint": "Add 1 for each deal you win; keep a running win count.",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "sir-tommy",
+      "name": "Sir Tommy",
+      "type": "cards",
+      "aliases": [
+        "Old Patience",
+        "Try Again",
+        "Numerica"
+      ],
+      "keywords": [
+        "solitaire",
+        "patience",
+        "waste piles",
+        "one deck",
+        "simple",
+        "planner"
+      ],
+      "tags": [
+        "patience"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          5,
+          10
+        ],
+        "category": "short"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "One standard 52-card deck, no jokers",
+        "A table with room to lay out the cards"
+      ],
+      "objective": "Build four foundations from Ace up to King, ignoring suit, using four waste piles as temporary storage.",
+      "quickStart": [
+        "Turn cards one at a time from the deck.",
+        "Aces start foundations; build up to King in any suit.",
+        "Put unplayable cards on one of 4 waste piles. Only the top of each is playable."
+      ],
+      "setup": [
+        "Shuffle the deck and hold it face down.",
+        "Leave room for four foundations and four waste piles."
+      ],
+      "gameplay": [
+        "Turn the cards up one at a time.",
+        "Each Ace starts a foundation. Foundations are built up regardless of suit (A, 2, 3 … K).",
+        "A card that can go on a foundation may be played there; otherwise put it on top of any one of the four waste piles. You choose which.",
+        "The top card of each waste pile may be played to a foundation at any time, but cards may never be moved from one waste pile to another.",
+        "There is only one pass through the deck."
+      ],
+      "scoring": [
+        "You win if all four foundations reach the King. Estimates of the winning chance range from about 1 in 5 to 1 in 16, so count wins."
+      ],
+      "variations": [
+        "Tip: keep one waste pile for Kings and other high cards, and avoid burying a low card under several higher ones.",
+        "Strategy: deal every card to eight waste piles first (only Aces go out), then build — easier.",
+        "Puss in the Corner: build by colour instead.",
+        "Turn up four cards at a time and place all four before making other moves."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          1
+        ],
+        "unit": "wins",
+        "hint": "Add 1 for each deal you win; keep a running win count.",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "napoleons-square",
+      "name": "Napoleon’s Square",
+      "type": "cards",
+      "aliases": [
+        "Napoleon's Square",
+        "Le Carré Napoléon"
+      ],
+      "keywords": [
+        "solitaire",
+        "patience",
+        "two decks",
+        "forty thieves",
+        "easy"
+      ],
+      "tags": [
+        "patience",
+        "multi-deck"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          15,
+          30
+        ],
+        "category": "medium"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "Two standard 52-card decks shuffled together, no jokers (104 cards)",
+        "A large table"
+      ],
+      "objective": "Build all eight Aces up in suit to the King on foundations.",
+      "quickStart": [
+        "Deal 12 piles of 4 face up around three sides of a square.",
+        "Build piles down in suit; move runs; any card fills a space.",
+        "Turn the stock one at a time, once only. Usually winnable."
+      ],
+      "setup": [
+        "Shuffle the two decks together.",
+        "Deal forty-eight cards face up into twelve piles of four, arranged as three sides of a square (four piles to a side).",
+        "The fourth side is left for the eight foundations. The remaining cards are the stock."
+      ],
+      "gameplay": [
+        "Aces go to the foundations as they become available; build them up in suit to the King.",
+        "The top card of each pile may be played to a foundation or onto another pile.",
+        "On the piles, build down in the same suit. A run in sequence may be moved as a unit.",
+        "An empty pile may be filled with any available card or run.",
+        "When stuck, deal the stock one card at a time to a waste pile; the top waste card is available. Only one pass through the stock."
+      ],
+      "scoring": [
+        "You win when all 104 cards are on the foundations — this happens in most games."
+      ],
+      "variations": [
+        "Napoleon’s Shoulder: pack down regardless of suit.",
+        "Start with only one card per pile (as in the earliest version) for a harder game.",
+        "Napoleon’s Square is an easier relative of Forty Thieves."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          1
+        ],
+        "unit": "wins",
+        "hint": "Add 1 for each deal you win; keep a running win count.",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "westcliff",
+      "name": "Westcliff",
+      "type": "cards",
+      "aliases": [
+        "Westcliff Patience"
+      ],
+      "keywords": [
+        "solitaire",
+        "patience",
+        "klondike",
+        "easy",
+        "one deck"
+      ],
+      "tags": [
+        "patience"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          5,
+          15
+        ],
+        "category": "short"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "One standard 52-card deck, no jokers",
+        "A table with room to lay out the cards"
+      ],
+      "objective": "Build four foundations up in suit from Ace to King.",
+      "quickStart": [
+        "Deal 10 piles of 3 (top card face up); the rest is the stock.",
+        "Build down in alternating colours; move runs; any card fills a space.",
+        "Turn the stock one card at a time, once only. Most games are won."
+      ],
+      "setup": [
+        "Deal ten piles of three cards each: two face down and one face up on top.",
+        "The remaining 22 cards are the stock. Leave room for four foundations and a waste pile."
+      ],
+      "gameplay": [
+        "Aces go to the foundations as they become free; build up in suit to the King.",
+        "On the tableau, build down in alternating colours.",
+        "You can move a run of sequenced cards, whole or in part.",
+        "Turn up any face-down card that becomes exposed.",
+        "An empty pile may be filled with any card or run.",
+        "When stuck, turn the stock one card at a time onto the waste pile; the top waste card is available. Only one pass."
+      ],
+      "scoring": [
+        "You win when all 52 cards are on the foundations — about 9 games in 10 with care."
+      ],
+      "variations": [
+        "Classic Westcliff (1911): deal 21 cards in three overlapping rows of seven, the first two rows face down and the third face up. Same play; harder.",
+        "Easthaven is a related game with only seven piles and extra rows dealt from the stock."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          1
+        ],
+        "unit": "wins",
+        "hint": "Add 1 for each deal you win; keep a running win count.",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "easthaven",
+      "name": "Easthaven",
+      "type": "cards",
+      "aliases": [],
+      "keywords": [
+        "solitaire",
+        "patience",
+        "westcliff",
+        "one deck",
+        "deal rows"
+      ],
+      "tags": [
+        "patience"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          10,
+          15
+        ],
+        "category": "short"
+      },
+      "difficulty": "medium",
+      "equipment": [
+        "One standard 52-card deck, no jokers",
+        "A table with room to lay out the cards"
+      ],
+      "objective": "Build four foundations up in suit from Ace to King.",
+      "quickStart": [
+        "Deal 7 piles of 3 (top card face up).",
+        "Build down in alternating colours; only Kings fill spaces.",
+        "When stuck, deal a new row of 7 face up, one card onto each pile."
+      ],
+      "setup": [
+        "Deal seven piles of three cards: two face down and one face up on top.",
+        "The remaining 31 cards are the stock. Leave room for four foundations."
+      ],
+      "gameplay": [
+        "Aces go to the foundations when free; build each one up in suit to the King.",
+        "On the tableau, build down in alternating colours. A run may be moved in whole or in part.",
+        "Turn up face-down cards as they become exposed.",
+        "Only a King, or a run headed by a King, may fill an empty pile.",
+        "When no more useful moves are possible, deal seven cards from the stock face up, one onto each pile, and continue.",
+        "The last three cards are dealt onto the first three piles."
+      ],
+      "scoring": [
+        "You win when all 52 cards reach the foundations."
+      ],
+      "variations": [
+        "Easier: allow any card into an empty pile.",
+        "Easthaven was created from the original 21-card form of Westcliff; see that game too."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          1
+        ],
+        "unit": "wins",
+        "hint": "Add 1 for each deal you win; keep a running win count.",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "agnes",
+      "name": "Agnes",
+      "type": "cards",
+      "aliases": [
+        "Agnes Bernauer",
+        "Agnes Sorel"
+      ],
+      "keywords": [
+        "solitaire",
+        "patience",
+        "klondike",
+        "reserve",
+        "turning the corner",
+        "one deck"
+      ],
+      "tags": [
+        "patience"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          10,
+          20
+        ],
+        "category": "medium"
+      },
+      "difficulty": "hard",
+      "equipment": [
+        "One standard 52-card deck, no jokers",
+        "A table with room to lay out the cards"
+      ],
+      "objective": "Build four foundations up in suit, starting from a randomly chosen base rank and turning the corner from King to Ace.",
+      "quickStart": [
+        "Deal a Klondike-style tableau, turn one card as the base, and deal a row of 7 reserve cards.",
+        "Foundations start with that base rank and build up in suit, wrapping K→A.",
+        "Build down in alternating colours. When stuck, deal 7 more onto the reserve."
+      ],
+      "setup": [
+        "Deal 28 cards as in Klondike: seven piles of 1, 2, 3 … 7 cards with only the top card of each face up.",
+        "Turn up the next card and place it above the tableau as the first foundation. Its rank is the base rank; the three other cards of that rank start the other foundations when they turn up.",
+        "Deal seven more cards face up in a row as the reserve. The remaining 16 cards are the stock.",
+        "This version is Agnes Bernauer, the more common modern form of Agnes."
+      ],
+      "gameplay": [
+        "Build foundations up in suit from the base rank, turning the corner from King to Ace (e.g. 8, 9, 10, J, Q, K, A, 2 … 7).",
+        "On the tableau, build down in alternating colours. Turn up face-down cards as they are exposed.",
+        "Reserve cards can be played onto the tableau or a foundation, but nothing can be built on the reserve.",
+        "An empty tableau pile may only be filled by a card one rank below the base rank (or a run headed by one).",
+        "Runs on the tableau are moved as a whole (some players allow moving part of a run).",
+        "When stuck, deal seven more cards from the stock onto the reserve, one on each, covering any reserve cards still there. Covered cards become available again when the cards on top of them are played.",
+        "After the second such deal, the last two cards are turned up and are available. There is no redeal."
+      ],
+      "scoring": [
+        "You win when all 52 cards are on the foundations. It is a challenging game; count wins."
+      ],
+      "variations": [
+        "Agnes Sorel (the original 1909 game): deal 28 cards all face up in rows of 7, 6, 5 … 1, turn the 29th as the base, and build down in the same colour (not alternating). Only cards of the same suit move together. No reserve: when stuck, deal seven more cards onto the tableau. It has been called the best one-pack patience ever invented."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          1
+        ],
+        "unit": "wins",
+        "hint": "Add 1 for each deal you win; keep a running win count.",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "autumn-leaves",
+      "name": "Autumn Leaves",
+      "type": "cards",
+      "aliases": [],
+      "keywords": [
+        "solitaire",
+        "patience",
+        "toby ord",
+        "spider",
+        "invented",
+        "towers of hanoi"
+      ],
+      "tags": [
+        "patience"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          10,
+          20
+        ],
+        "category": "medium"
+      },
+      "difficulty": "medium",
+      "equipment": [
+        "One standard 52-card deck, no jokers",
+        "A table with room to lay out the cards"
+      ],
+      "objective": "Sort the whole deck into four piles, one per suit, each running from King down to Ace. (Invented by Toby Ord; published on Pagat.com.)",
+      "quickStart": [
+        "Deal 6 piles (4-4-3-3-4-4 cards), only the top card face up.",
+        "Play a card onto ANY higher card of the same suit; move in-suit runs together.",
+        "Whenever you like, deal 6 cards from your hand, one onto each pile (5 times)."
+      ],
+      "setup": [
+        "Shuffle and deal 22 cards into six piles: the two middle piles get three cards, the outer four piles get four cards.",
+        "Only the top card of each pile is face up.",
+        "Hold the remaining 30 cards face down as your hand."
+      ],
+      "gameplay": [
+        "The top card of a pile may be moved onto another pile if that pile’s top card is of the same suit and higher in rank. It does not need to be the next rank up — any higher card of the suit will do (e.g. 4♠ onto J♠).",
+        "Several cards can move together only if they form an unbroken descending run in one suit (e.g. 9♥-8♥-7♥).",
+        "When a face-down card is uncovered, turn it face up.",
+        "An empty pile is valuable: any card or run may be moved into it.",
+        "At any time you may deal six cards from your hand, one face up onto each pile (empty or not). This can be done five times in all.",
+        "Completed suits are not removed; they stay in the layout."
+      ],
+      "scoring": [
+        "You win if you end with four piles, one per suit, each running King down to Ace."
+      ],
+      "variations": [
+        "Pagat links to Toby Ord’s illustrated guide with worked examples.",
+        "For a gentler game, allow one extra redeal or an extra empty pile."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          1
+        ],
+        "unit": "wins",
+        "hint": "Add 1 for each deal you win; keep a running win count.",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "bowling-solitaire-mullen",
+      "name": "Bowling Solitaire",
+      "type": "cards",
+      "aliases": [
+        "Ten-Pin Bowling Solitaire"
+      ],
+      "keywords": [
+        "solitaire",
+        "bowling",
+        "ten pin",
+        "frames",
+        "strike",
+        "spare",
+        "kimberly mullen",
+        "add to ten",
+        "invented"
+      ],
+      "tags": [
+        "patience"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          15,
+          25
+        ],
+        "category": "medium"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "One standard 52-card deck plus 2 jokers (jokers optional — the game is harder without them)",
+        "Pen and paper or the score tracker for a bowling score sheet"
+      ],
+      "objective": "Knock down the ten ‘pins’ by removing cards in tens or pairs that add up to ten, and score as many points as you can over ten frames. (Invented by Kimberly Mullen; published on Pagat.com — a simpler game than Sid Sackson’s Bowling Solitaire.)",
+      "quickStart": [
+        "Lay 10 face-up ‘pins’ in a 4-3-2-1 triangle.",
+        "Remove 10-point cards alone, or two cards that add to 10 (jokers are wild).",
+        "Clear all pins in pass one = strike, in pass two = spare. Play 10 frames."
+      ],
+      "setup": [
+        "Shuffle the deck. Deal ten cards face up in a bowling-pin triangle: four in the back row, then three, two and one at the front. These are the pins.",
+        "The rest of the deck is your ‘ball’ stock."
+      ],
+      "gameplay": [
+        "Card values: Ace = 1, 2–10 face value, J/Q/K = 10. A joker is wild and can count as any value from 1 to 10.",
+        "Deal the stock three cards at a time onto a discard pile; only the top card of the discard pile is available.",
+        "Any 10-point card can be removed immediately, from the pins or from the top of the discard pile.",
+        "Other cards are removed in pairs that total exactly 10 (9+A, 8+2, 7+3, 6+4, 5+5). A joker can pair with any card. Pairs can use a pin and the top discard, or two pins.",
+        "You may never remove more than two cards at once, even if three or four add up to ten.",
+        "First ball: go through the stock once. If every pin is cleared, that frame is a strike. Otherwise note how many pins fell.",
+        "Second ball: pick up the discard pile and deal through it again in the same way. If the remaining pins are all cleared it is a spare; otherwise note how many more fell.",
+        "Reshuffle everything and repeat for ten frames."
+      ],
+      "scoring": [
+        "Score each frame as in ten-pin bowling: an open frame scores the pins knocked down; a spare scores 10 plus the pins from the next ball; a strike scores 10 plus the pins from the next two balls.",
+        "A perfect game is 300."
+      ],
+      "variations": [
+        "Leave out the jokers for a harder game.",
+        "Sid Sackson’s Bowling Solitaire (from A Gamut of Games) is a different, more elaborate published game."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          1,
+          5,
+          10,
+          20,
+          30
+        ],
+        "unit": "pins",
+        "endCondition": "target",
+        "hint": "Enter each frame’s score; a perfect game is 300."
+      }
+    },
+    {
+      "id": "cats-cradle",
+      "name": "Cat’s Cradle",
+      "type": "cards",
+      "aliases": [
+        "Cat's Cradle Solitaire"
+      ],
+      "keywords": [
+        "solitaire",
+        "patience",
+        "michael bourne",
+        "grid",
+        "lines",
+        "invented",
+        "4x4"
+      ],
+      "tags": [
+        "patience"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          10,
+          20
+        ],
+        "category": "medium"
+      },
+      "difficulty": "medium",
+      "equipment": [
+        "One standard 52-card deck, no jokers",
+        "A table with room to lay out the cards"
+      ],
+      "objective": "Use up all 36 cards of the stock by stacking cards along the lines of a 4×4 grid to open spaces. (Invented by Michael Bourne; published on Pagat.com.)",
+      "quickStart": [
+        "Lay out 16 cards in a 4×4 square; the rest is the stock.",
+        "Move a card onto one of opposite colour and one rank higher on the same row, column or diagonal.",
+        "When you can make no more spaces, refill them from the stock. Win by using all 36."
+      ],
+      "setup": [
+        "Deal sixteen cards face up in a 4×4 square, left to right and top to bottom.",
+        "The other 36 cards are the stock, face down.",
+        "The square contains 18 straight lines: 4 rows, 4 columns, the 2 long diagonals (4 cards each), four diagonals of 3 cards and four diagonals of 2 cards."
+      ],
+      "gameplay": [
+        "Move one card at a time: a single card or the top card of a stack.",
+        "A card may be moved onto a card of the opposite colour that is one rank higher. Ranks go round in a circle: King onto Ace and Ace onto 2 are both allowed.",
+        "The two cards must lie on the same straight line (row, column or any diagonal), in either direction. A card may never be moved into an empty space.",
+        "A card can be moved several times in one turn, e.g. a red 3 onto a black 4, then on to the other black 4 on another line, to reach new lines.",
+        "When you cannot create any more spaces, fill every space from the stock, left to right and top to bottom, and play again."
+      ],
+      "scoring": [
+        "You win if you use up all 36 stock cards. The game is lost if a refilled layout gives no way to make a space."
+      ],
+      "variations": [
+        "Tips: play forced moves first; prefer to clear the four centre squares (they lie on more lines); avoid having two stacks topped by identical-colour cards of the same rank (‘blocking’)."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          1
+        ],
+        "unit": "wins",
+        "hint": "Add 1 for each deal you win; keep a running win count.",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "chris-cross-pairs",
+      "name": "Chris-Cross Pairs",
+      "type": "cards",
+      "aliases": [
+        "Chris-Cross Pairs Solitaire"
+      ],
+      "keywords": [
+        "solitaire",
+        "patience",
+        "victor wakefield",
+        "pairs",
+        "grid",
+        "diagonals",
+        "invented"
+      ],
+      "tags": [
+        "patience"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          10,
+          20
+        ],
+        "category": "medium"
+      },
+      "difficulty": "medium",
+      "equipment": [
+        "One standard 52-card deck, no jokers",
+        "A table with room to lay out the cards",
+        "A coin or marker to track the phase (optional)"
+      ],
+      "objective": "Cast out every card in pairs of the same rank, leaving no tableau and no stock. (Invented by Victor Wakefield; published on Pagat.com.)",
+      "quickStart": [
+        "Deal a 5×5 square face up (down each column in turn).",
+        "Remove same-rank pairs from a column or a full 5-card diagonal; slide cards left to close gaps.",
+        "Rotate short rows for a second phase, then refill from the stock and repeat."
+      ],
+      "setup": [
+        "Deal 25 cards face up in five columns of five, filling column 1 top to bottom, then column 2, and so on.",
+        "The two 5-card diagonals cross at the centre card.",
+        "The other 27 cards are the stock, face down."
+      ],
+      "gameplay": [
+        "Each round has two phases.",
+        "Phase 1: if any column contains two cards of the same rank, remove them to the waste. You may also remove a pair from a diagonal that still has all 5 cards. With three of a rank in a column, choose which two; with four, you may remove both pairs.",
+        "After removing, you may slide the card just above or below a gap one space up or down into it (or not). Then close up every row by sliding its cards to the left so there are no gaps. Keep removing pairs.",
+        "Phase 2 (only if at least one pair came out in phase 1): for every row with fewer than 5 cards, move its leftmost card to the end of the row. Then remove pairs and slide cards exactly as in phase 1.",
+        "New round: refill every empty space from the stock, going down column 1, then column 2, and so on, until the square is full again or the stock runs out.",
+        "If no pair at all can be removed in a round, the game is lost."
+      ],
+      "scoring": [
+        "You win when every card has been paired off. Keeping column 1 for last helps, since it is the last column to empty."
+      ],
+      "variations": [
+        "Keep a coin heads-up for phase 1 and tails-up for phase 2 so you don’t lose track."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          1
+        ],
+        "unit": "wins",
+        "hint": "Add 1 for each deal you win; keep a running win count.",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "cricket-solitaire",
+      "name": "Cricket (Solitaire)",
+      "type": "cards",
+      "aliases": [
+        "Solo Cricket",
+        "Test Match Solitaire"
+      ],
+      "keywords": [
+        "solitaire",
+        "cricket",
+        "test match",
+        "batsmen",
+        "runs",
+        "wickets",
+        "adam lambert",
+        "simulation",
+        "invented"
+      ],
+      "tags": [
+        "patience"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          15,
+          40
+        ],
+        "category": "medium"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "One standard 52-card deck plus 2 jokers (54 cards)",
+        "Pen and paper or the score tracker"
+      ],
+      "objective": "Simulate a Test Match innings, scoring as many runs as you can before all ten batsmen are out. (Invented by Adam Lambert; published on Pagat.com.)",
+      "quickStart": [
+        "Turn cards one by one: number cards are runs, J/Q/K are 1-run extras.",
+        "Jokers always take a wicket; a diamond takes a wicket if it is ≤ the batsman’s number.",
+        "Reshuffle each time the pack runs out (one ‘day’). Stop after 10 wickets or 5 days."
+      ],
+      "setup": [
+        "Shuffle the 54-card pack and hold it face down.",
+        "Write batsmen 1 to 10 on your score sheet."
+      ],
+      "gameplay": [
+        "Turn the top card. Ace–10 score that many runs for the current batsman. Jack (leg bye), Queen (wide) and King (no ball) each add 1 extra.",
+        "Wickets: a joker always gets the batsman out. A diamond is also a wicket if its number is less than or equal to the batsman’s position in the order (Ace = 1); otherwise it scores runs as normal. So batsman 1 is out only to a joker or the Ace of diamonds, while batsman 10 is out to a joker or any diamond Ace–10.",
+        "When a batsman is out, the next one comes in.",
+        "When the pack runs out, that is the end of a day’s play: shuffle the used cards and carry on.",
+        "The innings ends when all batsmen are out or five days have been played."
+      ],
+      "scoring": [
+        "Add up the runs (and extras) for the total. Try to beat your best score, or play two innings and compare."
+      ],
+      "variations": [
+        "One-day version: limit the innings to, say, two passes through the pack.",
+        "Play a full match by batting twice for each of two imaginary teams."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          1,
+          2,
+          4,
+          6,
+          10
+        ],
+        "unit": "runs",
+        "endCondition": "target",
+        "hint": "Add each card’s runs as you turn them, or enter each batsman’s total."
+      }
+    },
+    {
+      "id": "doors-solitaire",
+      "name": "Doors",
+      "type": "cards",
+      "aliases": [],
+      "keywords": [
+        "solitaire",
+        "counting",
+        "joe wolf",
+        "simple",
+        "invented",
+        "luck"
+      ],
+      "tags": [
+        "patience"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          2,
+          5
+        ],
+        "category": "short"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "One standard 52-card deck, no jokers"
+      ],
+      "objective": "Count through the deck so that your last count lands exactly on the last card. (Invented by Joe Wolf; published on Pagat.com.)",
+      "quickStart": [
+        "Turn a card and note its number.",
+        "Turn that many more cards; the last one tells you the next count.",
+        "Win if a count ends exactly on the last card of the deck."
+      ],
+      "setup": [
+        "Shuffle and place the deck face down in front of you."
+      ],
+      "gameplay": [
+        "Turn over the top card and look at its value: Ace = 1, number cards face value, Jack = 11, Queen = 12, King = 13.",
+        "Turn over that many cards, one at a time. The last one you turn gives the next count.",
+        "Keep going through the deck in this way."
+      ],
+      "scoring": [
+        "You win if the final card of the deck is exactly the last card of a count (e.g. you turn a 7 with exactly 7 cards left).",
+        "You lose if a count needs more cards than remain (e.g. a 10 with 3 cards left); then shuffle and try again."
+      ],
+      "variations": [
+        "Count all court cards as 10 for a simpler game."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          1
+        ],
+        "unit": "wins",
+        "hint": "Add 1 for each deal you win; keep a running win count.",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "draft-solitaire",
+      "name": "Draft",
+      "type": "cards",
+      "aliases": [
+        "Draft Solitaire"
+      ],
+      "keywords": [
+        "solitaire",
+        "patience",
+        "aaron barnhart",
+        "hand",
+        "invented",
+        "one deck"
+      ],
+      "tags": [
+        "patience"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          10,
+          15
+        ],
+        "category": "short"
+      },
+      "difficulty": "medium",
+      "equipment": [
+        "One standard 52-card deck, no jokers",
+        "A table with room to lay out the cards"
+      ],
+      "objective": "Build the four Aces up in suit to the King. (Invented by Aaron Barnhart; published on Pagat.com.)",
+      "quickStart": [
+        "Aces start as foundations. Deal 4 piles of 5 (top card up) and a hand of 5.",
+        "Build piles down in suit; play from hand, refill to 5 as you play.",
+        "When stuck, discard 1 to the waste and draw. One pass through the stock."
+      ],
+      "setup": [
+        "Remove the four Aces and place them in a row as foundations.",
+        "Shuffle the other 48 cards. Deal four piles of five cards, turning only the top card of each pile face up.",
+        "Draw five cards as your hand. The rest is the stock, with room for a waste pile beside it."
+      ],
+      "gameplay": [
+        "Build foundations up in suit from Ace to King.",
+        "On the piles, build down in suit (e.g. 7♠ onto 8♠). A run in suit sequence can be moved as a unit.",
+        "Turn up any face-down card that has nothing on top of it.",
+        "An empty pile may be filled with any card.",
+        "You may play cards from your hand onto the piles or foundations. Each time you play a card from your hand, draw a replacement from the stock.",
+        "If you cannot make any move, discard one card from your hand onto the waste pile and draw another. The top waste card is available for play.",
+        "You may go through the stock only once."
+      ],
+      "scoring": [
+        "You win when all four foundations reach the King."
+      ],
+      "variations": [
+        "Easier: allow one redeal of the waste pile."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          1
+        ],
+        "unit": "wins",
+        "hint": "Add 1 for each deal you win; keep a running win count.",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "euchre-solitaire",
+      "name": "Euchre Solitaire",
+      "type": "cards",
+      "aliases": [
+        "Solitaire Euchre"
+      ],
+      "keywords": [
+        "solitaire",
+        "euchre",
+        "trick-taking",
+        "natty bumppo",
+        "bowers",
+        "trump",
+        "versus the deck",
+        "invented"
+      ],
+      "tags": [
+        "patience"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          15,
+          30
+        ],
+        "category": "medium"
+      },
+      "difficulty": "medium",
+      "equipment": [
+        "A 24-card pack: A, K, Q, J, 10 and 9 of each suit",
+        "Pen and paper or the score tracker"
+      ],
+      "objective": "Beat the deck at Euchre: be first to 10 points by winning at least three tricks in each deal you play. (Invented by Natty Bumppo, from The Columbus Book of Euchre; published on Pagat.com.)",
+      "quickStart": [
+        "Deal yourself 5 cards and turn up one card; order it up or name trumps.",
+        "When you lead, turn deck cards until one follows suit or trumps.",
+        "3+ tricks = 1 point to you; fewer = 2 points to the deck. Game is 10."
+      ],
+      "setup": [
+        "Use the 24-card Euchre pack. In the trump suit the Jack (right bower) is highest, the other Jack of the same colour (left bower) second, then A, K, Q, 10, 9.",
+        "Deal yourself five cards, then turn the next card face up on the deck."
+      ],
+      "gameplay": [
+        "Choose trumps: either order up the turned card (its suit becomes trumps; turn it face down on top of the deck) or name another suit as trumps (put the turned card at the bottom of the deck).",
+        "You lead to the first trick.",
+        "When you lead, the deck plays by turning cards from the top until one either follows suit or is a trump. That card is the deck’s play; the higher card wins the trick.",
+        "If the deck wins a trick, it leads its next top card, and you must follow suit if you can.",
+        "If the deck runs out of cards, you win all remaining tricks.",
+        "Going alone: you may declare it in any deal; then you must win all five tricks."
+      ],
+      "scoring": [
+        "You win 3 or more tricks: you score 1 point.",
+        "You win fewer than 3 tricks (euchred): the deck scores 2 points.",
+        "Going alone: all five tricks scores you 4 points; losing any trick gives the deck 4 points.",
+        "First to 10 points wins — you or the deck."
+      ],
+      "variations": [
+        "The inventor says it involves more skill than nearly any other solitaire."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": 10,
+        "defaultPlayers": 2,
+        "teams": false,
+        "quickAdd": [
+          1,
+          2,
+          4
+        ],
+        "unit": "points",
+        "endCondition": "target",
+        "hint": "Name the players ‘You’ and ‘Deck’; first to 10 wins."
+      }
+    },
+    {
+      "id": "flip-ace",
+      "name": "Flip Ace",
+      "type": "cards",
+      "aliases": [],
+      "keywords": [
+        "solitaire",
+        "aces up",
+        "variant",
+        "kewlio",
+        "invented",
+        "simple"
+      ],
+      "tags": [
+        "patience"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          5,
+          10
+        ],
+        "category": "short"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "One standard 52-card deck, no jokers",
+        "A table with room to lay out the cards"
+      ],
+      "objective": "Get the whole deck dealt out without getting stuck and without your last card being an Ace. (A variant of Aces Up, contributed to Pagat.com by ‘Kewlio’.)",
+      "quickStart": [
+        "Deal 8 cards (4×2); redeal if any is an Ace.",
+        "Cover any card that is lower than another showing card of its suit.",
+        "When an Ace appears, cover every showing card of its suit, then flip the Ace’s pile over (it is dead)."
+      ],
+      "setup": [
+        "Shuffle and deal eight cards face up, ideally in two rows of four.",
+        "If any Ace appears in this first deal, shuffle and redeal."
+      ],
+      "gameplay": [
+        "Find a showing card that is lower than another showing card of the same suit (e.g. 7♥ when 10♥ is showing). Deal a new card face up on top of the lower one.",
+        "Whenever an Ace comes up, deal a new card onto every other pile showing a card of the Ace’s suit, then turn the Ace’s pile face down: nothing more can be added to it.",
+        "Keep going while you have legal moves."
+      ],
+      "scoring": [
+        "The game is over if you run out of moves or if the last card you play is an Ace. Getting through the whole deck any other way is a win."
+      ],
+      "variations": [
+        "For a different challenge, play standard Aces Up (in this app)."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          1
+        ],
+        "unit": "wins",
+        "hint": "Add 1 for each deal you win; keep a running win count.",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "foundations-newman",
+      "name": "Foundations",
+      "type": "cards",
+      "aliases": [
+        "Foundations Solitaire"
+      ],
+      "keywords": [
+        "solitaire",
+        "patience",
+        "franklin newman",
+        "wild card",
+        "joker",
+        "chain",
+        "invented"
+      ],
+      "tags": [
+        "patience"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          15,
+          25
+        ],
+        "category": "medium"
+      },
+      "difficulty": "hard",
+      "equipment": [
+        "One standard 52-card deck plus 1 joker (wild)",
+        "A table with room to lay out the cards"
+      ],
+      "objective": "Build all four suits from Ace to King on foundations, with the help of a single wild card. (Invented by Franklin Newman in 1992; published on Pagat.com.)",
+      "quickStart": [
+        "Deal 8 piles: 3 face down with a face-up card on top. The rest is the stock.",
+        "Build down strictly in suit; the joker can stand in for one missing card.",
+        "When stuck, deal the stock 3 at a time, as often as you like."
+      ],
+      "setup": [
+        "Shuffle the 53 cards. Deal eight cards face down, then two more face down on each, then one face up on each: eight piles of four.",
+        "The 21 cards left over are the stock. Aces go to foundations as they are found."
+      ],
+      "gameplay": [
+        "On the piles, build down in the same suit only (Q♠ only on K♠, J♠ only on Q♠, and so on). A descending run of one suit is called a chain.",
+        "Turn up face-down cards when they are uncovered.",
+        "Foundations are built up in suit from the Ace. When a foundation reaches the rank just below a chain of the same suit, the whole chain can go onto it.",
+        "The joker is wild: it can stand in for any one card on the piles, linking broken chains together. When the real card turns up, it takes the joker’s place and the joker is freed.",
+        "Once you have chosen what the joker represents, it stays that card until replaced. It can never go onto a foundation; a chain stops at the joker until it is replaced.",
+        "When no move is possible, deal the stock three cards at a time; the top card is playable. You may go through the stock as many times as you like."
+      ],
+      "scoring": [
+        "You win when all four Kings sit on their foundations; only the joker should be left over."
+      ],
+      "variations": [
+        "The inventor found that two wild cards made the game too easy — keep to one."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          1
+        ],
+        "unit": "wins",
+        "hint": "Add 1 for each deal you win; keep a running win count.",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "freak-solitaire",
+      "name": "Freak Solitaire",
+      "type": "cards",
+      "aliases": [],
+      "keywords": [
+        "solitaire",
+        "michael gurfinkel",
+        "pairs",
+        "straights",
+        "keycard",
+        "invented",
+        "scoring"
+      ],
+      "tags": [
+        "patience"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          10,
+          15
+        ],
+        "category": "short"
+      },
+      "difficulty": "medium",
+      "equipment": [
+        "One standard 52-card deck, no jokers",
+        "A table with room to lay out the cards",
+        "Pen and paper or the score tracker"
+      ],
+      "objective": "Use the key card to make pairs, sets and straights, and finish with more cards in the Match pile than the Freak pile. (Invented by Michael Gurfinkel; published on Pagat.com.)",
+      "quickStart": [
+        "Deal 8 piles of 5 around a centre pile of 12; turn up each top card.",
+        "The top of the 12-pile is the key card: make pairs, sets or straights that include it.",
+        "If you can’t, send the key card and one other to the Freak pile. Score Match − Freak."
+      ],
+      "setup": [
+        "Deal eight piles of five cards in a ring, with one pile of twelve in the middle. Turn the top card of every pile face up.",
+        "The top card of the middle pile is the key card."
+      ],
+      "gameplay": [
+        "Using the key card plus top cards from the outer piles, make a pair, three or four of a kind, or a straight of at least three different ranks (e.g. 9-10-10-J-J is fine; 5-5-6 is not). The key card must be at one end of a straight. Aces are high or low, and straights may wrap round (Q-K-A-2-3).",
+        "Put the used cards in the Match pile and turn up the new top cards.",
+        "If you cannot make anything with the key card, put the key card and your least useful top card into the Freak pile.",
+        "When the middle pile is empty, move the most useful outer pile into the middle and continue.",
+        "At the very end, cards that can’t be matched go to the Freak pile."
+      ],
+      "scoring": [
+        "Score = number of cards in the Match pile minus cards in the Freak pile.",
+        "Add 20 bonus points if you use every card on the board. A typical score is 10–20."
+      ],
+      "variations": [
+        "Play several deals and add them up."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          1,
+          5,
+          10,
+          20
+        ],
+        "unit": "points",
+        "endCondition": "target",
+        "hint": "Enter Match minus Freak each deal (+20 for using every card)."
+      }
+    },
+    {
+      "id": "hebracs-dungeon",
+      "name": "Hebrac’s Dungeon",
+      "type": "cards",
+      "aliases": [
+        "Hebrac's Dungeon"
+      ],
+      "keywords": [
+        "solitaire",
+        "rpg",
+        "role playing",
+        "dungeon",
+        "adventure",
+        "luc miron",
+        "battles",
+        "treasure",
+        "invented"
+      ],
+      "tags": [
+        "patience"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          30,
+          60
+        ],
+        "category": "long"
+      },
+      "difficulty": "hard",
+      "equipment": [
+        "Two (or more) standard decks shuffled together, preferably with jokers",
+        "Pen and paper to track life points",
+        "A large table (a kitchen table is ideal)"
+      ],
+      "objective": "Explore a card dungeon, fight its guardians and collect the four magical Aces before you run out of life. (Invented by Luc Miron; published on Pagat.com.)",
+      "quickStart": [
+        "Lay out 12 chambers (3×4), each a face-down treasure under a face-down enemy.",
+        "Flip an enemy and deal with it; fight by turning your top card against its strength.",
+        "Use treasures (potions, gems, spells) to survive. Win by finding all four Aces."
+      ],
+      "setup": [
+        "Write 15 at the top of your paper: your maximum (and starting) life points.",
+        "Shuffle the cards. Deal three rows of four cards face down, then a second card face down on each — twelve chambers. The bottom card is the treasure, the top card the guardian.",
+        "The rest of the cards are your Hand Deck."
+      ],
+      "gameplay": [
+        "Start in any corner chamber. After clearing a chamber you may only move to one next to a chamber you have already visited. You cannot flee once a guardian is revealed (except by spell).",
+        "Guardians: an Ace means the chamber is empty. Numbered cards are enemies with that many life points (spades = mercenaries, hearts = amazons, clubs = evil magicians, diamonds = demons). Jacks are rival adventurers (10 life) you can fight or trade with. Black Queens steal your most valuable treasure; red Queens heal you fully or give you the treasure. Kings are merchants who sell the treasure for gems (diamonds). A joker is Hebrac himself: turn your top card — red wins you the treasure, black costs you 5 life.",
+        "Battle: turn the top card of your Hand Deck as your attack (A = 1, 2–10 face value, J/Q/K/joker = 10). If it equals or beats the enemy’s life, you win the treasure. Otherwise lose the difference in life points and attack again.",
+        "Treasures: hearts heal, spades add strength to one attack, clubs are magic for spells, diamonds are gems for buying and trading. Jacks are prisoners who help in one battle; Kings of hearts and diamonds are genies with special boons. The four Aces are the magic treasures you need (each also grants a power).",
+        "Used and defeated cards go under the Hand Deck.",
+        "When half the chambers on a level are cleared, you may go down a level: deal a fresh set of twelve chambers."
+      ],
+      "scoring": [
+        "You win the moment you hold all four Aces; you lose if your life points reach 0."
+      ],
+      "variations": [
+        "The full rules on Pagat.com include the complete spell list, trading values and what each Ace and King does — worth having open the first few times you play.",
+        "Game variations on Pagat include harder dungeons and different starting life."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          1
+        ],
+        "unit": "wins",
+        "hint": "Track your life points on paper; add 1 here for each dungeon you escape.",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "junk-solitaire",
+      "name": "Junk",
+      "type": "cards",
+      "aliases": [
+        "Junk Solitaire"
+      ],
+      "keywords": [
+        "solitaire",
+        "diego crawford",
+        "junk pile",
+        "matching",
+        "crazy eights",
+        "invented"
+      ],
+      "tags": [
+        "patience"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          5,
+          10
+        ],
+        "category": "short"
+      },
+      "difficulty": "medium",
+      "equipment": [
+        "One standard 52-card deck, no jokers"
+      ],
+      "objective": "Play the whole deck onto one pile by matching suit, rank or a ‘step’, leaving as little junk as possible. (Invented by Diego Crawford; published on Pagat.com.)",
+      "quickStart": [
+        "Turn cards one by one onto the Play Pile if they match suit or rank, step ±1 in the other colour, or are an Ace.",
+        "Otherwise (or if you choose) put them on the Junk Pile; the top junk card can be played later.",
+        "At the end, chain junk by suit/rank onto a Saving Grace pile. Score 1 per leftover card."
+      ],
+      "setup": [
+        "Shuffle the deck and hold it face down as the Draw Pile."
+      ],
+      "gameplay": [
+        "Turn the top card. Any card can start the Play Pile.",
+        "A card may go on the Play Pile if it is the same suit as the top card, the same rank, the opposite colour and one rank above or below (a ‘step’), or an Ace.",
+        "Aces are wild: an Ace can always be played, and any card can be played on an Ace. A drawn Ace must be placed at once (Play Pile or Junk Pile) before you look at the next card.",
+        "A card you cannot (or choose not to) play goes face up on the Junk Pile. Cards never move from the Play Pile to the Junk Pile.",
+        "Whenever the top Junk card can go on the Play Pile, you may move it there before drawing — sometimes a whole chain comes off.",
+        "Saving Grace: when the Draw Pile is empty, move the top Junk card to start a Saving Grace pile. Then keep moving the next Junk card onto it as long as it matches suit or rank."
+      ],
+      "scoring": [
+        "Score 1 point for each card left in the Junk Pile. Lowest is best; 0 is a perfect game (the inventor managed it twice)."
+      ],
+      "variations": [
+        "Naked Junk (for beginners): play with the Draw Pile face up, so you can see the next card too."
+      ],
+      "scorekeeper": {
+        "direction": "low",
+        "target": null,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          1,
+          5,
+          10
+        ],
+        "unit": "points",
+        "endCondition": "target",
+        "hint": "Enter the number of cards left in the Junk Pile; lower is better."
+      }
+    },
+    {
+      "id": "lockout-solitaire",
+      "name": "Lockout",
+      "type": "cards",
+      "aliases": [],
+      "keywords": [
+        "solitaire",
+        "patience",
+        "daniel r",
+        "klondike",
+        "penalty",
+        "invented"
+      ],
+      "tags": [
+        "patience"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          10,
+          20
+        ],
+        "category": "medium"
+      },
+      "difficulty": "hard",
+      "equipment": [
+        "One standard 52-card deck, no jokers",
+        "A table with room to lay out the cards"
+      ],
+      "objective": "Build complete suits from Ace to King in the foundation row while avoiding getting cards locked out. (Invented by Daniel R.; published on Pagat.com.)",
+      "quickStart": [
+        "Deal a row of 4 face-up ‘foundation row’ cards and a 4-column Klondike-style tableau below.",
+        "Stuck cards go to a free foundation-row spot, onto a row card (locking it) or face down as a penalty.",
+        "Aces must go to the foundation row. Only after the stock runs out may you turn up penalty cards."
+      ],
+      "setup": [
+        "Deal four cards face up in a row at the top: the foundation row.",
+        "Below, deal a small Klondike-style tableau of four columns: 1, 2, 3 and 4 cards, with only the last card of each face up.",
+        "The rest of the deck is the stock."
+      ],
+      "gameplay": [
+        "The original description is loose; this is a cleaned-up reading of it — see Pagat.com for the inventor’s diagrams.",
+        "The tableau works as in Klondike: build down in alternating colours.",
+        "First move any foundation-row cards that fit onto the tableau. Then turn cards from the stock one at a time and play them to the tableau if you can.",
+        "If a card cannot go on the tableau, place it in an empty spot of the foundation row. If the row is full, either build it down onto a foundation-row card (e.g. 5♥ on 6♠) — which ‘locks’ that group so it can only move back to the tableau — or put it face down in the penalty area.",
+        "The penalty area grows as an extra Klondike-style column to the right: each new column gets one more card than the one before it, with the last card face up.",
+        "Any Ace must go into the foundation row at once, displacing a card there; the displaced card goes to the tableau, the lockout, or the penalty area. Aces are built up in suit to the King.",
+        "Only after the stock is used up may you turn over one penalty card at a time."
+      ],
+      "scoring": [
+        "You win when all four suits are built from Ace to King."
+      ],
+      "variations": [
+        "Play it as a loose Klondike relative and agree any unclear points before you start."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          1
+        ],
+        "unit": "wins",
+        "hint": "Add 1 for each deal you win; keep a running win count.",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "one-player-ninety-nine",
+      "name": "One Player Ninety-Nine",
+      "type": "cards",
+      "aliases": [
+        "Solo 99",
+        "Ninety-Nine Solitaire"
+      ],
+      "keywords": [
+        "solitaire",
+        "99",
+        "ninety nine",
+        "corey dixon",
+        "dummy",
+        "adding",
+        "invented"
+      ],
+      "tags": [
+        "patience"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          10,
+          20
+        ],
+        "category": "medium"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "One standard 52-card deck plus 2 jokers",
+        "Pen and paper or the score tracker"
+      ],
+      "objective": "Play Ninety-Nine against a ‘dummy’ deck and force it over 99 before it does the same to you. (Invented by Corey Dixon; published on Pagat.com.)",
+      "quickStart": [
+        "Hold 3 cards; the dummy just plays the top card of the stock.",
+        "Take turns adding to the running total using normal Ninety-Nine card values.",
+        "Whoever can’t play without passing 99 gets a point. Reach X points and you lose."
+      ],
+      "setup": [
+        "Draw two cards: the first is yours, the second the dummy’s. The higher card goes first.",
+        "Draw three cards as your hand. If the dummy goes first, turn the next card face up to start the pile.",
+        "Agree a losing score X (e.g. 5)."
+      ],
+      "gameplay": [
+        "Use the usual Ninety-Nine card values (see the Ninety-Nine page in this app); agree what jokers do, or remove them.",
+        "On your turn, play one of your three cards, say the new total, and draw a replacement.",
+        "On the dummy’s turn, play the top card of the stock.",
+        "If the dummy would go over 99, turn the next three cards face up; if none of them lets the dummy continue, the dummy gets a point.",
+        "If the dummy is close to 99 and its card does not fit, turn two more cards; if neither fits, the dummy gets a point.",
+        "If you cannot play without going over 99, you get a point.",
+        "After each point, shuffle and start a new hand."
+      ],
+      "scoring": [
+        "Points are bad. If the dummy reaches X points first you win; if you reach X first you lose."
+      ],
+      "variations": [
+        "Change X to make matches longer or shorter."
+      ],
+      "scorekeeper": {
+        "direction": "low",
+        "target": 5,
+        "defaultPlayers": 2,
+        "teams": false,
+        "quickAdd": [
+          1
+        ],
+        "unit": "points",
+        "endCondition": "target",
+        "hint": "Name the players ‘You’ and ‘Dummy’; whoever reaches the target first loses."
+      }
+    },
+    {
+      "id": "one-minute-solitaire",
+      "name": "One-Minute Solitaire",
+      "type": "cards",
+      "aliases": [
+        "Spit for One"
+      ],
+      "keywords": [
+        "solitaire",
+        "speed",
+        "timer",
+        "robert gauss",
+        "real-time",
+        "matching",
+        "invented"
+      ],
+      "tags": [
+        "patience",
+        "real-time"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          1,
+          3
+        ],
+        "category": "short"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "One standard 52-card deck, no jokers",
+        "A one-minute timer (phone, watch or sand timer)"
+      ],
+      "objective": "Within 60 seconds, play every card onto one pile, each matching the previous card by suit or rank. (Invented by Robert Gauss around 1989; published on Pagat.com.)",
+      "quickStart": [
+        "Turn one card as the foundation, start a 60-second timer.",
+        "Flip the deck face up and play matching suit or rank onto the foundation; others go to a waste pile.",
+        "Recycle the waste without shuffling. Stop at 60 seconds."
+      ],
+      "setup": [
+        "Shuffle and hold the deck face down. Clear a small space with nothing breakable nearby!"
+      ],
+      "gameplay": [
+        "Turn the top card face up on the table: this is your only foundation.",
+        "Start the timer. The rest of the game happens in the next 60 seconds.",
+        "Flip the whole deck face up in your hand. Play each card onto the foundation if it matches the top card’s suit or rank; otherwise drop it onto a waste pile.",
+        "When your hand is empty, pick up the waste pile without shuffling or flipping and carry on.",
+        "If you think no card left matches, you may play any card onto the foundation to keep going.",
+        "Stop when the minute is up."
+      ],
+      "scoring": [
+        "You lose if any cards remain in your hand or waste pile.",
+        "If all cards are on the foundation, check it from bottom to top: each card should match the one below by suit or rank, except where you were genuinely stuck (no later card matched). If it checks out, you win."
+      ],
+      "variations": [
+        "Two players can race side by side with their own decks."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          1
+        ],
+        "unit": "wins",
+        "hint": "Add 1 for each deal you win; keep a running win count.",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "penguin-patience",
+      "name": "Penguin",
+      "type": "cards",
+      "aliases": [
+        "Penguin Patience"
+      ],
+      "keywords": [
+        "solitaire",
+        "patience",
+        "david parlett",
+        "beak",
+        "flipper",
+        "open",
+        "eight off",
+        "freecell",
+        "invented"
+      ],
+      "tags": [
+        "patience"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          15,
+          30
+        ],
+        "category": "medium"
+      },
+      "difficulty": "hard",
+      "equipment": [
+        "One standard 52-card deck, no jokers",
+        "A table with room to lay out the cards"
+      ],
+      "objective": "Free the ‘beak’ card and build all four suits up from the beak’s rank, turning the corner from King to Ace. (Invented by David Parlett for his Penguin Book of Patience.)",
+      "quickStart": [
+        "Deal 7×7 face up; the first card dealt is the beak. Its three matching ranks are foundations.",
+        "Build columns down in suit; up to 7 single cards may wait in the ‘flipper’.",
+        "Empty columns take only a card one rank below the beak. Almost every deal is winnable."
+      ],
+      "setup": [
+        "Deal the first card face up at the top left: this is the beak. Its rank is the foundation rank (e.g. if it is a 10, all foundations start at 10).",
+        "Deal six more cards to its right, then keep dealing rows of seven, overlapping, to make seven columns of seven (49 cards).",
+        "Whenever one of the other three cards of the beak’s rank comes up in the deal, put it aside as a foundation instead and deal the next card in its place.",
+        "Leave room for the flipper: seven spaces, each holding one card."
+      ],
+      "gameplay": [
+        "The bottom card of each column is available. Moving it releases the card above.",
+        "Foundations are built up in suit from the beak’s rank, turning the corner (e.g. 10, J, Q, K, A, 2 … 9). The beak itself becomes the fourth foundation once you uncover it.",
+        "You may move an available card onto the bottom card of another column if it continues a downward suit sequence (e.g. J♥ onto Q♥).",
+        "A whole run in suit sequence can be moved together onto a column if it continues the sequence.",
+        "Any available card may go into an empty flipper space, and flipper cards may be played to foundations or columns at any time.",
+        "An empty column can only be filled by a card one rank below the beak’s rank (e.g. a 9 when the beak is a 10), together with any run attached to it."
+      ],
+      "scoring": [
+        "You win when all four foundations hold thirteen cards. Very few deals are impossible; failure is usually due to an early mistake."
+      ],
+      "variations": [
+        "You can always free the beak at the start by moving its six covering cards into the flipper, but doing that straight away is often a bad idea."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          1
+        ],
+        "unit": "wins",
+        "hint": "Add 1 for each deal you win; keep a running win count.",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "portraits",
+      "name": "Portraits",
+      "type": "cards",
+      "aliases": [],
+      "keywords": [
+        "solitaire",
+        "james kyle",
+        "glastyn games",
+        "art market",
+        "buying",
+        "face cards",
+        "invented"
+      ],
+      "tags": [
+        "patience"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          10,
+          20
+        ],
+        "category": "medium"
+      },
+      "difficulty": "medium",
+      "equipment": [
+        "One standard 52-card deck, no jokers",
+        "A table with room to lay out the cards"
+      ],
+      "objective": "Collect all twelve portraits (court cards) into your vault without freezing the art market. (Designed by James Kyle, Glastyn Games, 2003, based on his game Peddler; published on Pagat.com.)",
+      "quickStart": [
+        "Deal 5 cards to the public sales row and 5 number cards to your assets.",
+        "Buy cards by paying more value in one suit; or swap an asset for one of equal value.",
+        "Courts drawn for your assets go to private sales — if that row is full, you lose."
+      ],
+      "setup": [
+        "Shuffle the deck face down as the draw pile.",
+        "Draw five cards face up into the public sales row.",
+        "Draw five cards face up into your assets row. No court card may go into your assets: put any court you draw into the private collector sales row instead (up to five cards). If a court is drawn while private sales already has five cards, you lose at once."
+      ],
+      "gameplay": [
+        "Each turn, make one transaction:",
+        "Buy an asset: discard one or more of your assets, all of one suit, totalling more than the value of a public-sales number card of the same suit. Put it in your assets.",
+        "Swap: discard one asset to take a public-sales number card of exactly the same value (of a different suit).",
+        "Buy a portrait: discard assets of one suit totalling more than a court card of that suit (J = 11, Q = 12, K = 13) from public or private sales. Put it in your vault.",
+        "Aces in your assets can count as 1 or 11 as you choose. Overpaying is allowed.",
+        "After each transaction, refill empty spots — first the public sales row, then your assets — from the draw pile (courts drawn for assets go to private sales). When the draw pile is empty, gaps are no longer filled.",
+        "You may count the draw pile and look through the discards and your vault at any time."
+      ],
+      "scoring": [
+        "You win if all twelve court cards are in your vault. You lose if no legal transaction remains first, or if a court card can’t fit in a full private sales row."
+      ],
+      "variations": [
+        "Portraits is a free game from Glastyn Games; it takes about 15 minutes."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          1
+        ],
+        "unit": "wins",
+        "hint": "Add 1 for each deal you win; keep a running win count.",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "rook-pyramid",
+      "name": "Rook Pyramid",
+      "type": "cards",
+      "aliases": [],
+      "keywords": [
+        "solitaire",
+        "pyramid",
+        "rook",
+        "rook deck",
+        "jeffrey jacobs",
+        "fifteen",
+        "invented"
+      ],
+      "tags": [
+        "patience",
+        "special-equipment"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          5,
+          15
+        ],
+        "category": "short"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "A Rook deck (the 56 numbered cards, 1–14 in four colours)",
+        "A table with room to lay out the cards"
+      ],
+      "objective": "Clear a 28-card pyramid by removing pairs that add up to 15. (Invented by Jeffrey Jacobs; published on Pagat.com.)",
+      "quickStart": [
+        "Deal a 28-card pyramid from the 56-card Rook deck.",
+        "Remove available pairs totalling 15 (1+14, 2+13 … 7+8).",
+        "You get three passes through the stock. Fewer passes = bigger win."
+      ],
+      "setup": [
+        "Shuffle the 56 numbered Rook cards. Deal a pyramid of seven rows (1, 2, 3 … 7 cards), each row overlapping the one above.",
+        "The remaining 28 cards are the stock."
+      ],
+      "gameplay": [
+        "Play as regular Pyramid, but remove pairs of available cards that add up to 15: 1+14, 2+13, 3+12, 4+11, 5+10, 6+9, 7+8.",
+        "A pyramid card is available when no card overlaps it.",
+        "Turn stock cards one at a time to a waste pile; the top waste card and the top stock card can be used in pairs.",
+        "You may go through the stock three times (two redeals)."
+      ],
+      "scoring": [
+        "Clearing the pyramid in three passes wins a single game; in two passes a double game; in one pass a triple game."
+      ],
+      "variations": [
+        "Playing with a standard deck instead? See Pyramid (pairs total 13)."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          1,
+          2,
+          3
+        ],
+        "unit": "games",
+        "endCondition": "target",
+        "hint": "Add 1, 2 or 3 for a single, double or triple win."
+      }
+    },
+    {
+      "id": "shop-solitaire",
+      "name": "Shop Solitaire",
+      "type": "cards",
+      "aliases": [
+        "The Shop Solitaire"
+      ],
+      "keywords": [
+        "solitaire",
+        "gabriel arthur petrie",
+        "candles",
+        "scales",
+        "ledger",
+        "invented"
+      ],
+      "tags": [
+        "patience"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          15,
+          30
+        ],
+        "category": "medium"
+      },
+      "difficulty": "hard",
+      "equipment": [
+        "One standard 52-card deck, no jokers",
+        "A table with room to lay out the cards"
+      ],
+      "objective": "Run a shop: light all seven candles, balance the scales, then fill the ledger — in that order. (Invented by Gabriel Arthur Petrie, 2005; published on Pagat.com.)",
+      "quickStart": [
+        "Every drawn card must go to a candle, a scale tray or the ledger.",
+        "Candles are lit when topped by a red card; scales balance when both sides’ top cards add up the same.",
+        "With all 7 candles lit and scales balanced, fill the ledger with one black suit (2–K)."
+      ],
+      "setup": [
+        "Shuffle the deck face down. You will build fourteen stacks: seven candles, six scale trays (three per side) and one ledger."
+      ],
+      "gameplay": [
+        "Candles: while fewer than seven exist, each drawn card starts a new candle. A candle is lit when its top card is red. While any candle is unlit, the next red card drawn must light one. Black cards that can go nowhere else must go on a candle, putting it out. Only the shortest candle (or one of the equal shortest) may be lit or put out. A candle holds at most five cards; one with four or five cards may be ‘trimmed’ — its cards go back into the deck.",
+        "Scales (only once all seven candles are lit): the first card on each side sets that side’s suit, and the two sides must be opposite colours. From then on every card of those suits goes onto one of the three trays on its side. The scales balance when the top cards on each side add up to the same total (A = 1 … K = 13). You may ‘recalibrate’ — shuffle all tray cards back into the deck — but then the ledger must be scrapped too.",
+        "Ledger (only with all candles lit and the scales balanced): cards of the other black suit go into the ledger. Its Ace can only go on a candle (putting it out). If the scales become unbalanced, rebalance them before adding to the ledger again.",
+        "Optional shelf: while all candles are lit you may put a drawn card on a shelf and reserve cards in a ‘purchase’ stack (total less than the shelf card), later playing either the shelf card or all the purchase cards."
+      ],
+      "scoring": [
+        "You win when the ledger holds all twelve cards (2–K) of its black suit while the candles are lit and the scales balanced."
+      ],
+      "variations": [
+        "Shortcut: start by lighting all seven candles with any seven red cards you choose.",
+        "Work ‘in the dark’ with fewer lit candles, or use more shelves.",
+        "The full rules on Pagat.com include an example win."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          1
+        ],
+        "unit": "wins",
+        "hint": "Add 1 for each deal you win; keep a running win count.",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "solitaire-bridge",
+      "name": "Solitaire Bridge",
+      "type": "cards",
+      "aliases": [
+        "Bridge for Bachelors"
+      ],
+      "keywords": [
+        "solitaire",
+        "bridge",
+        "contract bridge",
+        "stephen rogers",
+        "trick-taking",
+        "versus the deck",
+        "invented"
+      ],
+      "tags": [
+        "patience"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          20,
+          40
+        ],
+        "category": "medium"
+      },
+      "difficulty": "hard",
+      "equipment": [
+        "One standard 52-card deck plus 2 jokers (54 cards)",
+        "Pen and paper for Bridge scoring"
+      ],
+      "objective": "Bid and make a Bridge contract against the deck — or defeat the deck’s contract. (Invented by Stephen Rogers, inspired by Euchre Solitaire; published on Pagat.com.)",
+      "quickStart": [
+        "Deal 7 face down and 13 face up; choose 6 of the 13 to make your 13-card hand.",
+        "The stock bids by a formula; you overcall or defend. Jokers double the contract.",
+        "Play 13 tricks; the stock plays by turning cards until one follows suit or trumps."
+      ],
+      "setup": [
+        "Shuffle the 54 cards. Deal seven cards face down (don’t look), then thirteen face up.",
+        "Choose six of the face-up cards to add to the seven face-down ones: that is your hand. Any face-up joker must be chosen. The other seven face-up cards are discarded.",
+        "The rest of the pack is the stock — your opponent."
+      ],
+      "gameplay": [
+        "The stock bids first: count your hand’s quick tricks and subtract from 6. If the result is above 0, that is the stock’s level, in your shortest suit (ties: the higher-ranking suit). Otherwise it passes.",
+        "You then bid a contract (if it passed) or overcall or pass and defend. No Trumps is allowed only with a 4-3-3-3, 3-3-3-3 + joker, or 3-3-3-2 + 2 jokers hand.",
+        "One joker in your hand doubles the final contract; two jokers redouble it.",
+        "Play 13 tricks as in Bridge. If you declared, the stock leads first; if you defend, you lead.",
+        "When the stock leads, turn its top card. When you lead in a trump contract, turn stock cards until one follows suit, trumps, or is a joker; that card decides the trick. In No Trumps, turn up to four cards looking for the suit led or a joker; if none appears, you win the trick.",
+        "Jokers: playable when you can’t follow suit. A joker played by the stock wins the trick, unless you answer a stock-led joker with your own joker.",
+        "If the stock runs out, its last card is played to that trick; your remaining cards count as your tricks (jokers count for the stock)."
+      ],
+      "scoring": [
+        "Score as in any form of Bridge you prefer; the inventor used standard Contract Bridge scoring."
+      ],
+      "variations": [
+        "Pagat links to a longer description with example deals and variants."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          20,
+          30,
+          50,
+          100,
+          300,
+          500
+        ],
+        "unit": "points",
+        "endCondition": "target",
+        "hint": "Use your usual Bridge scores."
+      }
+    },
+    {
+      "id": "triple-deck-solitaire",
+      "name": "Triple Deck Solitaire",
+      "type": "cards",
+      "aliases": [],
+      "keywords": [
+        "solitaire",
+        "patience",
+        "alan gilfoy",
+        "three decks",
+        "klondike",
+        "invented"
+      ],
+      "tags": [
+        "patience"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          30,
+          60
+        ],
+        "category": "long"
+      },
+      "difficulty": "medium",
+      "equipment": [
+        "Three standard 52-card decks with all 12 Kings removed (144 cards)",
+        "A very large table"
+      ],
+      "objective": "Build twelve foundations from Ace up to Queen, regardless of suit, for the highest score. (Invented by Alan Gilfoy; published on Pagat.com.)",
+      "quickStart": [
+        "Remove the Kings from three decks; deal a Klondike layout.",
+        "Build down regardless of suit; only Queens fill spaces.",
+        "Build 12 foundations Ace→Queen. Turn the stock 3 at a time. Score by how far each pile got."
+      ],
+      "setup": [
+        "Shuffle three decks together with all twelve Kings removed.",
+        "Deal a normal Klondike layout: seven piles of 1 to 7 cards, top card face up.",
+        "The rest is the stock. Leave room for twelve foundations."
+      ],
+      "gameplay": [
+        "Aces go to foundations; build each foundation up regardless of suit (A, 2, 3 … Q).",
+        "On the tableau, build down regardless of suit (e.g. any Jack onto any Queen). Move whole or partial runs.",
+        "Only a Queen, or a run headed by a Queen, may fill an empty pile.",
+        "Turn up face-down cards as they are uncovered.",
+        "When stuck, turn three cards from the stock onto the waste; the top waste card is playable."
+      ],
+      "scoring": [
+        "Each foundation scores by its top card: A = 1, 2 = 3, 3 = 6, 4 = 10, 5 = 15, 6 = 21, 7 = 28, 8 = 36, 9 = 45, 10 = 55, J = 66, Q = 78. Total all twelve; the maximum is 936."
+      ],
+      "variations": [
+        "Keep the Kings in: Kings fill empty piles and a foundation built to the King scores 91."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          1,
+          10,
+          45,
+          78
+        ],
+        "unit": "points",
+        "endCondition": "target",
+        "hint": "Add each foundation’s score at the end."
+      }
+    },
+    {
+      "id": "twist-solitaire",
+      "name": "Twist Solitaire",
+      "type": "cards",
+      "aliases": [],
+      "keywords": [
+        "solitaire",
+        "patience",
+        "bill perkins",
+        "double suits",
+        "freerows",
+        "invented"
+      ],
+      "tags": [
+        "patience"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          20,
+          40
+        ],
+        "category": "medium"
+      },
+      "difficulty": "medium",
+      "equipment": [
+        "One standard 52-card deck, no jokers",
+        "A large table (about 1 metre square)"
+      ],
+      "objective": "Build two long ‘double suit’ rows, one red and one black, each holding all 26 cards of its colour. (Invented by Bill Perkins, 2006; published on Pagat.com.)",
+      "quickStart": [
+        "Deal 16 piles in a 4×4 square: 3 face down each, plus a 4th on the inner four.",
+        "Turn cards up and build tableau runs down in alternating colours; Aces end a run.",
+        "Build two FREEROWS, each alternating the two suits of one colour. Win when both hold 26."
+      ],
+      "setup": [
+        "Deal four rows of four cards face down (16 piles). Deal two more face-down layers on all sixteen, then a fourth card on each of the four centre piles. These are the sixteen depots.",
+        "Leave room on either side for two FREEROWS."
+      ],
+      "gameplay": [
+        "The original description is loose; this is a cleaned-up reading of it — see Pagat.com for the inventor’s wording.",
+        "Turn the top cards of the depots face up, one at a time, in any order you like.",
+        "On the depots, build down in alternating colours. Built runs can be moved, split or added to; an Ace ends a run (nothing goes on it).",
+        "A space can be filled from another depot (a face-up run, part of one, or even face-down cards). A face-up packet may also be placed on top of a face-down pile.",
+        "A FREEROW is a sequence of one colour that alternates its two suits (e.g. ♥♦♥♦ or ♠♣♠♣), running up or down and turning the corner from King to Ace. Any card or pair of matching cards may start one.",
+        "Move cards from the depots onto the ends of the FREEROWS when they continue them. Two FREEROWS of the same colour may be joined when their ends meet."
+      ],
+      "scoring": [
+        "You win when the two FREEROWS contain all 52 cards: 26 red and 26 black. Win games in a row to be ‘streaking’."
+      ],
+      "variations": [
+        "Start with one FREEROW only and open the second later."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          1
+        ],
+        "unit": "wins",
+        "hint": "Add 1 for each deal you win; keep a running win count.",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "pairs-gilfoy",
+      "name": "Pairs (Two-Deck)",
+      "type": "cards",
+      "aliases": [
+        "Gilfoy’s Pairs"
+      ],
+      "keywords": [
+        "solitaire",
+        "alan gilfoy",
+        "pairs",
+        "triples",
+        "two decks",
+        "3x3",
+        "invented"
+      ],
+      "tags": [
+        "patience",
+        "multi-deck"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          5,
+          15
+        ],
+        "category": "short"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "Two standard 52-card decks, ideally with different backs (104 cards)",
+        "Pen and paper or the score tracker"
+      ],
+      "objective": "Remove pairs and triples from a 3×3 square to score as many points as you can. (Invented by Alan Gilfoy; published on Pagat.com.)",
+      "quickStart": [
+        "Deal 9 cards in a 3×3 square.",
+        "Remove a pair or three of a kind; refill the gaps from the deck.",
+        "Stop when all nine ranks differ. Score pairs 3 (identical 7), triples 15 (21)."
+      ],
+      "setup": [
+        "Shuffle both decks together thoroughly.",
+        "Deal nine cards face up in a 3×3 square."
+      ],
+      "gameplay": [
+        "Remove any pair (two of the same rank) or triple (three of the same rank) from the square and keep each set separately.",
+        "Immediately deal new cards into the empty spaces.",
+        "Continue until every card is used or no pair or triple is showing (all nine ranks are different)."
+      ],
+      "scoring": [
+        "Pair: 3 points; a pair of identical cards (e.g. both 5♦): 7 points.",
+        "Triple: 15 points; 21 if two of its cards are identical.",
+        "Using all 104 cards: +104 bonus."
+      ],
+      "variations": [
+        "Aim to beat your best score."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          3,
+          7,
+          15,
+          21,
+          104
+        ],
+        "unit": "points",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "blackwidowstar",
+      "name": "Blackwidowstar",
+      "type": "cards",
+      "aliases": [],
+      "keywords": [
+        "solitaire",
+        "guessing",
+        "joseph smith",
+        "luck",
+        "patience practice",
+        "invented"
+      ],
+      "tags": [
+        "patience"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          3,
+          5
+        ],
+        "category": "short"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "One standard 52-card deck, no jokers"
+      ],
+      "objective": "Guess which suit will show the highest top card once the whole deck has been dealt onto four piles. (Invented by Joseph Smith; published on Pagat.com.)",
+      "quickStart": [
+        "Lay out the four 2s; shuffle the other 48 cards.",
+        "Guess a suit, then deal every card onto the pile of its suit.",
+        "Win if your suit’s top card is highest at the end."
+      ],
+      "setup": [
+        "Take the four 2s out and lay them face up in a row.",
+        "Shuffle the other 48 cards and place them face down."
+      ],
+      "gameplay": [
+        "Guess which suit will have the highest card on top when the deal ends.",
+        "Turn cards one at a time and put each on the pile of its own suit.",
+        "When all are dealt, compare the four top cards. If two or more tie for highest, remove those top cards and compare again until one pile is highest."
+      ],
+      "scoring": [
+        "You win if the winning pile is the suit you guessed."
+      ],
+      "variations": [
+        "The inventor recommends it as practice in patience — once, twice or three times a day."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          1
+        ],
+        "unit": "wins",
+        "hint": "Add 1 for each deal you win; keep a running win count.",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "lucky-o",
+      "name": "Lucky-o",
+      "type": "cards",
+      "aliases": [],
+      "keywords": [
+        "solitaire",
+        "guessing",
+        "luck",
+        "justin huneke",
+        "call the suit",
+        "invented"
+      ],
+      "tags": [
+        "patience"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          3,
+          5
+        ],
+        "category": "short"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "One standard 52-card deck plus 2 jokers"
+      ],
+      "objective": "Find out how lucky you are by calling suits (and sometimes ranks) before turning cards. (Invented by Justin Huneke; published on Pagat.com.)",
+      "quickStart": [
+        "Call a suit, turn the top card: right = face-up pile, wrong = face-down pile.",
+        "Feeling lucky? Call a rank instead; if right, also rescue a face-down card.",
+        "Jokers are free. Count your face-up pile at the end."
+      ],
+      "setup": [
+        "Shuffle the 54 cards and place them face down."
+      ],
+      "gameplay": [
+        "Name a suit, then turn the top card. If it matches, put it on the face-up pile; if not, put it face down on a second pile.",
+        "If you feel lucky, name a rank instead. If you are right, put that card and the top card of the face-down pile onto the face-up pile.",
+        "Never call a joker — jokers automatically go to the face-up pile.",
+        "Continue until the deck is used up."
+      ],
+      "scoring": [
+        "Count your face-up cards: 2–10 Mr. O’Luckless; 10–20 Mr. O’QuiteLucky; 20–30 Mr. O’Lucky; 30–40 Mr. O’BoveLucky; 40–51 Mr. O’Lucky-o. All of them? Mr. O’Cheater!"
+      ],
+      "variations": [
+        "Play several rounds and keep your best."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          1,
+          5,
+          10
+        ],
+        "unit": "cards",
+        "endCondition": "target",
+        "hint": "Enter the number of cards in your face-up pile."
+      }
+    },
+    {
+      "id": "right-or-wrong",
+      "name": "Right or Wrong",
+      "type": "cards",
+      "aliases": [],
+      "keywords": [
+        "solitaire",
+        "guessing",
+        "higher or lower",
+        "william malloy",
+        "invented"
+      ],
+      "tags": [
+        "patience"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          5,
+          10
+        ],
+        "category": "short"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "One standard 52-card deck, no jokers",
+        "Pen and paper or the score tracker"
+      ],
+      "objective": "Reach 20 points by guessing whether hidden cards are higher or lower than the face-up cards beside them. (Invented by William Malloy; published on Pagat.com.)",
+      "quickStart": [
+        "Make 4 stacks: face down, face up, face down.",
+        "Pick a hidden card: the top one should be higher, the bottom one lower than the face-up card.",
+        "+1 if right, −1 if wrong. Redeal each time. Win at 20."
+      ],
+      "setup": [
+        "Deal four cards face down in a row, four face up on top of them, then four more face down on top, overlapping so you can see each face-up card."
+      ],
+      "gameplay": [
+        "Pick one face-down card, either above or below a face-up card, and turn it over.",
+        "If you picked the card above, you score 1 point if it is higher than the face-up card and lose 1 if it is lower.",
+        "If you picked the card below, you score 1 point if it is lower and lose 1 if it is higher.",
+        "Equal cards score nothing — except two Aces, which win, since you may count one high and one low.",
+        "Aces count 1 or 14 (your choice), Kings 13, Queens 12, Jacks 11.",
+        "Gather all the cards, shuffle, deal again and repeat."
+      ],
+      "scoring": [
+        "You win when you reach 20 points."
+      ],
+      "variations": [
+        "Pick two cards per deal for a faster game."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": 20,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          1
+        ],
+        "unit": "points",
+        "endCondition": "target",
+        "hint": "Tap +1 for a right guess and −1 for a wrong one; first to 20 wins."
+      }
+    },
+    {
+      "id": "cribbage-solitaire",
+      "name": "Cribbage Solitaire",
+      "type": "cards",
+      "aliases": [
+        "Solitaire Cribbage"
+      ],
+      "keywords": [
+        "solitaire",
+        "cribbage",
+        "natty bumppo",
+        "fifteen two",
+        "pegging",
+        "free crib",
+        "invented"
+      ],
+      "tags": [
+        "patience"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          15,
+          25
+        ],
+        "category": "medium"
+      },
+      "difficulty": "medium",
+      "equipment": [
+        "One standard 52-card deck, no jokers",
+        "A cribbage board (or the score tracker)"
+      ],
+      "objective": "Score more than 120 points by playing six cribbage hands and cribs through one deck. (Invented by Natty Bumppo; published on Pagat.com.)",
+      "quickStart": [
+        "Deal 6 to your hand and 2 to a blind crib; throw 2 into the crib; turn a starter.",
+        "Play alternately from your hand and the crib’s unseen cards; peg only your own points.",
+        "Count hand and crib. Six hands plus a ‘free crib’ go through the deck. Win by passing 120."
+      ],
+      "setup": [
+        "Shuffle the deck. Deal six cards to yourself (first) and two face down to a blind crib.",
+        "Throw two cards from your hand on top of the crib.",
+        "Turn the top card of the deck as the starter; peg 2 if it is a Jack."
+      ],
+      "gameplay": [
+        "Play against the crib: play one card from your hand, then the bottom crib card (one of the two you haven’t seen), then another of yours, then the other unseen crib card, and so on — normal cribbage rules for the running total and pegging, but you peg only your own points.",
+        "Then count your hand and the crib with the starter, and peg both.",
+        "Turn the starter face down on top of the deck (it joins the next hand) and put the used cards face up at the bottom of the deck. Choose which card goes on top: it will be the starter for the free crib (a Jack or a 5 is best).",
+        "Repeat for six hands. Four face-down cards then remain: this is the free crib, and the first face-up card beneath it is its starter (2 for a Jack). Count it."
+      ],
+      "scoring": [
+        "You win if you have scored more than 120 points (past the end of the fourth street)."
+      ],
+      "variations": [
+        "Play against the deck too: peg for the deck the crib’s points in play, plus what you would have scored with the best possible throw. Win by beating the deck, passing 120, or both (two wins).",
+        "Peek at the bottom four cards before placing your first discard to choose the best free-crib starter."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": 121,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          1,
+          2,
+          4,
+          6,
+          8,
+          12
+        ],
+        "unit": "points",
+        "endCondition": "target",
+        "hint": "Peg your hand, crib and play points; reach 121 to win."
+      }
+    },
+    {
+      "id": "defeat-dummy-dealer",
+      "name": "Defeat Dummy Dealer",
+      "type": "cards",
+      "aliases": [],
+      "keywords": [
+        "solitaire",
+        "cribbage",
+        "andrzej lewicki",
+        "dummy",
+        "pegging",
+        "invented"
+      ],
+      "tags": [
+        "patience"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          15,
+          30
+        ],
+        "category": "medium"
+      },
+      "difficulty": "medium",
+      "equipment": [
+        "One standard 52-card deck, no jokers",
+        "A cribbage board (or the score tracker)"
+      ],
+      "objective": "Beat a dummy dealer at cribbage to 61 or 121 points. (Invented by Andrzej Lewicki; published on Pagat.com.)",
+      "quickStart": [
+        "Deal 4 face down to the dummy in a row, 6 to you, 2 to the dummy’s crib.",
+        "You throw 2 to the crib, then turn the starter and the dummy’s cards.",
+        "You lead; the dummy always plays its leftmost card that fits. Normal cribbage scoring."
+      ],
+      "setup": [
+        "Deal four cards face down in a row for the Dummy Dealer, six cards to yourself and two face down to the crib (the crib always belongs to the dummy).",
+        "Discard two of your cards to the crib.",
+        "Turn the starter card, then turn the dummy’s four cards face up without changing their order.",
+        "Agree whether you play to 61 or 121."
+      ],
+      "gameplay": [
+        "You are always the non-dealer, so you always play first.",
+        "On your turn, play any card that keeps the running total at 31 or under.",
+        "The dummy always plays its leftmost card if it fits; if that card would take the total past 31, the dummy says go and you may play again.",
+        "All normal cribbage scoring applies in play, including the go and last card.",
+        "Show: you count first, then the dummy’s hand, then the dummy’s crib."
+      ],
+      "scoring": [
+        "First to the agreed total (61 or 121) wins."
+      ],
+      "variations": [
+        "Think you’re better than the dummy? Give it a 10–12 point head start."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": 121,
+        "defaultPlayers": 2,
+        "teams": false,
+        "quickAdd": [
+          1,
+          2,
+          4,
+          6,
+          8,
+          12
+        ],
+        "unit": "points",
+        "endCondition": "target",
+        "hint": "Name the players ‘You’ and ‘Dummy’."
+      }
+    },
+    {
+      "id": "table-top-cribbage-solitaire",
+      "name": "Table Top Cribbage Solitaire",
+      "type": "cards",
+      "aliases": [
+        "Ghost Cribbage"
+      ],
+      "keywords": [
+        "solitaire",
+        "cribbage",
+        "george moore",
+        "grid",
+        "ghost",
+        "rows and columns",
+        "invented"
+      ],
+      "tags": [
+        "patience"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          10,
+          20
+        ],
+        "category": "medium"
+      },
+      "difficulty": "medium",
+      "equipment": [
+        "One standard 52-card deck, no jokers",
+        "A cribbage board (or the score tracker)"
+      ],
+      "objective": "Get round the cribbage board before the ‘ghost’ by improving a 4×4 grid: you score the columns, the ghost scores the rows and crib. (Invented by George Moore; published on Pagat.com.)",
+      "quickStart": [
+        "Deal a 4×4 grid, 4 cards for the ghost’s crib and 4 replacement cards for you.",
+        "Use your 4 replacements to swap out any 4 grid cards; turn a starter.",
+        "Columns score for you, rows and crib for the ghost. First round the board wins."
+      ],
+      "setup": [
+        "Shuffle and cut. Deal sixteen cards face up in four rows of four.",
+        "Deal four cards for the ghost’s crib and four cards as your replacement crib."
+      ],
+      "gameplay": [
+        "Use all four of your replacement cards to replace any four cards in the grid; the replaced cards go back into the deck.",
+        "Turn over a starter card.",
+        "Count each row of four with the starter as a cribbage hand and peg it for the ghost.",
+        "Count each column of four with the starter and peg it for yourself.",
+        "Count the crib with the starter for the ghost.",
+        "Shuffle and deal again until someone pegs out."
+      ],
+      "scoring": [
+        "Reach 121 before the ghost and you win. If the ghost pegs out on the rows and you peg out on the columns in the same deal, it is a tie."
+      ],
+      "variations": [
+        "With two real players, take turns being the ghost.",
+        "It is good practice for counting cribbage hands quickly."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": 121,
+        "defaultPlayers": 2,
+        "teams": false,
+        "quickAdd": [
+          2,
+          4,
+          6,
+          8,
+          12,
+          16
+        ],
+        "unit": "points",
+        "endCondition": "target",
+        "hint": "Name the players ‘You’ and ‘Ghost’."
+      }
+    },
+    {
+      "id": "repeat-poker",
+      "name": "Repeat Poker",
+      "type": "cards",
+      "aliases": [],
+      "keywords": [
+        "solitaire",
+        "poker",
+        "poker squares",
+        "pramod mulay",
+        "rows",
+        "levels",
+        "invented"
+      ],
+      "tags": [
+        "patience"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          10,
+          20
+        ],
+        "category": "medium"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "One standard 52-card deck, no jokers",
+        "Pen and paper or the score tracker"
+      ],
+      "objective": "Score as many points as possible by building poker hands in five rows, then try again with fewer rows. (Invented by Pramod Mulay; published on Pagat.com.)",
+      "quickStart": [
+        "Draw cards one at a time and place each in one of 5 rows.",
+        "When a row has 5 cards, score its best poker hand and remove only those cards.",
+        "After 52 cards, start the next level with one row fewer."
+      ],
+      "setup": [
+        "Shuffle the deck face down. Leave room for a 5×5 grid (five rows of five)."
+      ],
+      "gameplay": [
+        "Draw the top card and place it in any row that has space.",
+        "When a row is full, score its best poker hand: royal flush 1000, straight flush 750, four of a kind 500, full house 250, flush 200, straight 150, three of a kind 100, two pair 50, one pair 20.",
+        "Remove the cards that made the hand (both cards of a pair, all five of a flush, etc.) but leave the kickers in the row.",
+        "Continue until all 52 cards have been placed. Total the level’s points.",
+        "Next level: shuffle a full deck again and play with only four rows; then three; and so on."
+      ],
+      "scoring": [
+        "Add up your points for each level; try to beat your record."
+      ],
+      "variations": [
+        "Drop Down Solitaire Poker (in this app) is a ‘Connect Four’-style variant."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          20,
+          50,
+          100,
+          150,
+          200,
+          250,
+          500
+        ],
+        "unit": "points",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "drop-down-solitaire-poker",
+      "name": "Drop Down Solitaire Poker",
+      "type": "cards",
+      "aliases": [],
+      "keywords": [
+        "solitaire",
+        "poker",
+        "poker squares",
+        "ben rushing",
+        "connect four",
+        "gravity",
+        "invented"
+      ],
+      "tags": [
+        "patience"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          10,
+          15
+        ],
+        "category": "short"
+      },
+      "difficulty": "medium",
+      "equipment": [
+        "One standard 52-card deck plus 1 joker (53 cards)",
+        "One six-sided die (optional)",
+        "Pen and paper or the score tracker"
+      ],
+      "objective": "Drop 25 cards into a 5×5 grid, Connect-Four style, to make the best twelve poker hands. (Invented by Ben Rushing as a variant of Repeat Poker; published on Pagat.com.)",
+      "quickStart": [
+        "Deal a reserve: 3 columns of 13 cards and 1 of 14, with some cards face up.",
+        "Take a card from the bottom of a reserve column and drop it into the lowest space of a grid column.",
+        "When 25 are placed, score 5 rows, 5 columns and 2 diagonals as poker hands."
+      ],
+      "setup": [
+        "Shuffle the 53 cards and deal four reserve columns: three of thirteen cards and one of fourteen.",
+        "Choose how many cards at the bottom of each column are face up: 1, 2, 3, 4, all, or none (roll a die to pick).",
+        "Leave room for an empty 5×5 grid."
+      ],
+      "gameplay": [
+        "Each move, take the bottom card of one reserve column and place it in the lowest empty space of any grid column — as if gravity pulls it down.",
+        "Cards in the grid never move. If you took a face-up card, turn up the lowest face-down card in that reserve column to keep the same number showing.",
+        "An exhausted reserve column can no longer be used.",
+        "Stop when 25 cards are in the grid. The joker is wild."
+      ],
+      "scoring": [
+        "Score the five rows, five columns and two long diagonals: royal straight flush 30, five of a kind 28, straight flush 24, four of a kind 20, full house 18, flush 14, straight 10, three of a kind 8, two pair 4, one pair 2. Total all twelve."
+      ],
+      "variations": [
+        "Play with more cards face up for an easier, more strategic game."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          2,
+          4,
+          8,
+          10,
+          14,
+          18,
+          20
+        ],
+        "unit": "points",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "solitaire-uno",
+      "name": "Solitaire Uno",
+      "type": "cards",
+      "aliases": [
+        "Uno Solitaire"
+      ],
+      "keywords": [
+        "solitaire",
+        "uno",
+        "moonbeam",
+        "colours",
+        "shedding",
+        "invented"
+      ],
+      "tags": [
+        "patience",
+        "shedding",
+        "special-equipment"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          5,
+          10
+        ],
+        "category": "short"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "One Uno deck"
+      ],
+      "objective": "Get rid of a 20-card stack by playing it out onto the discard pile using normal Uno matching rules. (Contributed to Pagat.com by ‘Moonbeam’.)",
+      "quickStart": [
+        "Take 20 cards as a face-down stack; turn the next card to start the discard pile.",
+        "Go through your stack, playing any card that matches colour or number (or is wild).",
+        "Draw Two / Draw Four add cards to the bottom of your stack. Empty your stack to win."
+      ],
+      "setup": [
+        "Shuffle the Uno deck. Take twenty cards as your stack, face down.",
+        "Turn the top card of the remaining deck to start the discard pile."
+      ],
+      "gameplay": [
+        "Go through your stack one card at a time, playing each card onto the discard pile if it matches by colour, number or symbol, or is wild. Cards you can’t play go to the back of your stack.",
+        "Skip and Reverse do nothing except change the colour.",
+        "When you play a Draw Two or Draw Four, draw those cards from the deck and add them to the bottom of your stack.",
+        "When you are sure nothing in your stack can be played, draw from the deck onto your stack until you find a usable card, play it, then carry on with your stack."
+      ],
+      "scoring": [
+        "You win when your stack is empty."
+      ],
+      "variations": [
+        "Start with fewer cards for a quicker game."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          1
+        ],
+        "unit": "wins",
+        "hint": "Add 1 for each deal you win; keep a running win count.",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "solitary-gin",
+      "name": "Solitary Gin",
+      "type": "cards",
+      "aliases": [
+        "Solitaire Gin Rummy"
+      ],
+      "keywords": [
+        "solitaire",
+        "gin rummy",
+        "susan plank",
+        "melds",
+        "rummy",
+        "invented"
+      ],
+      "tags": [
+        "patience",
+        "rummy"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          10,
+          20
+        ],
+        "category": "medium"
+      },
+      "difficulty": "medium",
+      "equipment": [
+        "One standard 52-card deck, no jokers",
+        "Pen and paper or the score tracker"
+      ],
+      "objective": "Make gin — a ten-card hand all in sets and runs — within 15 draws, and score as low as possible over five deals. (Invented by Susan Plank; published on Pagat.com.)",
+      "quickStart": [
+        "Deal yourself 10 cards; you get 15 draw-and-discard turns.",
+        "Try to make all 10 cards into sets or runs of 3+ (Aces high or low, not both).",
+        "Gin = −20. Otherwise leftover cards: 2–9 = 5, 10–K = 10, Ace = 15. Five deals."
+      ],
+      "setup": [
+        "Shuffle and deal yourself ten cards. The rest of the deck is the stock."
+      ],
+      "gameplay": [
+        "Each turn, draw the top card of the stock, then discard either it or a card from your hand, so you always hold ten. Discards are out of play.",
+        "You have up to fifteen turns per deal.",
+        "Valid combinations: three or four of a kind, or runs of three or more in one suit. Aces can be high (Q-K-A) or low (A-2-3) but not both (no K-A-2).",
+        "Near the end, swapping high-scoring loose cards for cheap ones can save points.",
+        "Shuffle and deal again for five deals in all."
+      ],
+      "scoring": [
+        "Gin (all ten cards in combinations) scores −20.",
+        "Otherwise each loose card adds: 2–9 = 5 points, 10/J/Q/K = 10, Ace = 15.",
+        "Aim to finish five deals below a target — ‘30 or under’ wins about half the time. A perfect game is −100."
+      ],
+      "variations": [
+        "Set your own target, or allow 20 turns for an easier game."
+      ],
+      "scorekeeper": {
+        "direction": "low",
+        "target": null,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          5,
+          10,
+          15
+        ],
+        "unit": "points",
+        "endCondition": "target",
+        "hint": "Enter each deal’s score (use ± for a gin, −20); lowest total over five deals is best."
+      }
+    },
+    {
+      "id": "diamond-heist",
+      "name": "Diamond Heist",
+      "type": "cards",
+      "aliases": [],
+      "keywords": [
+        "solitaire",
+        "magic square",
+        "puzzle",
+        "gregg jewell",
+        "thief",
+        "invented",
+        "15"
+      ],
+      "tags": [
+        "patience"
+      ],
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "playerCounts": [
+        "1"
+      ],
+      "playTime": {
+        "minutes": [
+          5,
+          10
+        ],
+        "category": "short"
+      },
+      "difficulty": "medium",
+      "equipment": [
+        "10 cards from a standard deck: A–9 of diamonds and the Jack of spades"
+      ],
+      "objective": "Arrange nine diamonds into a magic square where every row, column and diagonal adds to 15, before the thief triggers a vault trap. (Invented by Gregg Jewell; rules linked from Pagat.com.)",
+      "quickStart": [
+        "Deal A–9♦ in a 3×3 ‘vault’; put the J♠ thief above the top-left card.",
+        "Swap a diamond in the thief’s line with one not in it; move the thief clockwise by their sum.",
+        "Lose if the thief’s line totals over 15; win when every line is 15."
+      ],
+      "setup": [
+        "Shuffle the nine diamonds (Ace = 1 up to 9) and deal them face up in a 3×3 grid: the vault.",
+        "Place the Jack of spades (the thief) just above the top-left diamond. There are sixteen spaces around the outside of the vault where the thief can stand."
+      ],
+      "gameplay": [
+        "Diamond move: swap a diamond that lies in the same column, row or diagonal as the thief with a diamond that does not.",
+        "Thief move: add up the two diamonds you swapped and move the thief that many spaces clockwise around the outside of the vault.",
+        "Then check the line (row, column or diagonal) that the thief is now in."
+      ],
+      "scoring": [
+        "You lose if the total of the thief’s line is greater than 15 — you have triggered a vault trap.",
+        "You win when every row, column and diagonal adds up to 15 (a magic square — the 5 is always in the centre)."
+      ],
+      "variations": [
+        "Count your moves and try to win in as few as possible."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 1,
+        "teams": false,
+        "quickAdd": [
+          1
+        ],
+        "unit": "wins",
+        "hint": "Add 1 for each deal you win; keep a running win count.",
+        "endCondition": "target"
+      }
     }
   ]
 }
