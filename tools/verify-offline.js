@@ -60,7 +60,7 @@ const ok = (cond, msg) => { console.log(`${cond ? 'PASS' : 'FAIL'}  ${msg}`); if
   ok(searchN >= 8, `search "trick" finds ${searchN} games`);
   await shot('01b-search');
   // Brand names lead to the traditional equivalent
-  for (const [q, expect] of [['yahtzee', 'Yacht'], ['uno', 'Crazy Eights'], ['phase 10', 'Contract Rummy'], ['skip-bo', 'Spite and Malice'], ['dutch blitz', 'Racing Demon'], ['left center right', 'Aces to the Centre'], ['nertz', 'Racing Demon'], ['thirty-one', 'Blitz'], ['goofspiel', 'GOPS'], ['tien len', 'Tiến Lên']]) {
+  for (const [q, expect] of [['yahtzee', 'Yacht'], ['uno', 'Crazy Eights'], ['phase 10', 'Contract Rummy'], ['skip-bo', 'Spite and Malice'], ['dutch blitz', 'Racing Demon'], ['left center right', 'Aces to the Centre'], ['nertz', 'Racing Demon'], ['thirty-one', 'Blitz'], ['goofspiel', 'GOPS'], ['tien len', 'Tiến Lên'], ['yaniv', 'Jhyap'], ['fight the landlord', 'Dou Dizhu'], ['bela', 'Klaberjass'], ['shithead', 'Palace']]) {
     await page.fill('#q', q);
     const names = await page.locator('#search-results .game-item .name').allTextContents();
     ok(names.some((n) => n.startsWith(expect)), `search "${q}" finds ${expect}`);

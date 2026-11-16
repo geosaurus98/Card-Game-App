@@ -7499,7 +7499,7 @@
       "name": "Sixty-Six",
       "type": "cards",
       "aliases": [
-        "Schnapsen (variant)",
+        "Schnapsen (relative)",
         "66"
       ],
       "keywords": [
@@ -10376,7 +10376,9 @@
         "Klabberjass",
         "Clob",
         "Clobyosh",
-        "Kalabriasz"
+        "Kalabriasz",
+        "Bela",
+        "Kalabrias"
       ],
       "keywords": [
         "two player",
@@ -10895,6 +10897,1275 @@
           30
         ],
         "unit": "points",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "watten",
+      "name": "Watten",
+      "type": "cards",
+      "aliases": [
+        "Bavarian Watten",
+        "Tyrolean Watten"
+      ],
+      "keywords": [
+        "bavarian",
+        "tyrol",
+        "austrian",
+        "trick taking",
+        "bluffing",
+        "betting",
+        "partnership",
+        "32-card",
+        "kritische"
+      ],
+      "tags": [
+        "trick-taking",
+        "partnership",
+        "bluffing"
+      ],
+      "players": {
+        "min": 2,
+        "max": 4
+      },
+      "playerCounts": [
+        "2",
+        "3",
+        "4"
+      ],
+      "playTime": {
+        "minutes": [
+          20,
+          40
+        ],
+        "category": "medium"
+      },
+      "difficulty": "medium",
+      "equipment": [
+        "A 32-card deck: A, K, Q, J, 10, 9, 8, 7 of each suit (traditionally German-suited: hearts = hearts, bells = diamonds, acorns = clubs, leaves = spades; Over = Queen, Under = Jack)",
+        "Pen and paper or the score tracker"
+      ],
+      "objective": "Win three of five tricks — and use bets and bluffs to raise the stakes or scare the other team off. First team to 11 points wins.",
+      "quickStart": [
+        "Goal: first team to 11 points; win 3 of 5 tricks each hand.",
+        "Forehand picks a trump rank, the dealer picks a trump suit. K♥, 7♦ and 7♣ are always the top three cards.",
+        "No need to follow suit. Say ‘Go!’ to raise the stakes; the other team folds or plays on."
+      ],
+      "setup": [
+        "Four players in partnerships, partners opposite. Deal five cards each (3 then 2); the rest are not used.",
+        "The three ‘Kritische’ are permanent top trumps: K♥ (Maxi), then 7♦ (Belli), then 7♣ (Spitz). If the card at the bottom of the cut is a Kritisch, the cutter may take it (then the dealer if the next is one too).",
+        "Forehand (dealer’s left) looks at their cards and names the trump rank (the ‘Schlag’), e.g. ‘tens’. Then the dealer names the trump suit. Only then may the other two pick up their cards."
+      ],
+      "gameplay": [
+        "Trump order: the three Kritische; then the card of both trump suit and trump rank (the ‘Rechte’); then the other cards of the trump rank (equal — the first played wins); then the rest of the trump suit A, K, Q, J, 10, 9, 8, 7. Other suits rank A, K, Q, J, 10, 9, 8, 7.",
+        "Forehand leads. There is usually no need to follow suit — play any card. Highest trump wins, otherwise the highest card of the suit led.",
+        "Exception: if the Rechte is led to the first trick, the leader may call ‘Trumps or Kritisch’, and others must play one of those if they can.",
+        "As soon as a team wins three tricks the hand ends.",
+        "Betting: at any time a player may say ‘Go!’ to raise the hand from 2 to 3 points. The other team either gives up (the bettors score the current value) or plays on. Teams must alternate raises (4, 5 …).",
+        "Partners may use traditional secret signals (winks, lip movements) to show their best cards — part of the fun."
+      ],
+      "scoring": [
+        "Winning a hand scores 2 points, or more if raised. First team to 11 wins.",
+        "Common rule: a team on 9 or 10 points (‘gespannt’) may not raise, and the hand counts 2 for them."
+      ],
+      "variations": [
+        "Tyrolean Watten uses the 6♦ as a wild ‘Weli’ and plays to 15 or 18.",
+        "Blind Watten (South Tyrol): trumps are chosen secretly, and only the choosers’ partners are told by signals.",
+        "Two- and three-player versions exist."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": 11,
+        "defaultPlayers": 2,
+        "teams": true,
+        "quickAdd": [
+          2,
+          3,
+          4,
+          5
+        ],
+        "unit": "points",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "twenty-stovel",
+      "name": "Twenty",
+      "type": "cards",
+      "aliases": [
+        "Twenty (adding game)"
+      ],
+      "keywords": [
+        "adding",
+        "counting",
+        "two player",
+        "shedding",
+        "kings wild",
+        "brian stovel"
+      ],
+      "tags": [
+        "shedding"
+      ],
+      "players": {
+        "min": 2,
+        "max": 4
+      },
+      "playerCounts": [
+        "2",
+        "3",
+        "4"
+      ],
+      "playTime": {
+        "minutes": [
+          15,
+          30
+        ],
+        "category": "medium"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "One standard 52-card deck, no jokers",
+        "Pen and paper or the score tracker"
+      ],
+      "objective": "Play cards that make each number from 1 up to 20 in turn, and keep your penalty points low. (A modern adding game by Brian Stovel, 2009, published on Pagat.com.)",
+      "quickStart": [
+        "Goal: fewest penalty points; game ends at 100.",
+        "The count goes 1, 2, 3 … 20. On your turn, play cards that add up exactly to the count — or draw a card.",
+        "Kings are wild. Cards left in hand when someone goes out (or reaches 20) are penalties."
+      ],
+      "setup": [
+        "Deal seven cards to each player. The rest is a face-down stack.",
+        "Values for making the count: Ace 1, 2–9 face value, 10/J/Q 10 (a pair of 10s, Jacks or Queens may count 10 instead of 20), King any number from 1 to 20."
+      ],
+      "gameplay": [
+        "The count starts at 1. The player after the dealer begins.",
+        "On your turn, either draw one card, or ‘make the count’ by playing one card or a set of cards adding up exactly to the current number. Drawing is always allowed, even if you could play.",
+        "Each time the count is made, it goes up by one. It may take several turns before someone makes it.",
+        "The hand ends when a player plays their last card, or the count of 20 is made."
+      ],
+      "scoring": [
+        "Penalties for cards left in hand: Ace–9 = 5 each, 10/J/Q = 10 each, King = 20.",
+        "Two players: when someone reaches 100, the lower total wins. With 3–4 players, play to 200."
+      ],
+      "variations": [
+        "For more rules and tips see the game’s page on Pagat.com."
+      ],
+      "scorekeeper": {
+        "direction": "low",
+        "target": 100,
+        "defaultPlayers": 2,
+        "teams": false,
+        "quickAdd": [
+          5,
+          10,
+          20
+        ],
+        "unit": "penalty points",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "two-hundred",
+      "name": "200",
+      "type": "cards",
+      "aliases": [
+        "Two Hundred",
+        "Deux Cents",
+        "Le Rough",
+        "Tens",
+        "Dix"
+      ],
+      "keywords": [
+        "canadian",
+        "acadian",
+        "trick taking",
+        "bidding",
+        "partnership",
+        "36-card",
+        "point cards"
+      ],
+      "tags": [
+        "trick-taking",
+        "partnership"
+      ],
+      "players": {
+        "min": 4,
+        "max": 4
+      },
+      "playerCounts": [
+        "4"
+      ],
+      "playTime": {
+        "minutes": [
+          30,
+          60
+        ],
+        "category": "long"
+      },
+      "difficulty": "medium",
+      "equipment": [
+        "A 36-card deck: remove the 2s, 3s, 4s and 6s from a standard deck",
+        "Pen and paper or the score tracker"
+      ],
+      "objective": "Partnerships bid how many card points they’ll take, then capture Aces, 10s and 5s. First team to 200 wins.",
+      "quickStart": [
+        "Goal: first partnership to 200.",
+        "Bid the card points your team will take (50–100, in fives); the winner names trumps.",
+        "Aces and 10s are worth 10, 5s are worth 5. Miss your bid and you lose it."
+      ],
+      "setup": [
+        "Four players in partnerships, partners opposite.",
+        "Cards rank A, K, Q, J, 10, 9, 8, 7, 5. Point cards: each Ace 10, each 10 10, each 5 5 (100 in total).",
+        "Deal nine cards each, in threes."
+      ],
+      "gameplay": [
+        "Bidding: starting left of the dealer, bid a multiple of 5 from 50 to 100, each bid higher than the last, or pass (once you pass you’re out). If everyone passes, redeal.",
+        "The highest bidder names trumps and leads the first card.",
+        "Follow suit if you can; otherwise play anything (you don’t have to trump). Highest trump wins, otherwise the highest card of the suit led."
+      ],
+      "scoring": [
+        "If the bidding team took at least its bid, it scores all the card points it took; otherwise it loses the amount bid. Scores can go below zero (‘in the box’).",
+        "The other team scores its card points — except that a team already on 100 or more scores only if one of them bid.",
+        "First team to 200 wins; if both get there on the same hand, the bidders win. A team at −200 loses."
+      ],
+      "variations": [
+        "With a 40-card deck (adding the 6s) and a four-card kitty taken by the bidder.",
+        "Some play to 300 or 500. Rook is a close relative with special cards."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": 200,
+        "defaultPlayers": 2,
+        "teams": true,
+        "quickAdd": [
+          5,
+          10,
+          25,
+          50
+        ],
+        "unit": "points",
+        "endCondition": "target",
+        "hint": "Use −1 / ±# when the bidders fail their bid."
+      }
+    },
+    {
+      "id": "swoop",
+      "name": "Swoop",
+      "type": "cards",
+      "aliases": [
+        "Swipe",
+        "Swoosh",
+        "Swish"
+      ],
+      "keywords": [
+        "shedding",
+        "party",
+        "multiple decks",
+        "jokers",
+        "palace",
+        "shithead"
+      ],
+      "tags": [
+        "shedding",
+        "party",
+        "multi-deck"
+      ],
+      "players": {
+        "min": 3,
+        "max": 8
+      },
+      "playerCounts": [
+        "3",
+        "4",
+        "5+"
+      ],
+      "playTime": {
+        "minutes": [
+          30,
+          60
+        ],
+        "category": "long"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "Two decks with jokers for 3–4 players, three for 5–6, four for 7–8",
+        "Pen and paper or the score tracker"
+      ],
+      "objective": "Be the first to get rid of all your cards — hand, face-up and face-down — by playing equal or lower cards. A newer cousin of Palace.",
+      "quickStart": [
+        "Goal: first to play out every card; others score what they hold.",
+        "Play 1–4 equal cards that are the same or lower than the pile. Play higher and you must pick up the pile first.",
+        "Four equal on top, a 10 or a joker ‘swoops’ the pile away and you go again."
+      ],
+      "setup": [
+        "Each player takes 19 cards. Without looking, place four face down, then four face up on top of them. The other 11 are your hand.",
+        "Cards rank A (low), 2 … 9, J, Q, K (high). 10s and jokers are special."
+      ],
+      "gameplay": [
+        "On your turn, play one to four cards of the same rank, from your hand and/or your face-up table cards.",
+        "If they are equal to or lower than the top of the pile, they go on the pile. If they are higher, you must first pick up the whole pile, then your cards start a new pile.",
+        "Swoop: if the top four cards of the pile are the same rank, or you play a 10 or a joker, the pile is removed from the game and you take another turn.",
+        "A face-down card can only be played as the first card of a turn: flip it and play it (plus any matching cards) with the usual consequences.",
+        "The first player out of cards — including their face-down cards — ends the deal."
+      ],
+      "scoring": [
+        "Everyone else scores the cards they still hold: Ace 1, 2–9 face value, J/Q/K 10, 10s and jokers 50.",
+        "When someone reaches 500, the lowest total wins."
+      ],
+      "variations": [
+        "Simpler scoring: Ace–9 = 5, J/Q/K = 10, 10s and jokers = 50."
+      ],
+      "scorekeeper": {
+        "direction": "low",
+        "target": 500,
+        "defaultPlayers": 4,
+        "teams": false,
+        "quickAdd": [
+          5,
+          10,
+          50
+        ],
+        "unit": "points",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "twenty-nine",
+      "name": "Twenty-Nine",
+      "type": "cards",
+      "aliases": [
+        "29"
+      ],
+      "keywords": [
+        "indian",
+        "bangladesh",
+        "nepal",
+        "trick taking",
+        "partnership",
+        "jack and nine",
+        "32-card",
+        "hidden trump"
+      ],
+      "tags": [
+        "trick-taking",
+        "partnership"
+      ],
+      "players": {
+        "min": 4,
+        "max": 4
+      },
+      "playerCounts": [
+        "4"
+      ],
+      "playTime": {
+        "minutes": [
+          30,
+          60
+        ],
+        "category": "long"
+      },
+      "difficulty": "medium",
+      "equipment": [
+        "A 32-card deck: J, 9, A, 10, K, Q, 8, 7 of each suit",
+        "Spare low cards as hidden trump markers (optional)"
+      ],
+      "objective": "Partnerships bid how many card points they’ll win, with a trump suit kept secret until someone can’t follow suit. First team to +6 game points wins.",
+      "quickStart": [
+        "Goal: first partnership to +6 game points.",
+        "Bid after seeing 4 cards; the winner secretly picks trumps. Jacks (3), 9s (2), Aces and 10s (1) are the point cards.",
+        "Trumps are revealed only when someone can’t follow suit."
+      ],
+      "setup": [
+        "Four players in partnerships, partners opposite.",
+        "Every suit ranks J, 9, A, 10, K, Q, 8, 7. Points: Jacks 3, Nines 2, Aces 1, Tens 1 — 28 in all (29 with a point for the last trick).",
+        "Deal four cards each."
+      ],
+      "gameplay": [
+        "Bidding: starting left of the dealer, bid a number of points from 15 to 28 or pass, until three pass in a row. If all others pass, the dealer must bid 15.",
+        "The winner secretly chooses trumps, placing a marker card of that suit face down. Then deal four more each (eight in all).",
+        "Left of the dealer leads; follow suit if you can. The first player who can’t follow suit asks for trumps to be revealed; from that trick on, the highest trump wins.",
+        "Royals: a player holding the King and Queen of trumps may declare them after their side wins a trick once trumps are known — it lowers their side’s target by 4 (or raises the bidders’ target by 4 if declared by an opponent)."
+      ],
+      "scoring": [
+        "If the bidding side took at least their bid (adjusted for Royals), they gain 1 game point; if not, they lose 1. The other side’s score doesn’t change.",
+        "First team to +6 wins; a team at −6 loses."
+      ],
+      "variations": [
+        "Many regional versions: doubling and redoubling, a ‘single hand’ bid to win every trick, and counter-clockwise play are common."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": 6,
+        "defaultPlayers": 2,
+        "teams": true,
+        "quickAdd": [
+          1
+        ],
+        "unit": "game points",
+        "endCondition": "target",
+        "hint": "Use −1 when the bidders fail."
+      }
+    },
+    {
+      "id": "dou-dizhu",
+      "name": "Dou Dizhu",
+      "type": "cards",
+      "aliases": [
+        "Fight the Landlord",
+        "Landlord",
+        "斗地主"
+      ],
+      "keywords": [
+        "chinese",
+        "climbing",
+        "shedding",
+        "landlord",
+        "bombs",
+        "rocket",
+        "jokers",
+        "three player"
+      ],
+      "tags": [
+        "shedding"
+      ],
+      "players": {
+        "min": 3,
+        "max": 3
+      },
+      "playerCounts": [
+        "3"
+      ],
+      "playTime": {
+        "minutes": [
+          15,
+          30
+        ],
+        "category": "medium"
+      },
+      "difficulty": "medium",
+      "equipment": [
+        "One standard 52-card deck plus two distinguishable jokers (54 cards)"
+      ],
+      "objective": "The ‘landlord’ plays alone against two peasants. Be first to get rid of all your cards by beating each play.",
+      "quickStart": [
+        "Goal: be first out of cards — the landlord against the two peasants.",
+        "Bid 1–3 to be landlord (you get the 3 extra cards). Beat each play with a higher one of the same type, or pass.",
+        "Four of a kind is a bomb and two jokers a rocket — they beat anything and double the stakes."
+      ],
+      "setup": [
+        "Cards rank (high to low): red joker, black joker, 2, A, K, Q … 3. Suits don’t matter.",
+        "Deal 17 cards each; leave three face down."
+      ],
+      "gameplay": [
+        "Auction: players bid 1, 2 or 3 (each higher than the last) or pass. The highest bidder becomes the landlord and takes the three extra cards.",
+        "The landlord leads any single card or combination: pair, triple, triple with a single or pair attached, sequence of 5+ cards (3 to Ace), sequence of 3+ pairs, sequence of triples (with or without attachments), four with two attachments.",
+        "Each player in turn must beat the last play with the same type and number of cards, higher, or pass. Passing doesn’t stop you playing later.",
+        "Bomb (four of a kind) beats any combination except a higher bomb or the rocket; rocket (both jokers) beats everything.",
+        "When two players pass in a row, the last player to play leads anything."
+      ],
+      "scoring": [
+        "If the landlord goes out first, each peasant pays them the bid; if a peasant goes out first, the landlord pays each peasant the bid.",
+        "Each bomb or rocket played doubles the payment."
+      ],
+      "variations": [
+        "Four-player version uses two decks; many apps add extra doubling rules (e.g. ‘spring’ when the other side never plays a card)."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 3,
+        "teams": false,
+        "quickAdd": [
+          1,
+          2,
+          3,
+          6
+        ],
+        "unit": "points",
+        "endCondition": "target",
+        "hint": "Zero-sum: use −1 / ±# for losing players."
+      }
+    },
+    {
+      "id": "jhyap",
+      "name": "Jhyap",
+      "type": "cards",
+      "aliases": [
+        "Yaniv",
+        "Dhumbal",
+        "Kluft"
+      ],
+      "keywords": [
+        "nepal",
+        "israel",
+        "draw and discard",
+        "low hand",
+        "sets",
+        "runs",
+        "travel"
+      ],
+      "tags": [
+        "rummy",
+        "party"
+      ],
+      "players": {
+        "min": 2,
+        "max": 8
+      },
+      "playerCounts": [
+        "2",
+        "3",
+        "4",
+        "5+"
+      ],
+      "playTime": {
+        "minutes": [
+          15,
+          30
+        ],
+        "category": "medium"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "One standard 52-card deck plus two jokers (two decks for 4+ players)",
+        "Pen and paper or the score tracker"
+      ],
+      "objective": "Get the total of your hand as low as possible, then call ‘Yaniv!’ (or ‘Jhyap!’) when you think it’s the lowest at the table.",
+      "quickStart": [
+        "Goal: keep your score low; over 200 and you’re out.",
+        "Each turn: throw away one card, a set or a run, then pick up one card.",
+        "With 5 or less in hand you may call ‘Yaniv!’ — but if anyone matches or beats you, you take a penalty."
+      ],
+      "setup": [
+        "Card values: Ace 1, 2–10 face value, J/Q/K 10, Joker 0.",
+        "Deal five cards each. Turn the top of the stock face up to start the dump pile."
+      ],
+      "gameplay": [
+        "On your turn, either call ‘Yaniv’ (see below) or throw then pick up.",
+        "Throw: one card, a set of two or more equal cards, or a run of three or more consecutive cards in one suit (Ace low; jokers can fill gaps).",
+        "Then pick up one card: the top of the stock, or the first or last card of the previous player’s throw.",
+        "Calling: at the start of your turn, if your hand totals 5 or less, you may call. Everyone shows their cards."
+      ],
+      "scoring": [
+        "If the caller has the lowest total, they score 0 and everyone else scores their hand total.",
+        "If anyone has an equal or lower total, the caller scores 30 plus their hand (‘Asaf’), and everyone else scores their hand.",
+        "Over 200 points and you’re out; the last player in wins. Landing on exactly 100 drops you to 50, and exactly 200 to 100."
+      ],
+      "variations": [
+        "Nepalese Jhyap and Dutch Kluft differ in the calling limit and penalties."
+      ],
+      "scorekeeper": {
+        "direction": "low",
+        "target": 200,
+        "defaultPlayers": 4,
+        "teams": false,
+        "quickAdd": [
+          1,
+          5,
+          10,
+          30
+        ],
+        "unit": "points",
+        "endCondition": "elimination"
+      }
+    },
+    {
+      "id": "ulti",
+      "name": "Ulti",
+      "type": "cards",
+      "aliases": [
+        "Ultimo"
+      ],
+      "keywords": [
+        "hungarian",
+        "trick taking",
+        "three player",
+        "talon",
+        "contracts",
+        "marriages",
+        "32-card"
+      ],
+      "tags": [
+        "trick-taking"
+      ],
+      "players": {
+        "min": 3,
+        "max": 3
+      },
+      "playerCounts": [
+        "3"
+      ],
+      "playTime": {
+        "minutes": [
+          45,
+          90
+        ],
+        "category": "long"
+      },
+      "difficulty": "hard",
+      "equipment": [
+        "A 32-card deck: A, 10, K, Q, J, 9, 8, 7 of each suit (traditionally Hungarian cards: Over = Queen, Under = Jack)",
+        "Pen and paper or the score tracker"
+      ],
+      "objective": "The national card game of Hungary. Bid for contracts — such as winning the last trick with the 7 of trumps — and play them alone against the other two.",
+      "quickStart": [
+        "Goal: win the contract you bid, playing alone against two.",
+        "Bidding passes a 2-card talon round: pick it up, discard two, name a higher contract.",
+        "Contracts include Parti, Ulti (last trick with the trump 7), 40-100, Betli and Durchmars. Hearts score double."
+      ],
+      "setup": [
+        "Deal 12 cards to the player on the dealer’s right and 10 to each of the others (play is anticlockwise).",
+        "With trumps, cards rank A, 10, K, Q, J, 9, 8, 7. Without trumps: A, K, Q, J, 10, 9, 8, 7.",
+        "Aces and 10s won in tricks are worth 10 each, and the last trick 10 (90 in all). Holding King and Queen of a suit adds 20, or 40 in trumps."
+      ],
+      "gameplay": [
+        "Auction: the player with 12 cards discards two face down as the talon and names a contract. Each later bidder may pick up the talon, discard two, and name a higher contract. It ends when everyone in turn declines the talon.",
+        "Main contracts: Parti (simple game: take more card points than the opponents); Ulti (win the last trick with the 7 of trumps); 40-100 (take 100 points using the trump marriage); 20-100; Durchmars (win every trick); Betli (no trumps, lose every trick). Contracts can be combined, e.g. ‘Ulti with Parti’.",
+        "The bidder names trumps and leads. Follow suit, trump if you can’t, and always try to beat the highest card so far.",
+        "Opponents may double (‘Kontra’) any part of the contract; the declarer may redouble."
+      ],
+      "scoring": [
+        "Each part of the contract is won or lost separately; the declarer is paid by, or pays, both opponents. Typical values: Parti 1, 40-100 4, Ulti 4 (lose 8), Betli 5, Durchmars 6, 20-100 8. Hearts as trumps double the score.",
+        "Keep a running total; play a fixed number of deals."
+      ],
+      "variations": [
+        "Open (‘Terített’) Betli and Durchmars are played with the declarer’s cards face up for higher scores. Unbid bonuses (e.g. silent ulti) also exist."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 3,
+        "teams": false,
+        "quickAdd": [
+          1,
+          2,
+          4,
+          5,
+          8
+        ],
+        "unit": "points",
+        "endCondition": "target",
+        "hint": "Zero-sum: the declarer gains or loses twice what each opponent does."
+      }
+    },
+    {
+      "id": "toepen",
+      "name": "Toepen",
+      "type": "cards",
+      "aliases": [
+        "Toep",
+        "Knock-out (Dutch)"
+      ],
+      "keywords": [
+        "dutch",
+        "netherlands",
+        "bluffing",
+        "knocking",
+        "last trick",
+        "drinking game",
+        "32-card"
+      ],
+      "tags": [
+        "trick-taking",
+        "bluffing",
+        "party"
+      ],
+      "players": {
+        "min": 3,
+        "max": 8
+      },
+      "playerCounts": [
+        "3",
+        "4",
+        "5+"
+      ],
+      "playTime": {
+        "minutes": [
+          15,
+          30
+        ],
+        "category": "medium"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "A 32-card deck: 10, 9, 8, 7, A, K, Q, J of each suit (ranked in that order)"
+      ],
+      "objective": "Win the last of four tricks. Knock to raise the stakes and bluff others into folding. Lose ten lives and you’re out.",
+      "quickStart": [
+        "Goal: win the 4th trick; don’t lose 10 lives.",
+        "Cards rank 10 (high), 9, 8, 7, A, K, Q, J. Follow suit if you can.",
+        "Knock to raise the stakes by a life — others must fold (lose lives now) or stay in."
+      ],
+      "setup": [
+        "Deal four cards each. A player whose hand is all A/K/Q/J may swap it for a new hand — but others can challenge (the loser of the challenge loses a life)."
+      ],
+      "gameplay": [
+        "Left of the dealer leads. Follow suit if you can; otherwise play anything. The highest card of the suit led wins. There are no trumps.",
+        "Only the last (fourth) trick matters. Its winner deals next; everyone else still in loses a life.",
+        "Knocking: at any time a player may knock on the table, raising the stake by one life. Each other player must stay in or fold. Folding costs the lives at stake before the knock; staying in risks one more.",
+        "You can’t knock twice in a row; someone else must knock in between.",
+        "Fun rules: hold three 10s and you must whistle; four 10s and you must stand up."
+      ],
+      "scoring": [
+        "Count lives lost. A player who loses 10 lives loses the game (traditionally buying a round). A player on 9 lost lives may not knock."
+      ],
+      "variations": [
+        "Fast ‘drinking’ version: after a knock, everyone decides at the same time by throwing in their cards or not."
+      ],
+      "scorekeeper": {
+        "direction": "low",
+        "target": 10,
+        "defaultPlayers": 4,
+        "teams": false,
+        "quickAdd": [
+          1,
+          2,
+          3
+        ],
+        "unit": "lives lost",
+        "endCondition": "elimination"
+      }
+    },
+    {
+      "id": "zwicker",
+      "name": "Zwicker",
+      "type": "cards",
+      "aliases": [
+        "Zwickern"
+      ],
+      "keywords": [
+        "german",
+        "fishing",
+        "capture",
+        "building",
+        "jokers",
+        "partnership",
+        "schleswig-holstein"
+      ],
+      "tags": [
+        "partnership"
+      ],
+      "players": {
+        "min": 2,
+        "max": 4
+      },
+      "playerCounts": [
+        "2",
+        "3",
+        "4"
+      ],
+      "playTime": {
+        "minutes": [
+          30,
+          60
+        ],
+        "category": "long"
+      },
+      "difficulty": "hard",
+      "equipment": [
+        "One standard 52-card deck plus three jokers, marked 15, 20 and 25 (55 cards)",
+        "Pen and paper or the score tracker"
+      ],
+      "objective": "Capture valuable cards from the table by matching, adding and building — especially the jokers. Clear the table for a ‘Zwick’.",
+      "quickStart": [
+        "Goal: capture the most valuable cards (jokers, 10♦, Aces) with your partner.",
+        "Play a card to capture table cards of equal value or groups that add up to it — or start/modify a build.",
+        "Clearing the table is a Zwick, worth 1 point."
+      ],
+      "setup": [
+        "Four players in partnerships, partners opposite.",
+        "Matching values: 2–10 face value; Ace 1 or 11; Jack 2 or 12; Queen 3 or 13; King 4 or 14; jokers 15, 20 and 25.",
+        "Deal four cards each and three face up on the table. Later deals: four more each, then five each."
+      ],
+      "gameplay": [
+        "On your turn, play one card. You may capture any table cards it matches, or any groups adding up to its value — as many as you like.",
+        "Or build: place a card on a table card or pile, announcing the new total (by adding or subtracting), as long as you hold a card to capture it later. Your partner can build to your value too.",
+        "Or just leave your card on the table.",
+        "Capturing everything on the table is a Zwick. At the very end, the last team to capture takes any remaining table cards."
+      ],
+      "scoring": [
+        "Large joker 7, middle joker 6, small joker 5, 10♦ 3, 10♠ 1, 2♠ 1, each Ace 1, most cards 3 — 30 per hand — plus 1 per Zwick.",
+        "Play a series of hands; the higher total wins."
+      ],
+      "variations": [
+        "Older versions play without jokers; some play with six jokers."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 2,
+        "teams": true,
+        "quickAdd": [
+          1,
+          3,
+          5,
+          7
+        ],
+        "unit": "points",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "cuarenta",
+      "name": "Cuarenta",
+      "type": "cards",
+      "aliases": [
+        "Forty"
+      ],
+      "keywords": [
+        "ecuador",
+        "fishing",
+        "capture",
+        "sequences",
+        "40-card",
+        "caida",
+        "limpia"
+      ],
+      "tags": [
+        "partnership"
+      ],
+      "players": {
+        "min": 2,
+        "max": 4
+      },
+      "playerCounts": [
+        "2",
+        "4"
+      ],
+      "playTime": {
+        "minutes": [
+          20,
+          40
+        ],
+        "category": "medium"
+      },
+      "difficulty": "medium",
+      "equipment": [
+        "A 40-card deck: remove the 8s, 9s and 10s (keep them for scoring)"
+      ],
+      "objective": "Ecuador’s national card game. Capture cards by matching, adding and sequences; snap up your opponent’s last card for a ‘caída’. First to 40 points wins.",
+      "quickStart": [
+        "Goal: first to 40 points.",
+        "Capture a table card by matching, or cards that add up to yours — then keep going up any sequence.",
+        "Matching the card just played is a caída (+2); clearing the table is a limpia (+2)."
+      ],
+      "setup": [
+        "Card order A, 2, 3, 4, 5, 6, 7, J, Q, K. For adding, Ace to 7 count face value; J, Q, K can only be matched.",
+        "Deal five cards each (four players play in partnerships). The rest is dealt five each when hands run out."
+      ],
+      "gameplay": [
+        "On your turn, play one card. It captures a table card of the same rank, or (if a number card) a group of table cards adding up to it.",
+        "After a capture you may also take the next-higher card on the table, and the next, as long as the sequence is unbroken (e.g. play a 2 to take a 2, then 3, 4, 5).",
+        "Caída: capturing by matching the card the previous player just played scores 2. Limpia: clearing the table scores 2.",
+        "Ronda: being dealt three of a kind scores 4; four of a kind wins the game outright."
+      ],
+      "scoring": [
+        "After all 40 cards: a side with 20 captured cards scores 6, plus 1 point per extra card (rounded up to even). If neither has 20, the side with more scores 2.",
+        "First to 40 wins. A side on 38 can’t score a limpia, so must finish with cards or a caída."
+      ],
+      "variations": [
+        "Score is traditionally kept with the spare 8s, 9s and 10s laid face up."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": 40,
+        "defaultPlayers": 2,
+        "teams": false,
+        "quickAdd": [
+          2,
+          4,
+          6,
+          8
+        ],
+        "unit": "points",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "kop",
+      "name": "Kop",
+      "type": "cards",
+      "aliases": [
+        "Baśka (relative)"
+      ],
+      "keywords": [
+        "polish",
+        "poznan",
+        "trick taking",
+        "16-card",
+        "black queens",
+        "secret partners",
+        "schafkopf family"
+      ],
+      "tags": [
+        "trick-taking",
+        "partnership"
+      ],
+      "players": {
+        "min": 4,
+        "max": 4
+      },
+      "playerCounts": [
+        "4"
+      ],
+      "playTime": {
+        "minutes": [
+          10,
+          20
+        ],
+        "category": "short"
+      },
+      "difficulty": "medium",
+      "equipment": [
+        "16 cards from a standard deck: the Aces, 10s, Queens and Jacks"
+      ],
+      "objective": "A fast Polish game with only 16 cards. The holders of the two black Queens are partners. Take at least 53 of the 104 card points.",
+      "quickStart": [
+        "Goal: your team takes 53+ of 104 points.",
+        "Holders of the black Queens are secret partners (unless someone plays alone).",
+        "12 of the 16 cards are trumps; you must follow and beat the trick if you can."
+      ],
+      "setup": [
+        "Deal four cards each.",
+        "Trumps (high to low): A♥, 10♥, Q♣, Q♠, Q♥, Q♦, J♣, J♠, J♥, J♦, A♦, 10♦. Only A♣, 10♣, A♠ and 10♠ are not trumps.",
+        "Card points: Ace 11, 10 10, Queen 3, Jack 2 (104 in all)."
+      ],
+      "gameplay": [
+        "Before play: anyone may double (‘Kontra’), and further doubles follow. A player may announce ‘Zolo’ to play alone against three, or ‘Zolo du’ to win all four tricks alone. A player with both black Queens may call ‘Wesele’ and partner the holder of the highest Jack they don’t hold.",
+        "Left of the dealer leads. Follow suit (trumps are one suit); you must beat the highest card in the trick if you can.",
+        "Highest trump wins."
+      ],
+      "scoring": [
+        "The side with 53+ points wins. Each loser pays each winner the base stake; double if the losers took 25 or fewer, triple if they took no trick.",
+        "Solo games pay 4× (silent), 5× (Zolo) or 10× (Zolo du) to or from each player. Every double doubles everything."
+      ],
+      "variations": [
+        "Baśka is a related Polish game with similar ideas."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 4,
+        "teams": false,
+        "quickAdd": [
+          1,
+          2,
+          4,
+          5,
+          10
+        ],
+        "unit": "points",
+        "endCondition": "target",
+        "hint": "Zero-sum: winners gain what losers pay."
+      }
+    },
+    {
+      "id": "skitgubbe",
+      "name": "Skitgubbe",
+      "type": "cards",
+      "aliases": [
+        "Mas",
+        "Mattis"
+      ],
+      "keywords": [
+        "swedish",
+        "beating",
+        "two phases",
+        "shedding",
+        "three player",
+        "loser"
+      ],
+      "tags": [
+        "shedding"
+      ],
+      "players": {
+        "min": 2,
+        "max": 4
+      },
+      "playerCounts": [
+        "2",
+        "3",
+        "4"
+      ],
+      "playTime": {
+        "minutes": [
+          15,
+          30
+        ],
+        "category": "medium"
+      },
+      "difficulty": "medium",
+      "equipment": [
+        "One standard 52-card deck, no jokers"
+      ],
+      "objective": "A two-phase Swedish game. First collect strong cards in tricks, then get rid of them by beating other players’ cards. The last player holding cards is the ‘Skitgubbe’.",
+      "quickStart": [
+        "Goal: don’t be the last player holding cards.",
+        "Phase 1: two-card tricks to collect good cards. The last stock card sets trumps.",
+        "Phase 2: beat the card in front of you (higher in suit, or a trump) — or pick it up."
+      ],
+      "setup": [
+        "Deal three cards each; the rest is the stock. Cards rank A (high) down to 2."
+      ],
+      "gameplay": [
+        "Phase 1: the leader plays any card and the next player plays any card; the higher card wins both. Suits don’t matter. Each player draws back to three. Equal cards ‘bounce’: they stay, and the same pair plays again for all of them.",
+        "Instead of playing from your hand you may turn up and play the top stock card.",
+        "The last stock card is the trump suit for phase 2. When the stock and hands run out, everyone picks up the cards they won.",
+        "Phase 2: the player who drew the trump card leads. Each player must beat the top card (higher of the same suit, or any trump on a non-trump) or pick it up.",
+        "A trick is cleared when it has as many cards as there are players; the player who completed it leads next. Players drop out as they run out of cards."
+      ],
+      "scoring": [
+        "The last player left holding cards loses and is the Skitgubbe."
+      ],
+      "variations": [
+        "In some versions everyone plays to each trick in phase 1, or sequences may be played in phase 2."
+      ],
+      "scorekeeper": {
+        "direction": "low",
+        "target": null,
+        "defaultPlayers": 3,
+        "teams": false,
+        "quickAdd": [
+          1
+        ],
+        "unit": "losses",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "konigrufen",
+      "name": "Königrufen",
+      "type": "cards",
+      "aliases": [
+        "Koenigrufen",
+        "Austrian Tarock",
+        "Tarock"
+      ],
+      "keywords": [
+        "austrian",
+        "tarock",
+        "trick taking",
+        "call a king",
+        "54-card",
+        "contracts"
+      ],
+      "tags": [
+        "trick-taking",
+        "partnership",
+        "special-equipment"
+      ],
+      "players": {
+        "min": 4,
+        "max": 4
+      },
+      "playerCounts": [
+        "4"
+      ],
+      "playTime": {
+        "minutes": [
+          45,
+          90
+        ],
+        "category": "long"
+      },
+      "difficulty": "hard",
+      "equipment": [
+        "A 54-card Tarock deck: 22 trumps (tarocks, including the Sküs, XXI and I) plus 8 cards in each of four suits",
+        "Pen and paper or the score tracker"
+      ],
+      "objective": "Austria’s most popular Tarock game. The bidder calls a King to choose a secret partner and must take at least 36 of the 70 card points — or play one of many special contracts.",
+      "quickStart": [
+        "Goal: make your contract — usually take 36+ of 70 points.",
+        "In a Rufer, the bidder calls a King; its holder is the secret partner. Use part of the six-card talon.",
+        "22 trumps (tarocks): Sküs highest, then XXI, down to I (the Pagat)."
+      ],
+      "setup": [
+        "Deal 12 cards each in packets of six, and six cards face down as the talon.",
+        "Suits: black suits rank K, Q, Knight, J, 10, 9, 8, 7; red suits K, Q, Knight, J, 1, 2, 3, 4. Tarocks are trumps: Sküs (highest), XXI … I.",
+        "Card points: Kings, Sküs, XXI and I 5 each; Queens 4; Knights 3; Jacks 2; others 1 — counted in threes (sum minus 2), 70 in all."
+      ],
+      "gameplay": [
+        "Auction: contracts from lowest to highest include Rufer (call a King, take 3 talon cards), Solo, Piccolo (win exactly one trick), Bettel (lose every trick), Dreier (alone, 3 talon cards) and Solodreier (alone, no talon).",
+        "For calling contracts, the declarer names a King; its holder is a secret partner.",
+        "The declarer looks at the talon (two halves of three), takes one half and discards the same number.",
+        "Follow suit if you can; otherwise you must play a tarock. Highest tarock wins, otherwise highest of the suit led.",
+        "Bonuses can be announced or won silently, e.g. winning the last trick with the Pagat (I), or capturing all three top trumps."
+      ],
+      "scoring": [
+        "Each contract has a value (e.g. Rufer 1, Solo 2, Bettel 3, Dreier 4, Solodreier 8). Losers pay winners; solo contracts pay or are paid by each of the three opponents.",
+        "Play an agreed number of deals."
+      ],
+      "variations": [
+        "Scores and the exact list of contracts vary from group to group."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": null,
+        "defaultPlayers": 4,
+        "teams": false,
+        "quickAdd": [
+          1,
+          2,
+          3,
+          4,
+          8
+        ],
+        "unit": "points",
+        "endCondition": "target",
+        "hint": "Zero-sum: winners gain what losers pay."
+      }
+    },
+    {
+      "id": "sidi-barrani",
+      "name": "Sidi Barrani",
+      "type": "cards",
+      "aliases": [
+        "Sidi Barrani Jass"
+      ],
+      "keywords": [
+        "swiss",
+        "jass",
+        "trick taking",
+        "partnership",
+        "auction",
+        "36-card",
+        "obenabe",
+        "undenufe"
+      ],
+      "tags": [
+        "trick-taking",
+        "partnership"
+      ],
+      "players": {
+        "min": 4,
+        "max": 4
+      },
+      "playerCounts": [
+        "4"
+      ],
+      "playTime": {
+        "minutes": [
+          45,
+          90
+        ],
+        "category": "long"
+      },
+      "difficulty": "hard",
+      "equipment": [
+        "A 36-card deck: A, K, Q, J, 10, 9, 8, 7, 6 of each suit (or a Swiss Jass deck)",
+        "Pen and paper or the score tracker"
+      ],
+      "objective": "A bidding version of Swiss Jass: bid how many card points your team will take and in which trump (or Obenabe / Undenufe).",
+      "quickStart": [
+        "Goal: make your bid — the card points your team promised.",
+        "Bid 40–157 (or 257 for all the tricks) plus a trump suit, Obenabe or Undenufe. Opponents can double.",
+        "Play as in Schieber Jass: trump Jack and 9 top; declarations score extra."
+      ],
+      "setup": [
+        "Four players in partnerships. Deal nine cards each.",
+        "Card values and ranks as in Jass (trump Jack 20, trump 9 14 …; 157 per hand including 5 for the last trick; 257 for winning every trick)."
+      ],
+      "gameplay": [
+        "Auction: bid a number of points (40, 50, 60 … 150, 157 or 257) plus a denomination: a trump suit, Obenabe (no trumps, high wins) or Undenufe (no trumps, low wins). Each bid must be higher. You may bid again after passing, even over your partner.",
+        "An opponent may double a bid immediately; that ends the auction.",
+        "The declarer leads. Follow suit or trump; you can’t undertrump unless you have only trumps. The trump Jack never has to follow trumps.",
+        "Declarations (Weis) in the first trick and King-Queen of trumps (Stöck) score as in Jass, for the team with the best declaration."
+      ],
+      "scoring": [
+        "Both teams score their card points, Weis and Stöck. The bid (doubled if doubled) is also added to the bidders’ score if they made it — or to the opponents’ if they failed.",
+        "When a team reaches 2,000 at the end of a hand, the higher score wins (a double win if the losers are under 1,000)."
+      ],
+      "variations": [
+        "See Jass (Schieber) for the standard non-bidding game."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": 2000,
+        "defaultPlayers": 2,
+        "teams": true,
+        "quickAdd": [
+          20,
+          50,
+          100,
+          157
+        ],
+        "unit": "points",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "schnapsen",
+      "name": "Schnapsen",
+      "type": "cards",
+      "aliases": [
+        "Snapszer",
+        "Šnaps"
+      ],
+      "keywords": [
+        "austrian",
+        "two player",
+        "trick taking",
+        "marriage",
+        "66",
+        "20-card",
+        "close the stock"
+      ],
+      "tags": [
+        "trick-taking"
+      ],
+      "players": {
+        "min": 2,
+        "max": 2
+      },
+      "playerCounts": [
+        "2"
+      ],
+      "playTime": {
+        "minutes": [
+          15,
+          30
+        ],
+        "category": "medium"
+      },
+      "difficulty": "medium",
+      "equipment": [
+        "A 20-card deck: A, 10, K, Q, J of each suit"
+      ],
+      "objective": "Austria’s favourite two-player game: be first to 66 card points in a hand by taking tricks and declaring marriages. Win 7 game points to win a ‘Bummerl’.",
+      "quickStart": [
+        "Goal: first to 66 card points; win 7 game points overall.",
+        "Five cards each; one card turned up for trumps. No need to follow suit while the stock lasts.",
+        "King + Queen of a suit is a marriage: 20 (40 in trumps). You can ‘close’ the stock to force strict play."
+      ],
+      "setup": [
+        "Cards rank A, 10, K, Q, J. Points: Ace 11, 10 10, King 4, Queen 3, Jack 2 (120 in all).",
+        "Deal five cards each (3 then 2). Turn the next card up for trumps and place it under the stock."
+      ],
+      "gameplay": [
+        "The non-dealer leads. While the stock lasts you don’t have to follow suit; higher card of the suit led or a trump wins. Winner draws first, then the loser.",
+        "When leading, you may show a King and Queen of one suit and lead one of them: 20 points (40 in trumps). They count once you’ve won a trick.",
+        "Holding the trump Jack, you may swap it for the turned-up trump card when it’s your lead.",
+        "Closing: on your lead you may turn the trump card face down to close the stock. From then on — and once the stock runs out — you must follow suit, win the trick if you can, and trump if you can’t follow.",
+        "Claim when you reach 66 (counting marriages)."
+      ],
+      "scoring": [
+        "Game points: 1 if the loser has 33 or more card points, 2 if under 33, 3 if they took no tricks. A false claim, or failing after closing, gives the opponent the points.",
+        "First to 7 game points wins (traditionally counted down from 7, a ‘Bummerl’)."
+      ],
+      "variations": [
+        "Sixty-Six is the older 24-card version with 9s and six-card hands. Bauernschnapsen is a four-player partnership version."
+      ],
+      "scorekeeper": {
+        "direction": "high",
+        "target": 7,
+        "defaultPlayers": 2,
+        "teams": false,
+        "quickAdd": [
+          1,
+          2,
+          3
+        ],
+        "unit": "game points",
         "endCondition": "target"
       }
     }
