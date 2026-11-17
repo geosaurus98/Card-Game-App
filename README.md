@@ -5,7 +5,7 @@ An offline-first Progressive Web App (PWA) with card and dice game rules organis
 - 244 games (220 card games, including 72 one-player solitaires, and 24 dice games), each with equipment, objective, setup, gameplay, scoring and variations
 - Searching a brand name such as Yahtzee, Uno, Phase 10, Skip-Bo or Dutch Blitz finds the traditional game it is based on
 - Separate **Card games** and **Dice games** sections on the home screen. Search and Favourites cover both, with dice games marked 🎲
-- A **🎉 Party** tab with seven pass-the-phone games and tools: Impostor, Werewolf / Mafia, Hot Potato, Charades, Fishbowl, a finger chooser and a party toolkit (dice, coin, scoreboard)
+- A **🎉 Party** tab with fourteen pass-the-phone games and tools: Impostor, Werewolf / Mafia, Hot Potato, Charades, Fishbowl, Forehead Guess, Forbidden Words, Song Hum-Along, Categories Countdown, Most Likely To, Would You Rather, Never Have I Ever, a finger chooser and a party toolkit (dice, coin, scoreboard)
 - A three-line **Quick start** summary at the top of every rules page, for teaching a game at the table
 - Score tracker with quick-add buttons, custom amounts, round history, undo, target score and a winner banner. **Share / export scores** sends the final standings through the phone's share sheet, copies them as text, or downloads a CSV for spreadsheets
 - Tags (Good for kids, Party, Trick-taking, Patience, Betting…) shown on each game and usable as a filter on every list
@@ -54,9 +54,16 @@ The **🎉 Party** tab (`#/party`) lists the party games. Each one's scripts loa
 | Charades | `#/charades` | Teams take timed turns acting out things from chosen decks (Actions plus word-list categories). Got it / Skip, scores, a set number of rounds. |
 | Fishbowl | `#/fishbowl` | Players secretly add words, or add random ones. Three rounds with the same words (describe, one word, act it out); leftover time carries over when the bowl empties. |
 | Finger chooser | `#/chooser` | Everyone touches the screen; it picks one player or splits players into 2–4 teams. |
+| Forehead Guess | `#/forehead` | One player holds the phone on their forehead while the others give clues. Nod down for “got it”, tip back to pass (motion sensor, with an option to swap directions), or tap either half of the screen. The word is drawn sideways because the installed app is locked to portrait. 1–10 guessers; decks include famous people, characters, songs and the word-list categories. |
+| Forbidden Words | `#/forbidden` | Teams describe a word without saying it or any of four banned words; the next team taps **Buzz** (card lost, optionally −1 point). 120+ cards. |
+| Song Hum-Along | `#/hum` | Teams hum a song title (no lyrics) for their team to guess. Decks: Films & kids, Classics, Pop hits, Christmas. Titles only, no audio. |
+| Categories Countdown | `#/categories` | Name something in the category (optionally starting with a letter), tap **Next player** and pass on. The answer time drops by a second each lap; running out or a bad answer costs a life. Last player standing wins. |
+| Most Likely To | `#/most-likely` | “Who’s most likely to…?” with a 3-2-1 countdown, then everyone points. Optional tally and leaderboard. Family and grown-up packs. |
+| Would You Rather | `#/would-you-rather` | Two choices; discuss openly or pass the phone for a secret vote and reveal the split. Family and grown-up packs. |
+| Never Have I Ever | `#/never` | Tap anyone who has done it to take one of their lives (3–10); undo available. Last player with lives wins. Family and grown-up packs. |
 | Party toolkit | `#/toolkit` | 1–10 dice (d4–d20), coin flip with tally, and a saved scoreboard. |
 
-Party-game code follows the same pattern as Impostor: pure logic modules (`js/werewolf-logic.js`, `js/guess-logic.js`, `js/party-logic.js`) separate from the screens (`js/werewolf.js`, `js/hot-potato.js`, `js/guess-games.js`, `js/party-tools.js`). Shared screen helpers, such as the hold-to-reveal card, the timer and beeps, are in `js/party-common.js`, and the Charades actions and Hot Potato prompts are in `js/party-words.js`. Unit tests: `node tools/test-party-logic.js`.
+Party-game code follows the same pattern as Impostor: pure logic modules (`js/werewolf-logic.js`, `js/guess-logic.js`, `js/party-logic.js`) separate from the screens (`js/werewolf.js`, `js/hot-potato.js`, `js/guess-games.js`, `js/party-tools.js`). Shared screen helpers, such as the hold-to-reveal card, the timer and beeps, are in `js/party-common.js`, the Charades actions and Hot Potato prompts are in `js/party-words.js`, and the second wave of decks (forbidden-word cards, prompt packs, categories, song titles, famous people and characters) is in `js/party-decks.js`. Forehead Guess, Categories Countdown and the prompt games use `js/party-more-logic.js` (no-repeat decks, tilt detection, lives, the shrinking clock), with screens in `js/forehead.js`, `js/categories.js` and `js/prompt-games.js`; Forbidden Words and Song Hum-Along are extra modes of `js/guess-games.js`. Unit tests: `node tools/test-party-logic.js`.
 
 Timed turns pause, and hide the word, if the phone locks or the app goes to the background.
 

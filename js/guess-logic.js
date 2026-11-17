@@ -47,13 +47,18 @@
     return out;
   }
 
-  /* opts: { mode: 'charades'|'fishbowl', teams: [names], words: [..], rounds (charades turns per team) } */
+  /* opts: { mode: 'charades'|'fishbowl'|other, teams: [names], words: [..], rounds (turns per team),
+   *         maxTeams (default 4; Forehead Guess lets each player be their own 'team'),
+   *         minTeams (default 2; 1 allows a solo game) }
+   * Any mode other than 'fishbowl' uses the endless-deck (charades) rules. */
   function createGame(opts, rng) {
     const words = cleanWords(opts.words);
     if (!words.length) throw new Error('No words');
-    const teamCount = Math.min(MAX_TEAMS, Math.max(2, (opts.teams || []).length || 2));
+    const maxTeams = Math.max(1, Number(opts.maxTeams) || MAX_TEAMS);
+    const minTeams = Math.min(maxTeams, opts.minTeams == null ? 2 : Math.max(1, Number(opts.minTeams)));
+    const teamCount = Math.min(maxTeams, Math.max(minTeams, (opts.teams || []).length || minTeams));
     return {
-      mode: opts.mode === 'fishbowl' ? 'fishbowl' : 'charades',
+      mode: opts.mode === 'fishbowl' ? 'fishbowl' : (opts.mode || 'charades'),
       teams: teamNames(opts.teams, teamCount).map((name) => ({ name, score: 0, roundScores: [0, 0, 0] })),
       words,
       bowl: shuffle(words, rng), // draw from the end
@@ -79,7 +84,7 @@
 
   function startTurn(g, rng) {
     if (g.over || g.roundOver) return g;
-    g.current = { word: draw(g, rng), got: [], skipped: [] };
+    g.current = { word: draw(g, rng), got: [], skipped: [], buzzed: [] };
     return g;
   }
 
@@ -90,7 +95,7 @@
     team.score += 1;
     if (g.mode === 'fishbowl') team.roundScores[g.round - 1] += 1;
     c.got.push(c.word);
-    if (g.mode === 'charades') g.used.push(c.word);
+    if (g.mode !== 'fishbowl') g.used.push(c.word);
     c.word = draw(g, rng);
     if (g.mode === 'fishbowl' && c.word == null) g.roundOver = true;
     return g;
@@ -109,6 +114,19 @@
     return g;
   }
 
+  /* Forbidden Words: the clue-giver said a banned word. The card is lost and
+   * (if penalty) the team loses a point. Score never goes below zero. */
+  function buzz(g, rng, penalty) {
+    const c = g.current;
+    if (!c || c.word == null || g.mode === 'fishbowl') return g;
+    const team = g.teams[g.teamIndex];
+    if (penalty) team.score = Math.max(0, team.score - 1);
+    c.buzzed.push(c.word);
+    g.used.push(c.word);
+    c.word = draw(g, rng);
+    return g;
+  }
+
   /* Finish the turn (timer ran out, or the round ended). The unfinished word goes back. */
   function endTurn(g, rng) {
     const c = g.current;
@@ -118,7 +136,7 @@
     }
     g.current = null;
     g.turnsPlayed += 1;
-    if (g.mode === 'charades') {
+    if (g.mode !== 'fishbowl') {
       g.teamIndex = (g.teamIndex + 1) % g.teams.length;
       if (g.turnsPlayed >= g.rounds * g.teams.length) g.over = true;
     } else if (!g.roundOver) {
@@ -143,5 +161,5 @@
     return g.teams.filter((t) => t.score === best);
   }
 
-  return { FISHBOWL_ROUNDS, MAX_TEAMS, shuffle, teamNames, cleanWords, createGame, startTurn, gotIt, skip, endTurn, nextRound, leaders };
+  return { FISHBOWL_ROUNDS, MAX_TEAMS, shuffle, teamNames, cleanWords, createGame, startTurn, gotIt, skip, buzz, endTurn, nextRound, leaders };
 });

@@ -1,5 +1,7 @@
-/* Charades (#/charades) and Fishbowl (#/fishbowl) — screens.
- * Both use the shared turn engine in guess-logic.js. */
+/* Charades (#/charades), Fishbowl (#/fishbowl), Forbidden Words (#/forbidden)
+ * and Song Hum-Along (#/hum) — screens. All use the shared turn engine in guess-logic.js.
+ * Forbidden Words and Hum-Along cards come from party-decks.js and are passed to the
+ * engine as ids ("f12", "Classics#3") so long titles are never trimmed. */
 window.CGR = window.CGR || {};
 CGR.views = CGR.views || {};
 
@@ -17,9 +19,57 @@ CGR.views = CGR.views || {};
     return decks;
   }
 
+  /* Song decks: deck name → list of ids. */
+  function songDecks() {
+    const out = {};
+    Object.keys(CGR.partyDecks.songs).forEach((d) => { out[d] = CGR.partyDecks.songs[d].map((_, i) => d + '#' + i); });
+    return out;
+  }
+  function songOf(id) {
+    const i = id.lastIndexOf('#');
+    return (CGR.partyDecks.songs[id.slice(0, i)] || [])[Number(id.slice(i + 1))] || [id, ''];
+  }
+  function forbiddenOf(id) { return CGR.partyDecks.forbidden[Number(id.slice(1))] || [id]; }
+
+  /* Per-mode wording and deck choice. */
+  const MODES = {
+    charades: { title: 'Charades', decks: charadesDecks, defaults: ['Actions', 'Animals', 'Jobs'], deckLegend: 'What to act out',
+      intro: 'Act it out — no talking! Your team guesses as many as possible before the timer runs out.',
+      verb: 'act', rule: 'No talking, no pointing at things in the room, no spelling it out.' },
+    fishbowl: { title: 'Fishbowl' },
+    forbidden: { title: 'Forbidden Words', decks: null,
+      intro: 'Get your team to say the word on the card — without saying it or any of the banned words underneath. Another team watches and taps Buzz if you slip.',
+      verb: 'give clues', rule: 'Don’t say the word, part of it, or any banned word. No rhymes, “sounds like” or spelling. The other team taps Buzz!' },
+    hum: { title: 'Song Hum-Along', decks: songDecks, defaults: ['Films & kids', 'Classics', 'Pop hits'], deckLegend: 'Songs to hum',
+      intro: 'Hum the song on the screen — no words, no lyrics — and your team shouts out the title.',
+      verb: 'hum', rule: 'Hum or “da-da-da” only: no lyrics, no words, no miming the title.' }
+  };
+
   function makeView(mode) {
     const KEY = mode;
     const isFish = mode === 'fishbowl';
+    const M = MODES[mode];
+    const decksOf = () => (M.decks ? M.decks() : {});
+    /* Plain-text label for a card (results lists). */
+    function label(w) {
+      if (mode === 'forbidden') return forbiddenOf(w)[0];
+      if (mode === 'hum') return songOf(w)[0];
+      return w;
+    }
+    /* The big card shown during a turn. */
+    function wordHTML(w) {
+      if (mode === 'forbidden') {
+        const c = forbiddenOf(w);
+        return `<h1 class="gg-word" tabindex="-1">${esc(c[0])}</h1>
+          <p class="fw-label">Don’t say:</p>
+          <ul class="fw-banned">${c.slice(1).map((b) => `<li>${esc(b)}</li>`).join('')}</ul>`;
+      }
+      if (mode === 'hum') {
+        const s = songOf(w);
+        return `<h1 class="gg-word" tabindex="-1">${esc(s[0])}</h1>${s[1] ? `<p class="hum-artist">${esc(s[1])}</p>` : ''}`;
+      }
+      return `<h1 class="gg-word" tabindex="-1">${esc(w)}</h1>`;
+    }
     let game = null;      // guess-logic game object
     let phase = 'setup';  // setup | words | intro | live | turnEnd | roundEnd | over
     let bowlWords = [];   // fishbowl entries before the game starts
@@ -30,13 +80,14 @@ CGR.views = CGR.views || {};
 
     function load() {
       const s = CGR.store.get(KEY, {});
-      const decks = Object.keys(charadesDecks());
+      const decks = Object.keys(decksOf());
       return {
         teamCount: P.clamp(Math.round(s.teamCount) || 2, 2, G.MAX_TEAMS),
         teamNames: Array.isArray(s.teamNames) ? s.teamNames : [],
         turnSeconds: TURN_CHOICES.indexOf(Number(s.turnSeconds)) !== -1 ? Number(s.turnSeconds) : 60,
         rounds: P.clamp(Math.round(s.rounds) || 3, 1, 10),
-        decks: Array.isArray(s.decks) && s.decks.some((d) => decks.indexOf(d) !== -1) ? s.decks.filter((d) => decks.indexOf(d) !== -1) : ['Actions', 'Animals', 'Jobs']
+        decks: Array.isArray(s.decks) && s.decks.some((d) => decks.indexOf(d) !== -1) ? s.decks.filter((d) => decks.indexOf(d) !== -1) : (M.defaults || []),
+        penalty: s.penalty !== false
       };
     }
     const save = (s) => CGR.store.set(KEY, s);
@@ -52,19 +103,22 @@ CGR.views = CGR.views || {};
     function setupHTML(s) {
       const times = TURN_CHOICES.map((t) => `<option value="${t}" ${s.turnSeconds === t ? 'selected' : ''}>${t} seconds</option>`).join('');
       const teamInputs = P.namesHTML(s.teamCount, s.teamNames, (i) => 'Team ' + String.fromCharCode(65 + i));
-      const deckChips = isFish ? '' : `<fieldset class="chip-group checks field"><legend>What to act out</legend>
-          ${Object.keys(charadesDecks()).map((d) => `<label><input type="checkbox" name="gg-deck" value="${esc(d)}" ${s.decks.indexOf(d) !== -1 ? 'checked' : ''}><span>${esc(d)}</span></label>`).join('')}
+      const deckChips = !M.decks ? '' : `<fieldset class="chip-group checks field"><legend>${esc(M.deckLegend)}</legend>
+          ${Object.keys(decksOf()).map((d) => `<label><input type="checkbox" name="gg-deck" value="${esc(d)}" ${s.decks.indexOf(d) !== -1 ? 'checked' : ''}><span>${esc(d)}</span></label>`).join('')}
         </fieldset>`;
-      return `<div class="page-head"><h1 tabindex="-1">${isFish ? 'Fishbowl' : 'Charades'}</h1>
+      const penalty = mode === 'forbidden' ? `<label class="switch-row field"><input type="checkbox" id="gg-penalty" role="switch" ${s.penalty ? 'checked' : ''}>
+          <span>A buzz costs the team a point</span></label>` : '';
+      return `<div class="page-head"><h1 tabindex="-1">${esc(M.title)}</h1>
           <p class="muted">${isFish
             ? 'Everyone adds words to the bowl. Teams race to guess them all, three times over: describe them, then one word only, then act them out.'
-            : 'Act it out — no talking! Your team guesses as many as possible before the timer runs out.'}</p></div>
+            : esc(M.intro)}</p></div>
         <form id="gg-setup" onsubmit="return false">
           <fieldset class="field"><legend>Teams</legend>${P.stepperHTML('teamCount', s.teamCount, 2, G.MAX_TEAMS, 'teams')}</fieldset>
           <fieldset class="field"><legend>Team names <span class="muted small">(optional)</span></legend>${teamInputs}</fieldset>
           <label class="field"><span>Time per turn</span><select id="gg-time">${times}</select></label>
           ${isFish ? '' : `<fieldset class="field"><legend>Rounds <span class="muted small">(each team gets one turn per round)</span></legend>${P.stepperHTML('rounds', s.rounds, 1, 10, 'rounds')}</fieldset>`}
           ${deckChips}
+          ${penalty}
         </form>
         <div class="action-bar"><div class="action-bar-inner"><button type="button" class="btn" id="gg-next">${isFish ? 'Next: fill the bowl' : 'Start game'}</button></div></div>`;
     }
@@ -92,8 +146,8 @@ CGR.views = CGR.views || {};
       const secs = isFish && carry > 0 ? carry : load().turnSeconds;
       return `<div class="page-head"><p class="muted">${sub}</p>
           <h1 tabindex="-1"><span class="imp-who">${esc(team().name)}</span>’s turn</h1>
-          <p>Pick someone to ${isFish && game.round < 3 ? 'give clues' : 'act'} and hand them the phone. Everyone else on ${esc(team().name)} guesses.</p>
-          ${r ? `<p class="gg-rule">${esc(r.rule)}</p>` : '<p class="gg-rule">No talking, no pointing at things in the room, no spelling it out.</p>'}
+          <p>Pick someone to ${isFish ? (game.round < 3 ? 'give clues' : 'act') : M.verb} and hand them the phone. Everyone else on ${esc(team().name)} guesses${mode === 'forbidden' && game.teams.length > 1 ? `; ${esc(game.teams[(game.teamIndex + 1) % game.teams.length].name)} watches for banned words` : ''}.</p>
+          <p class="gg-rule">${esc(r ? r.rule : M.rule)}</p>
           <p class="muted">${Math.round(secs)} seconds${isFish && carry > 0 ? ' (time left over from last round)' : ''}.</p></div>
         ${scoresHTML(true)}
         <div class="action-bar"><div class="action-bar-inner"><button type="button" class="btn" id="gg-go">Start turn ▶</button></div></div>`;
@@ -104,11 +158,11 @@ CGR.views = CGR.views || {};
       return `<div class="gg-live${paused ? ' paused' : ''}">
           <div class="gg-time" id="gg-time" role="timer" aria-live="off">${P.fmt(timer ? timer.remaining : 0)}</div>
           <p class="muted">${esc(team().name)} · ${c.got.length} so far${isFish ? ` · ${game.bowl.length + 1} left in the bowl` : ''}</p>
-          <h1 class="gg-word" tabindex="-1">${paused ? 'Paused' : esc(c.word)}</h1>
-          ${paused ? '<p>The word is hidden while paused.</p>' : ''}
+          ${paused ? '<h1 class="gg-word" tabindex="-1">Paused</h1><p>The word is hidden while paused.</p>' : wordHTML(c.word)}
         </div>
         <div class="action-bar gg-actions"><div class="action-bar-inner">
           ${paused ? '<button type="button" class="btn" id="gg-resume">Resume ▶</button>' : `
+          ${mode === 'forbidden' ? '<button type="button" class="btn btn-danger" id="gg-buzz">Buzz ✗</button>' : ''}
           <button type="button" class="btn btn-secondary" id="gg-skip" ${isFish && !game.bowl.length ? 'disabled' : ''}>Skip</button>
           <button type="button" class="btn" id="gg-got">Got it ✓</button>`}
         </div></div>`;
@@ -118,7 +172,7 @@ CGR.views = CGR.views || {};
       const c = game.lastTurn;
       return `<div class="page-head"><h1 tabindex="-1">${reason === 'bowl' ? 'Bowl empty! 🎉' : 'Time’s up! ⏰'}</h1>
           <p>${esc(c.team)} got <strong>${c.got.length}</strong>.</p></div>
-        ${c.got.length ? `<ul class="gg-got">${c.got.map((w) => `<li>✓ ${esc(w)}</li>`).join('')}</ul>` : ''}
+        ${c.got.length || c.buzzed.length ? `<ul class="gg-got">${c.got.map((w) => `<li>✓ ${esc(label(w))}</li>`).join('')}${c.buzzed.map((w) => `<li class="buzzed">✗ ${esc(label(w))} <span class="muted small">(buzzed)</span></li>`).join('')}</ul>` : ''}
         ${scoresHTML(false)}
         <div class="action-bar"><div class="action-bar-inner">
           <button type="button" class="btn" id="gg-continue">${game.over ? 'See results' : reason === 'bowl' ? (game.round >= 3 ? 'See results' : `Start round ${game.round + 1}`) : 'Next team'}</button></div></div>`;
@@ -149,7 +203,9 @@ CGR.views = CGR.views || {};
 
     function start(root) {
       const s = load();
-      const words = isFish ? bowlWords : [].concat(...s.decks.map((d) => charadesDecks()[d] || []));
+      const words = isFish ? bowlWords
+        : mode === 'forbidden' ? CGR.partyDecks.forbidden.map((_, i) => 'f' + i)
+        : [].concat(...s.decks.map((d) => decksOf()[d] || []));
       game = G.createGame({ mode, teams: s.teamNames.slice(0, s.teamCount).concat(new Array(s.teamCount).fill('')).slice(0, s.teamCount), words, rounds: s.rounds }, Math.random);
       carry = 0;
       phase = 'intro';
@@ -162,7 +218,9 @@ CGR.views = CGR.views || {};
         const s = load();
         s.teamNames = P.readNames(form, s.teamNames);
         s.turnSeconds = Number(form.querySelector('#gg-time').value);
-        if (!isFish) {
+        const pen = form.querySelector('#gg-penalty');
+        if (pen) s.penalty = pen.checked;
+        if (M.decks) {
           const d = Array.from(form.querySelectorAll('input[name="gg-deck"]:checked')).map((x) => x.value);
           s.decks = d.length ? d : s.decks;
         }
@@ -242,7 +300,7 @@ CGR.views = CGR.views || {};
       stopTimer();
       if (reason === 'time') { P.beep(300, 500, 0.25, 'square'); P.vibrate([300]); }
       const c = game.current;
-      game.lastTurn = { team: team().name, got: c ? c.got.slice() : [] };
+      game.lastTurn = { team: team().name, got: c ? c.got.slice() : [], buzzed: c ? c.buzzed.slice() : [] };
       if (reason === 'bowl') carry = Math.max(5, Math.round(remaining));
       G.endTurn(game, Math.random);
       phase = 'turnEnd';
@@ -262,6 +320,12 @@ CGR.views = CGR.views || {};
         render(root, true);
       });
       root.querySelector('#gg-skip').addEventListener('click', () => { G.skip(game, Math.random); render(root, true); });
+      const buzz = root.querySelector('#gg-buzz');
+      if (buzz) buzz.addEventListener('click', () => {
+        G.buzz(game, Math.random, load().penalty);
+        P.beep(220, 260, 0.2, 'square'); P.vibrate([120, 60, 120]);
+        render(root, true);
+      });
     }
 
     function wireTurnEnd(root, reason) {
@@ -281,7 +345,7 @@ CGR.views = CGR.views || {};
 
     return function view() {
       return {
-        title: isFish ? 'Fishbowl' : 'Charades',
+        title: M.title,
         back: '#/party',
         html: '<div id="gg-root" class="imp"></div>',
         onMount(v) {
@@ -309,4 +373,6 @@ CGR.views = CGR.views || {};
 
   CGR.views.charades = makeView('charades');
   CGR.views.fishbowl = makeView('fishbowl');
+  CGR.views.forbidden = makeView('forbidden');
+  CGR.views.hum = makeView('hum');
 })();

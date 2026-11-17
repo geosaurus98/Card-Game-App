@@ -275,7 +275,7 @@ const ok = (cond, msg) => { console.log(`${cond ? 'PASS' : 'FAIL'}  ${msg}`); if
   ok(await page.evaluate(() => !CGR.views.impostor && !CGR.views.werewolf), 'party games are not loaded at start-up (lazy loading)');
   await page.click('.type-tabs a[href="#/party"]');
   await page.waitForSelector('.party-list');
-  ok((await page.locator('.party-list .game-item').count()) === 7, 'Party tab lists 7 party games');
+  ok((await page.locator('.party-list .game-item').count()) === 14, 'Party tab lists 14 party games');
   await shot('16-party-home');
   await page.click('.party-list a[href="#/impostor"]');
   await page.waitForSelector('#imp-setup');
@@ -489,6 +489,133 @@ const ok = (cond, msg) => { console.log(`${cond ? 'PASS' : 'FAIL'}  ${msg}`); if
   await page.click('[data-add="0"][data-amt="5"]');
   ok((await page.textContent('.tk-score')).trim() === '5', 'toolkit: scoreboard +5');
   await shot('22-toolkit');
+
+  // ---------- Forehead Guess (tilt + taps, sideways word) ----------
+  await page.goto(BASE + '#/forehead');
+  await page.waitForSelector('#fh-setup');
+  await page.click('#fh-start');
+  await page.waitForSelector('#fh-ready');
+  ok((await page.textContent('h1')).includes('Player 1'), 'forehead: first guesser is up');
+  await page.click('#fh-ready');
+  await page.waitForSelector('#fh-word:not(.fh-count)', { timeout: 6000 });
+  const tilt = (z) => page.evaluate((zz) => window.dispatchEvent(new DeviceMotionEvent('devicemotion', { accelerationIncludingGravity: { x: 0, y: 9.8, z: zz } })), z);
+  const fw1 = await page.textContent('#fh-word');
+  await tilt(0); await tilt(-9);   // upright, then nod down = got it
+  await tilt(0); await tilt(9);    // upright, then tip back = pass
+  await page.click('#fh-got');     // tap the "got it" half
+  ok((await page.textContent('.fh-hint')).includes('2 ✓') && (await page.textContent('#fh-word')) !== fw1, 'forehead: nod and tap score, tip back passes');
+  const rot = await page.evaluate(() => getComputedStyle(document.querySelector('.fh-rot')).transform);
+  ok(rot && rot !== 'none', 'forehead: word is turned sideways on a portrait phone');
+  await shot('23-forehead');
+  await page.evaluate(() => { const real = Date.now; Date.now = () => real() + 200000; });
+  await page.waitForSelector('#fh-continue', { timeout: 5000 });
+  ok((await page.textContent('.page-head')).includes('got 2') && (await page.locator('.gg-got .buzzed').count()) === 1, 'forehead: turn summary lists got and passed words');
+  await page.click('#fh-continue');
+  await page.waitForSelector('#fh-ready');
+  ok((await page.textContent('h1')).includes('Player 2'), 'forehead: next guesser');
+  await page.reload();
+
+  // ---------- Forbidden Words ----------
+  await page.goto(BASE + '#/forbidden');
+  await page.waitForSelector('#gg-setup');
+  ok(await page.isChecked('#gg-penalty'), 'forbidden: buzz penalty on by default');
+  await page.click('#gg-next');
+  await page.waitForSelector('#gg-go');
+  ok((await page.textContent('.page-head')).includes('Team B watches'), 'forbidden: the other team watches for banned words');
+  await page.click('#gg-go');
+  await page.waitForSelector('.fw-banned');
+  ok((await page.locator('.fw-banned li').count()) === 4, 'forbidden: card shows four banned words');
+  await shot('24-forbidden');
+  await page.click('#gg-got');
+  await page.click('#gg-got');
+  await page.click('#gg-buzz');
+  await page.evaluate(() => { const real = Date.now; Date.now = () => real() + 200000; });
+  await page.waitForSelector('#gg-continue', { timeout: 5000 });
+  ok((await page.locator('.gg-got .buzzed').count()) === 1 && (await page.textContent('.gg-scores li:first-child strong')).trim() === '1', 'forbidden: buzz loses the card and a point');
+  await page.reload();
+
+  // ---------- Song Hum-Along ----------
+  await page.goto(BASE + '#/hum');
+  await page.waitForSelector('#gg-setup');
+  ok((await page.locator('input[name="gg-deck"]').count()) === 4, 'hum: four song decks');
+  await page.click('#gg-next');
+  await page.click('#gg-go');
+  await page.waitForSelector('.hum-artist');
+  await page.click('#gg-got');
+  ok((await page.textContent('.gg-live')).includes('1 so far'), 'hum: shows title and artist, Got it scores');
+  await page.goto(BASE + '#/party');
+  await page.waitForSelector('.party-list');
+
+  // ---------- Categories Countdown ----------
+  await page.goto(BASE + '#/categories');
+  await page.waitForSelector('#cc-setup');
+  await page.click('#cc-go');
+  await page.waitForSelector('#cc-begin');
+  ok((await page.textContent('.cc-cat')).length > 2, 'categories: shows a category');
+  await page.click('#cc-begin');
+  await page.waitForSelector('#cc-next');
+  const who1 = await page.textContent('.cc-who');
+  await page.click('#cc-next');
+  ok((await page.textContent('.cc-who')) !== who1, 'categories: answering passes to the next player');
+  await shot('25-categories');
+  await page.click('#cc-bad');
+  await page.waitForSelector('#cc-new');
+  ok((await page.textContent('.imp-pass')).includes('loses a life'), 'categories: a bad answer costs a life');
+  await page.click('#cc-new');
+  await page.click('#cc-begin');
+  await page.evaluate(() => { const real = Date.now; Date.now = () => real() + 60000; });
+  await page.waitForSelector('#cc-new', { timeout: 5000 });
+  ok((await page.textContent('h1')).includes('Time’s up'), 'categories: running out of time costs a life');
+  await page.reload();
+
+  // ---------- Most Likely To ----------
+  await page.goto(BASE + '#/most-likely');
+  await page.waitForSelector('#ml-setup');
+  await page.click('#ml-start');
+  await page.waitForSelector('.pg-person');
+  const ml1 = await page.textContent('.pg-prompt');
+  await page.click('.pg-person >> nth=1');
+  await page.click('.pg-person >> nth=1');
+  await page.click('#ml-undo');
+  ok((await page.textContent('.pg-person >> nth=1')).includes('1'), 'most likely: tap to vote, undo works');
+  await page.click('#ml-next');
+  ok((await page.textContent('.pg-prompt')) !== ml1, 'most likely: next question is different');
+  await page.click('#ml-board');
+  ok((await page.textContent('.pg-board li')).includes('Player 2'), 'most likely: leaderboard');
+  await shot('26-most-likely');
+
+  // ---------- Would You Rather (secret vote) ----------
+  await page.goto(BASE + '#/would-you-rather');
+  await page.waitForSelector('#wr-setup');
+  await page.check('#wr-secret');
+  await page.waitForSelector('[data-step="voters"]');
+  await page.click('[data-step="voters"][data-d="-1"]');
+  await page.click('[data-step="voters"][data-d="-1"]');
+  await page.click('#wr-start');
+  await page.click('#wr-vote');
+  await page.click('.wr-choice.a');
+  await page.waitForSelector('#wr-ready');
+  ok(!(await page.textContent('#wr-root')).includes('%'), 'would you rather: votes stay secret between voters');
+  await page.click('#wr-ready');
+  await page.click('.wr-choice.b');
+  await page.waitForSelector('.wr-result');
+  ok((await page.textContent('.wr-bar.a')).includes('50%') && (await page.textContent('.wr-bar.b')).includes('50%'), 'would you rather: reveal shows the split');
+  await shot('27-would-you-rather');
+
+  // ---------- Never Have I Ever ----------
+  await page.goto(BASE + '#/never');
+  await page.waitForSelector('#nv-setup');
+  await page.click('[data-step="lives"][data-d="-1"]');
+  await page.click('[data-step="lives"][data-d="-1"]');
+  await page.click('#nv-start');
+  await page.waitForSelector('.pg-person');
+  await page.click('[data-i="0"]');
+  await page.click('#nv-undo');
+  ok((await page.locator('[data-i="0"] .nv-lives i.on').count()) === 3, 'never: tap loses a life, undo restores it');
+  for (const i of [0, 1, 2]) for (let k = 0; k < 3; k++) await page.click(`[data-i="${i}"]`);
+  await page.waitForSelector('#nv-again');
+  ok((await page.textContent('h1')).includes('Player 4 wins'), 'never: last player with lives wins');
+  await shot('28-never');
 
   // Deep link in a brand-new tab while offline
   const page2 = await context.newPage();

@@ -687,3 +687,109 @@ dialog.sheet::backdrop { background: rgba(0,0,0,.5); }
   padding: .3rem .7rem; border-radius: 999px; border: 2px solid var(--border);
   background: var(--surface-2); color: var(--text); font-size: 1rem; font-weight: 700;
 }
+
+/* ---------- Party wave 2 ---------- */
+.center { text-align: center; }
+.btn-row.center { justify-content: center; margin: .75rem 0; }
+.btn-row.center > .btn { flex: 0 1 auto; }
+.segmented.two { grid-template-columns: repeat(2, 1fr); }
+.gg-got .buzzed { color: var(--danger); }
+
+/* Forbidden Words + Hum-Along card */
+.fw-label { margin: 0 0 .4rem; font-weight: 700; color: var(--danger); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem; }
+.fw-banned { list-style: none; padding: 0; margin: 0 auto; display: grid; gap: .35rem; max-width: 18rem; }
+.fw-banned li { padding: .45rem .75rem; border-radius: 10px; border: 2px solid var(--danger); font-size: 1.3rem; font-weight: 700; }
+.hum-artist { margin: -.5rem 0 0; color: var(--muted); font-size: 1.1rem; }
+
+/* Prompt cards (Most Likely To, Never Have I Ever, Categories) */
+.pg-card {
+  text-align: center; padding: 1.5rem 1rem; margin: .5rem 0 1rem; border-radius: var(--radius);
+  background: var(--surface); border: 2px solid var(--accent); box-shadow: var(--shadow);
+}
+.pg-lead { margin: 0; color: var(--muted); font-weight: 700; font-size: 1.05rem; }
+.pg-lead-h { font-size: 1.5rem; }
+.pg-prompt { font-size: 1.9rem; line-height: 1.2; margin: .4rem 0 0; word-break: break-word; }
+.pg-count { font-size: 2.6rem; font-weight: 800; min-height: 1.3em; color: var(--accent-strong); margin-top: .5rem; }
+.pg-people { list-style: none; padding: 0; margin: 0 0 1rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr)); gap: .5rem; }
+.pg-person {
+  width: 100%; min-height: 56px; display: flex; justify-content: space-between; align-items: center; gap: .5rem;
+  padding: .5rem .8rem; border-radius: var(--radius); border: 2px solid var(--border);
+  background: var(--surface); color: var(--text); font: inherit; font-weight: 700; text-align: left; cursor: pointer;
+}
+button.pg-person:active { background: var(--accent-soft); }
+.pg-person strong { font-size: 1.3rem; font-variant-numeric: tabular-nums; color: var(--accent-strong); }
+.pg-person.out { opacity: .5; text-decoration: line-through; cursor: default; }
+.pg-person.current { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.pg-board { list-style: none; padding: 0; margin: 0 0 1rem; display: grid; gap: .4rem; }
+.pg-board li { display: flex; gap: .75rem; align-items: center; padding: .6rem .9rem; border-radius: var(--radius); background: var(--surface); border: 2px solid var(--border); font-weight: 700; }
+.pg-board li:first-child { border-color: var(--accent); }
+.pg-board li > span:nth-child(2) { flex: 1; }
+.pg-pos { width: 1.8rem; height: 1.8rem; border-radius: 50%; display: grid; place-items: center; background: var(--surface-2); font-size: .9rem; }
+.nv-lives { display: inline-flex; flex-wrap: wrap; gap: 3px; justify-content: flex-end; max-width: 5.5rem; }
+.nv-lives i { width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--danger); }
+.nv-lives i.on { background: var(--danger); }
+
+/* Would You Rather */
+.wr-choices { display: grid; gap: .5rem; margin: .5rem 0 1rem; }
+.wr-choice {
+  min-height: 110px; padding: 1rem; border-radius: var(--radius); border: 3px solid var(--border);
+  background: var(--surface); color: var(--text); font: inherit; font-size: 1.35rem; font-weight: 800; line-height: 1.25;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .35rem; cursor: pointer;
+}
+.wr-choice.a { border-color: var(--accent); }
+.wr-choice.b { border-color: var(--medium); }
+.wr-choice.picked.a { background: var(--accent); color: var(--on-accent); }
+.wr-choice.picked.b { background: var(--medium); color: var(--surface); }
+.wr-or { font-size: .8rem; letter-spacing: .1em; opacity: .7; }
+.wr-vs { text-align: center; font-weight: 800; color: var(--muted); text-transform: uppercase; }
+.wr-result { display: grid; gap: .6rem; margin: 1rem 0; }
+.wr-bar {
+  position: relative; overflow: hidden; display: flex; justify-content: space-between; gap: .75rem; align-items: center;
+  padding: .9rem 1rem; border-radius: var(--radius); border: 2px solid var(--border); background: var(--surface); font-weight: 700;
+}
+.wr-bar::before { content: ""; position: absolute; inset: 0 auto 0 0; width: var(--pct); background: var(--accent-soft); z-index: 0; }
+.wr-bar.b::before { background: color-mix(in srgb, var(--medium) 22%, transparent); }
+.wr-bar > * { position: relative; z-index: 1; }
+.wr-bar strong { white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+/* Categories Countdown */
+.cc-cat { font-size: 1.9rem; line-height: 1.2; margin: .3rem 0 0; }
+.cc-letter { font-size: 1.2rem; margin: .4rem 0 0; }
+.cc-letter strong { font-size: 2rem; color: var(--accent-strong); vertical-align: middle; }
+.cc-who { font-size: 1.6rem; font-weight: 800; margin: 1rem 0 0; }
+.cc-time { font-size: 4.2rem; font-weight: 800; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.cc-bar { height: 10px; border-radius: 999px; background: var(--surface-2); overflow: hidden; margin: .25rem 0 .5rem; }
+.cc-bar i { display: block; height: 100%; width: 100%; background: var(--accent); transition: width .2s linear; }
+#cc-bad { flex: 0 0 auto; white-space: nowrap; }
+.cc-next { white-space: nowrap; }
+
+/* Forehead Guess: full-screen stage, word turned sideways for a portrait-locked phone */
+.fh-howto { list-style: none; padding: 0; display: grid; gap: .4rem; }
+.fh-howto li { padding: .6rem .9rem; border-radius: var(--radius); background: var(--surface); border: 2px solid var(--border); }
+body.fh-playing { overflow: hidden; }
+.fh-stage { position: fixed; inset: 0; z-index: 50; background: var(--accent); color: var(--on-accent); overflow: hidden; touch-action: none; user-select: none; -webkit-user-select: none; }
+.fh-stage.ready { background: var(--accent-strong); }
+.fh-rot { position: absolute; inset: 0; }
+@media (orientation: portrait) {
+  .fh-rot { inset: auto; top: 50%; left: 50%; width: 100vh; height: 100vw; width: 100dvh; height: 100dvw; transform: translate(-50%, -50%) rotate(90deg); }
+  .fh-stage.turn-left .fh-rot { transform: translate(-50%, -50%) rotate(-90deg); }
+}
+.fh-zone { position: absolute; top: 0; bottom: 0; width: 50%; border: 0; background: transparent; cursor: pointer; z-index: 2; }
+.fh-pass { left: 0; }
+.fh-got { right: 0; }
+.fh-inner { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1rem 2rem; text-align: center; pointer-events: none; z-index: 1; }
+.fh-time { font-size: 2.2rem; font-weight: 800; font-variant-numeric: tabular-nums; opacity: .9; }
+.fh-word { font-size: clamp(2.4rem, 11vmin, 5.5rem); font-weight: 900; line-height: 1.05; word-break: break-word; margin: .5rem 0; }
+.fh-count { font-size: clamp(5rem, 30vmin, 10rem); }
+.fh-hint { display: flex; justify-content: space-between; width: 100%; font-weight: 700; opacity: .85; gap: 1rem; }
+.fh-hint span:only-child { margin: 0 auto; }
+.fh-quit {
+  position: absolute; top: max(.5rem, env(safe-area-inset-top)); right: .5rem; z-index: 3; width: 44px; height: 44px; border-radius: 50%;
+  border: 2px solid currentColor; background: transparent; color: inherit; font-size: 1.2rem; cursor: pointer; opacity: .7;
+}
+.fh-stage.flash-got { animation: fh-got .45s ease-out; }
+.fh-stage.flash-pass { animation: fh-pass .45s ease-out; }
+@keyframes fh-got { from { background: #1f9d55; } }
+@keyframes fh-pass { from { background: #c47a00; } }
+@media (prefers-reduced-motion: reduce) { .fh-stage.flash-got, .fh-stage.flash-pass { animation: none; } }
+.gg-actions #gg-got { flex: 1.6 1 auto; white-space: nowrap; }
