@@ -6,6 +6,8 @@ const P = require('../js/party-logic.js');
 const PW = require('../js/party-words.js');
 const IW = require('../js/impostor-words.js');
 const { createRng } = require('../js/impostor-logic.js');
+const M = require('../js/party-more-logic.js');
+const D = require('../js/party-decks.js');
 
 let passed = 0;
 function test(name, fn) {
@@ -197,6 +199,147 @@ test('data: 100 charades actions and 80 hot potato prompts, no duplicates', () =
   assert.strictEqual(PW.prompts.length, 80);
   assert.strictEqual(new Set(PW.prompts).size, 80);
   assert.ok(IW.Animals.length >= 100, 'charades reuses impostor categories');
+});
+
+// ---------- Forbidden Words / Forehead (guess-logic additions) ----------
+test('guess: buzz loses the card, costs a point (never below 0) and draws the next', () => {
+  const rng = createRng(5);
+  const g = G.createGame({ mode: 'forbidden', teams: ['A', 'B'], words: ['f0', 'f1', 'f2', 'f3'], rounds: 2 }, rng);
+  G.startTurn(g, rng);
+  const first = g.current.word;
+  G.buzz(g, rng, true);
+  assert.strictEqual(g.teams[0].score, 0, 'score floors at 0');
+  assert.deepStrictEqual(g.current.buzzed, [first]);
+  assert.notStrictEqual(g.current.word, first);
+  G.gotIt(g, rng); G.gotIt(g, rng);
+  G.buzz(g, rng, true);
+  assert.strictEqual(g.teams[0].score, 1);
+  G.buzz(g, rng, false);
+  assert.strictEqual(g.teams[0].score, 1, 'no penalty when turned off');
+  G.endTurn(g, rng);
+  assert.strictEqual(g.teamIndex, 1, 'non-fishbowl modes rotate like charades');
+});
+test('guess: buzz does nothing in fishbowl', () => {
+  const rng = createRng(1);
+  const g = G.createGame({ mode: 'fishbowl', teams: ['A', 'B'], words: ['a', 'b', 'c'] }, rng);
+  G.startTurn(g, rng);
+  const w = g.current.word;
+  G.buzz(g, rng, true);
+  assert.strictEqual(g.current.word, w);
+});
+test('guess: forehead allows a solo game and up to 10 players', () => {
+  const solo = G.createGame({ mode: 'forehead', teams: ['Sam'], words: ['x', 'y'], minTeams: 1, maxTeams: 10, rounds: 2 }, createRng(1));
+  assert.strictEqual(solo.teams.length, 1);
+  G.startTurn(solo); G.endTurn(solo); assert.ok(!solo.over); G.startTurn(solo); G.endTurn(solo);
+  assert.ok(solo.over, 'two turns for one player and two rounds');
+  const big = G.createGame({ mode: 'forehead', teams: Array.from({ length: 12 }, (_, i) => 'P' + i), words: ['x'], maxTeams: 10 }, createRng(1));
+  assert.strictEqual(big.teams.length, 10);
+  assert.strictEqual(G.createGame({ teams: Array(6).fill('') , words: ['x'] }).teams.length, 4, 'charades still capped at 4 teams');
+});
+
+// ---------- Prompt deck ----------
+test('deck: every card once before repeats, no back-to-back repeat across reshuffles', () => {
+  const rng = createRng(9);
+  const d = M.createDeck(5, rng);
+  const first = Array.from({ length: 5 }, () => M.drawCard(d, rng));
+  assert.deepStrictEqual(first.slice().sort(), [0, 1, 2, 3, 4]);
+  let prev = first[4];
+  for (let i = 0; i < 200; i++) { const c = M.drawCard(d, rng); assert.notStrictEqual(c, prev); prev = c; }
+  assert.strictEqual(M.drawCard(M.createDeck(0, rng), rng), null);
+  const one = M.createDeck(1, rng);
+  assert.strictEqual(M.drawCard(one, rng), 0); assert.strictEqual(M.drawCard(one, rng), 0);
+  assert.doesNotThrow(() => JSON.parse(JSON.stringify(d)), 'deck is plain data for localStorage');
+});
+
+// ---------- Forehead tilt ----------
+test('tilt: must start upright, nod = correct, tip back = pass, re-arms only near upright', () => {
+  let r = M.readTilt(-9, false);
+  assert.strictEqual(r.action, null, 'not armed until held upright');
+  r = M.readTilt(0.5, r.armed); assert.ok(r.armed);
+  r = M.readTilt(-8, r.armed); assert.strictEqual(r.action, 'correct'); assert.ok(!r.armed);
+  r = M.readTilt(-8, r.armed); assert.strictEqual(r.action, null, 'holding the nod does not repeat');
+  r = M.readTilt(5, r.armed); assert.ok(!r.armed, 'still tilted: not re-armed');
+  r = M.readTilt(1, r.armed); assert.ok(r.armed);
+  r = M.readTilt(8, r.armed); assert.strictEqual(r.action, 'pass');
+  r = M.readTilt(0, false); r = M.readTilt(-4, r.armed); assert.strictEqual(r.action, null, 'small tilts ignored');
+  assert.strictEqual(M.readTilt(8, true, true).action, 'correct', 'flipped swaps directions');
+  assert.strictEqual(M.readTilt(NaN, true).action, null);
+});
+
+// ---------- Most Likely To / Would You Rather ----------
+test('most likely: votes tally, undo never goes negative, ranking breaks ties by seat', () => {
+  let t = {};
+  t = M.addVote(t, 'Bo'); t = M.addVote(t, 'Al'); t = M.addVote(t, 'Bo'); t = M.addVote(t, 'Cy');
+  assert.deepStrictEqual(M.ranking(t, ['Al', 'Bo', 'Cy']).map((r) => r.name), ['Bo', 'Al', 'Cy']);
+  t = M.addVote(t, 'Cy', -1); t = M.addVote(t, 'Cy', -1);
+  assert.ok(!('Cy' in t));
+  assert.deepStrictEqual(M.ranking(t, ['Bo', 'Al']).map((r) => r.votes), [2, 1]);
+});
+test('would you rather: split adds to 100', () => {
+  assert.deepStrictEqual(M.split(0, 0), { a: 0, b: 0, total: 0 });
+  assert.deepStrictEqual(M.split(1, 2), { a: 33, b: 67, total: 3 });
+  assert.deepStrictEqual(M.split(5, 0), { a: 100, b: 0, total: 5 });
+});
+
+// ---------- Never Have I Ever ----------
+test('never: lives clamp, game ends with one player left', () => {
+  const s = M.createLives(['A', 'B', 'C'], 2);
+  M.changeLife(s, 0, -1); M.changeLife(s, 0, -1); M.changeLife(s, 0, -1);
+  assert.strictEqual(s.players[0].lives, 0);
+  M.changeLife(s, 0, 5); assert.strictEqual(s.players[0].lives, 2, 'undo capped at max');
+  M.changeLife(s, 0, -2); M.changeLife(s, 1, -2);
+  assert.ok(M.livesOver(s)); assert.deepStrictEqual(M.alive(s).map((p) => p.name), ['C']);
+  assert.strictEqual(M.createLives(['A'], 3).players.length, 1);
+  assert.ok(!M.livesOver(M.createLives(['A'], 3)), 'solo never auto-ends');
+});
+
+// ---------- Categories Countdown ----------
+test('categories: turns rotate, clock shrinks each lap to a minimum, misses cost lives', () => {
+  const g = M.createCategories({ players: ['A', 'B', 'C'], lives: 2, startSeconds: 6, minSeconds: 4 }, createRng(3));
+  g.current = 0;
+  assert.strictEqual(M.turnSeconds(g), 6);
+  M.answered(g); assert.strictEqual(g.current, 1);
+  M.answered(g); M.answered(g);
+  assert.strictEqual(g.current, 0); assert.strictEqual(M.turnSeconds(g), 5, 'one second shorter after a lap');
+  for (let i = 0; i < 12; i++) M.answered(g);
+  assert.strictEqual(M.turnSeconds(g), 4, 'never below the minimum');
+  M.timedOut(g); // A loses a life
+  assert.strictEqual(g.players[0].lives, 1); assert.strictEqual(g.current, 1); assert.strictEqual(g.answers, 0);
+  M.timedOut(g); // B misses; play moves on to C
+  assert.strictEqual(g.current, 2);
+  g.current = 1; M.timedOut(g); // B misses again: out
+  assert.strictEqual(g.players[1].lives, 0); assert.strictEqual(g.current, 2, 'skips the eliminated player');
+  M.answered(g); assert.strictEqual(g.current, 0, 'B is skipped in rotation');
+  M.timedOut(g); // A out
+  assert.ok(g.over); assert.strictEqual(M.winner(g).name, 'C');
+  assert.throws(() => M.createCategories({ players: ['solo'] }));
+});
+
+// ---------- New decks ----------
+test('decks: forbidden cards have 4 distinct banned words that are not part of the word', () => {
+  assert.ok(D.forbidden.length >= 120);
+  assert.strictEqual(new Set(D.forbidden.map((c) => c[0].toLowerCase())).size, D.forbidden.length);
+  D.forbidden.forEach((c) => {
+    assert.strictEqual(c.length, 5, c[0]);
+    assert.strictEqual(new Set(c.map((x) => x.toLowerCase())).size, 5, c[0]);
+    c.slice(1).forEach((b) => assert.ok(!c[0].toLowerCase().includes(b.toLowerCase()), `${c[0]} bans ${b}`));
+  });
+});
+test('decks: prompt packs, categories, songs and forehead decks are full and unique', () => {
+  for (const k of ['mostLikely', 'neverHave']) {
+    assert.ok(D[k].family.length >= 70 && D[k].grownup.length >= 40, k);
+    const all = D[k].family.concat(D[k].grownup);
+    assert.strictEqual(new Set(all).size, all.length, k + ' duplicates');
+  }
+  assert.ok(D.wouldRather.family.length >= 60 && D.wouldRather.grownup.length >= 25);
+  D.wouldRather.family.concat(D.wouldRather.grownup).forEach((p) => assert.ok(p.length === 2 && p[0] && p[1]));
+  assert.strictEqual(new Set(D.categories).size, D.categories.length);
+  assert.ok(D.categories.length >= 100);
+  const songs = [].concat(...Object.values(D.songs));
+  assert.ok(songs.length >= 130);
+  assert.strictEqual(new Set(songs.map((s) => s[0].toLowerCase())).size, songs.length, 'song titles unique');
+  assert.ok(D.famous.length >= 100 && new Set(D.famous).size === D.famous.length);
+  assert.ok(D.characters.length >= 80 && new Set(D.characters).size === D.characters.length);
 });
 
 console.log(`\n${passed} passed${process.exitCode ? ', some FAILED' : ''}`);

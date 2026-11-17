@@ -3,7 +3,7 @@
  * Bump CACHE_VERSION whenever you change ANY file (including games.json)
  * so installed copies pick up the new content on their next visit.
  */
-const CACHE_VERSION = 'v1.10.0';
+const CACHE_VERSION = 'v1.11.0';
 const CACHE_NAME = `card-rules-${CACHE_VERSION}`;
 
 // Every file the app needs to run offline. Paths are relative to this file,
@@ -30,6 +30,11 @@ const PRECACHE = [
   './js/hot-potato.js',
   './js/guess-logic.js',
   './js/guess-games.js',
+  './js/party-decks.js',
+  './js/party-more-logic.js',
+  './js/forehead.js',
+  './js/categories.js',
+  './js/prompt-games.js',
   './js/app.js',
   './icons/icon-192.png',
   './icons/icon-512.png',
