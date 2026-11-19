@@ -44,7 +44,7 @@ All paths are relative (`./games.json`, `css/styles.css`, …) and the service w
 
 ## Scorecards
 
-Eleven games open a purpose-built scorecard from **Start scorekeeper** instead of the plus/minus tracker. **Options → Simple tracker** (`#/score/<id>?simple=1`) still opens the plain tracker for any of them. Scorecards are saved under `sheet:<id>` and listed under **Scores in progress**.
+Twenty-five games open a purpose-built scorecard from **Start scorekeeper** instead of the plus/minus tracker. **Options → Simple tracker** (`#/score/<id>?simple=1`) still opens the plain tracker for any of them. Scorecards are saved under `sheet:<id>` and listed under **Scores in progress**.
 
 **Five-dice category scorecard** (`js/dice-sheet-logic.js`, `js/dice-sheet.js`):
 
@@ -65,8 +65,20 @@ Eleven games open a purpose-built scorecard from **Start scorekeeper** instead o
 | Canasta | Canastas, red 3s, going out, meld and hand points per team | Hand score, unmelded red-3 penalty, each team’s minimum first meld, 5,000 to win |
 | Cribbage | Pegs (+1 … +12, or any amount) | Peg board with back peg, win at 121 (or 61), skunk / double skunk |
 | Hearts | Hearts per player, who took the Q♠ (and J♦ for Omnibus) | 26-point check, shooting the moon (others +26 or shooter −26), lowest wins at 100 |
+| Gin Rummy | Knock / gin / big gin / draw, and deadwood tapped in on a card keypad | Knock difference, undercut (+25), gin (+25) and big gin (+31), first to 100, box and game bonuses (shutout doubles) |
+| Euchre / Three-Handed Euchre | Makers, result (3–4 tricks, march, euchred), going alone | 1 / 2 / 4 points, euchre 2 to the defenders (each opponent in three-handed; march 3), defending alone option, to 10 |
+| Six-Card Golf | Each player’s six cards (or a typed score) | Card values (A 1, 2 −2, J/Q 10, K 0), column pairs cancel, 9 or 18 holes, lowest wins |
+| Pinochle | Bid, meld (quick meld buttons) and counters per team | Meld kept only with a counter, set by the bid if short, partner’s counters fill in to 250, bidders count out first at 1,500 |
+| Rummy 500 | Cards melded and left in hand, tapped in per player | Melded − hand (Ace 15 or 1 low), first to 500 |
+| Auction Pitch | Pitcher, bid (or Smudge), who took High, Low, Jack, Game | Set back by the bid, smudge wins, count-out order pitcher → High → Low → Jack → Game |
+| Bid Whist | Bid, uptown / downtown / no trump, books won | Books over six, set by the bid, no trump doubles, ±7 |
+| Whist | Tricks and honours | Tricks over six, honours (not from game − 1), games of 5/7/10, best-of-three rubber |
+| Skat | Declarer, bid, game, matadors, hand / schneider / schwarz / announcements / ouvert, result | Game value (shown live), null values, lost = −2 × value, overbid rule |
+| 1000 | Declarer, bid, card points with marriage buttons (♥100 ♦80 ♣60 ♠40) | Bid made or lost, opponents rounded to 5, three zero hands −120, to 1,000 |
+| Sixty-Six / Schnapsen | Winner, and whether the loser had 33+, under 33 or no tricks | 1 / 2 / 3 game points, to 7 |
+| French Tarot | Taker (and called partner with 5), contract, oudlers, card points, petit au bout, handful, slam | Points needed, (25 + difference) × multiplier, bonuses, zero-sum shares for 3, 4 or 5 players |
 
-Unit tests: `node tools/test-dice-sheet.js` and `node tools/test-round-sheet.js`. A game opts in with `"sheet"` in its `scorekeeper` (`yacht`, `generala`, `ohhell`, `spades`, `fivehundred`, `bridge`, `farkle`, `crummy`, `canasta`, `cribbage`, `hearts`).
+Unit tests: `node tools/test-dice-sheet.js` and `node tools/test-round-sheet.js`. A game opts in with `"sheet"` in its `scorekeeper` (`yacht`, `generala`, `ohhell`, `spades`, `fivehundred`, `bridge`, `farkle`, `crummy`, `canasta`, `cribbage`, `hearts`, `gin`, `euchre`, `euchre3`, `golf`, `pinochle`, `rummy500`, `pitch`, `bidwhist`, `whist`, `skat`, `thousand`, `sixtysix`, `tarot`). The newer games’ forms live in `js/round-sheet-more.js`.
 
 ## Party games
 

@@ -967,3 +967,29 @@ body.fh-playing { overflow: hidden; }
 .cr-count .rs-step .btn { min-width: 38px; min-height: 38px; font-size: 1.15rem; }
 .cr-count .rs-step output { min-width: 1.8rem; font-size: 1.15rem; }
 .cr-counts { gap: .25rem .75rem; }
+
+/* Card keypad (Gin, Rummy 500) and Golf cards */
+.kp-fields { display: flex; flex-wrap: wrap; gap: .4rem; margin: .35rem 0; }
+.kp-field {
+  flex: 1 1 8rem; display: flex; justify-content: space-between; align-items: center; gap: .5rem; min-height: 48px; padding: .35rem .7rem;
+  border-radius: 12px; border: 2px dashed var(--border); background: var(--surface); color: var(--text); font: inherit; cursor: pointer;
+}
+.kp-field.on { border-style: solid; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.kp-flabel { font-weight: 700; font-size: .9rem; }
+.kp-fval { font-weight: 800; font-size: 1.3rem; font-variant-numeric: tabular-nums; }
+.kp { display: grid; grid-template-columns: repeat(auto-fill, minmax(3.4rem, 1fr)); gap: .3rem; margin: .4rem 0; }
+.kp-key { min-height: 44px; padding: .2rem; border-radius: 10px; border: 2px solid var(--border); background: var(--surface); color: var(--text); font: inherit; font-weight: 800; cursor: pointer; }
+.kp-key:active { background: var(--accent-soft); }
+.kp-key:disabled { opacity: .4; cursor: default; }
+.kp-clear, .kp-type { font-weight: 600; font-size: .9rem; }
+.kp-sticky { position: sticky; bottom: calc(var(--tap) + 1.6rem); z-index: 2; background: var(--surface); padding: .25rem 0; }
+.gf-ranks { display: grid; grid-template-columns: repeat(7, 1fr); gap: .3rem; margin: .5rem 0; position: sticky; top: 0; z-index: 2; background: var(--surface); padding: .25rem 0; }
+.gf-grid { display: grid; grid-template-columns: repeat(3, 3.2rem); gap: .3rem; margin: .4rem 0; }
+.gf-slot { height: 4rem; border-radius: 8px; border: 2px solid var(--border); background: var(--surface); color: var(--text); font: inherit; font-weight: 800; font-size: 1.15rem; cursor: pointer; }
+.gf-slot.empty { border-style: dashed; color: var(--muted); }
+.gf-slot.on { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.gf-slot.pair { background: var(--accent-soft); }
+.gf-player .btn-ghost { min-height: 36px; padding: .2rem .5rem; font-size: .9rem; }
+.pn-melds { justify-content: flex-start; margin-top: .35rem; }
+.pn-melds .btn { font-size: .85rem; }
+.sk-extras { display: flex; flex-wrap: wrap; gap: .4rem .9rem; }

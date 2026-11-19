@@ -278,4 +278,181 @@ test('hearts: points, shooting the moon both ways, omnibus J♦, lowest wins', (
   assert.ok(r.over); assert.deepStrictEqual(r.winners, ['p1']);
 });
 
+// ---------- Gin Rummy ----------
+test('gin: knock, undercut, gin, big gin, draw', () => {
+  const G = R.gin, o = G.defaults(), s = ['p1', 'p2'];
+  assert.deepStrictEqual(G.hand(o, s, { type: 'knock', by: 'p1', dw: { p1: 4, p2: 30 } }).deltas, { p1: 26, p2: 0 });
+  assert.deepStrictEqual(G.hand(o, s, { type: 'knock', by: 'p1', dw: { p1: 7, p2: 5 } }).deltas, { p1: 0, p2: 27 }, 'undercut: 2 + 25');
+  assert.deepStrictEqual(G.hand(o, s, { type: 'knock', by: 'p1', dw: { p1: 6, p2: 6 } }).deltas, { p1: 0, p2: 25 }, 'equal is an undercut');
+  assert.deepStrictEqual(G.hand(o, s, { type: 'gin', by: 'p2', dw: { p1: 41 } }).deltas, { p1: 0, p2: 66 });
+  assert.strictEqual(G.hand(o, s, { type: 'biggin', by: 'p2', dw: { p1: 10 } }).deltas.p2, 41);
+  assert.deepStrictEqual(G.hand(o, s, { type: 'draw' }).deltas, { p1: 0, p2: 0 });
+  assert.ok(G.validate(o, s, { type: 'knock', by: 'p1', dw: { p1: 11, p2: 3 } }).includes('10 or less'));
+});
+test('gin: game to 100 with box and game bonuses; shutout doubles the game bonus', () => {
+  const G = R.gin, o = G.defaults(), s = ['p1', 'p2'];
+  const r = G.replay(o, s, [{ type: 'gin', by: 'p1', dw: { p2: 40 } }, { type: 'knock', by: 'p2', dw: { p2: 2, p1: 12 } }, { type: 'gin', by: 'p1', dw: { p2: 30 } }]);
+  assert.ok(r.over); assert.deepStrictEqual(r.winners, ['p1']);
+  assert.deepStrictEqual(r.info.running, { p1: 120, p2: 10 });
+  assert.deepStrictEqual(r.totals, { p1: 120 + 50 + 100, p2: 10 + 25 });
+  const sh = G.replay(o, s, [{ type: 'gin', by: 'p1', dw: { p2: 80 } }]);
+  assert.deepStrictEqual(sh.totals, { p1: 105 + 25 + 200, p2: 0 });
+  assert.deepStrictEqual(G.replay(Object.assign({}, o, { endBonuses: false }), s, [{ type: 'gin', by: 'p1', dw: { p2: 80 } }]).totals, { p1: 105, p2: 0 });
+});
+
+// ---------- Euchre ----------
+test('euchre: made 1, march 2, alone march 4, alone 3–4 tricks 1, euchred 2 (4 vs a lone defender)', () => {
+  const E = R.euchre, o = E.defaults();
+  assert.deepStrictEqual(E.hand(o, { makers: 'A', result: 'made' }), { A: 1, B: 0 });
+  assert.deepStrictEqual(E.hand(o, { makers: 'A', result: 'march' }), { A: 2, B: 0 });
+  assert.deepStrictEqual(E.hand(o, { makers: 'B', result: 'march', alone: true }), { A: 0, B: 4 });
+  assert.deepStrictEqual(E.hand(o, { makers: 'B', result: 'made', alone: true }), { A: 0, B: 1 });
+  assert.deepStrictEqual(E.hand(o, { makers: 'A', result: 'euchred' }), { A: 0, B: 2 });
+  assert.deepStrictEqual(E.hand(Object.assign({}, o, { defendAlone: true }), { makers: 'A', result: 'euchred', alone: true, defAlone: true }), { A: 0, B: 4 });
+  const r = E.replay(o, ['A', 'B'], Array.from({ length: 5 }, () => ({ makers: 'A', result: 'march' })));
+  assert.ok(r.over); assert.deepStrictEqual(r.winners, ['A']);
+});
+test('three-handed euchre: made 1, march 3, euchred = 2 to each opponent', () => {
+  const E = R.euchre3, s = ['p1', 'p2', 'p3'];
+  assert.deepStrictEqual(E.hand({}, s, { maker: 'p2', result: 'made' }), { p1: 0, p2: 1, p3: 0 });
+  assert.deepStrictEqual(E.hand({}, s, { maker: 'p2', result: 'march' }), { p1: 0, p2: 3, p3: 0 });
+  assert.deepStrictEqual(E.hand({}, s, { maker: 'p2', result: 'euchred' }), { p1: 2, p2: 0, p3: 2 });
+});
+
+// ---------- Six-Card Golf ----------
+test('golf: card values, column pairs cancel, nine holes lowest wins', () => {
+  const G = R.golf;
+  assert.deepStrictEqual(['A', '2', '7', 'J', 'Q', 'K'].map((c) => G.value(c)), [1, -2, 7, 10, 10, 0]);
+  assert.strictEqual(G.score(['5', 'K', '2', '5', 'J', 'A']), 0 + 0 + 10 - 2 + 1, 'the two 5s are a column pair');
+  assert.strictEqual(G.score(['Q', 'Q', 'Q', '3', '4', '6']), 10 + 3 + 10 + 4 + 10 + 6, 'pairs only count within a column');
+  assert.strictEqual(G.score(['2', '2', '2', '2', '2', '2']), 0);
+  assert.strictEqual(G.score(['A', 'B']), null);
+  const s = ['p1', 'p2'];
+  const r = G.replay({ holes: 9 }, s, Array.from({ length: 9 }, () => ({ pts: { p1: 3, p2: 5 } })));
+  assert.ok(r.over); assert.deepStrictEqual(r.winners, ['p1']); assert.deepStrictEqual(r.totals, { p1: 27, p2: 45 });
+});
+
+// ---------- Pinochle ----------
+test('pinochle: bidder makes or is set; meld needs a counter; counters total 250', () => {
+  const P = R.pinochle, o = P.defaults();
+  let h = P.hand(o, { bidder: 'A', bid: 300, meld: { A: 120, B: 60 }, counters: { A: 190, B: 60 } });
+  assert.deepStrictEqual(h.deltas, { A: 310, B: 120 });
+  h = P.hand(o, { bidder: 'A', bid: 350, meld: { A: 120, B: 60 }, counters: { A: 190, B: 60 } });
+  assert.deepStrictEqual(h.deltas, { A: -350, B: 120 });
+  h = P.hand(o, { bidder: 'A', bid: 250, meld: { A: 100, B: 80 }, counters: { A: 250, B: 0 } });
+  assert.deepStrictEqual(h.deltas, { A: 350, B: 0 }, 'B took no counters: loses its meld');
+  assert.ok(P.validate(o, { bidder: 'A', bid: 250, meld: { A: 0, B: 0 }, counters: { A: 200, B: 40 } }).includes('250'));
+  const r = P.replay(o, ['A', 'B'], [{ bidder: 'B', bid: 250, meld: { A: 900, B: 1000 }, counters: { A: 100, B: 150 } }, { bidder: 'B', bid: 250, meld: { A: 600, B: 300 }, counters: { A: 100, B: 150 } }]);
+  assert.ok(r.over); assert.deepStrictEqual(r.winners, ['B'], 'bidding side counts out first');
+});
+
+// ---------- Rummy 500 ----------
+test('rummy 500: melded minus hand, first to 500', () => {
+  const R5 = R.rummy500, s = ['p1', 'p2', 'p3'];
+  const r = R5.replay(R5.defaults(), s, [{ melded: { p1: 85, p2: 40, p3: 0 }, hand: { p1: 0, p2: 15, p3: 62 } }]);
+  assert.deepStrictEqual(r.totals, { p1: 85, p2: 25, p3: -62 });
+  const r2 = R5.replay(R5.defaults(), s, Array.from({ length: 6 }, () => ({ melded: { p1: 90, p2: 10, p3: 0 }, hand: { p1: 0, p2: 0, p3: 0 } })));
+  assert.ok(r2.over); assert.deepStrictEqual(r2.winners, ['p1']);
+});
+
+// ---------- Auction Pitch ----------
+test('pitch: points to their winners, pitcher set back, smudge, count-out order', () => {
+  const P = R.pitch, o = P.defaults(), s = ['p1', 'p2', 'p3', 'p4'];
+  let h = P.hand(o, s, { pitcher: 'p1', bid: 2, high: 'p1', low: 'p3', jack: 'p1', game: 'p2' });
+  assert.deepStrictEqual(h.deltas, { p1: 2, p2: 1, p3: 1, p4: 0 });
+  h = P.hand(o, s, { pitcher: 'p1', bid: 3, high: 'p1', low: 'p3', jack: 'p1', game: 'p2' });
+  assert.deepStrictEqual(h.deltas, { p1: -3, p2: 1, p3: 1, p4: 0 });
+  assert.strictEqual(P.hand(o, s, { pitcher: 'p2', bid: 2, high: 'p2', low: 'p2', jack: null, game: null }).deltas.p2, 2, 'jack not dealt, game tied');
+  const sm = P.replay(o, s, [{ pitcher: 'p4', bid: 5, high: 'p4', low: 'p4', jack: 'p4', game: 'p4' }]);
+  assert.ok(sm.over); assert.deepStrictEqual(sm.winners, ['p4'], 'smudge wins outright');
+  // p1 and p2 both reach 7: pitcher p2 counts first.
+  const hands = [{ pitcher: 'p1', bid: 4, high: 'p1', low: 'p1', jack: 'p1', game: 'p1' }, { pitcher: 'p2', bid: 4, high: 'p2', low: 'p2', jack: 'p2', game: 'p2' }];
+  const r = P.replay(Object.assign({}, o, { smudge: false }), s, hands.concat([{ pitcher: 'p1', bid: 2, high: 'p1', low: 'p1', jack: 'p2', game: 'p2' }, { pitcher: 'p2', bid: 1, high: 'p2', low: 'p1', jack: null, game: null }]));
+  assert.deepStrictEqual(r.totals.p1, 7); assert.deepStrictEqual(r.totals.p2, 7);
+  assert.ok(r.over); assert.deepStrictEqual(r.winners, ['p2']);
+});
+
+// ---------- Bid Whist ----------
+test('bid whist: books over six, set by the bid, no trump doubles, ±7', () => {
+  const B = R.bidwhist, o = B.defaults();
+  assert.deepStrictEqual(B.hand(o, { bidder: 'A', bid: 4, type: 'up', books: 11 }).deltas, { A: 5, B: 0 });
+  assert.deepStrictEqual(B.hand(o, { bidder: 'A', bid: 4, type: 'down', books: 9 }).deltas, { A: -4, B: 0 });
+  assert.deepStrictEqual(B.hand(o, { bidder: 'B', bid: 5, type: 'nt', books: 12 }).deltas, { A: 0, B: 12 });
+  const r = B.replay(o, ['A', 'B'], [{ bidder: 'A', bid: 4, type: 'up', books: 8 }, { bidder: 'A', bid: 3, type: 'up', books: 7 }]);
+  assert.ok(r.over); assert.deepStrictEqual(r.winners, ['B'], 'A reached −7');
+});
+
+// ---------- Whist ----------
+test('whist: tricks over six, honours (not from 4), game 5, rubber best of three', () => {
+  const W = R.whist, o = W.defaults();
+  let r = W.replay(o, ['A', 'B'], [{ tricksA: 9, honours: '' }]);
+  assert.deepStrictEqual(r.info.points, { A: 3, B: 0 });
+  r = W.replay(o, ['A', 'B'], [{ tricksA: 7, honours: 'B:4' }]);
+  assert.deepStrictEqual(r.info.points, { A: 1, B: 4 });
+  r = W.replay(o, ['A', 'B'], [{ tricksA: 7, honours: 'B:4' }, { tricksA: 7, honours: 'B:2' }]);
+  assert.deepStrictEqual(r.info.points, { A: 2, B: 4 }, 'B at 4: honours can’t win the game');
+  r = W.replay(o, ['A', 'B'], [{ tricksA: 12 }, { tricksA: 12 }]);
+  assert.ok(r.over); assert.deepStrictEqual(r.winners, ['A']); assert.deepStrictEqual(r.info.games, { A: 2, B: 0 });
+});
+
+// ---------- Skat ----------
+test('skat: suit and grand values, null values, lost doubles, overbid', () => {
+  const S = R.skat;
+  const v = (e) => S.value(Object.assign({ won: true, bid: 18 }, e));
+  assert.strictEqual(v({ game: 'C', matadors: 2 }).value, 36, 'with 2, game 3 × clubs 12');
+  assert.strictEqual(v({ game: 'H', matadors: 1, hand: true }).value, 30);
+  assert.strictEqual(v({ game: 'G', matadors: 1, schneider: true }).value, 72);
+  assert.strictEqual(v({ game: 'S', matadors: 1, hand: true, schwarzAnn: true }).value, 11 * 7, 'hand + schneider + ann + schwarz + ann');
+  assert.strictEqual(v({ game: 'G', matadors: 4, hand: true, ouvert: true }).value, 24 * 11, 'with 4, game, hand, schneider, ann., schwarz, ann., ouvert');
+  assert.strictEqual(v({ game: 'nullHandOuvert' }).value, 59);
+  const lost = S.replay({ rounds: 3 }, ['p1', 'p2', 'p3'], [{ declarer: 'p1', game: 'D', matadors: 1, won: false, bid: 18 }]);
+  assert.strictEqual(lost.totals.p1, -36);
+  const ob = v({ game: 'D', matadors: 1, bid: 20 });
+  assert.ok(ob.lost && ob.overbid); assert.strictEqual(ob.value, 27, 'overbid 20 on a 18 diamonds: next multiple of 9');
+  const r = S.replay({ rounds: 2 }, ['p1', 'p2', 'p3'], [{ declarer: 'p2', game: 'G', matadors: 2, won: true, bid: 48 }, { declarer: 'p3', game: 'null', won: true, bid: 23 }]);
+  assert.ok(r.over); assert.deepStrictEqual(r.totals, { p1: 0, p2: 72, p3: 23 }); assert.deepStrictEqual(r.winners, ['p2']);
+});
+
+// ---------- 1000 ----------
+test('1000: declarer makes or loses the bid, opponents round to 5, three zeros −120', () => {
+  const T = R.thousand, o = T.defaults(), s = ['p1', 'p2', 'p3'];
+  let r = T.replay(o, s, [{ declarer: 'p1', bid: 120, points: { p1: 135, p2: 47, p3: 23 } }]);
+  assert.deepStrictEqual(r.totals, { p1: 120, p2: 45, p3: 25 });
+  r = T.replay(o, s, [{ declarer: 'p1', bid: 150, points: { p1: 135, p2: 48, p3: 2 } }]);
+  assert.deepStrictEqual(r.totals, { p1: -150, p2: 50, p3: 0 });
+  const zero = { declarer: 'p1', bid: 100, points: { p1: 120, p2: 0, p3: 0 } };
+  r = T.replay(o, s, [zero, zero, zero]);
+  assert.strictEqual(r.totals.p2, -120);
+  assert.ok(r.rows[2].notes.length);
+});
+
+// ---------- Sixty-Six / Schnapsen ----------
+test('sixty-six: 1, 2 or 3 game points, first to 7', () => {
+  const X = R.sixtysix, s = ['p1', 'p2'];
+  assert.deepStrictEqual([X.gamePoints(40, true), X.gamePoints(20, true), X.gamePoints(0, false)], [1, 2, 3]);
+  const r = X.replay({ target: 7 }, s, [{ winner: 'p1', pts: 3 }, { winner: 'p2', pts: 2 }, { winner: 'p1', pts: 3 }, { winner: 'p1', pts: 1 }]);
+  assert.ok(r.over); assert.deepStrictEqual(r.winners, ['p1']);
+});
+
+// ---------- French Tarot ----------
+test('french tarot: points needed by oudlers, multipliers, bonuses, zero-sum shares', () => {
+  const T = R.tarot;
+  let h = T.handValue({ contract: 'garde', oudlers: 2, points: 49, petit: 'none' });
+  assert.strictEqual(h.v, (25 + 8) * 2);
+  h = T.handValue({ contract: 'petite', oudlers: 1, points: 47.5, petit: 'defence' });
+  assert.strictEqual(h.v, -(25 + 3.5) - 10);
+  h = T.handValue({ contract: 'sans', oudlers: 3, points: 36, petit: 'taker', handful: 'single' });
+  assert.strictEqual(h.v, 25 * 4 + 40 + 20);
+  const s4 = ['p1', 'p2', 'p3', 'p4'];
+  const r = T.replay({ rounds: 0 }, s4, [{ taker: 'p1', contract: 'garde', oudlers: 2, points: 49 }]);
+  assert.deepStrictEqual(r.totals, { p1: 198, p2: -66, p3: -66, p4: -66 });
+  assert.strictEqual(Object.values(r.totals).reduce((a, b) => a + b, 0), 0, 'zero-sum');
+  const s5 = ['p1', 'p2', 'p3', 'p4', 'p5'];
+  const r5 = T.replay({ rounds: 0 }, s5, [{ taker: 'p1', partner: 'p3', contract: 'petite', oudlers: 1, points: 61 }]);
+  assert.deepStrictEqual(r5.totals, { p1: 70, p2: -35, p3: 35, p4: -35, p5: -35 });
+  const solo = T.replay({ rounds: 0 }, s5, [{ taker: 'p1', partner: 'p1', contract: 'petite', oudlers: 1, points: 61 }]);
+  assert.strictEqual(solo.totals.p1, 140, 'called themselves: wins from all four');
+  assert.ok(T.validate({}, s4, { taker: 'p1', contract: 'garde', oudlers: 1, points: 47.3 }));
+});
+
 console.log(`\n${passed} passed${process.exitCode ? ', some FAILED' : ''}`);

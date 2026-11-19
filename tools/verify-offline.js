@@ -757,6 +757,104 @@ const ok = (cond, msg) => { console.log(`${cond ? 'PASS' : 'FAIL'}  ${msg}`); if
   await page.click('[data-act="undo"]');
   ok((await rsTotals()) === '0,0,0,0', 'hearts: undo removes the hand');
 
+  // ---------- More scorecards ----------
+  const kp = async (field, vals) => { await page.click(`[data-kpfocus="${field}"]`); for (const v of vals) await page.click(`[data-kp="${v}"]`); };
+
+  await rsOpen('gin-rummy');
+  await rsSet('type', 'knock'); await rsSet('by', 'p1');
+  await kp('dw.p1', [3, 1]); await kp('dw.p2', [10, 10, 7]);
+  await page.click('[data-act="save"]');
+  ok((await rsTotals()) === '23,0', 'gin: knock with 4 v 27 deadwood scores 23 (cards tapped on the keypad)');
+  await rsSet('type', 'knock'); await rsSet('by', 'p1');
+  await kp('dw.p1', [8]); await kp('dw.p2', [5]);
+  await page.click('[data-act="save"]');
+  ok((await rsTotals()) === '23,28', 'gin: undercut gives the opponent the difference + 25');
+  await shot('34-gin');
+
+  await rsOpen('euchre');
+  await rsSet('makers', 'A'); await rsSet('result', 'march');
+  await page.click('[data-act="save"]');
+  await rsSet('makers', 'A'); await rsSet('result', 'euchred');
+  await page.click('[data-act="save"]');
+  ok((await rsTotals()) === '2,2', 'euchre: march 2, euchred gives the defenders 2');
+
+  await rsOpen('euchre-3');
+  await rsSet('maker', 'p2'); await rsSet('result', 'euchred');
+  await page.click('[data-act="save"]');
+  ok((await rsTotals()) === '2,0,2', 'three-handed euchre: euchred = 2 to each opponent');
+
+  await rsOpen('six-card-golf');
+  await page.click('[data-gfslot="p1:0"]');
+  for (const r of ['5', 'K', '2', '5', 'J', 'A']) await page.click(`[data-gfrank="${r}"]`);   // fills p1, moves on
+  for (let p = 2; p <= 4; p++) { await page.click(`[data-gftype="p${p}"]`); await page.fill('#ui-dialog-input', String(p * 3)); await page.click('#ui-dialog-actions button[value="ok"]'); await page.waitForSelector(`[data-gfuntype="p${p}"]`); }
+  ok((await page.locator('.gf-slot.pair').count()) === 2, 'golf: a column pair is highlighted');
+  await shot('35-golf');
+  await page.click('[data-act="save"]');
+  ok((await rsTotals()) === '9,6,9,12', 'golf: column pair cancels (5/5), 2 = −2, K = 0');
+
+  await rsOpen('pinochle');
+  await rsSet('bidder', 'A');
+  await rsStep('bid', 10, 5);  // 250 → 300 in steps of 10
+  await page.click('[data-addto="meld.A"][data-amt="150"]'); await page.click('[data-addto="meld.A"][data-amt="40"]');
+  await page.fill('[data-path="counters.A"]', '170');
+  await page.click('[data-addto="meld.B"][data-amt="100"]');
+  await page.click('[data-act="save"]');
+  ok((await rsTotals()) === '360,180', 'pinochle: meld + counters, partner counters fill in to 250');
+
+  await rsOpen('rummy-500');
+  await kp('melded.p1', [15, 10, 10, 10]); await kp('hand.p2', [9, 5]); await kp('melded.p3', [4, 5, 6]);
+  await page.click('[data-act="save"]');
+  ok((await rsTotals()) === '45,-14,15,0', 'rummy 500: melded minus left in hand');
+
+  await rsOpen('auction-pitch');
+  await rsSet('pitcher', 'p1'); await rsSet('bid', 3);
+  await rsSet('high', 'p1'); await rsSet('low', 'p2'); await rsSet('jack', 'p1'); await rsSet('game', 'p3');
+  await page.click('[data-act="save"]');
+  ok((await rsTotals()) === '-3,1,1,0', 'pitch: pitcher short of the bid is set back');
+
+  await rsOpen('bid-whist');
+  await rsSet('bidder', 'B'); await rsSet('bid', 4); await rsSet('type', 'nt');
+  await rsStep('books', 1, 11);
+  await page.click('[data-act="save"]');
+  ok((await rsTotals()) === '0,10', 'bid whist: 11 books on a no-trump 4 bid scores 5 × 2');
+
+  await rsOpen('whist');
+  await rsStep('tricksA', 1, 9); await rsSet('honours', 'A:2');
+  await page.click('[data-act="save"]');
+  ok((await page.textContent('.rs-info')).includes('5') && (await rsTotals()) === '1,0', 'whist: 3 tricks over + 2 honours wins a game of 5');
+
+  await rsOpen('skat');
+  await rsSet('declarer', 'p1');
+  await rsSet('game', 'C');
+  await rsStep('matadors', 1, 1);
+  ok((await page.textContent('.rs-form')).includes('Game value 36'), 'skat: clubs with 2 = 36 shown before saving');
+  await rsSet('won', 'won');
+  await page.click('[data-act="save"]');
+  ok((await rsTotals()) === '36,0,0', 'skat: declarer scores the game value');
+  ok((await page.locator('.rs-chip.on[data-set="game"]').count()) === 0, 'skat: the next game starts with nothing selected');
+  await shot('36-skat');
+
+  await rsOpen('thousand');
+  await rsSet('declarer', 'p1');
+  await rsStep('bid', 5, 4); // 100 → 120 in steps of 5
+  await page.fill('[data-path="points.p1"]', '60'); await page.click('[data-addto="points.p1"][data-amt="80"]');
+  await page.fill('[data-path="points.p2"]', '33'); await page.fill('[data-path="points.p3"]', '27');
+  await page.click('[data-act="save"]');
+  ok((await rsTotals()) === '120,35,25', '1000: bid made with a marriage; opponents rounded to 5');
+
+  await rsOpen('schnapsen');
+  await rsSet('winner', 'p2'); await rsSet('pts', 2);
+  await page.click('[data-act="save"]');
+  ok((await rsTotals()) === '0,2', 'schnapsen: 2 game points for a schneider');
+
+  await rsOpen('french-tarot');
+  await rsSet('taker', 'p1'); await rsSet('contract', 'garde'); await rsSet('oudlers', 2);
+  await page.fill('[data-path="points"]', '49');
+  await page.waitForFunction(() => document.querySelector('#rs-preview').textContent.includes('+198'));
+  await page.click('[data-act="save"]');
+  ok((await rsTotals()) === '198,-66,-66,-66', 'french tarot: Garde made by 8 with 2 oudlers, zero-sum');
+  await shot('37-tarot');
+
   await page.goto(BASE + '#/score/generala');
   await page.waitForSelector('#ds-setup');
   ok((await page.locator('input[name="ds-rules"]').count()) === 2, 'generala: its own rule sets');

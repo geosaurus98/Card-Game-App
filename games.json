@@ -470,7 +470,9 @@
           25
         ],
         "unit": "points",
-        "endCondition": "target"
+        "endCondition": "target",
+        "sheet": "gin",
+        "hint": "Scorecard: knock, gin or big gin plus deadwood (tap the cards); undercuts and end-of-game bonuses worked out."
       }
     },
     {
@@ -1285,7 +1287,9 @@
           3
         ],
         "unit": "points",
-        "endCondition": "target"
+        "endCondition": "target",
+        "sheet": "euchre3",
+        "hint": "Scorecard: maker and result — march 3, euchred 2 to each opponent."
       }
     },
     {
@@ -1620,7 +1624,9 @@
           4
         ],
         "unit": "points",
-        "endCondition": "target"
+        "endCondition": "target",
+        "sheet": "euchre",
+        "hint": "Scorecard: makers, result and going alone — points and the target worked out."
       }
     },
     {
@@ -1697,7 +1703,9 @@
           4
         ],
         "unit": "points",
-        "endCondition": "target"
+        "endCondition": "target",
+        "sheet": "whist",
+        "hint": "Scorecard: tricks and honours; games and the rubber tracked."
       }
     },
     {
@@ -3032,8 +3040,9 @@
           4
         ],
         "unit": "points",
-        "hint": "Use −1 or ±# to set the pitcher back.",
-        "endCondition": "target"
+        "hint": "Scorecard: pitcher, bid and who took High, Low, Jack and Game; set-backs and count-out order handled.",
+        "endCondition": "target",
+        "sheet": "pitch"
       }
     },
     {
@@ -7105,7 +7114,9 @@
           50
         ],
         "unit": "points",
-        "endCondition": "target"
+        "endCondition": "target",
+        "sheet": "rummy500",
+        "hint": "Tap the cards melded and left in hand for each player; first to 500."
       }
     },
     {
@@ -7352,7 +7363,8 @@
         ],
         "unit": "points",
         "endCondition": "target",
-        "hint": "Nine holes. Use −1 or ±# for negative hands."
+        "hint": "Tap each player’s six cards; column pairs cancel automatically. Nine holes, lowest wins.",
+        "sheet": "golf"
       }
     },
     {
@@ -7583,7 +7595,9 @@
           3
         ],
         "unit": "game points",
-        "endCondition": "target"
+        "endCondition": "target",
+        "sheet": "sixtysix",
+        "hint": "Scorecard: winner and 1, 2 or 3 game points per deal."
       }
     },
     {
@@ -7739,7 +7753,9 @@
           150
         ],
         "unit": "points",
-        "endCondition": "target"
+        "endCondition": "target",
+        "sheet": "pinochle",
+        "hint": "Scorecard: bid, meld (quick meld buttons) and counters; set back if short."
       }
     },
     {
@@ -7814,7 +7830,9 @@
           3
         ],
         "unit": "points",
-        "endCondition": "target"
+        "endCondition": "target",
+        "sheet": "bidwhist",
+        "hint": "Scorecard: bid, uptown/downtown/no trump and books won."
       }
     },
     {
@@ -8125,7 +8143,8 @@
         ],
         "unit": "points",
         "endCondition": "target",
-        "hint": "Use −1 or ±# when the declarer loses (twice the game value)."
+        "hint": "Game-value calculator: game, matadors, hand, schneider, schwarz, announcements and overbids.",
+        "sheet": "skat"
       }
     },
     {
@@ -8290,7 +8309,8 @@
         ],
         "unit": "points",
         "endCondition": "target",
-        "hint": "Zero-sum: the taker gains (or loses) three times what each defender loses (or gains)."
+        "hint": "Calculator: contract, oudlers, card points, petit au bout, handfuls and slam; zero-sum shares for 3–5 players.",
+        "sheet": "tarot"
       }
     },
     {
@@ -12186,7 +12206,9 @@
           3
         ],
         "unit": "game points",
-        "endCondition": "target"
+        "endCondition": "target",
+        "sheet": "sixtysix",
+        "hint": "Scorecard: winner and 1, 2 or 3 game points per deal (a Bummerl is 7)."
       }
     },
     {
@@ -12709,7 +12731,9 @@
           100
         ],
         "unit": "points",
-        "endCondition": "target"
+        "endCondition": "target",
+        "sheet": "thousand",
+        "hint": "Scorecard: bid, card points with marriage buttons; rounding and three-zero penalty handled."
       }
     },
     {
