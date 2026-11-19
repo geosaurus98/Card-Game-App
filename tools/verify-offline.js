@@ -105,7 +105,8 @@ const ok = (cond, msg) => { console.log(`${cond ? 'PASS' : 'FAIL'}  ${msg}`); if
   // Scorekeeper (Hearts: lowest wins, target 100, 4 players by default)
   await page.goto(BASE + '#/game/hearts');
   await page.waitForSelector('article.rules');
-  await page.click('a:has-text("Start scorekeeper")');
+  ok(await page.isVisible('a:has-text("Start scorekeeper")'), 'game page has a Start scorekeeper button');
+  await page.goto(BASE + '#/score/hearts?simple=1'); // the plain tracker (Hearts' own button opens its scorecard)
   await page.waitForSelector('.player');
   ok((await page.locator('.player').count()) === 4, 'Hearts scorekeeper pre-set to 4 players');
   const p = (i) => page.locator('.player').nth(i);
@@ -664,6 +665,111 @@ const ok = (cond, msg) => { console.log(`${cond ? 'PASS' : 'FAIL'}  ${msg}`); if
   await page.goto(BASE + '#/score/yacht?simple=1');
   await page.waitForSelector('#sk-body');
   ok(true, 'scorecard: the simple tracker is still available');
+
+  // ---------- Hand-by-hand scorecards ----------
+  const rsOpen = async (id) => {
+    await page.goto(BASE + '#/score/' + id);
+    await page.waitForSelector('[data-act="start"], .rs-stand');
+    if (await page.$('[data-act="start"]')) await page.click('[data-act="start"]');
+    await page.waitForSelector('.rs-stand');
+  };
+  const rsStep = async (path, d, times) => { for (let i = 0; i < times; i++) await page.click(`[data-step="${path}"][data-d="${d}"]`); };
+  const rsTotals = async () => (await page.$$eval('.rs-stand .rs-total', (xs) => xs.map((x) => x.textContent.trim()))).join(',');
+  const rsSet = (path, val) => page.click(`[data-set="${path}"][data-val='${JSON.stringify(val)}']`);
+
+  await rsOpen('oh-hell');
+  ok((await page.textContent('.rs-info')).includes('10 cards each'), 'oh hell: first hand is 10 cards, dealer shown');
+  await rsStep('bids.p2', 1, 3); await rsStep('bids.p3', 1, 2); await rsStep('bids.p4', 1, 4); await rsStep('bids.p1', 1, 1);
+  await page.click('[data-act="bids-done"]');
+  ok(await page.isVisible('[data-act="bids-done"]'), 'oh hell: hook rule stops the dealer making the bids add up');
+  await rsStep('bids.p1', 1, 1);
+  await page.click('[data-act="bids-done"]');
+  await rsStep('tricks.p2', 1, 3); await rsStep('tricks.p3', 1, 2); await rsStep('tricks.p4', 1, 4); await rsStep('tricks.p1', 1, 1);
+  await page.click('[data-act="save"]');
+  ok((await rsTotals()) === '0,13,12,14', 'oh hell: exact bids score 10 + bid, misses 0');
+  await shot('30-oh-hell');
+
+  await rsOpen('spades');
+  await rsStep('bids.p1', 1, 4); await rsStep('bids.p2', -1, 1); await rsStep('bids.p3', 1, 3); await rsStep('bids.p4', 1, 4);
+  await page.click('[data-act="bids-done"]');
+  await rsStep('tricks.p1', 1, 5); await rsStep('tricks.p3', 1, 3); await rsStep('tricks.p4', 1, 5);
+  await page.click('[data-act="save"]');
+  ok((await rsTotals()) === '71,141' && (await page.textContent('.rs-info')).includes('1/10'), 'spades: team contracts, nil bonus and bags');
+
+  await rsOpen('five-hundred');
+  await rsSet('bidder', 'p1'); await rsSet('contract.suit', 'H'); await rsSet('contract.tricks', 7);
+  await rsStep('tricks.p1', 1, 7); await rsStep('tricks.p2', 1, 2); await rsStep('tricks.p3', 1, 1);
+  await page.click('[data-act="save"]');
+  ok((await rsTotals()) === '200,20,10', '500: 7♥ made is 200, defenders 10 per trick');
+
+  await rsOpen('bridge');
+  await rsSet('decl', 'A'); await rsSet('level', 4); await rsSet('denom', 'S');
+  await rsStep('taken', 1, 10);
+  await page.click('[data-act="save"]');
+  ok((await rsTotals()) === '120,0' && (await page.textContent('.rs-info')).includes('vulnerable'), 'bridge: 4♠ made is game and makes We vulnerable');
+  await shot('31-bridge');
+
+  await rsOpen('farkle');
+  for (const f of [5, 5]) await page.click(`[data-fface="${f}"]`);
+  await page.click('[data-act="f-add"]');
+  ok(await page.isDisabled('[data-act="f-bank"]'), 'farkle: can’t bank 100 before reaching the 500 opening minimum');
+  for (const f of [1, 1, 1]) await page.click(`[data-fface="${f}"]`);
+  await page.click('[data-act="f-add"]');
+  await page.click('[data-act="f-bank"]');
+  ok((await rsTotals()) === '1100,0,0' && (await page.textContent('.rs-info')).includes('Player 2'), 'farkle: dice scored and banked; next player');
+
+  await rsOpen('contract-rummy');
+  ok((await page.textContent('.cr-name')).includes('Two sets') && (await page.locator('.cr-now > .cr-melds .cr-meld.set').count()) === 2 && (await page.textContent('.cr-min')).includes('6 cards'),
+    'contract rummy: round 1 shows two SET blocks, 6 cards minimum');
+  await rsSet('out', 'p1');
+  await rsStep('cards.p2.joker', 1, 1); await rsStep('cards.p2.high', 1, 1);     // 25 + 10
+  await rsStep('cards.p3.low', 1, 3); await rsStep('cards.p3.ace', 1, 1);       // 15 + 15
+  await page.click('[data-crtype="p4"]');
+  await page.fill('#ui-dialog-input', '15');
+  await page.click('#ui-dialog-actions button[value="ok"]');
+  await page.waitForFunction(() => document.querySelector('#rs-preview').textContent.includes('+15'));
+  await shot('33-contract-rummy');
+  await page.click('[data-act="save"]');
+  ok((await rsTotals()) === '0,35,30,15', 'contract rummy: penalties counted from cards left (or typed)');
+  ok((await page.textContent('.cr-name')).includes('One set and one run') && (await page.textContent('.rs-hist')).includes('★ out'), 'contract rummy: next contract shown; history marks who went out');
+
+  await rsOpen('canasta');
+  await rsStep('A.natural', 1, 1); await rsStep('A.red3', 1, 1);
+  await page.fill('[data-path="A.meld"]', '230'); await rsSet('A.out', 'out');
+  await page.fill('[data-path="B.meld"]', '150'); await page.fill('[data-path="B.hand"]', '45');
+  await page.click('[data-act="save"]');
+  ok((await rsTotals()) === '930,105', 'canasta: canastas, red 3s, going out and card points');
+
+  await rsOpen('cribbage');
+  for (let i = 0; i < 10; i++) await page.click('[data-peg="p1"][data-amt="12"]');
+  await page.click('[data-peg="p2"][data-amt="8"]');
+  await page.click('[data-peg="p1"][data-amt="1"]');
+  await page.waitForSelector('.gameover');
+  ok((await rsTotals()) === '121,8' && (await page.textContent('.gameover')).includes('double skunk'), 'cribbage: pegging to 121 wins, skunk shown');
+  await shot('32-cribbage');
+
+  await rsOpen('hearts');
+  await page.click('[data-act="moon"]');
+  await page.click('#ui-dialog-actions button[value="p2"]');
+  await page.waitForFunction(() => document.querySelector('#rs-preview').textContent.includes('moon'));
+  await page.click('[data-act="save"]');
+  ok((await rsTotals()) === '26,0,26,26', 'hearts: shooting the moon gives everyone else 26');
+  await page.click('[data-act="undo"]');
+  ok((await rsTotals()) === '0,0,0,0', 'hearts: undo removes the hand');
+
+  await page.goto(BASE + '#/score/generala');
+  await page.waitForSelector('#ds-setup');
+  ok((await page.locator('input[name="ds-rules"]').count()) === 2, 'generala: its own rule sets');
+  await page.click('#ds-start');
+  await page.waitForSelector('.ds-table');
+  for (const f of [4, 4, 4, 4, 4]) await page.click(`.ds-face[data-face="${f}"]`);
+  await page.check('#ds-served');
+  await page.click('[data-pid="p1"][data-cat="generala"]');
+  await page.waitForSelector('.gameover');
+  ok((await page.textContent('.gameover')).includes('wins outright'), 'generala: a served Generala wins outright');
+  await page.goto(BASE + '#/');
+  await page.waitForSelector('#resume-h');
+  ok((await page.textContent('.section')).includes('Oh Hell') && (await page.textContent('.section')).includes('hand 2 of 19'), 'hand-by-hand scorecards appear under Scores in progress');
 
   // Deep link in a brand-new tab while offline
   const page2 = await context.newPage();

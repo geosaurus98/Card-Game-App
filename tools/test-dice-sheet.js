@@ -76,7 +76,7 @@ test('totals: upper bonus at 63, pace vs three of each, bonus lost when upper do
 
 test('placing a roll fills the box; filled boxes cannot be reused', () => {
   const c = S.emptyCard();
-  assert.deepStrictEqual(S.place(Y, c, 'full', [2, 2, 3, 3, 3]), { ok: true, score: 25, bonus: false });
+  assert.deepStrictEqual(S.place(Y, c, 'full', [2, 2, 3, 3, 3]), { ok: true, score: 25, bonus: false, outright: false });
   assert.strictEqual(S.place(Y, c, 'full', [2, 2, 3, 3, 3]).ok, false);
   assert.strictEqual(S.place(Y, c, 'chance', [1, 1, 1, 1]).ok, false, 'needs five dice');
   assert.strictEqual(S.openCats(Y, c).length, 12);
@@ -144,6 +144,51 @@ test('perfect yahtzee-style game scores 1575', () => {
   const t = S.totals(Y, c);
   assert.strictEqual(c.bonusFives, 12);
   assert.strictEqual(t.total, 1575);
+});
+
+// ---------- Generala ----------
+const G = S.rules('generala');
+const G2 = S.rules('generala2');
+test('generala: 10 / 11 boxes, offered only on the Generala scorecard', () => {
+  assert.strictEqual(G.cats.length, 10);
+  assert.strictEqual(G2.cats.length, 11);
+  assert.deepStrictEqual(S.rulesFor('generala').map((r) => r.id), ['generala', 'generala2']);
+  assert.deepStrictEqual(S.rulesFor('yacht').map((r) => r.id), ['yahtzee', 'yacht', 'yatzy']);
+});
+test('generala: escalera (incl. 3-4-5-6-1), full 30, poker 40, generala 50', () => {
+  assert.strictEqual(S.rawScore(G, 'esc', [1, 2, 3, 4, 5]), 20);
+  assert.strictEqual(S.rawScore(G, 'esc', [6, 5, 4, 3, 2]), 20);
+  assert.strictEqual(S.rawScore(G, 'esc', [3, 4, 5, 6, 1]), 20);
+  assert.strictEqual(S.rawScore(G, 'esc', [1, 2, 3, 4, 6]), 0);
+  assert.strictEqual(S.rawScore(G, 'full', [2, 2, 6, 6, 6]), 30);
+  assert.strictEqual(S.rawScore(G, 'poker', [4, 4, 4, 4, 1]), 40);
+  assert.strictEqual(S.rawScore(G, 'poker', [4, 4, 4, 4, 4]), 40);
+  assert.strictEqual(S.rawScore(G, 'generala', [2, 2, 2, 2, 2]), 50);
+  assert.strictEqual(S.totals(G, { boxes: { 1: 3 }, bonusFives: 0 }).bonus, 0, 'no upper bonus');
+});
+test('generala: served (first roll) adds 5; manual scores accept served values', () => {
+  const c = S.emptyCard();
+  assert.strictEqual(S.place(G, c, 'full', [3, 3, 5, 5, 5], true).score, 35);
+  assert.strictEqual(S.scoreFor(G, c, 'ones', [1, 1, 1, 2, 2], true), 3, 'no served bonus on number boxes');
+  assert.strictEqual(S.scoreFor(G, c, 'esc', [1, 1, 1, 2, 2], true), 0, 'no bonus on a zero');
+  assert.deepStrictEqual(S.possible(G, 'poker'), [0, 40, 45]);
+  assert.ok(S.validManual(G, 'esc', 25) && !S.validManual(G, 'esc', 22));
+});
+test('generala: a served Generala wins outright and ends the game', () => {
+  const cards = { a: S.emptyCard(), b: S.emptyCard() };
+  const r = S.place(G, cards.b, 'generala', [6, 6, 6, 6, 6], true);
+  assert.ok(r.ok && r.outright); assert.strictEqual(r.score, 55);
+  assert.strictEqual(S.nextPlayer(G, ['a', 'b'], cards), null);
+  assert.strictEqual(S.standings(G, ['a', 'b'], cards, { a: 'A', b: 'B' })[0].name, 'B');
+  const plain = S.emptyCard();
+  assert.ok(!S.place(G, plain, 'generala', [6, 6, 6, 6, 6], false).outright, 'not served: just 50');
+});
+test('generala: Double Generala needs a 50 in Generala first', () => {
+  const c = S.emptyCard();
+  assert.strictEqual(S.scoreFor(G2, c, 'double', [5, 5, 5, 5, 5]), 0);
+  S.place(G2, c, 'generala', [2, 2, 2, 2, 2]);
+  assert.strictEqual(S.scoreFor(G2, c, 'double', [5, 5, 5, 5, 5]), 100);
+  assert.deepStrictEqual(S.possible(G2, 'double'), [0, 100]);
 });
 
 console.log(`\n${passed} passed${process.exitCode ? ', some FAILED' : ''}`);

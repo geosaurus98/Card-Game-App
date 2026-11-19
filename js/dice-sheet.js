@@ -19,7 +19,7 @@ CGR.views = CGR.views || {};
     const players = prev ? prev.players : Array.from({ length: Math.min(MAX_PLAYERS, Math.max(1, game.scorekeeper.defaultPlayers || 2)) }, (_, i) => ({ id: 'p' + (i + 1), name: 'Player ' + (i + 1) }));
     const cards = {};
     players.forEach((p) => { cards[p.id] = S.emptyCard(); });
-    return { v: 1, gameId: game.id, rules: prev ? prev.rules : 'yahtzee', players, cards, started: !!prev, undo: [], dice: [], touched: false, updatedAt: Date.now(), meta: '' };
+    return { v: 1, gameId: game.id, rules: prev ? prev.rules : S.rulesFor(game.scorekeeper.sheet)[0].id, players, cards, started: !!prev, undo: [], dice: [], served: false, touched: false, updatedAt: Date.now(), meta: '' };
   }
   function valid(s) { return s && s.v === 1 && Array.isArray(s.players) && s.cards && typeof s.cards === 'object'; }
   function load(game) {
@@ -50,7 +50,7 @@ CGR.views = CGR.views || {};
 
   /* ---------------- Setup ---------------- */
   function setupHTML(game, st) {
-    const opts = Object.values(S.RULES).map((r) => `<label><input type="radio" name="ds-rules" value="${r.id}" ${st.rules === r.id ? 'checked' : ''}>
+    const opts = S.rulesFor(game.scorekeeper.sheet).map((r) => `<label><input type="radio" name="ds-rules" value="${r.id}" ${st.rules === r.id ? 'checked' : ''}>
       <span><strong>${esc(r.name)}</strong><br><span class="muted small">${esc(r.note)}</span></span></label>`).join('');
     return `<div class="page-head"><h1 tabindex="-1">${esc(game.name)} scorecard</h1>
         <p class="muted">A full scorecard: every box, bonuses and totals worked out for you. Optionally tap in your dice and it shows what each box would score.</p></div>
@@ -85,7 +85,8 @@ CGR.views = CGR.views || {};
       const best = rank[0].total;
       const winners = rank.filter((x) => x.total === best).map((x) => esc(x.name));
       banner = `<div class="gameover" role="status"><span class="trophy" aria-hidden="true">🏆</span>
-        ${order.length === 1 ? `Final score: <strong>${best}</strong>` : `${winners.join(' & ')} ${winners.length > 1 ? 'share the win' : 'wins'} with <strong>${best}</strong>!`}
+        ${rank[0].outright ? `${esc(rank[0].name)} wins outright with a served ${esc(S.cat(r, r.fiveId).name)}!`
+          : order.length === 1 ? `Final score: <strong>${best}</strong>` : `${winners.join(' & ')} ${winners.length > 1 ? 'share the win' : 'wins'} with <strong>${best}</strong>!`}
         <div class="btn-row" style="margin-top:.75rem">
           <button type="button" class="btn" data-act="share">📤 Share results</button>
           <button type="button" class="btn btn-secondary" data-act="again">New game</button></div></div>`;
@@ -104,7 +105,7 @@ CGR.views = CGR.views || {};
         if (has) return `<td><button type="button" class="ds-cell filled${card.boxes[c.id] === 0 ? ' zero' : ''}" data-pid="${p.id}" data-cat="${c.id}" aria-label="${esc(label)}: ${card.boxes[c.id]}. Change">${card.boxes[c.id] === 0 ? '–' : card.boxes[c.id]}</button></td>`;
         if (p.id === cur && diceReady) {
           if (!allowed[c.id]) return `<td><button type="button" class="ds-cell blocked" data-pid="${p.id}" data-cat="${c.id}" aria-label="${esc(label)}: not allowed with this roll">·</button></td>`;
-          const v = S.scoreFor(r, card, c.id, st.dice);
+          const v = S.scoreFor(r, card, c.id, st.dice, st.served);
           return `<td><button type="button" class="ds-cell preview${v ? '' : ' zero'}" data-pid="${p.id}" data-cat="${c.id}" aria-label="${esc(label)}: would score ${v}">${v}</button></td>`;
         }
         return `<td><button type="button" class="ds-cell open${p.id === cur ? ' cur' : ''}" data-pid="${p.id}" data-cat="${c.id}" aria-label="${esc(label)}: empty"></button></td>`;
@@ -139,6 +140,8 @@ CGR.views = CGR.views || {};
         <p class="ds-turn"><span class="imp-who">${esc(nameOf(st, cur))}</span>’s turn · ${S.turnNumber(r, order, st.cards)} of ${r.cats.length}</p>
         <div class="ds-slots">${diceSlots}${st.dice.length ? '<button type="button" class="btn btn-ghost ds-clear" data-act="clear">Clear</button>' : ''}</div>
         <div class="ds-faces" role="group" aria-label="Add a die">${[1, 2, 3, 4, 5, 6].map((f) => `<button type="button" class="ds-face" data-face="${f}" aria-label="Add a ${f}" ${st.dice.length >= 5 ? 'disabled' : ''}>${dieHTML(f)}</button>`).join('')}</div>
+        ${r.servedBonus ? `<label class="switch-row ds-served"><input type="checkbox" id="ds-served" role="switch" ${st.served ? 'checked' : ''}>
+          <span><strong>Served</strong> <span class="muted small">— made on the first roll (+${r.servedBonus}; a served ${esc(S.cat(r, r.fiveId).name)} wins)</span></span></label>` : ''}
         <p class="muted small ds-tip">${diceReady ? 'Tap a box in the highlighted column to score this roll.' + (S.jokerActive(r, st.cards[cur], st.dice) ? ' <strong>Joker roll</strong>: the matching upper box first, otherwise any lower box at full value.' : '') : 'Tap your final dice to see what each box scores — or just tap a box and type the score.'}</p>
       </section>` : ''}
       <div class="ds-wrap"><table class="ds-table${order.length > 4 ? ' many' : ''}">
@@ -319,7 +322,9 @@ CGR.views = CGR.views || {};
             save(st); refresh();
           }));
           const clear = root.querySelector('[data-act="clear"]');
-          if (clear) clear.addEventListener('click', () => { st.dice = []; save(st); refresh(); });
+          if (clear) clear.addEventListener('click', () => { st.dice = []; st.served = false; save(st); refresh(); });
+          const served = root.querySelector('#ds-served');
+          if (served) served.addEventListener('change', () => { st.served = served.checked; save(st); refresh(); });
 
           root.querySelectorAll('.ds-cell[data-cat]').forEach((b) => b.addEventListener('click', () => {
             const r = S.rules(st.rules);
@@ -329,11 +334,13 @@ CGR.views = CGR.views || {};
             const cid = b.dataset.cat;
             if (b.classList.contains('preview')) {
               snapshot(st, `${S.cat(r, cid).name} for ${nameOf(st, pid)}`);
-              const res = S.place(r, st.cards[pid], cid, st.dice);
+              const res = S.place(r, st.cards[pid], cid, st.dice, st.served);
               if (!res.ok) { st.undo.pop(); return; }
               st.dice = [];
+              st.served = false;
               save(st);
-              CGR.ui.toast(`${nameOf(st, pid)}: ${S.cat(r, cid).name} ${res.score}${res.bonus ? ` + ${r.fiveBonus} bonus! 🎉` : ''}`);
+              CGR.ui.toast(res.outright ? `${nameOf(st, pid)}: served ${S.cat(r, cid).name} — wins the game! 🎉`
+                : `${nameOf(st, pid)}: ${S.cat(r, cid).name} ${res.score}${res.bonus ? ` + ${r.fiveBonus} bonus! 🎉` : ''}`);
               const next = S.nextPlayer(r, order, st.cards);
               render();
               if (next === null) { window.scrollTo(0, 0); CGR.ui.announce('Game over'); }

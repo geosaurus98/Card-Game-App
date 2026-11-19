@@ -553,7 +553,9 @@
           8
         ],
         "unit": "points",
-        "endCondition": "target"
+        "endCondition": "target",
+        "sheet": "cribbage",
+        "hint": "Peg board with quick pegging, back peg and skunk lines."
       }
     },
     {
@@ -1118,8 +1120,9 @@
           100
         ],
         "unit": "points",
-        "hint": "Use custom values for bigger bids (e.g. 140, 520) and the − button for failed contracts.",
-        "endCondition": "target"
+        "hint": "Scorecard: choose the contract and tricks; bid values and the 490 rule are automatic.",
+        "endCondition": "target",
+        "sheet": "fivehundred"
       }
     },
     {
@@ -1203,7 +1206,9 @@
           13
         ],
         "unit": "points",
-        "endCondition": "target"
+        "endCondition": "target",
+        "sheet": "ohhell",
+        "hint": "Scorecard: bids, tricks, hook rule and hand sizes worked out for you."
       }
     },
     {
@@ -1369,8 +1374,9 @@
           500
         ],
         "unit": "points",
-        "hint": "Enter totals (above + below the line) for each team.",
-        "endCondition": "target"
+        "hint": "Rubber bridge scorecard: contract and tricks in, above/below the line, games and rubber bonus out.",
+        "endCondition": "target",
+        "sheet": "bridge"
       }
     },
     {
@@ -1449,7 +1455,9 @@
           100
         ],
         "unit": "points",
-        "endCondition": "target"
+        "endCondition": "target",
+        "sheet": "spades",
+        "hint": "Scorecard: bids, nil, bags and the 500 target worked out for you."
       }
     },
     {
@@ -1529,7 +1537,9 @@
           26
         ],
         "unit": "points",
-        "endCondition": "target"
+        "endCondition": "target",
+        "sheet": "hearts",
+        "hint": "Hearts + Q♠ per player, with a shoot-the-moon button; checks every hand adds up."
       }
     },
     {
@@ -1775,7 +1785,9 @@
           500
         ],
         "unit": "points",
-        "endCondition": "target"
+        "endCondition": "target",
+        "sheet": "canasta",
+        "hint": "Hand calculator: canastas, red 3s, going out and card points; shows each team’s minimum meld."
       }
     },
     {
@@ -7178,7 +7190,8 @@
         ],
         "unit": "points",
         "endCondition": "target",
-        "hint": "Seven rounds; add each player’s penalty after every round."
+        "hint": "Scorecard showing each round’s contract; lowest total wins.",
+        "sheet": "crummy"
       }
     },
     {
@@ -8446,7 +8459,9 @@
           50
         ],
         "unit": "points",
-        "endCondition": "target"
+        "endCondition": "target",
+        "sheet": "generala",
+        "hint": "Full scorecard with the served (+5) bonus and the served-Generala instant win."
       }
     },
     {
@@ -8531,7 +8546,8 @@
         ],
         "unit": "points",
         "endCondition": "target",
-        "hint": "Game ends when someone reaches 10,000 — remember everyone else gets one last turn."
+        "hint": "Turn builder: tap the dice you set aside; opening minimum and last turns handled.",
+        "sheet": "farkle"
       }
     },
     {
