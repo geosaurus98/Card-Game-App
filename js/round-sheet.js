@@ -22,19 +22,22 @@ CGR.views = CGR.views || {};
     cribbage: { min: 2, max: 4, def: 2, teams: (n) => n === 4, names: 'players' },
     hearts: { min: 3, max: 6, def: 4, teams: false }
   };
-  const isTeams = (st) => { const t = CONF[st.kind].teams; return typeof t === 'function' ? t(st.players.length) : t; };
+  /* More games are registered by round-sheet-more.js (CGR.roundSheetExt[kind]). */
+  const EXT = (k) => (CGR.roundSheetExt || {})[k] || null;
+  const conf = (k) => CONF[k] || (EXT(k) && EXT(k).conf);
+  const isTeams = (st) => { const t = conf(st.kind).teams; return typeof t === 'function' ? t(st.players.length) : t; };
   function sides(st) { return isTeams(st) ? ['A', 'B'] : st.players.map((p) => p.id); }
   const pname = (st, pid) => (st.players.find((p) => p.id === pid) || {}).name || pid;
   function sideName(st, s) {
     if (!isTeams(st)) return pname(st, s);
-    if (CONF[st.kind].names === 'teams') return (st.teamNames && st.teamNames[s]) || (CONF[st.kind].teamDefaults || ['Team A', 'Team B'])[s === 'A' ? 0 : 1];
+    if (conf(st.kind).names === 'teams') return (st.teamNames && st.teamNames[s]) || (conf(st.kind).teamDefaults || ['Team A', 'Team B'])[s === 'A' ? 0 : 1];
     const members = s === 'A' ? ['p1', 'p3'] : ['p2', 'p4'];
     return members.map((m) => pname(st, m)).join(' & ');
   }
   const optsOf = (st) => Object.assign({}, st.kind === 'ohhell' ? L.ohhell.defaults(st.players.length) : L[st.kind].defaults(), st.opts || {});
 
   function fresh(game, kind, prev) {
-    const c = CONF[kind];
+    const c = conf(kind);
     const n = prev ? prev.players.length : Math.min(c.max, Math.max(c.min, game.scorekeeper.defaultPlayers || c.def));
     const players = prev ? prev.players : Array.from({ length: n }, (_, i) => ({ id: 'p' + (i + 1), name: 'Player ' + (i + 1) }));
     return { v: 1, gameId: game.id, kind, started: !!prev, players, teamNames: prev ? prev.teamNames : {}, opts: prev ? prev.opts : {},
@@ -64,19 +67,28 @@ CGR.views = CGR.views || {};
   /* ---------- Small HTML helpers ---------- */
   const getPath = (o, p) => p.split('.').reduce((a, k) => (a == null ? a : a[k]), o);
   function setPath(o, p, v) { const ks = p.split('.'); const last = ks.pop(); const t = ks.reduce((a, k) => (a[k] = a[k] || {}), o); t[last] = v; }
-  function stepper(path, val, min, max, label, blank) {
+  function stepper(path, val, min, max, label, blank, step) {
+    step = step || 1;
     const shown = val == null || val === '' ? (blank || '–') : val;
     return `<div class="rs-step" role="group" aria-label="${esc(label)}">
-      <button type="button" class="btn btn-secondary" data-step="${path}" data-d="-1" data-min="${min}" data-max="${max}" aria-label="Less: ${esc(label)}" ${val != null && val !== '' && val <= min ? 'disabled' : ''}>−</button>
+      <button type="button" class="btn btn-secondary" data-step="${path}" data-d="${-step}" data-min="${min}" data-max="${max}" aria-label="Less: ${esc(label)}" ${val != null && val !== '' && val <= min ? 'disabled' : ''}>−</button>
       <output>${esc(String(shown))}</output>
-      <button type="button" class="btn btn-secondary" data-step="${path}" data-d="1" data-min="${min}" data-max="${max}" aria-label="More: ${esc(label)}" ${val != null && val !== '' && val >= max ? 'disabled' : ''}>+</button></div>`;
+      <button type="button" class="btn btn-secondary" data-step="${path}" data-d="${step}" data-min="${min}" data-max="${max}" aria-label="More: ${esc(label)}" ${val != null && val !== '' && val >= max ? 'disabled' : ''}>+</button></div>`;
   }
   function chips(path, current, options, label) {
-    return `<div class="rs-chips" role="group" aria-label="${esc(label)}">${options.map(([v, text]) => `<button type="button" class="rs-chip${String(current) === String(v) ? ' on' : ''}" data-set="${path}" data-val='${esc(JSON.stringify(v))}' aria-pressed="${String(current) === String(v)}">${esc(String(text))}</button>`).join('')}</div>`;
+    const on = (v) => current != null && String(current) === String(v); // an empty (null) value never matches, even a "null" id
+    return `<div class="rs-chips" role="group" aria-label="${esc(label)}">${options.map(([v, text]) => `<button type="button" class="rs-chip${on(v) ? ' on' : ''}" data-set="${path}" data-val='${esc(JSON.stringify(v))}' aria-pressed="${on(v)}">${esc(String(text))}</button>`).join('')}</div>`;
   }
   const numInput = (path, val, label) => `<input type="number" inputmode="numeric" min="0" step="1" class="rs-num" data-path="${path}" value="${val == null ? '' : esc(String(val))}" aria-label="${esc(label)}" placeholder="0">`;
   const fmtDelta = (n) => (n > 0 ? '+' + n : n < 0 ? '−' + Math.abs(n) : '0');
   const N = (v) => (v === '' || v == null ? 0 : Number(v));
+
+  /* Helpers handed to round-sheet-more.js. */
+  const H = {
+    get L() { return L; }, esc, stepper, chips, numInput, fmtDelta, N, getPath, setPath,
+    sides: (st) => sides(st), sideName: (st, s) => sideName(st, s), pname: (st, p) => pname(st, p), isTeams: (st) => isTeams(st),
+    optsOf: (st) => optsOf(st), draft: (st) => draft(st), replay: (st) => replay(st)
+  };
 
   /* ---------- Drafts (what is being entered for the next hand) ---------- */
   function newDraft(st) {
@@ -91,7 +103,7 @@ CGR.views = CGR.views || {};
       case 'crummy': return { out: null, cards: Object.fromEntries(ps.map((x) => [x, { low: 0, high: 0, ace: 0, joker: 0 }])), typed: zero(ps, null) };
       case 'canasta': { const t = () => ({ natural: 0, mixed: 0, red3: 0, out: 'none', melded: true, meld: '', hand: '' }); return { A: t(), B: t() }; }
       case 'hearts': return { hearts: zero(ps, 0), queen: null, jack: null };
-      default: return {};
+      default: return EXT(st.kind) ? EXT(st.kind).draft(st, H) : {};
     }
   }
   function draft(st) {
@@ -135,7 +147,7 @@ CGR.views = CGR.views || {};
         return { A: t(d.A), B: t(d.B) };
       }
       case 'hearts': return { hearts: Object.assign({}, d.hearts), queen: d.queen, jack: d.jack };
-      default: return null;
+      default: return EXT(st.kind) ? EXT(st.kind).entry(st, draft(st), H) : null;
     }
   }
   function validate(st, e) {
@@ -143,7 +155,7 @@ CGR.views = CGR.views || {};
     switch (st.kind) {
       case 'ohhell': return K.validate(o, s, K.hands(o)[st.entries.length], e);
       case 'spades': return K.validate(o, e);
-      case 'bridge': case 'canasta': return K.validate(o, e);
+      case 'bridge': case 'canasta': case 'euchre': case 'pinochle': case 'bidwhist': case 'whist': return K.validate(o, e);
       default: return K.validate(o, s, e);
     }
   }
@@ -191,7 +203,7 @@ CGR.views = CGR.views || {};
       }
       case 'canasta': return `<p class="rs-info">Minimum first meld: ${s.map((x) => `${esc(sideName(st, x))} <strong>${r.info.minimum[x]}</strong>`).join(' · ')}</p>`;
       case 'hearts': return `<p class="rs-info">Game ends at ${o.target}. Lowest score wins.</p>`;
-      default: return '';
+      default: return EXT(st.kind) && EXT(st.kind).info ? EXT(st.kind).info(st, r, H) : '';
     }
   }
 
@@ -348,7 +360,7 @@ CGR.views = CGR.views || {};
           ${o.omnibus ? `<p class="rs-label">Took the J♦ (−10)</p>${chips('jack', d.jack, st.players.map((p) => [p.id, p.name]), 'Jack of diamonds')}` : ''}
           <div class="btn-row rs-gap"><button type="button" class="btn btn-secondary" data-act="moon">🌙 Shot the moon</button><button type="button" class="btn" data-act="save">Save hand</button></div>`;
       }
-      default: return '';
+      default: return EXT(st.kind) ? EXT(st.kind).form(st, r, H) : '';
     }
   }
 
@@ -357,6 +369,7 @@ CGR.views = CGR.views || {};
     if (st.kind === 'canasta') return null;
     if (['ohhell', 'spades'].indexOf(st.kind) !== -1 && draft(st).phase !== 'tricks') return '';
     if (['farkle', 'cribbage'].indexOf(st.kind) !== -1) return '';
+    if (EXT(st.kind) && EXT(st.kind).noPreview) return '';
     const e = entryOf(st);
     if (validate(st, e)) return '';
     const s = sides(st);
@@ -377,7 +390,7 @@ CGR.views = CGR.views || {};
       case 'crummy': return `<span class="cr-hround">R${i + 1}</span> ${esc(row.contract.name)}${contractHTML(row.contract, true)}${row.out ? `<span class="muted small">★ ${esc(pname(st, row.out))} went out</span>` : ''}`;
       case 'hearts': return `${i + 1}${row.moon ? ' 🌙' : ''}`;
       case 'cribbage': return esc(sideName(st, row.side));
-      default: return String(i + 1);
+      default: return EXT(st.kind) && EXT(st.kind).label ? EXT(st.kind).label(st, row, i, H) : String(i + 1);
     }
   }
   function historyHTML(st, r) {
@@ -410,10 +423,10 @@ CGR.views = CGR.views || {};
 
   /* ---------- Setup ---------- */
   function setupHTML(game, st) {
-    const c = CONF[st.kind];
+    const c = conf(st.kind);
     const o = optsOf(st);
     const n = st.players.length;
-    const teamNameInputs = CONF[st.kind].names === 'teams';
+    const teamNameInputs = conf(st.kind).names === 'teams';
     const opt = [];
     const sel = (k, label, options) => `<label class="field"><span>${label}</span><select data-opt="${k}">${options.map(([v, t]) => `<option value="${esc(String(v))}" ${String(o[k]) === String(v) ? 'selected' : ''}>${esc(t)}</option>`).join('')}</select></label>`;
     const sw = (k, label, sub) => `<label class="switch-row field"><input type="checkbox" role="switch" data-optb="${k}" ${o[k] ? 'checked' : ''}><span><strong>${label}</strong>${sub ? `<br><span class="muted small">${sub}</span>` : ''}</span></label>`;
@@ -452,10 +465,10 @@ CGR.views = CGR.views || {};
         opt.push(sel('moon', 'Shooting the moon', [['add', 'Everyone else +26'], ['subtract', 'Shooter −26']]));
         opt.push(sw('omnibus', 'Omnibus Hearts', 'The J♦ is worth −10.'));
         break;
-      default: break;
+      default: if (EXT(st.kind) && EXT(st.kind).setup) opt.push(...EXT(st.kind).setup(st, o, { sel, sw, stepper }));
     }
     const count = c.min === c.max ? '' : `<fieldset class="field"><legend>Players</legend>${stepper('count', n, c.min, c.max, 'Players')}
-      ${st.kind === 'fivehundred' ? '<p class="muted small">4 players play in partnerships (1 & 3 v 2 & 4).</p>' : st.kind === 'cribbage' ? '<p class="muted small">4 players play as partners (1 & 3 v 2 & 4).</p>' : ''}</fieldset>`;
+      ${EXT(st.kind) && EXT(st.kind).countNote ? `<p class="muted small">${esc(EXT(st.kind).countNote)}</p>` : st.kind === 'fivehundred' ? '<p class="muted small">4 players play in partnerships (1 & 3 v 2 & 4).</p>' : st.kind === 'cribbage' ? '<p class="muted small">4 players play as partners (1 & 3 v 2 & 4).</p>' : ''}</fieldset>`;
     const names = teamNameInputs
       ? `<fieldset class="field"><legend>Teams</legend><div class="imp-names">${['A', 'B'].map((x, i) => `<label class="imp-name"><span class="imp-name-num" aria-hidden="true">${i + 1}</span>
           <input type="text" data-team="${x}" value="${esc((st.teamNames || {})[x] || '')}" placeholder="${esc((c.teamDefaults || ['Team A', 'Team B'])[i])}" maxlength="16" aria-label="Team ${i + 1} name"></label>`).join('')}</div></fieldset>`
@@ -598,6 +611,8 @@ CGR.views = CGR.views || {};
             return commit(st);
           }
           if (ds.crclear) { draft(st).typed[ds.crclear] = null; return commit(st); }
+          const ext = EXT(st.kind);
+          if (ext && ext.click && await ext.click(b, st, H)) return commit(st);
           if (ds.fface) { st.turn = st.turn || { pts: 0, left: 6, sel: [] }; if (st.turn.sel.length < st.turn.left) st.turn.sel.push(Number(ds.fface)); return commit(st); }
           if (ds.unsel != null) { st.turn.sel.splice(Number(ds.unsel), 1); return commit(st); }
           switch (ds.act) {
@@ -697,7 +712,8 @@ CGR.views = CGR.views || {};
           if (!t.dataset.path) return;
           const st = st0();
           const v = t.value.trim();
-          setPath(draft(st), t.dataset.path, v === '' ? '' : Math.max(0, Math.round(Number(v)) || 0));
+          const num = t.dataset.half ? Math.round(Number(v) * 2) / 2 : Math.round(Number(v));
+          setPath(draft(st), t.dataset.path, v === '' ? '' : Math.max(0, num || 0));
           save(st);
           const pv = root.querySelector('#rs-preview');
           if (pv) pv.innerHTML = previewHTML(st) || '';
@@ -709,5 +725,5 @@ CGR.views = CGR.views || {};
     };
   };
 
-  CGR.roundSheetKinds = Object.keys(CONF);
+  CGR.roundSheetKinds = Object.keys(CONF).concat(Object.keys(CGR.roundSheetExt || {}));
 })();

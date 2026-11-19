@@ -473,6 +473,523 @@
     }
   };
 
-  const KINDS = { ohhell, spades, fivehundred, bridge, farkle, crummy, canasta, cribbage, hearts };
+  /* =========================================================================
+   * Gin Rummy — knock / gin / big gin, undercuts, end-of-game bonuses
+   * ======================================================================= */
+  const gin = {
+    defaults() { return { target: 100, undercutBonus: 25, ginBonus: 25, bigGinBonus: 31, endBonuses: true, boxBonus: 25, gameBonus: 100 }; },
+    /* e: { type: 'knock'|'gin'|'biggin'|'draw', by: pid (knocker / gin player), dw: { pid: deadwood } } */
+    hand(opts, sides, e) {
+      const deltas = zeroTotals(sides);
+      if (e.type === 'draw') return { deltas, winner: null, note: 'Draw' };
+      const other = sides.find((s) => s !== e.by);
+      const mine = e.dw[e.by] || 0, theirs = e.dw[other] || 0;
+      if (e.type === 'gin' || e.type === 'biggin') {
+        deltas[e.by] = theirs + (e.type === 'biggin' ? opts.bigGinBonus : opts.ginBonus);
+        return { deltas, winner: e.by, note: e.type === 'biggin' ? 'Big gin' : 'Gin' };
+      }
+      if (mine < theirs) { deltas[e.by] = theirs - mine; return { deltas, winner: e.by, note: 'Knock' }; }
+      deltas[other] = mine - theirs + opts.undercutBonus;
+      return { deltas, winner: other, note: 'Undercut' };
+    },
+    validate(opts, sides, e) {
+      if (e.type === 'draw') return null;
+      if (sides.indexOf(e.by) === -1) return 'Who knocked or went gin?';
+      const other = sides.find((s) => s !== e.by);
+      if (!Number.isInteger(e.dw[other]) || e.dw[other] < 0) return 'Enter the opponent’s deadwood.';
+      if (e.type === 'knock') {
+        if (!Number.isInteger(e.dw[e.by]) || e.dw[e.by] < 0) return 'Enter the knocker’s deadwood.';
+        if (e.dw[e.by] > 10) return 'You can only knock with 10 or less deadwood.';
+      }
+      return null;
+    },
+    replay(opts, sides, entries) {
+      const totals = zeroTotals(sides);
+      const won = zeroTotals(sides);
+      let over = false;
+      const rows = [];
+      entries.forEach((e) => {
+        if (over) return;
+        const h = this.hand(opts, sides, e);
+        sides.forEach((s) => { totals[s] += h.deltas[s]; });
+        if (h.winner) won[h.winner] += 1;
+        rows.push({ deltas: h.deltas, totals: Object.assign({}, totals), note: h.note, winner: h.winner });
+        if (sides.some((s) => totals[s] >= opts.target)) over = true;
+      });
+      const final = Object.assign({}, totals);
+      const bonuses = zeroTotals(sides);
+      let winners = [];
+      if (over) {
+        const w = leaders(totals, sides)[0];
+        winners = [w];
+        if (opts.endBonuses) {
+          const loser = sides.find((s) => s !== w);
+          const shutout = totals[loser] === 0;
+          sides.forEach((s) => { bonuses[s] = won[s] * opts.boxBonus; });
+          bonuses[w] += shutout ? 2 * opts.gameBonus : opts.gameBonus;
+          sides.forEach((s) => { final[s] += bonuses[s]; });
+        }
+      }
+      return { rows, totals: over && opts.endBonuses ? final : totals, over, winners, info: { handsWon: won, bonuses, running: totals } };
+    }
+  };
+
+  /* =========================================================================
+   * Euchre — partnerships (A/B) and three-handed (each for themselves)
+   * ======================================================================= */
+  const euchre = {
+    defaults() { return { target: 10, defendAlone: false }; },
+    /* e: { makers: 'A'|'B', result: 'made'|'march'|'euchred', alone, defAlone } */
+    hand(opts, e) {
+      const deltas = { A: 0, B: 0 };
+      const other = e.makers === 'A' ? 'B' : 'A';
+      if (e.result === 'euchred') deltas[other] = opts.defendAlone && e.alone && e.defAlone ? 4 : 2;
+      else if (e.result === 'march') deltas[e.makers] = e.alone ? 4 : 2;
+      else deltas[e.makers] = 1;
+      return deltas;
+    },
+    validate(opts, e) {
+      if (e.makers !== 'A' && e.makers !== 'B') return 'Which team called trumps?';
+      if (['made', 'march', 'euchred'].indexOf(e.result) === -1) return 'How did the hand go?';
+      return null;
+    },
+    replay(opts, sides, entries) {
+      const totals = { A: 0, B: 0 };
+      const rows = entries.map((e) => {
+        const deltas = this.hand(opts, e);
+        totals.A += deltas.A; totals.B += deltas.B;
+        return { deltas, totals: Object.assign({}, totals) };
+      });
+      const over = totals.A >= opts.target || totals.B >= opts.target;
+      return { rows, totals, over, winners: over ? leaders(totals, ['A', 'B']) : [], info: {} };
+    }
+  };
+  const euchre3 = {
+    defaults() { return { target: 10 }; },
+    hand(opts, sides, e) {
+      const deltas = zeroTotals(sides);
+      if (e.result === 'euchred') sides.forEach((s) => { if (s !== e.maker) deltas[s] = 2; });
+      else deltas[e.maker] = e.result === 'march' ? 3 : 1;
+      return deltas;
+    },
+    validate(opts, sides, e) {
+      if (sides.indexOf(e.maker) === -1) return 'Who was the maker?';
+      if (['made', 'march', 'euchred'].indexOf(e.result) === -1) return 'How did the hand go?';
+      return null;
+    },
+    replay(opts, sides, entries) {
+      const totals = zeroTotals(sides);
+      const rows = entries.map((e) => {
+        const deltas = this.hand(opts, sides, e);
+        sides.forEach((s) => { totals[s] += deltas[s]; });
+        return { deltas, totals: Object.assign({}, totals) };
+      });
+      const over = sides.some((s) => totals[s] >= opts.target);
+      return { rows, totals, over, winners: over ? leaders(totals, sides) : [], info: {} };
+    }
+  };
+
+  /* =========================================================================
+   * Six-Card Golf — two rows of three; column pairs score 0; 9 holes, lowest wins
+   * ======================================================================= */
+  const GOLF_RANKS = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+  const golf = {
+    RANKS: GOLF_RANKS,
+    defaults() { return { holes: 9 }; },
+    value(rank) { return rank === 'A' ? 1 : rank === '2' ? -2 : rank === 'K' ? 0 : rank === 'J' || rank === 'Q' ? 10 : Number(rank); },
+    /* cards: [top0, top1, top2, bottom0, bottom1, bottom2] ranks. Columns are i and i+3. */
+    score(cards) {
+      if (!Array.isArray(cards) || cards.length !== 6 || cards.some((c) => GOLF_RANKS.indexOf(c) === -1)) return null;
+      let s = 0;
+      for (let i = 0; i < 3; i++) {
+        if (cards[i] === cards[i + 3]) continue;
+        s += this.value(cards[i]) + this.value(cards[i + 3]);
+      }
+      return s;
+    },
+    validate(opts, sides, e) {
+      return sides.every((s) => Number.isInteger(e.pts[s])) ? null : 'Enter every player’s cards (or score).';
+    },
+    replay(opts, sides, entries) {
+      const totals = zeroTotals(sides);
+      const rows = entries.map((e, i) => {
+        sides.forEach((s) => { totals[s] += e.pts[s]; });
+        return { deltas: Object.assign({}, e.pts), totals: Object.assign({}, totals), hole: i + 1 };
+      });
+      const over = entries.length >= opts.holes;
+      return { rows, totals, over, winners: over ? leaders(totals, sides, true) : [], info: { hole: entries.length + 1 } };
+    }
+  };
+
+  /* =========================================================================
+   * Pinochle (partnership) — bid, meld, counters; set back if short
+   * ======================================================================= */
+  const pinochle = {
+    MELDS: [['Run', 150], ['Royal marriage', 40], ['Marriage', 20], ['Pinochle', 40], ['Double pinochle', 300], ['Aces around', 100], ['Kings around', 80], ['Queens around', 60], ['Jacks around', 40], ['Dix', 10]],
+    defaults() { return { target: 1500, counters: 250 }; },
+    /* e: { bidder: 'A'|'B', bid, meld: {A,B}, counters: {A,B} } */
+    hand(opts, e) {
+      const deltas = { A: 0, B: 0 };
+      const notes = {};
+      ['A', 'B'].forEach((s) => {
+        const keep = e.counters[s] > 0;
+        const total = (keep ? e.meld[s] : 0) + e.counters[s];
+        if (s === e.bidder) {
+          if (total >= e.bid) deltas[s] = total;
+          else { deltas[s] = -e.bid; notes[s] = 'Set'; }
+        } else deltas[s] = total;
+        if (!keep && e.meld[s]) notes[s] = (notes[s] ? notes[s] + ', ' : '') + 'meld lost (no counters)';
+      });
+      return { deltas, notes };
+    },
+    validate(opts, e) {
+      if (e.bidder !== 'A' && e.bidder !== 'B') return 'Which team won the bid?';
+      if (!Number.isInteger(e.bid) || e.bid <= 0) return 'Enter the bid.';
+      for (const s of ['A', 'B']) {
+        if (!Number.isInteger(e.meld[s]) || e.meld[s] < 0 || !Number.isInteger(e.counters[s]) || e.counters[s] < 0) return 'Enter meld and counters for both teams.';
+      }
+      if (e.counters.A + e.counters.B !== opts.counters) return `Counters must add up to ${opts.counters} (now ${e.counters.A + e.counters.B}).`;
+      return null;
+    },
+    replay(opts, sides, entries) {
+      const totals = { A: 0, B: 0 };
+      let over = false, winners = [];
+      const rows = entries.map((e) => {
+        const h = this.hand(opts, e);
+        totals.A += h.deltas.A; totals.B += h.deltas.B;
+        if (!over && (totals.A >= opts.target || totals.B >= opts.target)) {
+          over = true;
+          // The bidding side counts out first.
+          winners = totals[e.bidder] >= opts.target ? [e.bidder] : leaders(totals, ['A', 'B']);
+        }
+        return { deltas: h.deltas, totals: Object.assign({}, totals), notes: h.notes };
+      });
+      return { rows, totals, over, winners, info: {} };
+    }
+  };
+
+  /* =========================================================================
+   * Rummy 500 — melded minus left in hand, to 500
+   * ======================================================================= */
+  const rummy500 = {
+    defaults() { return { target: 500 }; },
+    validate(opts, sides, e) {
+      return sides.every((s) => Number.isInteger(e.melded[s]) && Number.isInteger(e.hand[s]) && e.melded[s] >= 0 && e.hand[s] >= 0) ? null : 'Enter melded and in-hand points for everyone.';
+    },
+    replay(opts, sides, entries) {
+      const totals = zeroTotals(sides);
+      let over = false, winners = [];
+      const rows = entries.map((e) => {
+        const deltas = {};
+        sides.forEach((s) => { deltas[s] = e.melded[s] - e.hand[s]; totals[s] += deltas[s]; });
+        if (!over && sides.some((s) => totals[s] >= opts.target)) { over = true; winners = leaders(totals, sides); }
+        return { deltas, totals: Object.assign({}, totals) };
+      });
+      return { rows, totals, over, winners, info: {} };
+    }
+  };
+
+  /* =========================================================================
+   * Auction Pitch — High, Low, Jack, Game; set back; count-out order
+   * ======================================================================= */
+  const pitch = {
+    POINTS: ['high', 'low', 'jack', 'game'],
+    defaults() { return { target: 7, smudge: true }; },
+    /* e: { pitcher, bid: 1–4 or 5 (smudge), high, low, jack (or null), game (or null) } */
+    validate(opts, sides, e) {
+      if (sides.indexOf(e.pitcher) === -1) return 'Who was the pitcher?';
+      if (!(e.bid >= 1 && e.bid <= (opts.smudge ? 5 : 4))) return 'Choose the bid.';
+      if (sides.indexOf(e.high) === -1 || sides.indexOf(e.low) === -1) return 'Who had High and Low?';
+      return null;
+    },
+    hand(opts, sides, e) {
+      const won = zeroTotals(sides);
+      this.POINTS.forEach((k) => { if (e[k] && sides.indexOf(e[k]) !== -1) won[e[k]] += 1; });
+      const deltas = Object.assign({}, won);
+      const need = e.bid === 5 ? 4 : e.bid;
+      const made = won[e.pitcher] >= need;
+      deltas[e.pitcher] = made ? won[e.pitcher] : -need;
+      return { deltas, made, smudge: e.bid === 5 && made };
+    },
+    replay(opts, sides, entries) {
+      const totals = zeroTotals(sides);
+      let over = false, winners = [];
+      const rows = entries.map((e) => {
+        const before = Object.assign({}, totals);
+        const h = this.hand(opts, sides, e);
+        sides.forEach((s) => { totals[s] += h.deltas[s]; });
+        if (!over) {
+          if (h.smudge && before[e.pitcher] >= 0) { over = true; winners = [e.pitcher]; }
+          else if (sides.some((s) => totals[s] >= opts.target)) {
+            over = true;
+            // Count out in order: pitcher first, then High, Low, Jack, Game.
+            const run = Object.assign({}, before);
+            run[e.pitcher] += h.deltas[e.pitcher];
+            if (run[e.pitcher] >= opts.target) winners = [e.pitcher];
+            else {
+              for (const k of this.POINTS) {
+                const s = e[k];
+                if (!s || s === e.pitcher || sides.indexOf(s) === -1) continue;
+                run[s] += 1;
+                if (run[s] >= opts.target) { winners = [s]; break; }
+              }
+              if (!winners.length) winners = leaders(totals, sides);
+            }
+          }
+        }
+        return { deltas: h.deltas, totals: Object.assign({}, totals), made: h.made, bid: e.bid };
+      });
+      return { rows, totals, over, winners, info: {} };
+    }
+  };
+
+  /* =========================================================================
+   * Bid Whist (partnership) — books over six; uptown / downtown / no trump
+   * ======================================================================= */
+  const bidwhist = {
+    defaults() { return { target: 7, ntDouble: true, loseAtMinus: true }; },
+    /* e: { bidder: 'A'|'B', bid 3–7, type: 'up'|'down'|'nt', books: books won by bidder side incl. the kitty (0–13) } */
+    validate(opts, e) {
+      if (e.bidder !== 'A' && e.bidder !== 'B') return 'Which team won the bid?';
+      if (!(e.bid >= 3 && e.bid <= 7)) return 'Choose the bid (3–7).';
+      if (['up', 'down', 'nt'].indexOf(e.type) === -1) return 'Uptown, downtown or no trump?';
+      if (!(Number.isInteger(e.books) && e.books >= 0 && e.books <= 13)) return 'Enter the books won (0–13).';
+      return null;
+    },
+    hand(opts, e) {
+      const deltas = { A: 0, B: 0 };
+      const mult = e.type === 'nt' && opts.ntDouble ? 2 : 1;
+      const made = e.books >= 6 + e.bid;
+      deltas[e.bidder] = (made ? e.books - 6 : -e.bid) * mult;
+      return { deltas, made };
+    },
+    replay(opts, sides, entries) {
+      const totals = { A: 0, B: 0 };
+      const rows = entries.map((e) => {
+        const h = this.hand(opts, e);
+        totals.A += h.deltas.A; totals.B += h.deltas.B;
+        return { deltas: h.deltas, totals: Object.assign({}, totals), made: h.made };
+      });
+      const won = ['A', 'B'].filter((s) => totals[s] >= opts.target);
+      const lost = opts.loseAtMinus ? ['A', 'B'].filter((s) => totals[s] <= -opts.target) : [];
+      const over = won.length > 0 || lost.length > 0;
+      let winners = [];
+      if (won.length) winners = leaders(totals, won);
+      else if (lost.length) winners = ['A', 'B'].filter((s) => lost.indexOf(s) === -1);
+      return { rows, totals, over, winners, info: {} };
+    }
+  };
+
+  /* =========================================================================
+   * Whist (partnership) — tricks over six, honours, games and rubber
+   * ======================================================================= */
+  const whist = {
+    defaults() { return { game: 5, honours: true }; },
+    /* e: { tricksA: 0–13, honours: '' | 'A:4' | 'A:2' | 'B:4' | 'B:2' } */
+    validate(opts, e) { return Number.isInteger(e.tricksA) && e.tricksA >= 0 && e.tricksA <= 13 ? null : 'Enter Team A’s tricks (0–13).'; },
+    replay(opts, sides, entries) {
+      const pts = { A: 0, B: 0 };
+      const games = { A: 0, B: 0 };
+      let over = false;
+      const rows = [];
+      entries.forEach((e) => {
+        if (over) return;
+        const deltas = { A: 0, B: 0 };
+        const notes = [];
+        const tr = { A: e.tricksA, B: 13 - e.tricksA };
+        const before = Object.assign({}, pts);
+        ['A', 'B'].forEach((s) => { if (tr[s] > 6) deltas[s] += tr[s] - 6; });
+        if (opts.honours && e.honours) {
+          const [s, v] = e.honours.split(':');
+          // Honours can't win a game for a side that stood at game − 1 before the hand.
+          if (before[s] === opts.game - 1) notes.push('Honours don’t count at ' + (opts.game - 1));
+          else deltas[s] += Number(v);
+        }
+        pts.A += deltas.A; pts.B += deltas.B;
+        const done = ['A', 'B'].find((s) => pts[s] >= opts.game);
+        if (done) {
+          games[done] += 1;
+          notes.push('Game!');
+          pts.A = 0; pts.B = 0;
+          if (games[done] === 2) { over = true; notes.push('Rubber'); }
+        }
+        rows.push({ deltas, totals: Object.assign({}, pts), notes, games: Object.assign({}, games) });
+      });
+      return { rows, totals: Object.assign({}, games), over, winners: over ? leaders(games, ['A', 'B']) : [], info: { points: pts, games } };
+    }
+  };
+
+  /* =========================================================================
+   * Skat — game value calculator (suit, grand, null), win / lose ×2, overbids
+   * ======================================================================= */
+  const SKAT_BASE = { D: 9, H: 10, S: 11, C: 12, G: 24 };
+  const SKAT_NULL = { null: 23, nullHand: 35, nullOuvert: 46, nullHandOuvert: 59 };
+  const skat = {
+    BASE: SKAT_BASE,
+    NULL: SKAT_NULL,
+    BIDS: [18, 20, 22, 23, 24, 27, 30, 33, 35, 36, 40, 44, 45, 46, 48, 50, 54, 55, 59, 60, 63, 66, 70, 72, 77, 80, 81, 84, 88, 90, 96, 99, 100, 108, 110, 117, 120, 121, 126, 130, 132, 135, 140, 143, 144, 150, 153, 154, 156, 160, 162, 165, 168, 170, 176, 180, 187, 192, 198, 204, 216, 240, 264],
+    defaults() { return { rounds: 12 }; },
+    /* Multiplier for a suit or grand game. */
+    multiplier(e) {
+      let m = 1 + (e.matadors || 1);
+      if (e.hand) m++;
+      if (e.schneider || e.schneiderAnn || e.schwarzAnn || e.ouvert) m++;           // schneider (made, or implied by announcements)
+      if (e.schneiderAnn || e.schwarzAnn || e.ouvert) m++;                          // schneider announced
+      if (e.schwarz || e.schwarzAnn || e.ouvert) m++;                               // schwarz (made, or implied by announcing it)
+      if (e.schwarzAnn || e.ouvert) m++;                                            // schwarz announced
+      if (e.ouvert) m++;                                                            // open
+      return m;
+    },
+    /* { value, lost (bool), overbid (bool) } for one game. */
+    value(e) {
+      if (SKAT_NULL[e.game]) {
+        const v = SKAT_NULL[e.game];
+        const over = e.bid > v;
+        return { value: over ? v * Math.ceil(e.bid / v) : v, lost: !e.won || over, overbid: over };
+      }
+      const base = SKAT_BASE[e.game];
+      let v = base * this.multiplier(e);
+      const over = e.bid > v;
+      if (over) v = base * Math.ceil(e.bid / base); // lost overbid: the smallest multiple of the base that covers the bid
+      return { value: v, lost: !e.won || over, overbid: over };
+    },
+    validate(opts, sides, e) {
+      if (sides.indexOf(e.declarer) === -1) return 'Who was the declarer?';
+      if (!SKAT_BASE[e.game] && !SKAT_NULL[e.game]) return 'Choose the game.';
+      if (SKAT_BASE[e.game] && !(e.matadors >= 1 && e.matadors <= (e.game === 'G' ? 4 : 11))) return 'Choose matadors (with or without).';
+      if (!(e.bid >= 18)) return 'Choose the winning bid.';
+      if (typeof e.won !== 'boolean') return 'Did the declarer win?';
+      return null;
+    },
+    replay(opts, sides, entries) {
+      const totals = zeroTotals(sides);
+      const rows = entries.map((e) => {
+        const deltas = zeroTotals(sides);
+        const r = this.value(e);
+        deltas[e.declarer] = r.lost ? -2 * r.value : r.value;
+        totals[e.declarer] += deltas[e.declarer];
+        return { deltas, totals: Object.assign({}, totals), value: r.value, lost: r.lost, overbid: r.overbid };
+      });
+      const over = opts.rounds > 0 && entries.length >= opts.rounds;
+      return { rows, totals, over, winners: over ? leaders(totals, sides) : [], info: {} };
+    }
+  };
+
+  /* =========================================================================
+   * 1000 (Thousand) — bid, card points + marriages, rounding, three zeros
+   * ======================================================================= */
+  const thousand = {
+    MARRIAGES: [['♥', 100], ['♦', 80], ['♣', 60], ['♠', 40]],
+    defaults() { return { target: 1000, zeroPenalty: true }; },
+    round5(n) { return Math.round(n / 5) * 5; },
+    validate(opts, sides, e) {
+      if (sides.indexOf(e.declarer) === -1) return 'Who won the bidding?';
+      if (!(Number.isInteger(e.bid) && e.bid >= 100 && e.bid % 5 === 0)) return 'The bid is 100 or more, in steps of 5.';
+      if (!sides.every((s) => s === e.sitOut || (Number.isInteger(e.points[s]) && e.points[s] >= 0))) return 'Enter everyone’s points.';
+      return null;
+    },
+    replay(opts, sides, entries) {
+      const totals = zeroTotals(sides);
+      const zeros = zeroTotals(sides);
+      let over = false, winners = [];
+      const rows = entries.map((e) => {
+        const deltas = zeroTotals(sides);
+        const notes = [];
+        sides.forEach((s) => {
+          if (s === e.sitOut) return;
+          if (s === e.declarer) deltas[s] = e.points[s] >= e.bid ? e.bid : -e.bid;
+          else deltas[s] = this.round5(e.points[s]);
+          if (opts.zeroPenalty) {
+            zeros[s] = deltas[s] === 0 ? zeros[s] + 1 : 0;
+            if (zeros[s] === 3) { deltas[s] -= 120; zeros[s] = 0; notes.push('Three zeros −120'); }
+          }
+        });
+        sides.forEach((s) => { totals[s] += deltas[s]; });
+        if (!over && sides.some((s) => totals[s] >= opts.target)) { over = true; winners = totals[e.declarer] >= opts.target ? [e.declarer] : leaders(totals, sides); }
+        return { deltas, totals: Object.assign({}, totals), made: e.points[e.declarer] >= e.bid, notes };
+      });
+      return { rows, totals, over, winners, info: { zeros } };
+    }
+  };
+
+  /* =========================================================================
+   * Sixty-Six / Schnapsen — game points 1, 2 or 3 per deal; first to 7
+   * ======================================================================= */
+  const sixtysix = {
+    defaults() { return { target: 7 }; },
+    /* e: { winner, pts: 1|2|3 } */
+    validate(opts, sides, e) {
+      if (sides.indexOf(e.winner) === -1) return 'Who won the deal?';
+      return [1, 2, 3].indexOf(e.pts) !== -1 ? null : 'How many game points?';
+    },
+    /* Game points from the loser's card points and whether they took a trick. */
+    gamePoints(loserPoints, loserTookTrick) { return !loserTookTrick ? 3 : loserPoints < 33 ? 2 : 1; },
+    replay(opts, sides, entries) {
+      const totals = zeroTotals(sides);
+      const rows = entries.map((e) => {
+        const deltas = zeroTotals(sides);
+        deltas[e.winner] = e.pts;
+        totals[e.winner] += e.pts;
+        return { deltas, totals: Object.assign({}, totals) };
+      });
+      const over = sides.some((s) => totals[s] >= opts.target);
+      return { rows, totals, over, winners: over ? leaders(totals, sides) : [], info: {} };
+    }
+  };
+
+  /* =========================================================================
+   * French Tarot — zero-sum; contract × multiplier; 3, 4 or 5 players
+   * ======================================================================= */
+  const TAROT_MULT = { petite: 1, garde: 2, sans: 4, contre: 6 };
+  const tarot = {
+    MULT: TAROT_MULT,
+    NEED: [56, 51, 41, 36],
+    HANDFUL: { single: 20, double: 30, triple: 40 },
+    defaults() { return { rounds: 0 }; },
+    /* Hand value from the taker's side: positive if the contract is made. */
+    handValue(e) {
+      const need = this.NEED[e.oudlers];
+      const made = e.points >= need;
+      const m = TAROT_MULT[e.contract];
+      const base = (25 + Math.abs(e.points - need)) * m;
+      let v = made ? base : -base;
+      if (e.petit === 'taker') v += 10 * m;
+      if (e.petit === 'defence') v -= 10 * m;
+      if (e.handful && this.HANDFUL[e.handful]) v += made ? this.HANDFUL[e.handful] : -this.HANDFUL[e.handful];
+      if (e.slam === 'announced') v += 400;
+      else if (e.slam === 'made') v += 200;
+      else if (e.slam === 'failed') v -= 200;
+      return { v, made, need };
+    },
+    validate(opts, sides, e) {
+      if (sides.indexOf(e.taker) === -1) return 'Who was the taker?';
+      if (!TAROT_MULT[e.contract]) return 'Choose the contract.';
+      if (!(e.oudlers >= 0 && e.oudlers <= 3)) return 'How many oudlers did the taker’s side have?';
+      if (!(typeof e.points === 'number' && e.points >= 0 && e.points <= 91 && (e.points * 2) % 1 === 0)) return 'Card points are 0–91 (halves allowed).';
+      if (sides.length === 5 && sides.indexOf(e.partner) === -1) return 'Who was the called partner (the taker if they called themselves)?';
+      return null;
+    },
+    replay(opts, sides, entries) {
+      const totals = zeroTotals(sides);
+      const n = sides.length;
+      const rows = entries.map((e) => {
+        const h = this.handValue(e);
+        const deltas = zeroTotals(sides);
+        const partner = n === 5 && e.partner !== e.taker ? e.partner : null;
+        const defenders = sides.filter((s) => s !== e.taker && s !== partner);
+        defenders.forEach((s) => { deltas[s] = -h.v; });
+        const pool = h.v * defenders.length;
+        if (partner) { deltas[partner] = h.v; deltas[e.taker] = pool - h.v; }
+        else deltas[e.taker] = pool;
+        sides.forEach((s) => { totals[s] += deltas[s]; });
+        return { deltas, totals: Object.assign({}, totals), made: h.made, need: h.need, v: h.v };
+      });
+      const over = opts.rounds > 0 && entries.length >= opts.rounds;
+      return { rows, totals, over, winners: over ? leaders(totals, sides) : [], info: {} };
+    }
+  };
+
+  const KINDS = { ohhell, spades, fivehundred, bridge, farkle, crummy, canasta, cribbage, hearts,
+    gin, euchre, euchre3, golf, pinochle, rummy500, pitch, bidwhist, whist, skat, thousand, sixtysix, tarot };
   return Object.assign({ KINDS, sumOf, leaders }, KINDS);
 });

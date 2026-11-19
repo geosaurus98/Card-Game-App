@@ -159,7 +159,7 @@ function lazyView(id) {
 const DICE_SHEETS = ['yacht', 'generala'];
 function sheetView(game) {
   const dice = DICE_SHEETS.indexOf(game.scorekeeper.sheet) !== -1;
-  const files = dice ? ['js/dice-sheet-logic.js', 'js/dice-sheet.js'] : ['js/round-sheet-logic.js', 'js/round-sheet.js'];
+  const files = dice ? ['js/dice-sheet-logic.js', 'js/dice-sheet.js'] : ['js/round-sheet-logic.js', 'js/round-sheet-more.js', 'js/round-sheet.js'];
   const view = dice ? CGR.views.diceSheet : CGR.views.roundSheet;
   if (view) return view(game.id);
   return {
