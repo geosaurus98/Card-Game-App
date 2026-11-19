@@ -156,15 +156,18 @@ function lazyView(id) {
 }
 
 /* Category scorecard for five-dice games (lazy-loaded like the party games). */
-const SHEET_FILES = ['js/dice-sheet-logic.js', 'js/dice-sheet.js'];
+const DICE_SHEETS = ['yacht', 'generala'];
 function sheetView(game) {
-  if (CGR.views.diceSheet) return CGR.views.diceSheet(game.id);
+  const dice = DICE_SHEETS.indexOf(game.scorekeeper.sheet) !== -1;
+  const files = dice ? ['js/dice-sheet-logic.js', 'js/dice-sheet.js'] : ['js/round-sheet-logic.js', 'js/round-sheet.js'];
+  const view = dice ? CGR.views.diceSheet : CGR.views.roundSheet;
+  if (view) return view(game.id);
   return {
     title: 'Score: ' + game.name, back: '#/game/' + game.id,
     html: '<p class="loading">Loading…</p>',
     onMount(view) {
       const hash = location.hash;
-      CGR.loadScripts(SHEET_FILES).then(() => { if (location.hash === hash) CGR.router.render(); }).catch(() => {
+      CGR.loadScripts(files).then(() => { if (location.hash === hash) CGR.router.render(); }).catch(() => {
         view.innerHTML = `<div class="page-head"><h1 tabindex="-1">Couldn’t load the scorecard</h1>
           <p>Connect to the internet once so the app can save it for offline use.</p></div>
           <a class="btn" href="#/score/${CGR.esc(game.id)}?simple=1">Use the simple tracker</a>`;

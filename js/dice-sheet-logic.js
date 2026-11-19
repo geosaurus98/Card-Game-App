@@ -6,6 +6,9 @@
  *             extra five-of-a-kinds earn 100 each, with the joker rule.
  *   yacht   — classic Yacht: 12 boxes, no bonuses.
  *   yatzy   — Nordic Yatzy: 15 boxes, upper bonus 50 at 63+.
+ *   generala / generala2 — Generala (10 boxes, or 11 with Double Generala); +5 for a
+ *             straight, full, poker or generala made on the first roll ('served');
+ *             a served Generala wins the game outright.
  *
  * A sheet is plain data: { [playerId]: { [category]: score } } plus yahtzee-bonus counts. */
 (function (root, factory) {
@@ -61,9 +64,24 @@
       ])
     }
   };
+  const GENERALA = [
+    { id: 'esc', name: 'Escalera', kind: 'fixed', pattern: 'esc', value: 20, served: true, hint: 'Straight (1-5, 2-6 or 3-4-5-6-1): 20' },
+    { id: 'full', name: 'Full', kind: 'fixed', pattern: 'full', value: 30, served: true, hint: '3 + 2 alike: 30' },
+    { id: 'poker', name: 'Poker', kind: 'fixed', pattern: 'four', value: 40, served: true, hint: 'Four alike: 40' },
+    { id: 'generala', name: 'Generala', kind: 'fixed', pattern: 'five', value: 50, served: true, hint: 'All five alike: 50' }
+  ];
+  const genUpper = UPPER.map((c) => Object.assign({}, c, { name: String(c.face), hint: `Add up the ${c.face}s` }));
+  RULES.generala = { id: 'generala', name: 'Generala', note: '10 boxes · +5 when served (first roll) · served Generala wins', sheet: 'generala',
+    upperBonus: null, fiveBonus: 0, joker: false, fiveId: 'generala', servedBonus: 5, cats: genUpper.concat(GENERALA) };
+  RULES.generala2 = { id: 'generala2', name: 'Generala + Double', note: '11 boxes · adds Double Generala (100) · +5 when served', sheet: 'generala',
+    upperBonus: null, fiveBonus: 0, joker: false, fiveId: 'generala', servedBonus: 5,
+    cats: genUpper.concat(GENERALA, [{ id: 'double', name: 'Double Generala', kind: 'double', value: 100, hint: 'A second five alike, after scoring 50 for Generala: 100' }]) };
+  ['yahtzee', 'yacht', 'yatzy'].forEach((k) => { RULES[k].sheet = 'yacht'; });
   Object.values(RULES).forEach((r) => r.cats.forEach((c) => { if (!c.section) c.section = 'lower'; }));
 
   function rules(id) { return RULES[id] || RULES.yahtzee; }
+  /* Rule sets offered on a game's scorecard ("yacht" or "generala"). */
+  function rulesFor(sheet) { return Object.values(RULES).filter((r) => r.sheet === (sheet === 'generala' ? 'generala' : 'yacht')); }
   function cat(r, id) { return r.cats.find((c) => c.id === id) || null; }
 
   /* ---------- Dice analysis ---------- */
@@ -89,6 +107,8 @@
       case 'run5': return longestRun(c) === 5;
       case 'low5': return [1, 2, 3, 4, 5].every((f) => c[f] === 1);
       case 'high5': return [2, 3, 4, 5, 6].every((f) => c[f] === 1);
+      case 'esc': return matches('low5', c) || matches('high5', c) || [1, 3, 4, 5, 6].every((f) => c[f] === 1);
+      case 'four': return c.some((n) => n >= 4);
       default: return false;
     }
   }
@@ -106,6 +126,7 @@
       case 'nTimes': { for (let f = 6; f >= 1; f--) if (k[f] >= c.n) return f * c.n; return 0; }
       case 'fixed': return matches(c.pattern, k) ? c.value : 0;
       case 'fullSum': return matches('full', k) ? sum(dice) : 0;
+      case 'double': return matches('five', k) ? c.value : 0;
       case 'pair': { for (let f = 6; f >= 1; f--) if (k[f] >= 2) return f * 2; return 0; }
       case 'twoPairs': {
         const pairs = [];
@@ -137,13 +158,18 @@
     return lower.length ? lower : open;
   }
 
-  /* Score the roll would make in an open box, including the joker rule. */
-  function scoreFor(r, card, cid, dice) {
+  /* Score the roll would make in an open box, including the joker rule and
+   * (Generala) the served bonus. */
+  function scoreFor(r, card, cid, dice, served) {
     const c = cat(r, cid);
     if (!c) return 0;
     if (jokerActive(r, card, dice) && c.kind === 'fixed' && ['full', 'run4', 'run5'].indexOf(c.pattern) !== -1) return c.value;
-    return rawScore(r, cid, dice);
+    if (c.kind === 'double' && card.boxes[r.fiveId] !== (cat(r, r.fiveId) || {}).value) return 0; // needs a 50 in Generala first
+    const v = rawScore(r, cid, dice);
+    return v && served && c.served && r.servedBonus ? v + r.servedBonus : v;
   }
+  /* Generala served on the first roll and put in the Generala box wins outright. */
+  function winsOutright(r, cid, dice, served) { return !!(r.servedBonus && served && cid === r.fiveId && isFive(dice)); }
 
   /* Does this roll earn a five-of-a-kind bonus? (Yahtzee box already scored 50.) */
   function earnsBonus(r, card, dice) {
@@ -151,13 +177,15 @@
   }
 
   /* Place a roll: returns { ok, score, bonus } and updates the card. */
-  function place(r, card, cid, dice) {
+  function place(r, card, cid, dice, served) {
     if (!validDice(dice) || filled(card, cid) || allowed(r, card, dice).indexOf(cid) === -1) return { ok: false };
     const bonus = earnsBonus(r, card, dice);
-    const score = scoreFor(r, card, cid, dice);
+    const score = scoreFor(r, card, cid, dice, served);
+    const outright = winsOutright(r, cid, dice, served);
     card.boxes[cid] = score;
     if (bonus) card.bonusFives += 1;
-    return { ok: true, score, bonus };
+    if (outright) card.outright = true;
+    return { ok: true, score, bonus, outright };
   }
 
   /* Scores that could legally appear in a box (for typing a score by hand). */
@@ -170,6 +198,7 @@
     const out = new Set([0]);
     const each = (fn) => { for (let a = 1; a <= 6; a++) for (let b = 1; b <= 6; b++) for (let d = 1; d <= 6; d++) for (let e = 1; e <= 6; e++) for (let f = 1; f <= 6; f++) out.add(fn([a, b, d, e, f])); };
     each((dice) => rawScore(r, cid, dice));
+    if (c.served && r.servedBonus) Array.from(out).forEach((v) => { if (v) out.add(v + r.servedBonus); });
     possibleCache[ck] = Array.from(out).sort((x, y) => x - y);
     return possibleCache[ck];
   }
@@ -206,6 +235,7 @@
   /* ---------- Whole game ---------- */
   /* Next player: fewest filled boxes, earliest seat. null when everyone is done. */
   function nextPlayer(r, order, cards) {
+    if (order.some((pid) => cards[pid] && cards[pid].outright)) return null; // served Generala: game over
     let best = null, bestN = Infinity;
     order.forEach((pid) => {
       const n = r.cats.length - openCats(r, cards[pid]).length;
@@ -218,10 +248,10 @@
     return Math.min(r.cats.length, Math.min.apply(null, filledCounts) + 1);
   }
   function standings(r, order, cards, names) {
-    return order.map((pid, i) => ({ pid, name: names[pid] || 'Player ' + (i + 1), total: totals(r, cards[pid]).total }))
-      .sort((a, b) => b.total - a.total);
+    return order.map((pid, i) => ({ pid, name: names[pid] || 'Player ' + (i + 1), total: totals(r, cards[pid]).total, outright: !!cards[pid].outright }))
+      .sort((a, b) => (b.outright - a.outright) || (b.total - a.total));
   }
 
-  return { RULES, rules, cat, counts, validDice, rawScore, emptyCard, openCats, allowed, scoreFor, earnsBonus, jokerActive, place,
+  return { RULES, rules, rulesFor, winsOutright, cat, counts, validDice, rawScore, emptyCard, openCats, allowed, scoreFor, earnsBonus, jokerActive, place,
     possible, validManual, totals, nextPlayer, turnNumber, standings };
 });

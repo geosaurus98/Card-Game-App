@@ -42,16 +42,31 @@ Screens (URL hash routes): `#/` card games home · `#/players/3` card games for 
 
 All paths are relative (`./games.json`, `css/styles.css`, …) and the service worker lives at the project root, so its scope is the folder the app is served from. That is why it works from a GitHub Pages subpath such as `https://<user>.github.io/<repo>/`.
 
-## Yacht scorecard
+## Scorecards
 
-The Yacht game's **Start scorekeeper** button (`#/score/yacht`) opens a full category scorecard instead of the plus/minus tracker:
+Eleven games open a purpose-built scorecard from **Start scorekeeper** instead of the plus/minus tracker. **Options → Simple tracker** (`#/score/<id>?simple=1`) still opens the plain tracker for any of them. Scorecards are saved under `sheet:<id>` and listed under **Scores in progress**.
 
-- Rule sets: **Yahtzee-style** (13 boxes, 35 bonus at 63+, +100 for each extra five of a kind with the joker rule), **Yacht (classic)** (12 boxes, no bonuses) and **Yatzy (Nordic)** (15 boxes, 50 bonus at 63+).
-- One column per player (1–8). Tap the five dice you rolled and every open box in the current player's column shows what it would score; tap one to place it and play passes on. The joker rule is enforced when a dice roll is entered.
-- Or just tap a box and pick/type the score; impossible scores are refused. Tap a filled box to change or clear it. Undo, totals, the upper-bonus pace (ahead/behind three of each), winner and sharing are automatic.
-- Saved under `sheet:yacht` and listed under **Scores in progress**. **Options → Simple tracker** (`#/score/yacht?simple=1`) still opens the plain tracker.
+**Five-dice category scorecard** (`js/dice-sheet-logic.js`, `js/dice-sheet.js`):
 
-Logic is in `js/dice-sheet-logic.js` (unit tests: `node tools/test-dice-sheet.js`), the screen in `js/dice-sheet.js`; both load on demand. Any game can use it by adding `"sheet": "yacht"` to its `scorekeeper`.
+- **Yacht**: rule sets Yahtzee-style (13 boxes, 35 bonus at 63+, +100 for each extra five of a kind with the joker rule), Yacht (classic, 12 boxes) and Yatzy (Nordic, 15 boxes, 50 bonus).
+- **Generala**: 10 boxes (or 11 with Double Generala); a **Served** switch adds the +5 first-roll bonus, and a served Generala wins outright.
+- One column per player (1–8). Tap the five dice you rolled and every open box shows what it would score; tap one to place it. Or tap a box and pick/type the score (impossible scores are refused). Undo, totals, upper-bonus pace, winner and sharing are automatic.
+
+**Hand-by-hand scorecards** (`js/round-sheet-logic.js`, `js/round-sheet.js`): enter what happened in each hand and every score is worked out. Only the raw entries are stored; totals are replayed from them, so undo removes the last entry.
+
+| Game | You enter | Worked out for you |
+|---|---|---|
+| Oh Hell | Bids, then tricks | 10 + bid for exact (or tricks + 10), hook rule for the dealer, hand sizes (down/up), dealer rotation |
+| Spades | Bids (nil, blind nil), then tricks | Team contracts, nil ±100/±200, bags and the 10-bag −100 penalty, 500 to win / −200 to lose |
+| 500 | Bidder, contract, tricks | Avondale bid values, misère, slam = 250, defenders 10 per trick (capped at 490), ±500 |
+| Contract Bridge | Declarer, contract, doubling, tricks taken, honours | Rubber scoring: below/above the line, games, vulnerability, over/undertricks, insult, slams, 700/500 rubber bonus |
+| Farkle | The dice you set aside each roll; Bank or Farkle | Dice combinations, hot dice, opening minimum, the final round after someone reaches the target |
+| Contract Rummy | Penalty points (quick-add card values) | The seven contracts in order, lowest total wins |
+| Canasta | Canastas, red 3s, going out, meld and hand points per team | Hand score, unmelded red-3 penalty, each team’s minimum first meld, 5,000 to win |
+| Cribbage | Pegs (+1 … +12, or any amount) | Peg board with back peg, win at 121 (or 61), skunk / double skunk |
+| Hearts | Hearts per player, who took the Q♠ (and J♦ for Omnibus) | 26-point check, shooting the moon (others +26 or shooter −26), lowest wins at 100 |
+
+Unit tests: `node tools/test-dice-sheet.js` and `node tools/test-round-sheet.js`. A game opts in with `"sheet"` in its `scorekeeper` (`yacht`, `generala`, `ohhell`, `spades`, `fivehundred`, `bridge`, `farkle`, `crummy`, `canasta`, `cribbage`, `hearts`).
 
 ## Party games
 
@@ -200,7 +215,7 @@ Add an object to the `games` array in `games.json`. The order doesn't matter (li
 | `scorekeeper.direction` | `"high"` \| `"low"` | yes | Whether the highest or lowest total wins. |
 | `scorekeeper.target` | number \| null | yes | Score that ends the game (e.g. Hearts 100, Cribbage 121), or `null` for none. |
 | `scorekeeper.endCondition` | `"target"` \| `"elimination"` | no (default `"target"`) | `target`: the game ends when anyone reaches the target, and the winner is decided by `direction`. `elimination`: players reaching the target are "out", and the game ends when one player is left (Spoons letters, Ninety-Nine lives). |
-| `scorekeeper.sheet` | `"yacht"` | no | Opens the five-dice category scorecard (see **Yacht scorecard**) instead of the plus/minus tracker. |
+| `scorekeeper.sheet` | string | no | Opens a purpose-built scorecard instead of the plus/minus tracker (see **Scorecards** for the values). |
 | `scorekeeper.defaultPlayers` | number | yes | How many players (or teams) the scorekeeper starts with. If the user arrived from a player-count list the game supports, that count is used instead. |
 | `scorekeeper.teams` | boolean | yes | `true` names the rows "Team A", "Team B"… (partnership games). |
 | `scorekeeper.quickAdd` | number[] | yes | Quick-add buttons. `+1`, `−1` and a custom-amount button are always shown. |
