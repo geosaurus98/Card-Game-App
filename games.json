@@ -8362,7 +8362,9 @@
           50
         ],
         "unit": "points",
-        "endCondition": "target"
+        "endCondition": "target",
+        "sheet": "yacht",
+        "hint": "Full scorecard: Yahtzee-style, classic Yacht or Nordic Yatzy boxes, with bonuses worked out for you."
       }
     },
     {

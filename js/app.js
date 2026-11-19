@@ -155,6 +155,24 @@ function lazyView(id) {
   };
 }
 
+/* Category scorecard for five-dice games (lazy-loaded like the party games). */
+const SHEET_FILES = ['js/dice-sheet-logic.js', 'js/dice-sheet.js'];
+function sheetView(game) {
+  if (CGR.views.diceSheet) return CGR.views.diceSheet(game.id);
+  return {
+    title: 'Score: ' + game.name, back: '#/game/' + game.id,
+    html: '<p class="loading">Loading…</p>',
+    onMount(view) {
+      const hash = location.hash;
+      CGR.loadScripts(SHEET_FILES).then(() => { if (location.hash === hash) CGR.router.render(); }).catch(() => {
+        view.innerHTML = `<div class="page-head"><h1 tabindex="-1">Couldn’t load the scorecard</h1>
+          <p>Connect to the internet once so the app can save it for offline use.</p></div>
+          <a class="btn" href="#/score/${CGR.esc(game.id)}?simple=1">Use the simple tracker</a>`;
+      });
+    }
+  };
+}
+
 /* ---------------------------------------------------------------------------
  * Shared view fragments
  * ------------------------------------------------------------------------- */
@@ -225,7 +243,7 @@ CGR.views.home = function (type) {
       <h2 id="resume-h">Scores in progress</h2>
       <ul class="game-list">${saved.map(({ game, state }) => `<li class="game-item"><a href="#/score/${esc(game.id)}">
         <span class="name">${esc(game.name)}</span>
-        <span class="meta">${state.players.length} ${state.players.length === 1 ? 'player' : 'players'} · round ${state.rounds.length} · updated ${esc(new Date(state.updatedAt).toLocaleDateString())}</span>
+        <span class="meta">${state.players.length} ${state.players.length === 1 ? 'player' : 'players'} · ${state.meta ? esc(state.meta) : 'round ' + state.rounds.length} · updated ${esc(new Date(state.updatedAt).toLocaleDateString())}</span>
       </a></li>`).join('')}</ul></section>` : '';
 
   const favCount = CGR.favs.all().filter((id) => CGR.data.get(id)).length;
@@ -442,7 +460,11 @@ CGR.router = (function () {
       case 'all': return CGR.views.all('cards');
       case 'favourites': return CGR.views.favourites();
       case 'game': return CGR.views.game(parts[1]);
-      case 'score': return CGR.views.score(parts[1], params);
+      case 'score': {
+        const g = CGR.data.get(parts[1]);
+        if (g && g.scorekeeper && g.scorekeeper.sheet && !params.get('simple')) return sheetView(g);
+        return CGR.views.score(parts[1], params);
+      }
       case 'pick': return CGR.views.pick(params);
       case 'party': return CGR.views.party();
       default:

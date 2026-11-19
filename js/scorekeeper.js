@@ -63,18 +63,34 @@ CGR.score = (function () {
     CGR.store.set(key(state.gameId), state);
   }
 
+  /* Five-dice scorecards (dice-sheet.js) are saved as "sheet:<id>"; read them here too
+   * so the home screen and game page show them before that script is loaded. */
+  function sheetState(id) {
+    const s = (CGR.diceSheetSaved && CGR.diceSheetSaved(id)) || CGR.store.get('sheet:' + id, null);
+    return s && s.v === 1 && Array.isArray(s.players) && s.touched ? s : null;
+  }
+  function usesSheet(game) { return !!(game && game.scorekeeper && game.scorekeeper.sheet); }
+
   function hasSaved(id) {
+    if (usesSheet(CGR.data.get(id)) && sheetState(id)) return true;
     const s = live[id] || CGR.store.get(key(id), null);
     return !!(valid(s) && s.touched);
   }
 
   function savedGames() {
-    return CGR.store.keys('score:').map((k) => {
+    const simple = CGR.store.keys('score:').map((k) => {
       const id = k.slice('score:'.length);
       const state = live[id] || CGR.store.get(k, null);
       const game = CGR.data.get(id);
-      return game && valid(state) && state.touched ? { game, state } : null;
-    }).filter(Boolean).sort((a, b) => b.state.updatedAt - a.state.updatedAt);
+      return game && valid(state) && state.touched && !(usesSheet(game) && sheetState(id)) ? { game, state } : null;
+    });
+    const sheets = CGR.store.keys('sheet:').map((k) => {
+      const id = k.slice('sheet:'.length);
+      const game = CGR.data.get(id);
+      const state = usesSheet(game) ? sheetState(id) : null;
+      return state ? { game, state } : null;
+    });
+    return simple.concat(sheets).filter(Boolean).sort((a, b) => b.state.updatedAt - a.state.updatedAt);
   }
 
   function total(state, pid) {

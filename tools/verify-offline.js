@@ -617,6 +617,54 @@ const ok = (cond, msg) => { console.log(`${cond ? 'PASS' : 'FAIL'}  ${msg}`); if
   ok((await page.textContent('h1')).includes('Player 4 wins'), 'never: last player with lives wins');
   await shot('28-never');
 
+  // ---------- Yacht / Yahtzee-style scorecard ----------
+  await page.goto(BASE + '#/game/yacht');
+  await page.click('a.btn[href="#/score/yacht"]');
+  await page.waitForSelector('#ds-setup');
+  await page.fill('[data-pid="p1"]', 'Ann');
+  await page.fill('[data-pid="p2"]', 'Ben');
+  await page.click('#ds-start');
+  await page.waitForSelector('.ds-table');
+  ok((await page.locator('.ds-table tbody .ds-cell[data-pid="p1"][data-cat]').count()) === 13, 'scorecard: 13 Yahtzee-style boxes per player');
+  const roll = async (dice) => { for (const f of dice) await page.click(`.ds-face[data-face="${f}"]`); };
+  await roll([3, 3, 3, 5, 5]);
+  ok((await page.textContent('[data-pid="p1"][data-cat="full"]')).trim() === '25' && (await page.textContent('[data-pid="p1"][data-cat="three"]')).trim() === '19', 'scorecard: entering dice previews every box');
+  await page.click('[data-pid="p1"][data-cat="full"]');
+  ok((await page.textContent('.ds-turn')).includes('Ben'), 'scorecard: placing a roll passes the turn');
+  await roll([4, 4, 4, 4, 4]);
+  await page.click('[data-pid="p2"][data-cat="yahtzee"]');
+  await roll([6, 6, 6, 6, 6]);
+  await page.click('[data-pid="p1"][data-cat="yahtzee"]');
+  await roll([4, 4, 4, 4, 4]);
+  ok((await page.locator('.ds-cell.preview[data-pid="p2"]').count()) === 1 && (await page.locator('.ds-cell.blocked[data-pid="p2"]').count()) === 11, 'scorecard: joker rule forces the matching upper box');
+  await page.click('[data-pid="p2"][data-cat="fours"]');
+  ok((await page.textContent('.ds-total td:nth-child(3)')).trim() === '170', 'scorecard: extra five of a kind earns the 100 bonus (50 + 20 + 100)');
+  await page.click('[data-pid="p1"][data-cat="chance"]');
+  await page.fill('#ui-dialog-input', '31');
+  await page.click('#ui-dialog-actions button[value="ok"]');
+  ok((await page.textContent('[data-pid="p1"][data-cat="chance"]')).trim() === '', 'scorecard: impossible typed scores are refused');
+  await page.click('[data-pid="p1"][data-cat="chance"]');
+  await page.fill('#ui-dialog-input', '22');
+  await page.click('#ui-dialog-actions button[value="ok"]');
+  await page.waitForFunction(() => document.querySelector('[data-pid="p1"][data-cat="chance"]').textContent.trim() !== '', null, { timeout: 3000 }).catch(() => {});
+  ok((await page.textContent('[data-pid="p1"][data-cat="chance"]')).trim() === '22', 'scorecard: a score can be typed in by hand');
+  await page.click('[data-act="undo"]');
+  ok((await page.textContent('[data-pid="p1"][data-cat="chance"]')).trim() === '', 'scorecard: undo');
+  await page.click('[data-pid="p1"][data-cat="sixes"]');
+  await page.click('#ui-dialog-actions button[value="v24"]');
+  await page.waitForFunction(() => document.querySelector('.ds-bonus td:nth-child(2)').textContent.includes('+6'), null, { timeout: 3000 }).catch(() => {});
+  ok((await page.textContent('.ds-bonus td:nth-child(2)')).includes('+6'), 'scorecard: upper bonus pace shown (+6 with four sixes)');
+  await shot('29-scorecard');
+  await page.reload();
+  await page.waitForSelector('.ds-table');
+  ok((await page.textContent('.ds-total td:nth-child(2)')).trim() === '99', 'scorecard: survives a reload');
+  await page.goto(BASE + '#/dice');
+  await page.waitForSelector('#resume-h');
+  ok((await page.textContent('.section')).includes('Yacht') && (await page.textContent('.section')).includes('turn'), 'scorecard: listed under Scores in progress');
+  await page.goto(BASE + '#/score/yacht?simple=1');
+  await page.waitForSelector('#sk-body');
+  ok(true, 'scorecard: the simple tracker is still available');
+
   // Deep link in a brand-new tab while offline
   const page2 = await context.newPage();
   await page2.goto(BASE + '#/game/cribbage');
