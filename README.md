@@ -42,6 +42,17 @@ Screens (URL hash routes): `#/` card games home · `#/players/3` card games for 
 
 All paths are relative (`./games.json`, `css/styles.css`, …) and the service worker lives at the project root, so its scope is the folder the app is served from. That is why it works from a GitHub Pages subpath such as `https://<user>.github.io/<repo>/`.
 
+## Yacht scorecard
+
+The Yacht game's **Start scorekeeper** button (`#/score/yacht`) opens a full category scorecard instead of the plus/minus tracker:
+
+- Rule sets: **Yahtzee-style** (13 boxes, 35 bonus at 63+, +100 for each extra five of a kind with the joker rule), **Yacht (classic)** (12 boxes, no bonuses) and **Yatzy (Nordic)** (15 boxes, 50 bonus at 63+).
+- One column per player (1–8). Tap the five dice you rolled and every open box in the current player's column shows what it would score; tap one to place it and play passes on. The joker rule is enforced when a dice roll is entered.
+- Or just tap a box and pick/type the score; impossible scores are refused. Tap a filled box to change or clear it. Undo, totals, the upper-bonus pace (ahead/behind three of each), winner and sharing are automatic.
+- Saved under `sheet:yacht` and listed under **Scores in progress**. **Options → Simple tracker** (`#/score/yacht?simple=1`) still opens the plain tracker.
+
+Logic is in `js/dice-sheet-logic.js` (unit tests: `node tools/test-dice-sheet.js`), the screen in `js/dice-sheet.js`; both load on demand. Any game can use it by adding `"sheet": "yacht"` to its `scorekeeper`.
+
 ## Party games
 
 The **🎉 Party** tab (`#/party`) lists the party games. Each one's scripts load only when it is opened, which keeps app start-up fast; the service worker precaches them, so they all work offline. The list of games and the files each one needs is `CGR.PARTY_GAMES` in `js/app.js`.
@@ -189,6 +200,7 @@ Add an object to the `games` array in `games.json`. The order doesn't matter (li
 | `scorekeeper.direction` | `"high"` \| `"low"` | yes | Whether the highest or lowest total wins. |
 | `scorekeeper.target` | number \| null | yes | Score that ends the game (e.g. Hearts 100, Cribbage 121), or `null` for none. |
 | `scorekeeper.endCondition` | `"target"` \| `"elimination"` | no (default `"target"`) | `target`: the game ends when anyone reaches the target, and the winner is decided by `direction`. `elimination`: players reaching the target are "out", and the game ends when one player is left (Spoons letters, Ninety-Nine lives). |
+| `scorekeeper.sheet` | `"yacht"` | no | Opens the five-dice category scorecard (see **Yacht scorecard**) instead of the plus/minus tracker. |
 | `scorekeeper.defaultPlayers` | number | yes | How many players (or teams) the scorekeeper starts with. If the user arrived from a player-count list the game supports, that count is used instead. |
 | `scorekeeper.teams` | boolean | yes | `true` names the rows "Team A", "Team B"… (partnership games). |
 | `scorekeeper.quickAdd` | number[] | yes | Quick-add buttons. `+1`, `−1` and a custom-amount button are always shown. |
