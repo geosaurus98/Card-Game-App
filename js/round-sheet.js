@@ -88,13 +88,35 @@ CGR.views = CGR.views || {};
       case 'spades': return { phase: 'bids', bids: zero(ps, null), blind: {}, tricks: zero(ps, 0) };
       case 'fivehundred': return { bidder: null, contract: { tricks: 6, suit: null }, tricks: zero(s, 0) };
       case 'bridge': return { decl: null, level: null, denom: null, dbl: 0, taken: null, honours: '' };
-      case 'crummy': return { pts: zero(ps, '') };
+      case 'crummy': return { out: null, cards: Object.fromEntries(ps.map((x) => [x, { low: 0, high: 0, ace: 0, joker: 0 }])), typed: zero(ps, null) };
       case 'canasta': { const t = () => ({ natural: 0, mixed: 0, red3: 0, out: 'none', melded: true, meld: '', hand: '' }); return { A: t(), B: t() }; }
       case 'hearts': return { hearts: zero(ps, 0), queen: null, jack: null };
       default: return {};
     }
   }
-  function draft(st) { if (!st.draft) st.draft = newDraft(st); return st.draft; }
+  function draft(st) {
+    if (!st.draft || (st.kind === 'crummy' && !st.draft.cards)) st.draft = newDraft(st);
+    return st.draft;
+  }
+  /* Contract Rummy: one player's penalty from the draft (went out = 0; typed total wins over card counts). */
+  function crummyPts(st, d, pid) {
+    if (d.out === pid) return 0;
+    if (d.typed && d.typed[pid] != null) return d.typed[pid];
+    return L.crummy.penalty(optsOf(st), d.cards[pid]);
+  }
+
+  /* Contract Rummy: the contract as meld blocks with example cards. */
+  const EXAMPLES = { set: ['7♣ 7♥ 7♠', 'Q♦ Q♠ Q♣', '4♥ 4♦ 4♣'], run: ['5♥ 6♥ 7♥ 8♥', '9♠ 10♠ J♠ Q♠', '2♦ 3♦ 4♦ 5♦'] };
+  function cardsHTML(text) {
+    return text.split(' ').map((c) => `<span class="cr-card${/[♥♦]/.test(c) ? ' red' : ''}">${esc(c)}</span>`).join('');
+  }
+  function contractHTML(c, small) {
+    const seen = { set: 0, run: 0 };
+    return `<div class="cr-melds${small ? ' small' : ''}">${c.melds.map((m, k) => {
+      const ex = EXAMPLES[m][seen[m]++ % 3];
+      return `${k ? '<span class="cr-plus" aria-hidden="true">+</span>' : ''}<div class="cr-meld ${m}"><span class="cr-kind">${m === 'set' ? 'SET' : 'RUN'} <span class="cr-n">${m === 'set' ? '3+' : '4+'}</span></span>${small ? '' : `<span class="cr-ex">${cardsHTML(ex)}</span>`}</div>`;
+    }).join('')}</div>`;
+  }
 
   /* Turn a draft into an entry (numbers only). */
   function entryOf(st) {
@@ -107,7 +129,7 @@ CGR.views = CGR.views || {};
         const h = d.honours ? d.honours.split(':') : null;
         return { decl: d.decl, level: d.level, denom: d.denom, dbl: d.dbl, taken: d.taken, honours: h ? { side: h[0], pts: Number(h[1]) } : null };
       }
-      case 'crummy': return { pts: Object.fromEntries(Object.keys(d.pts).map((k) => [k, d.pts[k] === '' ? NaN : Number(d.pts[k])])) };
+      case 'crummy': return { out: d.out, pts: Object.fromEntries(st.players.map((p) => [p.id, crummyPts(st, d, p.id)])) };
       case 'canasta': {
         const t = (x) => ({ natural: x.natural, mixed: x.mixed, red3: x.red3, out: x.out, melded: x.melded, meld: N(x.meld), hand: N(x.hand) });
         return { A: t(d.A), B: t(d.B) };
@@ -150,7 +172,23 @@ CGR.views = CGR.views || {};
         const cur = L.farkle.current(s, st.entries);
         return `<p class="rs-info"><strong>${esc(pname(st, cur))}</strong>’s turn${r.info.finalRound ? ` · <strong class="rs-warn">Final round</strong> — ${esc(pname(st, r.info.triggeredBy))} reached ${o.target}` : ''}${!r.info.onBoard[cur] && o.openMin ? ` · needs ${o.openMin}+ to get on the board` : ''}</p>`;
       }
-      case 'crummy': return r.over ? '' : `<p class="rs-info"><strong>Round ${r.info.round} of 7:</strong> ${esc(r.info.next)}</p>`;
+      case 'crummy': {
+        const C = L.crummy;
+        const list = `<details class="cr-all"><summary>All seven contracts</summary><ol class="cr-list">${C.CONTRACTS.map((c, i) => `<li class="${i < st.entries.length ? 'done' : i === st.entries.length ? 'now' : ''}">
+            <span class="cr-ln">${i < st.entries.length ? '✓' : i + 1}</span><span class="cr-lname">${esc(c.name)}</span>${contractHTML(c, true)}</li>`).join('')}</ol></details>`;
+        const legend = `<details class="cr-legend"><summary>What counts as a set or a run?</summary>
+            <p><strong>Set</strong>: 3 or more cards of the same rank, any suits — ${cardsHTML('7♣ 7♥ 7♠')}</p>
+            <p><strong>Run</strong>: 4 or more cards in order, all the same suit — ${cardsHTML('5♥ 6♥ 7♥ 8♥')}. Ace can be high or low.</p>
+            <p>Jokers (and in many games 2s) are wild. You must lay down the whole contract in one go; after that you may add cards to any melds on the table.</p></details>`;
+        if (r.over) return list;
+        const c = r.info.current;
+        return `<section class="cr-now" aria-label="This round’s contract">
+            <p class="cr-round">Round ${r.info.round} of 7 · deal ${c.deal} cards each</p>
+            <h2 class="cr-name">${esc(c.name)}</h2>
+            ${contractHTML(c)}
+            <p class="cr-min">Lay down at least <strong>${c.min} cards</strong> at once.${c.note ? ' ' + esc(c.note) : ''}</p>
+            ${legend}${list}</section>`;
+      }
       case 'canasta': return `<p class="rs-info">Minimum first meld: ${s.map((x) => `${esc(sideName(st, x))} <strong>${r.info.minimum[x]}</strong>`).join(' · ')}</p>`;
       case 'hearts': return `<p class="rs-info">Game ends at ${o.target}. Lowest score wins.</p>`;
       default: return '';
@@ -256,11 +294,20 @@ CGR.views = CGR.views || {};
           </div>`;
       }
       case 'crummy': {
-        return `<h2>Penalty points</h2><p class="muted small">Cards left in hand: 2–9 = 5, 10–K = 10, Ace = 15, Joker = 25. Whoever went out scores 0.</p>
-          <ul class="rs-rows rs-pen">${st.players.map((p) => `<li><span>${esc(p.name)}</span>
-            <span class="rs-penin">${numInput('pts.' + p.id, d.pts[p.id], p.name + ' penalty')}
-            <span class="rs-quick">${[5, 10, 15, 25].map((v) => `<button type="button" class="btn btn-ghost" data-addto="pts.${p.id}" data-amt="${v}">+${v}</button>`).join('')}
-            <button type="button" class="btn btn-ghost" data-set="pts.${p.id}" data-val="0">Out</button></span></span></li>`).join('')}</ul>
+        const groups = L.crummy.groups(o);
+        const rows = st.players.map((p) => {
+          if (d.out === p.id) return `<li class="cr-player out"><div class="cr-phead"><strong>${esc(p.name)}</strong><span class="cr-ptotal">★ Went out · 0</span></div></li>`;
+          const typed = d.typed[p.id] != null;
+          return `<li class="cr-player"><div class="cr-phead"><strong>${esc(p.name)}</strong>
+              <span class="cr-ptotal">${crummyPts(st, d, p.id)} pts${typed ? ' <span class="rs-tag">typed</span>' : ''}</span></div>
+            ${typed ? `<p class="muted small">Total typed in. <button type="button" class="btn btn-ghost" data-crclear="${p.id}">Count cards instead</button></p>`
+              : `<div class="cr-counts">${groups.map((g) => `<div class="cr-count"><span class="cr-glabel">${esc(g.label)} <span class="muted">×${g.value}</span></span>${stepper(`cards.${p.id}.${g.k}`, d.cards[p.id][g.k], 0, 20, `${p.name}: ${g.label} cards left`)}</div>`).join('')}</div>`}
+            <button type="button" class="btn btn-ghost cr-type" data-crtype="${p.id}">Type a total</button></li>`;
+        }).join('');
+        return `<h2>Round ${st.entries.length + 1} scores</h2>
+          <p class="rs-label">Who went out?</p>${chips('out', d.out, st.players.map((p) => [p.id, p.name]), 'Who went out')}
+          <p class="muted small cr-rule">Everyone else counts the cards left in their hand: ${groups.map((g) => `${esc(g.label)} = ${g.value}`).join(', ')}.</p>
+          <ul class="cr-players">${rows}</ul>
           <button type="button" class="btn" data-act="save">Save round</button>`;
       }
       case 'canasta': {
@@ -327,7 +374,7 @@ CGR.views = CGR.views || {};
       case 'fivehundred': return `${esc(sideName(st, e.bidder)).split(' ')[0]} ${esc(row.label)} ${row.made ? '✓' : '✗'}`;
       case 'bridge': return `${esc(sideName(st, e.decl))} ${esc(row.label)} ${esc(row.result || '')}${row.notes && row.notes.length ? `<span class="muted small"> · ${esc(row.notes.join(', '))}</span>` : ''}`;
       case 'farkle': return `${esc(pname(st, row.pid))}${row.farkle ? ' <span class="rs-warn">farkle</span>' : ''}`;
-      case 'crummy': return `${i + 1}. <span class="muted small">${esc(row.contract)}</span>`;
+      case 'crummy': return `<span class="cr-hround">R${i + 1}</span> ${esc(row.contract.name)}${contractHTML(row.contract, true)}${row.out ? `<span class="muted small">★ ${esc(pname(st, row.out))} went out</span>` : ''}`;
       case 'hearts': return `${i + 1}${row.moon ? ' 🌙' : ''}`;
       case 'cribbage': return esc(sideName(st, row.side));
       default: return String(i + 1);
@@ -340,7 +387,7 @@ CGR.views = CGR.views || {};
     let more = '';
     if (st.kind === 'cribbage' && rows.length > 12) { more = `<p class="muted small">Showing the last 12 of ${rows.length} pegs.</p>`; rows = rows.slice(-12); }
     return `<h2 class="rs-h">History</h2>${more}<div class="ds-wrap"><table class="rs-hist"><thead><tr><th scope="col">${st.kind === 'farkle' || st.kind === 'cribbage' ? 'Turn' : 'Hand'}</th>${s.map((x) => `<th scope="col">${esc(sideName(st, x))}</th>`).join('')}</tr></thead>
-      <tbody>${rows.map(({ row, i }) => `<tr><th scope="row">${rowLabel(st, row, i)}</th>${s.map((x) => `<td><span class="rs-d ${row.deltas[x] < 0 ? 'neg' : ''}">${row.deltas[x] ? fmtDelta(row.deltas[x]) : '·'}</span><span class="rs-t">${row.totals[x]}</span></td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+      <tbody>${rows.map(({ row, i }) => `<tr><th scope="row">${rowLabel(st, row, i)}</th>${s.map((x) => `<td><span class="rs-d ${row.deltas[x] < 0 ? 'neg' : ''}">${row.out === x ? '★ out' : row.deltas[x] ? fmtDelta(row.deltas[x]) : '·'}</span><span class="rs-t">${row.totals[x]}</span></td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
   }
 
   function standingsHTML(st, r, game) {
@@ -392,6 +439,10 @@ CGR.views = CGR.views || {};
         break;
       case 'canasta':
         opt.push(sel('target', 'Play to', [[5000, '5,000'], [3000, '3,000']]));
+        break;
+      case 'crummy':
+        opt.push(sel('aceValue', 'Ace left in hand', [[15, '15 points'], [20, '20 points']]));
+        opt.push(sel('jokerValue', 'Joker left in hand', [[25, '25 points'], [50, '50 points']]));
         break;
       case 'cribbage':
         opt.push(sel('target', 'Game', [[121, '121 (standard)'], [61, '61 (short game)']]));
@@ -537,6 +588,16 @@ CGR.views = CGR.views || {};
             if (err) { CGR.ui.toast(err); return; }
             st.entries.push({ side: ds.pegtype, pts: n }); return commit(st);
           }
+          if (ds.crtype) {
+            const res = await CGR.ui.dialog({ title: 'Penalty total — ' + pname(st, ds.crtype), input: { label: 'Points left in hand', type: 'number', inputmode: 'numeric' } });
+            if (res.action !== 'ok') return;
+            const n = Number(res.value);
+            if (!Number.isInteger(n) || n < 0) { CGR.ui.toast('Enter a whole number of 0 or more'); return; }
+            draft(st).typed[ds.crtype] = n;
+            if (draft(st).out === ds.crtype && n) draft(st).out = null;
+            return commit(st);
+          }
+          if (ds.crclear) { draft(st).typed[ds.crclear] = null; return commit(st); }
           if (ds.fface) { st.turn = st.turn || { pts: 0, left: 6, sel: [] }; if (st.turn.sel.length < st.turn.left) st.turn.sel.push(Number(ds.fface)); return commit(st); }
           if (ds.unsel != null) { st.turn.sel.splice(Number(ds.unsel), 1); return commit(st); }
           switch (ds.act) {

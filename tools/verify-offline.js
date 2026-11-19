@@ -719,12 +719,19 @@ const ok = (cond, msg) => { console.log(`${cond ? 'PASS' : 'FAIL'}  ${msg}`); if
   ok((await rsTotals()) === '1100,0,0' && (await page.textContent('.rs-info')).includes('Player 2'), 'farkle: dice scored and banked; next player');
 
   await rsOpen('contract-rummy');
-  ok((await page.textContent('.rs-info')).includes('Two sets'), 'contract rummy: shows the round’s contract');
-  await rsSet('pts.p1', 0);
-  await page.click('[data-addto="pts.p2"][data-amt="25"]'); await page.click('[data-addto="pts.p2"][data-amt="10"]');
-  await page.fill('[data-path="pts.p3"]', '40'); await page.fill('[data-path="pts.p4"]', '15');
+  ok((await page.textContent('.cr-name')).includes('Two sets') && (await page.locator('.cr-now > .cr-melds .cr-meld.set').count()) === 2 && (await page.textContent('.cr-min')).includes('6 cards'),
+    'contract rummy: round 1 shows two SET blocks, 6 cards minimum');
+  await rsSet('out', 'p1');
+  await rsStep('cards.p2.joker', 1, 1); await rsStep('cards.p2.high', 1, 1);     // 25 + 10
+  await rsStep('cards.p3.low', 1, 3); await rsStep('cards.p3.ace', 1, 1);       // 15 + 15
+  await page.click('[data-crtype="p4"]');
+  await page.fill('#ui-dialog-input', '15');
+  await page.click('#ui-dialog-actions button[value="ok"]');
+  await page.waitForFunction(() => document.querySelector('#rs-preview').textContent.includes('+15'));
+  await shot('33-contract-rummy');
   await page.click('[data-act="save"]');
-  ok((await rsTotals()) === '0,35,40,15', 'contract rummy: penalty points with quick-add');
+  ok((await rsTotals()) === '0,35,30,15', 'contract rummy: penalties counted from cards left (or typed)');
+  ok((await page.textContent('.cr-name')).includes('One set and one run') && (await page.textContent('.rs-hist')).includes('★ out'), 'contract rummy: next contract shown; history marks who went out');
 
   await rsOpen('canasta');
   await rsStep('A.natural', 1, 1); await rsStep('A.red3', 1, 1);

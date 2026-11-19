@@ -328,22 +328,50 @@
    * Contract Rummy — seven contracts, penalty points, lowest wins
    * ======================================================================= */
   const crummy = {
-    CONTRACTS: ['Two sets', 'One set + one run', 'Two runs', 'Three sets', 'Two sets + one run', 'One set + two runs', 'Three runs (all your cards)'],
-    CARD_VALUES: [['2–9', 5], ['10–K', 10], ['Ace', 15], ['Joker', 25]],
-    defaults() { return {}; },
+    /* The seven contracts. A set is 3+ cards of one rank (any suits); a run is 4+ cards in
+     * sequence in one suit. min = fewest cards needed to lay the contract down. */
+    CONTRACTS: [
+      { name: 'Two sets', melds: ['set', 'set'], min: 6, deal: 10 },
+      { name: 'One set and one run', melds: ['set', 'run'], min: 7, deal: 10 },
+      { name: 'Two runs', melds: ['run', 'run'], min: 8, deal: 10 },
+      { name: 'Three sets', melds: ['set', 'set', 'set'], min: 9, deal: 12 },
+      { name: 'Two sets and one run', melds: ['set', 'set', 'run'], min: 10, deal: 12 },
+      { name: 'One set and two runs', melds: ['set', 'run', 'run'], min: 11, deal: 12 },
+      { name: 'Three runs', melds: ['run', 'run', 'run'], min: 12, deal: 12, allCards: true, note: 'You must use every card in your hand — no discard to go out.' }
+    ],
+    /* Penalty card groups: key, label, value (Ace and Joker values are options). */
+    groups(opts) {
+      return [
+        { k: 'low', label: '2–9', value: 5 },
+        { k: 'high', label: '10, J, Q, K', value: 10 },
+        { k: 'ace', label: 'Ace', value: opts.aceValue || 15 },
+        { k: 'joker', label: 'Joker', value: opts.jokerValue || 25 }
+      ];
+    },
+    defaults() { return { aceValue: 15, jokerValue: 25 }; },
+    /* Penalty for the cards left in one hand: counts = { low, high, ace, joker }. */
+    penalty(opts, counts) {
+      return this.groups(opts).reduce((s, g) => s + g.value * ((counts && counts[g.k]) || 0), 0);
+    },
+    label(i) { const c = this.CONTRACTS[i]; return c ? `${i + 1}. ${c.name}` : ''; },
     validate(opts, sides, e) {
       if (!sides.every((s) => Number.isInteger(e.pts[s]) && e.pts[s] >= 0)) return 'Enter a penalty (0 or more) for everyone.';
-      if (!sides.some((s) => e.pts[s] === 0)) return 'Someone must have gone out (0).';
+      const out = sides.filter((s) => e.pts[s] === 0);
+      if (!out.length) return 'Someone must have gone out (0 points). Tap “Went out” for them.';
+      if (e.out && sides.indexOf(e.out) !== -1 && e.pts[e.out] !== 0) return 'The player who went out scores 0.';
       return null;
     },
     replay(opts, sides, entries) {
       const totals = zeroTotals(sides);
       const rows = entries.map((e, i) => {
         sides.forEach((s) => { totals[s] += e.pts[s]; });
-        return { deltas: Object.assign({}, e.pts), totals: Object.assign({}, totals), contract: this.CONTRACTS[i] };
+        const out = e.out && sides.indexOf(e.out) !== -1 ? e.out : (sides.find((s) => e.pts[s] === 0) || null);
+        return { deltas: Object.assign({}, e.pts), totals: Object.assign({}, totals), contract: this.CONTRACTS[i], round: i + 1, out };
       });
       const over = entries.length >= this.CONTRACTS.length;
-      return { rows, totals, over, winners: over ? leaders(totals, sides, true) : [], info: { next: over ? null : this.CONTRACTS[entries.length], round: entries.length + 1 } };
+      const i = entries.length;
+      return { rows, totals, over, winners: over ? leaders(totals, sides, true) : [],
+        info: { round: i + 1, current: over ? null : this.CONTRACTS[i], next: over ? null : this.CONTRACTS[i].name } };
     }
   };
 

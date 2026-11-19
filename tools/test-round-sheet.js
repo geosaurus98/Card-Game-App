@@ -197,15 +197,39 @@ test('farkle: turn order, opening minimum, last-turn rule', () => {
 });
 
 // ---------- Contract Rummy ----------
-test('contract rummy: seven contracts, someone goes out, lowest wins', () => {
+test('contract rummy: seven contracts with melds, minimum cards and deal sizes', () => {
+  const C = R.crummy;
+  assert.strictEqual(C.CONTRACTS.length, 7);
+  C.CONTRACTS.forEach((c) => {
+    const min = c.melds.reduce((s, m) => s + (m === 'set' ? 3 : 4), 0);
+    assert.strictEqual(c.min, min, c.name + ' minimum cards');
+    assert.ok(c.deal >= c.min, c.name + ' deal is big enough');
+  });
+  assert.deepStrictEqual(C.CONTRACTS.map((c) => c.melds.join('+')), ['set+set', 'set+run', 'run+run', 'set+set+set', 'set+set+run', 'set+run+run', 'run+run+run']);
+  assert.ok(C.CONTRACTS[6].allCards);
+  assert.strictEqual(C.label(1), '2. One set and one run');
+});
+test('contract rummy: penalty from cards left, Ace/Joker value options', () => {
+  const C = R.crummy;
+  const hand = { low: 3, high: 2, ace: 1, joker: 1 };
+  assert.strictEqual(C.penalty(C.defaults(), hand), 15 + 20 + 15 + 25);
+  assert.strictEqual(C.penalty({ aceValue: 20, jokerValue: 50 }, hand), 15 + 20 + 20 + 50);
+  assert.strictEqual(C.penalty(C.defaults(), {}), 0);
+});
+test('contract rummy: someone goes out, rows remember the contract and who went out, lowest wins', () => {
   const C = R.crummy;
   const s = ['p1', 'p2', 'p3'];
-  assert.strictEqual(C.CONTRACTS.length, 7);
   assert.ok(C.validate({}, s, { pts: by([5, 10, 15], s) }).includes('gone out'));
-  const entries = Array.from({ length: 7 }, (_, i) => ({ pts: by([0, 10 + i, 20], s) }));
+  assert.ok(C.validate({}, s, { out: 'p2', pts: by([0, 10, 15], s) }).includes('scores 0'));
+  const entries = Array.from({ length: 7 }, (_, i) => ({ out: 'p1', pts: by([0, 10 + i, 20], s) }));
   const r = C.replay({}, s, entries);
   assert.ok(r.over); assert.deepStrictEqual(r.winners, ['p1']);
-  assert.strictEqual(C.replay({}, s, entries.slice(0, 2)).info.next, 'Two runs');
+  assert.strictEqual(r.rows[2].contract.name, 'Two runs');
+  assert.strictEqual(r.rows[0].out, 'p1');
+  const part = C.replay({}, s, entries.slice(0, 2));
+  assert.strictEqual(part.info.next, 'Two runs');
+  assert.strictEqual(part.info.current.deal, 10);
+  assert.strictEqual(C.replay({}, s, entries.slice(0, 3)).info.current.deal, 12, 'rounds 4–7 deal 12');
 });
 
 // ---------- Canasta ----------

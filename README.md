@@ -61,7 +61,7 @@ Eleven games open a purpose-built scorecard from **Start scorekeeper** instead o
 | 500 | Bidder, contract, tricks | Avondale bid values, misère, slam = 250, defenders 10 per trick (capped at 490), ±500 |
 | Contract Bridge | Declarer, contract, doubling, tricks taken, honours | Rubber scoring: below/above the line, games, vulnerability, over/undertricks, insult, slams, 700/500 rubber bonus |
 | Farkle | The dice you set aside each roll; Bank or Farkle | Dice combinations, hot dice, opening minimum, the final round after someone reaches the target |
-| Contract Rummy | Penalty points (quick-add card values) | The seven contracts in order, lowest total wins |
+| Contract Rummy | Who went out, and each other player’s cards left by type (2–9, 10–K, Aces, Jokers) — or a typed total | Each round’s contract shown as SET 3+ / RUN 4+ blocks with example cards, minimum cards and deal size; all seven contracts with progress; penalties (Ace 15/20, Joker 25/50 options); lowest total wins |
 | Canasta | Canastas, red 3s, going out, meld and hand points per team | Hand score, unmelded red-3 penalty, each team’s minimum first meld, 5,000 to win |
 | Cribbage | Pegs (+1 … +12, or any amount) | Peg board with back peg, win at 121 (or 61), skunk / double skunk |
 | Hearts | Hearts per player, who took the Q♠ (and J♦ for Omnibus) | 26-point check, shooting the moon (others +26 or shooter −26), lowest wins at 100 |
