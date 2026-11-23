@@ -75,7 +75,7 @@ CGR.views = CGR.views || {};
 
     function load() {
       const s = CGR.store.get(KEY, {});
-      return { count: P.clamp(Math.round(s.count) || 4, 3, 16), names: Array.isArray(s.names) ? s.names : [], packs: cleanPacks(s.packs), track: s.track !== false };
+      return { count: P.clamp(Math.round(s.count) || 4, 3, 16), names: Array.isArray(s.names) ? s.names : [], packs: cleanPacks(s.packs), track: s.track !== false, drink: !!s.drink };
     }
     const save = (s) => CGR.store.set(KEY, s);
 
@@ -88,6 +88,7 @@ CGR.views = CGR.views || {};
           ${s.track ? `<fieldset class="field"><legend>Players</legend>${P.stepperHTML('count', s.count, 3, 16, 'players')}</fieldset>
           <fieldset class="field"><legend>Names</legend>${P.namesHTML(s.count, s.names, (i) => 'Player ' + (i + 1))}</fieldset>` : ''}
           ${packsHTML(s, 'ml-pack')}
+          ${P.drinkSwitchHTML('ml-drink', s.drink, 'Whoever gets the most fingers drinks.')}
         </form>
         <div class="action-bar"><div class="action-bar-inner"><button type="button" class="btn" id="ml-start">Start</button></div></div>`;
     }
@@ -132,10 +133,11 @@ CGR.views = CGR.views || {};
         s.names = P.readNames(form, s.names);
         s.packs = readPacks(form, 'ml-pack', s.packs);
         s.track = form.querySelector('#ml-track').checked;
+        s.drink = form.querySelector('#ml-drink').checked;
         return s;
       };
       form.addEventListener('input', () => save(read()));
-      form.addEventListener('change', (e) => { save(read()); if (e.target.id === 'ml-track') render(root); });
+      form.addEventListener('change', async (e) => { if (e.target.id === 'ml-drink') await P.drinkConfirm(e.target); save(read()); if (e.target.id === 'ml-track') render(root); });
       P.wireSteppers(root, (k, d) => { const s = read(); s.count = P.clamp(s.count + d, 3, 16); save(s); render(root); });
       root.querySelector('#ml-start').addEventListener('click', () => {
         save(read());
@@ -159,7 +161,7 @@ CGR.views = CGR.views || {};
           n -= 1;
           if (n > 0) { el.textContent = n; P.beep(700, 90, 0.1); return; }
           clearInterval(counting); counting = null;
-          el.textContent = 'Point! 👉'; P.beep(1200, 250, 0.15); P.vibrate(80);
+          el.textContent = load().drink ? 'Point! 👉 Most fingers drinks 🍺' : 'Point! 👉'; P.beep(1200, 250, 0.15); P.vibrate(80);
         }, 800);
       });
       root.querySelectorAll('.pg-person').forEach((b) => b.addEventListener('click', () => {
@@ -167,6 +169,7 @@ CGR.views = CGR.views || {};
         history.push(b.dataset.name);
         b.querySelector('strong').textContent = tally[b.dataset.name];
         const u = root.querySelector('#ml-undo'); if (u) u.disabled = false;
+        if (load().drink) CGR.ui.toast(`${b.dataset.name} drinks! 🍺`);
       }));
       const undo = root.querySelector('#ml-undo');
       if (undo) undo.addEventListener('click', () => {
@@ -213,7 +216,7 @@ CGR.views = CGR.views || {};
 
     function load() {
       const s = CGR.store.get(KEY, {});
-      return { packs: cleanPacks(s.packs), secret: !!s.secret, voters: P.clamp(Math.round(s.voters) || 4, 2, 20) };
+      return { packs: cleanPacks(s.packs), secret: !!s.secret, voters: P.clamp(Math.round(s.voters) || 4, 2, 20), drink: !!s.drink };
     }
     const save = (s) => CGR.store.set(KEY, s);
 
@@ -225,6 +228,7 @@ CGR.views = CGR.views || {};
           <label class="switch-row field"><input type="checkbox" id="wr-secret" role="switch" ${s.secret ? 'checked' : ''}>
             <span><strong>Secret vote</strong><br><span class="muted small">Pass the phone round and vote privately, then reveal how the group split.</span></span></label>
           ${s.secret ? `<fieldset class="field"><legend>Voters</legend>${P.stepperHTML('voters', s.voters, 2, 20, 'voters')}</fieldset>` : ''}
+          ${P.drinkSwitchHTML('wr-drink', s.drink, 'Everyone on the smaller side drinks.')}
         </form>
         <div class="action-bar"><div class="action-bar-inner"><button type="button" class="btn" id="wr-start">Start</button></div></div>`;
     }
@@ -247,7 +251,7 @@ CGR.views = CGR.views || {};
       }
       return `<div class="page-head center"><h1 tabindex="-1" class="pg-lead-h">Would you rather…</h1></div>
         ${choiceButtons('wr')}
-        <p class="muted small center">Everyone shout or point at the same time. Tap a side to highlight it.</p>
+        <p class="muted small center">Everyone shout or point at the same time. Tap a side to highlight it.${load().drink ? ' <strong>The smaller side drinks! 🍺</strong>' : ''}</p>
         <div class="action-bar"><div class="action-bar-inner"><button type="button" class="btn" id="wr-next">Next ▶</button></div></div>`;
     }
 
@@ -272,7 +276,7 @@ CGR.views = CGR.views || {};
           <div class="wr-bar a" style="--pct:${sp.a}%"><span>${esc(pair[0])}</span><strong>${sp.a}% · ${votes.a}</strong></div>
           <div class="wr-bar b" style="--pct:${sp.b}%"><span>${esc(pair[1])}</span><strong>${sp.b}% · ${votes.b}</strong></div>
         </div>
-        <p class="center">${votes.a === votes.b ? 'A perfect split! Fight it out.' : `The minority has some explaining to do…`}</p>
+        <p class="center">${votes.a === votes.b ? (load().drink ? 'A perfect split — everyone drinks! 🍺' : 'A perfect split! Fight it out.') : load().drink ? `🍺 Everyone who chose <strong>${esc(votes.a < votes.b ? pair[0] : pair[1])}</strong> drinks.` : 'The minority has some explaining to do…'}</p>
         <div class="action-bar"><div class="action-bar-inner"><button type="button" class="btn" id="wr-next">Next question ▶</button></div></div>`;
     }
 
@@ -288,8 +292,8 @@ CGR.views = CGR.views || {};
     function wireSetup(root) {
       const form = root.querySelector('#wr-setup');
       guardPacks(form, 'wr-pack');
-      const read = () => { const s = load(); s.packs = readPacks(form, 'wr-pack', s.packs); s.secret = form.querySelector('#wr-secret').checked; return s; };
-      form.addEventListener('change', (e) => { save(read()); if (e.target.id === 'wr-secret') render(root); });
+      const read = () => { const s = load(); s.packs = readPacks(form, 'wr-pack', s.packs); s.secret = form.querySelector('#wr-secret').checked; s.drink = form.querySelector('#wr-drink').checked; return s; };
+      form.addEventListener('change', async (e) => { if (e.target.id === 'wr-drink') await P.drinkConfirm(e.target); save(read()); if (e.target.id === 'wr-secret') render(root); });
       P.wireSteppers(root, (k, d) => { const s = read(); s.voters = P.clamp(s.voters + d, 2, 20); save(s); render(root); });
       root.querySelector('#wr-start').addEventListener('click', () => {
         save(read());
@@ -347,7 +351,7 @@ CGR.views = CGR.views || {};
 
     function load() {
       const s = CGR.store.get(KEY, {});
-      return { count: P.clamp(Math.round(s.count) || 4, 2, 16), names: Array.isArray(s.names) ? s.names : [], lives: P.clamp(Math.round(s.lives) || 5, 3, 10), packs: cleanPacks(s.packs) };
+      return { count: P.clamp(Math.round(s.count) || 4, 2, 16), names: Array.isArray(s.names) ? s.names : [], lives: P.clamp(Math.round(s.lives) || 5, 3, 10), packs: cleanPacks(s.packs), drink: !!s.drink };
     }
     const save = (s) => CGR.store.set(KEY, s);
 
@@ -357,13 +361,15 @@ CGR.views = CGR.views || {};
         <form id="nv-setup" onsubmit="return false">
           <fieldset class="field"><legend>Players</legend>${P.stepperHTML('count', s.count, 2, 16, 'players')}</fieldset>
           <fieldset class="field"><legend>Names</legend>${P.namesHTML(s.count, s.names, (i) => 'Player ' + (i + 1))}</fieldset>
-          <fieldset class="field"><legend>Lives (fingers) each</legend>${P.stepperHTML('lives', s.lives, 3, 10, 'lives')}</fieldset>
+          ${P.drinkSwitchHTML('nv-drink', s.drink, 'Instead of losing lives, everyone who has done it drinks. No one is knocked out.')}
+          ${s.drink ? '' : `<fieldset class="field"><legend>Lives (fingers) each</legend>${P.stepperHTML('lives', s.lives, 3, 10, 'lives')}</fieldset>`}
           ${packsHTML(s, 'nv-pack')}
         </form>
         <div class="action-bar"><div class="action-bar-inner"><button type="button" class="btn" id="nv-start">Start</button></div></div>`;
     }
 
     function livesHTML(p) {
+      if (state.drink) return `<strong class="nv-sips">🍺 ${state.lives - p.lives}</strong>`;
       const dots = [];
       for (let i = 0; i < state.lives; i++) dots.push(`<i class="${i < p.lives ? 'on' : ''}"></i>`);
       return `<span class="nv-lives" aria-label="${p.lives} of ${state.lives} lives">${dots.join('')}</span>`;
@@ -374,7 +380,7 @@ CGR.views = CGR.views || {};
           <p class="pg-lead">Never have I ever…</p>
           <h1 class="pg-prompt" tabindex="-1">${esc(prompt)}</h1>
         </div>
-        <p class="muted small center">Tap everyone who <strong>has</strong> done it:</p>
+        <p class="muted small center">Tap everyone who <strong>has</strong> done it${state.drink ? ' — they drink 🍺' : ''}:</p>
         <ul class="pg-people nv">${state.players.map((p, i) => `<li><button type="button" class="pg-person${p.lives ? '' : ' out'}" data-i="${i}" ${p.lives ? '' : 'disabled'}>
           <span>${esc(p.name)}</span>${livesHTML(p)}</button></li>`).join('')}</ul>
         <div class="btn-row center"><button type="button" class="btn btn-ghost" id="nv-undo" ${history.length ? '' : 'disabled'}>Undo last</button></div>
@@ -399,7 +405,8 @@ CGR.views = CGR.views || {};
 
     function startGame() {
       const s = load();
-      state = L.createLives(namesFrom(s, 'Player'), s.lives);
+      state = s.drink ? Object.assign(L.createLives(namesFrom(s, 'Player'), 10), { lives: 999, drink: true }) : L.createLives(namesFrom(s, 'Player'), s.lives);
+      if (state.drink) state.players.forEach((p) => { p.lives = 999; });
       history = [];
       source = source || makeSource(KEY, CGR.partyDecks.neverHave);
       prompt = source.next(s.packs);
@@ -409,9 +416,9 @@ CGR.views = CGR.views || {};
     function wireSetup(root) {
       const form = root.querySelector('#nv-setup');
       guardPacks(form, 'nv-pack');
-      const read = () => { const s = load(); s.names = P.readNames(form, s.names); s.packs = readPacks(form, 'nv-pack', s.packs); return s; };
+      const read = () => { const s = load(); s.names = P.readNames(form, s.names); s.packs = readPacks(form, 'nv-pack', s.packs); s.drink = form.querySelector('#nv-drink').checked; return s; };
       form.addEventListener('input', () => save(read()));
-      form.addEventListener('change', () => save(read()));
+      form.addEventListener('change', async (e) => { if (e.target.id === 'nv-drink') { await P.drinkConfirm(e.target); save(read()); render(root); return; } save(read()); });
       P.wireSteppers(root, (k, d) => {
         const s = read();
         if (k === 'count') s.count = P.clamp(s.count + d, 2, 16); else s.lives = P.clamp(s.lives + d, 3, 10);

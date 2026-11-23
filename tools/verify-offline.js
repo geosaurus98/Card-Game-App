@@ -276,7 +276,7 @@ const ok = (cond, msg) => { console.log(`${cond ? 'PASS' : 'FAIL'}  ${msg}`); if
   ok(await page.evaluate(() => !CGR.views.impostor && !CGR.views.werewolf), 'party games are not loaded at start-up (lazy loading)');
   await page.click('.type-tabs a[href="#/party"]');
   await page.waitForSelector('.party-list');
-  ok((await page.locator('.party-list .game-item').count()) === 14, 'Party tab lists 14 party games');
+  ok((await page.locator('.party-list .game-item').count()) === 26, 'Party tab lists 26 party games (12 in the drinking section)');
   await shot('16-party-home');
   await page.click('.party-list a[href="#/impostor"]');
   await page.waitForSelector('#imp-setup');
@@ -868,6 +868,46 @@ const ok = (cond, msg) => { console.log(`${cond ? 'PASS' : 'FAIL'}  ${msg}`); if
   await page.goto(BASE + '#/');
   await page.waitForSelector('#resume-h');
   ok((await page.textContent('.section')).includes('Oh Hell') && (await page.textContent('.section')).includes('hand 2 of 19'), 'hand-by-hand scorecards appear under Scores in progress');
+
+  // ---------- Drinking games ----------
+  await page.goto(BASE + '#/kings');
+  await page.waitForSelector('#dk-age-ok');
+  ok((await page.textContent('.dk-gate')).includes('legal drinking age'), 'drinking: age check before the first drinking game');
+  await page.click('#dk-age-ok');
+  await page.waitForSelector('#dk-start');
+  await page.click('#dk-start');
+  for (let i = 0; i < 3; i++) await page.click('#kg-draw');
+  ok((await page.locator('.pc.big').count()) === 1 && (await page.textContent('.kg-side')).includes('49 cards left'), 'kings: draws cards and shows the rule');
+  await page.goto(BASE + '#/ride-the-bus');
+  await page.waitForSelector('#dk-start');
+  ok(!(await page.$('#dk-age-ok')), 'drinking: age check is only asked once');
+  await page.click('[data-step="count"][data-d="-1"]'); await page.click('[data-step="count"][data-d="-1"]');
+  await page.click('#dk-start');
+  for (let i = 0; i < 8; i++) await page.locator('[data-rb]').first().click();
+  await page.click('#rb-next');
+  for (let i = 0; i < 10; i++) await page.click('#rb-flip');
+  await page.click('#rb-next');
+  ok((await page.textContent('h1')).includes('rides the bus'), 'ride the bus: questions, pyramid, then someone rides the bus');
+  await page.goto(BASE + '#/horse-race');
+  await page.waitForSelector('#dk-start'); await page.click('#dk-start');
+  for (let i = 0; i < 4; i++) await page.click(`[data-hrb="${i}:${'CDHS'[i]}"]`);
+  await page.click('#hr-go');
+  for (let n = 0; n < 80 && !(await page.$('#hr-again')); n++) await page.click('#hr-step');
+  ok((await page.textContent('.dk-call')).includes('win!'), 'horse race: runs to a winner and settles the bets');
+  await shot('38-horse-race');
+  await page.goto(BASE + '#/mexico');
+  await page.waitForSelector('#dk-start'); await page.click('#dk-start');
+  await page.click('#mx-roll'); await page.click('[data-mx="21"]');
+  await page.click('#mx-lie');
+  ok((await page.textContent('.dk-call')).includes('2 sips'), 'mexico: calling a Mexico costs double');
+  await page.goto(BASE + '#/never');
+  await page.waitForSelector('#nv-drink'); await page.check('#nv-drink');
+  await page.waitForSelector('#nv-start'); await page.click('#nv-start');
+  await page.click('[data-i="1"]'); await page.click('[data-i="1"]');
+  ok((await page.textContent('[data-i="1"]')).includes('🍺 2'), 'never have I ever: drinking mode counts sips instead of lives');
+  await page.goto(BASE + '#/game/kings-cup');
+  await page.waitForSelector('article.rules');
+  ok(await page.isVisible('a.btn[href="#/kings"]') && (await page.textContent('.tags, article.rules')).includes('Drinking'), 'rules page: Drinking tag and a Play on this phone button');
 
   // Deep link in a brand-new tab while offline
   const page2 = await context.newPage();

@@ -1864,7 +1864,8 @@
       "variations": [
         "Playing an equal card skips the next player.",
         "A 2 (or four of a kind — a ‘revolution’) clears the pile immediately.",
-        "Jokers as the highest cards; or ‘bombs’ that beat anything."
+        "Jokers as the highest cards; or ‘bombs’ that beat anything.",
+        "Drinking version (Asshole): the Asshole drinks at the start of each round and must refill the President’s drink; anyone who can’t play when it’s their turn takes a sip."
       ],
       "scorekeeper": {
         "direction": "high",
@@ -2031,7 +2032,8 @@
       "variations": [
         "Players may choose to play the rank one above, the same rank, or one below the previous claim.",
         "Some groups allow passing, or require exactly one to four cards per play.",
-        "With two decks, a player may claim up to eight cards of one rank."
+        "With two decks, a player may claim up to eight cards of one rank.",
+        "Drinking version (Lies / Bullshit): a caught liar drinks a sip for every card in the pile; a wrong challenger drinks the same."
       ],
       "scorekeeper": {
         "direction": "high",
@@ -3260,7 +3262,8 @@
       "variations": [
         "Insurance: when the dealer shows an Ace, players may bet half their stake that the dealer has blackjack (pays 2 to 1).",
         "Some casinos make the dealer hit a ‘soft 17’ (a 17 counting an Ace as 11).",
-        "Pontoon is the British relative with different terms and payouts."
+        "Pontoon is the British relative with different terms and payouts.",
+        "Drinking version (21): no dealer — everyone draws to 21; busted players drink, the closest hand gives out sips, and a perfect 21 gives out double. The app’s Bust! party game plays it (Party → Drinking games)."
       ],
       "scorekeeper": {
         "direction": "high",
@@ -8816,7 +8819,8 @@
         "elimination"
       ],
       "tags": [
-        "party"
+        "party",
+        "drinking"
       ],
       "players": {
         "min": 2,
@@ -8860,7 +8864,8 @@
         "A player with no lives left is out. The last player with a life wins."
       ],
       "variations": [
-        "Mia (Mäxchen) is the bluffing version: you roll hidden, announce your roll, and the next player must beat it or call your bluff."
+        "Mia (Mäxchen) is the bluffing version: you roll hidden, announce your roll, and the next player must beat it or call your bluff.",
+        "Drinking version (Mäxchen / Mia): whoever loses a challenge drinks instead of losing a life; Mexico (2-1) doubles it. The app’s Mexico game plays it."
       ],
       "scorekeeper": {
         "direction": "low",
@@ -8874,7 +8879,8 @@
         "unit": "lives lost",
         "endCondition": "elimination",
         "hint": "Add 1 (or 2 after a Mexico) to each round’s loser. Six means they’re out."
-      }
+      },
+      "play": "#/mexico"
     },
     {
       "id": "chicago-dice",
@@ -9420,7 +9426,8 @@
       ],
       "variations": [
         "Some groups count three of a kind as 30, or don’t count it at all.",
-        "Ties for lowest: all tied players lose a life, unless one of them is the knocker."
+        "Ties for lowest: all tied players lose a life, unless one of them is the knocker.",
+        "Drinking version (Swimming / Schwimmen): play with three lives as usual; losing a life is a sip, and being knocked out (‘swimming’) is a bigger drink."
       ],
       "scorekeeper": {
         "direction": "low",
@@ -18822,6 +18829,813 @@
         ],
         "unit": "wins",
         "hint": "Add 1 for each deal you win; keep a running win count.",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "kings-cup",
+      "name": "Kings",
+      "type": "cards",
+      "aliases": [
+        "King’s Cup",
+        "Ring of Fire",
+        "Circle of Death",
+        "Waterfall"
+      ],
+      "keywords": [
+        "kings cup",
+        "ring of fire",
+        "rules",
+        "waterfall",
+        "mate",
+        "rhyme",
+        "categories",
+        "drinking game"
+      ],
+      "tags": [
+        "party",
+        "drinking"
+      ],
+      "players": {
+        "min": 3,
+        "max": 12
+      },
+      "playerCounts": [
+        "3",
+        "4",
+        "5+"
+      ],
+      "playTime": {
+        "minutes": [
+          20,
+          45
+        ],
+        "category": "medium"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "One standard 52-card deck",
+        "An empty cup (the King’s Cup) and everyone’s drinks"
+      ],
+      "objective": "Draw cards in turn and follow each card’s rule. Whoever draws the fourth King drinks the King’s Cup.",
+      "quickStart": [
+        "Spread the deck face down in a circle round an empty cup.",
+        "Take turns drawing a card and doing what its rank says (2 = you, 3 = me, 4 = floor…).",
+        "Kings: pour some of your drink into the cup — the 4th King drinks it."
+      ],
+      "setup": [
+        "Place an empty cup in the middle of the table and spread the shuffled deck face down in a ring around it.",
+        "Agree the rule for each rank before you start (the app’s Kings game shows them and lets you edit them)."
+      ],
+      "gameplay": [
+        "Take turns clockwise drawing one card and doing its action. A common set: A Waterfall (everyone drinks; you can’t stop until the person before you stops), 2 You (pick someone to drink), 3 Me (you drink), 4 Floor (last to touch the floor drinks), 5 Guys, 6 Ladies, 7 Heaven (last to point up drinks), 8 Mate (your mate drinks whenever you do), 9 Rhyme, 10 Categories, J Make a rule, Q Question master, K pour into the King’s Cup.",
+        "Ring of Fire (UK) swaps a few: 5 Thumb master, 10 Social (everyone drinks), Q Ladies.",
+        "Rules from a Jack last until the next Jack (or the end of the game). The question master and thumb master keep their powers until someone else draws that card.",
+        "Some groups say that if you break the ring of cards when drawing, you drink."
+      ],
+      "scoring": [
+        "No points: the game ends when the fourth King is drawn and that player drinks the cup (or when the deck runs out)."
+      ],
+      "variations": [
+        "Never Have I Ever on Jacks instead of rules.",
+        "Skip the King’s Cup entirely and just drink 3 sips on the 4th King.",
+        "Play responsibly: count sips, not shots; any drink works, including soft drinks; nobody has to drink."
+      ],
+      "scorekeeper": {
+        "direction": "low",
+        "target": null,
+        "defaultPlayers": 4,
+        "teams": false,
+        "quickAdd": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "unit": "sips",
+        "hint": "Optional: keep count of sips (lowest is the soberest).",
+        "endCondition": "target"
+      },
+      "play": "#/kings"
+    },
+    {
+      "id": "ride-the-bus",
+      "name": "Ride the Bus",
+      "type": "cards",
+      "aliases": [
+        "Bus Driver",
+        "Busfahrer",
+        "Bus Ride"
+      ],
+      "keywords": [
+        "red or black",
+        "higher or lower",
+        "inside or outside",
+        "suit",
+        "pyramid",
+        "bus driver",
+        "drinking game"
+      ],
+      "tags": [
+        "party",
+        "drinking"
+      ],
+      "players": {
+        "min": 2,
+        "max": 8
+      },
+      "playerCounts": [
+        "2",
+        "3",
+        "4",
+        "5+"
+      ],
+      "playTime": {
+        "minutes": [
+          20,
+          40
+        ],
+        "category": "medium"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "One standard 52-card deck"
+      ],
+      "objective": "Answer four questions about your cards without drinking too much — and avoid being the one who rides the bus.",
+      "quickStart": [
+        "Everyone answers four questions with new cards: red/black, higher/lower, inside/outside, suit.",
+        "Wrong answers drink 1, 2, 3 or 4 sips (right ones may hand them out).",
+        "The loser rides the bus: all four right in a row, starting again after every miss."
+      ],
+      "setup": [
+        "Shuffle and have one player act as dealer (or use the app)."
+      ],
+      "gameplay": [
+        "Round 1 — four questions. Going round the table, each player is asked in turn: (1) red or black? (2) higher or lower than your first card? (3) inside or outside your first two cards? (4) which suit? The dealer turns a new card face up for each answer; the player keeps their cards.",
+        "A wrong answer drinks as many sips as the question number; many groups let a right answer hand those sips out instead. Equal ranks count as wrong.",
+        "Bus Driver pyramid (optional): deal a pyramid of 10 face-down cards (rows of 4, 3, 2, 1). Flip them one at a time from the bottom row; anyone holding that rank lays it down and gives out sips equal to the row number.",
+        "The bus: the player with the most cards left (or the most wrong answers without the pyramid) rides the bus — answering the four questions again with fresh cards. Any mistake means drink and start again from question 1, until they get all four right in a row."
+      ],
+      "scoring": [
+        "No points. The game ends when the bus rider gets off the bus."
+      ],
+      "variations": [
+        "A shorter bus: lay 7 cards in a row and guess higher or lower along it; a face card or a miss sends you back to the start.",
+        "Play responsibly: count sips, not shots; any drink works, including soft drinks; nobody has to drink."
+      ],
+      "scorekeeper": {
+        "direction": "low",
+        "target": null,
+        "defaultPlayers": 4,
+        "teams": false,
+        "quickAdd": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "unit": "sips",
+        "hint": "Optional: keep count of sips (lowest is the soberest).",
+        "endCondition": "target"
+      },
+      "play": "#/ride-the-bus"
+    },
+    {
+      "id": "pyramid-drinking",
+      "name": "Pyramid (drinking game)",
+      "type": "cards",
+      "aliases": [
+        "Pyramid",
+        "Drinking Pyramid",
+        "Bullshit Pyramid"
+      ],
+      "keywords": [
+        "pyramid",
+        "bluff",
+        "memory",
+        "call bullshit",
+        "drinking game"
+      ],
+      "tags": [
+        "party",
+        "drinking"
+      ],
+      "players": {
+        "min": 2,
+        "max": 8
+      },
+      "playerCounts": [
+        "2",
+        "3",
+        "4",
+        "5+"
+      ],
+      "playTime": {
+        "minutes": [
+          15,
+          30
+        ],
+        "category": "medium"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "One standard 52-card deck"
+      ],
+      "objective": "Use your four secret cards — or a good bluff — to make others drink as the pyramid flips.",
+      "quickStart": [
+        "Everyone looks at four cards, then puts them face down.",
+        "Flip the 15-card pyramid row by row: claim a matching rank to make someone drink the row number.",
+        "They drink — or call your bluff: wrong caller drinks double, caught liar drinks double."
+      ],
+      "setup": [
+        "Deal four cards to each player. Look at them once, then place them face down without peeking again.",
+        "Lay out a pyramid of 15 cards face down: a bottom row of 5, then 4, 3, 2 and 1."
+      ],
+      "gameplay": [
+        "Flip the pyramid one card at a time, starting with the bottom row. Bottom-row cards are worth 1 sip, the next row 2, and so on up to 5 for the top card.",
+        "When a card is flipped, anyone may claim to hold a card of that rank and name another player to drink the row’s value.",
+        "The named player either drinks, or calls ‘Bullshit!’. The claimer then shows the card: if they had it, the caller drinks double; if they were bluffing, the claimer drinks double.",
+        "After all 15 cards are flipped, everyone reveals their hands."
+      ],
+      "scoring": [
+        "No points: play once or a few times."
+      ],
+      "variations": [
+        "Some groups make every row of the first half ‘drink’ cards and the top half ‘give’ cards.",
+        "Play responsibly: count sips, not shots; any drink works, including soft drinks; nobody has to drink."
+      ],
+      "scorekeeper": {
+        "direction": "low",
+        "target": null,
+        "defaultPlayers": 4,
+        "teams": false,
+        "quickAdd": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "unit": "sips",
+        "hint": "Optional: keep count of sips (lowest is the soberest).",
+        "endCondition": "target"
+      },
+      "play": "#/pyramid-drink"
+    },
+    {
+      "id": "horse-race",
+      "name": "Horse Race",
+      "type": "cards",
+      "aliases": [
+        "Horse Racing",
+        "Derby"
+      ],
+      "keywords": [
+        "aces",
+        "bet",
+        "race",
+        "suit",
+        "track",
+        "drinking game"
+      ],
+      "tags": [
+        "party",
+        "drinking"
+      ],
+      "players": {
+        "min": 2,
+        "max": 12
+      },
+      "playerCounts": [
+        "2",
+        "3",
+        "4",
+        "5+"
+      ],
+      "playTime": {
+        "minutes": [
+          10,
+          20
+        ],
+        "category": "medium"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "One standard 52-card deck"
+      ],
+      "objective": "Back the winning Ace: winners hand out their bet in sips, everyone else drinks theirs.",
+      "quickStart": [
+        "Line up the four Aces as horses beside a track of 7 face-down cards.",
+        "Everyone bets sips on a suit. Flip cards: that suit’s Ace moves forward one.",
+        "When all horses pass a track card, flip it — that suit goes back one. First past the end wins."
+      ],
+      "setup": [
+        "Take out the four Aces and lay them side by side as the starting line.",
+        "Deal 7 cards face down in a line at right angles to the Aces: this is the track.",
+        "Every player bets a number of sips on one suit."
+      ],
+      "gameplay": [
+        "The dealer flips cards from the rest of the deck one at a time. The Ace of the flipped card’s suit moves forward one place.",
+        "When every Ace has moved past a track card, flip that track card: the Ace of its suit moves back one place.",
+        "The first Ace past the last track card wins."
+      ],
+      "scoring": [
+        "Players who backed the winning suit hand out their bet in sips; everyone else drinks the sips they bet."
+      ],
+      "variations": [
+        "Winners hand out double their bet.",
+        "A longer track (9 cards) makes a longer race.",
+        "Play responsibly: count sips, not shots; any drink works, including soft drinks; nobody has to drink."
+      ],
+      "scorekeeper": {
+        "direction": "low",
+        "target": null,
+        "defaultPlayers": 4,
+        "teams": false,
+        "quickAdd": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "unit": "sips",
+        "hint": "Optional: keep count of sips (lowest is the soberest).",
+        "endCondition": "target"
+      },
+      "play": "#/horse-race"
+    },
+    {
+      "id": "beat-the-dealer",
+      "name": "Beat the Dealer",
+      "type": "cards",
+      "aliases": [
+        "F*** the Dealer",
+        "F the Dealer",
+        "Screw the Dealer"
+      ],
+      "keywords": [
+        "guess the card",
+        "dealer",
+        "higher or lower",
+        "drinking game"
+      ],
+      "tags": [
+        "party",
+        "drinking"
+      ],
+      "players": {
+        "min": 3,
+        "max": 10
+      },
+      "playerCounts": [
+        "3",
+        "4",
+        "5+"
+      ],
+      "playTime": {
+        "minutes": [
+          15,
+          30
+        ],
+        "category": "medium"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "One standard 52-card deck"
+      ],
+      "objective": "Guess the dealer’s next card in two tries to make the dealer drink; miss and drink the difference.",
+      "quickStart": [
+        "The dealer holds the deck. The next player guesses the rank of the top card.",
+        "Wrong? The dealer says higher or lower; guess again.",
+        "Right first time: dealer drinks 5 (second time: 3). Missed: you drink the difference."
+      ],
+      "setup": [
+        "Choose a dealer, who holds the shuffled deck face down. Played cards are laid out by rank so everyone can see what’s gone."
+      ],
+      "gameplay": [
+        "The player to the dealer’s left guesses the rank of the top card (Ace low).",
+        "If wrong, the dealer says ‘higher’ or ‘lower’ and the player guesses again.",
+        "If they get it on the first guess the dealer drinks 5 sips; on the second guess, 3 sips. If both guesses are wrong, the guesser drinks the difference between their second guess and the real card.",
+        "The card is laid face up with the others of its rank, and the next player guesses.",
+        "After three wrong guessers in a row the dealer passes the deck to the next player."
+      ],
+      "scoring": [
+        "No points: play until the deck runs out."
+      ],
+      "variations": [
+        "Some groups use 10 / 5 sips for the dealer instead of 5 / 3.",
+        "Play responsibly: count sips, not shots; any drink works, including soft drinks; nobody has to drink."
+      ],
+      "scorekeeper": {
+        "direction": "low",
+        "target": null,
+        "defaultPlayers": 4,
+        "teams": false,
+        "quickAdd": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "unit": "sips",
+        "hint": "Optional: keep count of sips (lowest is the soberest).",
+        "endCondition": "target"
+      },
+      "play": "#/beat-the-dealer"
+    },
+    {
+      "id": "river-drinking",
+      "name": "Up and Down the River (drinking)",
+      "type": "cards",
+      "aliases": [
+        "Up the River, Down the River",
+        "Rivers"
+      ],
+      "keywords": [
+        "river",
+        "match",
+        "give",
+        "drink",
+        "drinking game"
+      ],
+      "tags": [
+        "party",
+        "drinking"
+      ],
+      "players": {
+        "min": 2,
+        "max": 8
+      },
+      "playerCounts": [
+        "2",
+        "3",
+        "4",
+        "5+"
+      ],
+      "playTime": {
+        "minutes": [
+          10,
+          20
+        ],
+        "category": "medium"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "One standard 52-card deck"
+      ],
+      "objective": "Watch ten river cards: matching cards in your hand make you drink on the way up and let you give on the way down.",
+      "quickStart": [
+        "Deal four cards to each player.",
+        "Flip five ‘up the river’ cards: hold that rank and drink 1, 2, 3, 4, 5 sips per card.",
+        "Flip five ‘down the river’ cards: hold that rank and give 1–5 sips per card."
+      ],
+      "setup": [
+        "Deal four cards to each player, face up in front of them (or held, if you allow bluffing).",
+        "Deal ten cards face down in a row: the river."
+      ],
+      "gameplay": [
+        "Going up the river, flip the first five cards one at a time. For card 1 anyone holding a card of the same rank drinks 1 sip per matching card, for card 2 they drink 2, and so on to 5.",
+        "Coming down the river, flip the last five. Now matching players give out 1 to 5 sips per matching card instead."
+      ],
+      "scoring": [
+        "No points: deal again for another round."
+      ],
+      "variations": [
+        "Bluffing version: hold your cards secretly and claim matches; a challenged false claim drinks double.",
+        "This is different from the trick-taking game also called Up and Down the River (see Oh Hell).",
+        "Play responsibly: count sips, not shots; any drink works, including soft drinks; nobody has to drink."
+      ],
+      "scorekeeper": {
+        "direction": "low",
+        "target": null,
+        "defaultPlayers": 4,
+        "teams": false,
+        "quickAdd": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "unit": "sips",
+        "hint": "Optional: keep count of sips (lowest is the soberest).",
+        "endCondition": "target"
+      },
+      "play": "#/river"
+    },
+    {
+      "id": "higher-or-lower",
+      "name": "Higher or Lower (drinking)",
+      "type": "cards",
+      "aliases": [
+        "Higher Lower",
+        "Hi-Lo"
+      ],
+      "keywords": [
+        "higher",
+        "lower",
+        "streak",
+        "chain",
+        "drinking game"
+      ],
+      "tags": [
+        "party",
+        "drinking"
+      ],
+      "players": {
+        "min": 2,
+        "max": 12
+      },
+      "playerCounts": [
+        "2",
+        "3",
+        "4",
+        "5+"
+      ],
+      "playTime": {
+        "minutes": [
+          5,
+          20
+        ],
+        "category": "medium"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "One standard 52-card deck"
+      ],
+      "objective": "Guess whether the next card is higher or lower and don’t be the one who breaks the streak.",
+      "quickStart": [
+        "Turn up a card. The first player says higher or lower before the next card is turned.",
+        "Right: the streak grows — keep going or pass it on.",
+        "Wrong: drink a sip for every card in the streak, which then resets."
+      ],
+      "setup": [
+        "Shuffle and turn the top card face up."
+      ],
+      "gameplay": [
+        "The player whose turn it is guesses whether the next card will be higher or lower (Aces high). Turn it over.",
+        "If they were right, the streak goes up by one and they may guess again or pass the streak to the next player.",
+        "If they were wrong, they drink one sip for each card in the streak (at least one) and the next player starts a new streak.",
+        "A tie counts as wrong unless you agree otherwise."
+      ],
+      "scoring": [
+        "No points: play until the deck runs out."
+      ],
+      "variations": [
+        "Two-player version: the dealer guesses against the deck and the other player drinks for misses.",
+        "Play responsibly: count sips, not shots; any drink works, including soft drinks; nobody has to drink."
+      ],
+      "scorekeeper": {
+        "direction": "low",
+        "target": null,
+        "defaultPlayers": 4,
+        "teams": false,
+        "quickAdd": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "unit": "sips",
+        "hint": "Optional: keep count of sips (lowest is the soberest).",
+        "endCondition": "target"
+      },
+      "play": "#/higher-lower"
+    },
+    {
+      "id": "seven-and-a-half",
+      "name": "Seven and a Half (7½)",
+      "type": "cards",
+      "aliases": [
+        "Sette e mezzo",
+        "Siebeneinhalb",
+        "7.5",
+        "Brain Damage"
+      ],
+      "keywords": [
+        "7.5",
+        "push your luck",
+        "half points",
+        "sette e mezzo",
+        "drinking game"
+      ],
+      "tags": [
+        "party",
+        "drinking",
+        "push-your-luck"
+      ],
+      "players": {
+        "min": 2,
+        "max": 8
+      },
+      "playerCounts": [
+        "2",
+        "3",
+        "4",
+        "5+"
+      ],
+      "playTime": {
+        "minutes": [
+          10,
+          30
+        ],
+        "category": "medium"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "A standard deck with the 8s, 9s and 10s removed (40 cards)"
+      ],
+      "objective": "Get as close to 7½ as you dare without going over.",
+      "quickStart": [
+        "A–7 count face value; J, Q, K count ½.",
+        "Each player draws cards until they stand or go over 7½.",
+        "Bust: drink. Closest hand gives out sips (exactly 7½ gives out double)."
+      ],
+      "setup": [
+        "Remove the 8s, 9s and 10s. Deal one card face up to each player."
+      ],
+      "gameplay": [
+        "Card values: Ace 1, 2–7 face value, Jack, Queen and King ½ each.",
+        "In turn, each player takes extra cards one at a time until they decide to stand. Going over 7½ is a bust.",
+        "When everyone has played, compare totals."
+      ],
+      "scoring": [
+        "Busted players drink. The closest total gives out sips; exactly 7½ gives out double.",
+        "Traditional Italian Sette e mezzo is a banking game played for chips with a dealer; this is the drinking version."
+      ],
+      "variations": [
+        "21 instead: play the same way with a full deck to 21 (Aces 1 or 11, faces 10) — see Blackjack.",
+        "Play responsibly: count sips, not shots; any drink works, including soft drinks; nobody has to drink."
+      ],
+      "scorekeeper": {
+        "direction": "low",
+        "target": null,
+        "defaultPlayers": 4,
+        "teams": false,
+        "quickAdd": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "unit": "sips",
+        "hint": "Optional: keep count of sips (lowest is the soberest).",
+        "endCondition": "target"
+      },
+      "play": "#/bust"
+    },
+    {
+      "id": "card-blowing",
+      "name": "Card Blowing",
+      "type": "cards",
+      "aliases": [
+        "Kartenpusten",
+        "Blow the Cards"
+      ],
+      "keywords": [
+        "bottle",
+        "blow",
+        "dexterity",
+        "drinking game"
+      ],
+      "tags": [
+        "party",
+        "drinking",
+        "real-time"
+      ],
+      "players": {
+        "min": 2,
+        "max": 10
+      },
+      "playerCounts": [
+        "2",
+        "3",
+        "4",
+        "5+"
+      ],
+      "playTime": {
+        "minutes": [
+          5,
+          20
+        ],
+        "category": "medium"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "One standard 52-card deck",
+        "A full (or empty) bottle"
+      ],
+      "objective": "Blow some cards off the stack on top of a bottle — but not all of them.",
+      "quickStart": [
+        "Put the deck on top of a bottle.",
+        "Take turns blowing: you must blow off at least one card.",
+        "Whoever blows off the last cards drinks."
+      ],
+      "setup": [
+        "Place the whole deck squarely on the mouth of a bottle."
+      ],
+      "gameplay": [
+        "Players take turns blowing at the deck. You must blow off at least one card; if none fall, take a sip and try again.",
+        "Whoever blows off the last card (or cards) drinks — traditionally the bottle the cards were on."
+      ],
+      "scoring": [
+        "No points: rebuild the stack and go again."
+      ],
+      "variations": [
+        "Exactly-one rule: you must blow off exactly one card; more than one and you drink a sip per extra card.",
+        "Play responsibly: count sips, not shots; any drink works, including soft drinks; nobody has to drink."
+      ],
+      "scorekeeper": {
+        "direction": "low",
+        "target": null,
+        "defaultPlayers": 4,
+        "teams": false,
+        "quickAdd": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "unit": "sips",
+        "hint": "Optional: keep count of sips (lowest is the soberest).",
+        "endCondition": "target"
+      }
+    },
+    {
+      "id": "hepp-hepp-hepp",
+      "name": "Hepp Hepp Hepp",
+      "type": "cards",
+      "aliases": [
+        "Hepp-Hepp",
+        "Bierdeckel-Spiel"
+      ],
+      "keywords": [
+        "beer mats",
+        "pass cards",
+        "three of a kind",
+        "spoons",
+        "drinking game"
+      ],
+      "tags": [
+        "party",
+        "drinking",
+        "real-time",
+        "special-equipment"
+      ],
+      "players": {
+        "min": 3,
+        "max": 8
+      },
+      "playerCounts": [
+        "3",
+        "4",
+        "5+"
+      ],
+      "playTime": {
+        "minutes": [
+          10,
+          20
+        ],
+        "category": "medium"
+      },
+      "difficulty": "easy",
+      "equipment": [
+        "One standard 52-card deck",
+        "Beer mats (coasters): one fewer than the number of players"
+      ],
+      "objective": "Collect three of a kind by passing cards to the beat of ‘Hepp!’, then grab a beer mat — the player left without one drinks.",
+      "quickStart": [
+        "Deal three cards each and put one fewer beer mat than players in the middle.",
+        "Everyone chants ‘Hepp, Hepp, Hepp!’ and passes one card left on each ‘Hepp’.",
+        "Three of a kind? Grab a mat — then everyone grabs. No mat, drink."
+      ],
+      "setup": [
+        "Deal three cards to each player. Place beer mats in the middle of the table, one fewer than the number of players."
+      ],
+      "gameplay": [
+        "Everyone chants ‘Hepp, Hepp, Hepp!’ together. On every ‘Hepp’, each player passes one unwanted card face down to the left at the same time and picks up the card passed to them.",
+        "As soon as you hold three cards of the same rank, grab a beer mat. Everyone else then grabs one as fast as they can.",
+        "The player left without a beer mat drinks. Grabbing a mat without three of a kind also costs a drink."
+      ],
+      "scoring": [
+        "No points: deal again for the next round."
+      ],
+      "variations": [
+        "Play to the speed of the chant: the faster the ‘Hepp’, the harder it gets.",
+        "Spoons is the same idea with spoons instead of beer mats.",
+        "Play responsibly: count sips, not shots; any drink works, including soft drinks; nobody has to drink."
+      ],
+      "scorekeeper": {
+        "direction": "low",
+        "target": null,
+        "defaultPlayers": 4,
+        "teams": false,
+        "quickAdd": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "unit": "sips",
+        "hint": "Optional: keep count of sips (lowest is the soberest).",
         "endCondition": "target"
       }
     }

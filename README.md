@@ -2,10 +2,10 @@
 
 An offline-first Progressive Web App (PWA) with card and dice game rules organised by number of players (1, 2, 3, 4, 5+). It also has a per-game score tracker and a "pick a game for us" button.
 
-- 244 games (220 card games, including 72 one-player solitaires, and 24 dice games), each with equipment, objective, setup, gameplay, scoring and variations
+- 254 games (230 card games, including 72 one-player solitaires, and 24 dice games), each with equipment, objective, setup, gameplay, scoring and variations
 - Searching a brand name such as Yahtzee, Uno, Phase 10, Skip-Bo or Dutch Blitz finds the traditional game it is based on
 - Separate **Card games** and **Dice games** sections on the home screen. Search and Favourites cover both, with dice games marked 🎲
-- A **🎉 Party** tab with fourteen pass-the-phone games and tools: Impostor, Werewolf / Mafia, Hot Potato, Charades, Fishbowl, Forehead Guess, Forbidden Words, Song Hum-Along, Categories Countdown, Most Likely To, Would You Rather, Never Have I Ever, a finger chooser and a party toolkit (dice, coin, scoreboard)
+- A **🎉 Party** tab with twenty-six pass-the-phone games and tools, including a 🍻 Drinking section (18+): Impostor, Werewolf / Mafia, Hot Potato, Charades, Fishbowl, Forehead Guess, Forbidden Words, Song Hum-Along, Categories Countdown, Most Likely To, Would You Rather, Never Have I Ever, a finger chooser and a party toolkit (dice, coin, scoreboard); plus Kings, Ride the Bus, Higher or Lower, Pyramid, Horse Race, Beat the Dealer, Up and Down the River, Bust! (21 / 7½), Truth or Drink, Paranoia, Rule Roulette and Mexico
 - A three-line **Quick start** summary at the top of every rules page, for teaching a game at the table
 - Score tracker with quick-add buttons, custom amounts, round history, undo, target score and a winner banner. **Share / export scores** sends the final standings through the phone's share sheet, copies them as text, or downloads a CSV for spreadsheets
 - Tags (Good for kids, Party, Trick-taking, Patience, Betting…) shown on each game and usable as a filter on every list
@@ -79,6 +79,16 @@ Twenty-five games open a purpose-built scorecard from **Start scorekeeper** inst
 | French Tarot | Taker (and called partner with 5), contract, oudlers, card points, petit au bout, handful, slam | Points needed, (25 + difference) × multiplier, bonuses, zero-sum shares for 3, 4 or 5 players |
 
 Unit tests: `node tools/test-dice-sheet.js` and `node tools/test-round-sheet.js`. A game opts in with `"sheet"` in its `scorekeeper` (`yacht`, `generala`, `ohhell`, `spades`, `fivehundred`, `bridge`, `farkle`, `crummy`, `canasta`, `cribbage`, `hearts`, `gin`, `euchre`, `euchre3`, `golf`, `pinochle`, `rummy500`, `pitch`, `bidwhist`, `whist`, `skat`, `thousand`, `sixtysix`, `tarot`). The newer games’ forms live in `js/round-sheet-more.js`.
+
+## Drinking games
+
+The Party tab’s **🍻 Drinking games** section has twelve games for adults of legal drinking age, played with a virtual deck or dice on one phone: Kings (editable rule for every rank; Kings or Ring of Fire presets), Ride the Bus (with an optional Bus Driver pyramid), Higher or Lower, Pyramid (secret hands and bluff-calling), Horse Race (bets in sips), Beat the Dealer, Up and Down the River, Bust! (21 or 7½), Truth or Drink (mild, spicy and couples packs), Paranoia, Rule Roulette and Mexico (Mia).
+
+- The first drinking game asks once whether the player is of legal drinking age (stored on the device). Every game counts **sips**, says any drink works, and offers a water-break reminder every 20 minutes.
+- Never Have I Ever, Most Likely To, Would You Rather and Hot Potato have an optional **🍺 Drinking mode** switch (same age check).
+- Rules pages tagged **Drinking game** cover the same games plus Card Blowing and Hepp Hepp Hepp; drinking twists are listed under President, Cheat, Blitz (31), Blackjack and Mexico.
+
+Code: `js/drink-logic.js` (pure logic, `node tools/test-drink-logic.js`), `js/drink-data.js` (rules and questions), `js/drink-common.js` (age check, cards, setup, water reminder), `js/drink-cards.js` and `js/drink-talk.js` (screens).
 
 ## Party games
 
@@ -211,7 +221,8 @@ Add an object to the `games` array in `games.json`. The order doesn't matter (li
 | `type` | `"cards"` \| `"dice"` | no (default `"cards"`) | Which section the game appears in. Dice games are listed under **Dice games** and marked 🎲. |
 | `aliases` | string[] | no | Other names. Shown on the game page and searchable. |
 | `keywords` | string[] | no | Extra search terms (e.g. "trick taking", "kids"). |
-| `tags` | string[] | no | Shown as chips on the game page and used by the list filter and picker. Allowed values: `kids`, `party`, `trick-taking`, `rummy`, `patience`, `shedding`, `bluffing`, `betting`, `real-time`, `partnership`, `push-your-luck`, `multi-deck`, `special-equipment`. To add a new tag, also give it a label in `TAG_LABELS` in `js/data.js`. `kids` drives the picker's "Good for kids" option; `special-equipment` (anything beyond standard cards, dice, pen and counters) drives "No special equipment". |
+| `tags` | string[] | no | Shown as chips on the game page and used by the list filter and picker. Allowed values: `kids`, `party`, `trick-taking`, `rummy`, `patience`, `shedding`, `bluffing`, `betting`, `real-time`, `partnership`, `push-your-luck`, `multi-deck`, `special-equipment`, `drinking`. To add a new tag, also give it a label in `TAG_LABELS` in `js/data.js`. `kids` drives the picker's "Good for kids" option; `special-equipment` (anything beyond standard cards, dice, pen and counters) drives "No special equipment". |
+| `play` | string | no | A route in the app where the game can be played on one phone (e.g. `"#/kings"`). The game page then shows **▶ Play on this phone** instead of **Start scorekeeper** (the score tracker stays linked under the rules). |
 | `players.min` / `players.max` | number | yes | Supported player range, shown as "3–7 players". Also limits the scorekeeper's pre-set player count. |
 | `playerCounts` | string[] | yes | Which home-screen buttons list the game: any of `"1"`, `"2"`, `"3"`, `"4"`, `"5+"`. A count button only appears when at least one game of that type uses it. Set explicitly, so a game can be left out of a count it technically supports (e.g. Hearts has a separate 3-player entry). Also used by the picker's player filter. |
 | `playTime.minutes` | [number, number] | yes | Typical range in minutes, shown as "20–45 min". |

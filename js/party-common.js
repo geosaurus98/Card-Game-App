@@ -154,5 +154,19 @@ CGR.party = (function () {
     if (h1) h1.focus({ preventScroll: true });
   }
 
-  return { stepperHTML, namesHTML, readNames, clamp, holdToReveal, onBackground, countdown, unlockAudio, beep, vibrate, fmt, wireSteppers, focusHeading };
+  /* ---- Optional drinking mode (legal-drinking-age check on first use) ---- */
+  function drinkSwitchHTML(id, on, sub) {
+    return `<label class="switch-row field"><input type="checkbox" id="${id}" role="switch" ${on ? 'checked' : ''}>
+      <span><strong>🍺 Drinking mode</strong><br><span class="muted small">${sub} Sips, any drink — adults of legal drinking age only.</span></span></label>`;
+  }
+  /* Call on change: if switched on for the first time, confirm age; unticks if declined. Resolves to the final state. */
+  async function drinkConfirm(input) {
+    if (input.checked && !CGR.store.get('drink-age', false)) {
+      const ok = await CGR.ui.confirm('Drinking mode', 'This mode is for adults of legal drinking age. It counts sips, any drink works (including soft drinks), and nobody has to drink.', 'I’m of legal drinking age');
+      if (ok) CGR.store.set('drink-age', true); else input.checked = false;
+    }
+    return input.checked;
+  }
+
+  return { drinkSwitchHTML, drinkConfirm, stepperHTML, namesHTML, readNames, clamp, holdToReveal, onBackground, countdown, unlockAudio, beep, vibrate, fmt, wireSteppers, focusHeading };
 })();

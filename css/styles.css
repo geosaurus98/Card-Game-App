@@ -993,3 +993,96 @@ body.fh-playing { overflow: hidden; }
 .pn-melds { justify-content: flex-start; margin-top: .35rem; }
 .pn-melds .btn { font-size: .85rem; }
 .sk-extras { display: flex; flex-wrap: wrap; gap: .4rem .9rem; }
+
+/* ---------- Drinking games ---------- */
+.dk-gate { text-align: center; }
+.dk-emoji { font-size: 3.2rem; margin: .5rem 0 0; }
+.dk-gate-list { text-align: left; max-width: 26rem; margin: .75rem auto; padding-left: 1.2rem; line-height: 1.6; }
+.dk-center { text-align: center; }
+.dk-stage { display: flex; flex-direction: column; align-items: center; text-align: center; gap: .5rem; margin: .5rem 0 1rem; }
+.dk-up { margin: 0; font-weight: 700; }
+.dk-rule-title { margin: .25rem 0 0; font-size: 1.8rem; }
+.dk-rule-text { margin: 0; font-size: 1.15rem; max-width: 28rem; line-height: 1.45; }
+.dk-draw { min-height: 64px; font-size: 1.2rem; }
+.dk-call { margin: .75rem 0; padding: .7rem .9rem; border-radius: var(--radius); background: var(--surface-2); font-size: 1.05rem; line-height: 1.6; }
+.dk-call.good { background: var(--accent-soft); }
+.dk-call.bad { background: color-mix(in srgb, var(--danger) 15%, var(--surface)); }
+.dk-call .pc { vertical-align: middle; }
+.dk-answers { display: grid; grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr)); gap: .5rem; margin: .75rem 0; }
+.dk-ans { min-height: 64px; font-size: 1.2rem; }
+.dk-hand { display: flex; flex-wrap: wrap; gap: .35rem; justify-content: center; margin: .5rem 0; }
+.dk-hand.sm { display: inline-flex; justify-content: flex-start; margin: 0; gap: 3px; vertical-align: middle; }
+.dk-list { list-style: none; padding: 0; margin: .5rem 0 1rem; display: grid; gap: .35rem; }
+.dk-list li { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; padding: .45rem .7rem; border-radius: 10px; background: var(--surface); border: 1px solid var(--border); }
+.dk-hint { font-size: 1.15rem; }
+.dk-secret { font-size: 1.3rem; font-weight: 800; line-height: 1.3; }
+.dk-peeks { display: grid; grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr)); gap: .4rem; margin-bottom: 1rem; }
+.dk-peek {
+  min-height: 64px; padding: .5rem; border-radius: var(--radius); border: 2px dashed var(--border); background: var(--surface);
+  color: var(--text); font: inherit; font-weight: 700; cursor: pointer; touch-action: none; user-select: none; -webkit-user-select: none;
+}
+.dk-peek.big { width: 100%; min-height: 9rem; font-size: 1.1rem; margin: .5rem 0 1rem; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .5rem; }
+.dk-peek.on { border-style: solid; border-color: var(--accent); }
+
+/* Playing cards */
+.pc {
+  display: inline-flex; flex-direction: column; align-items: center; justify-content: center; width: 3.6rem; height: 5rem;
+  border-radius: 8px; border: 1.5px solid var(--border); background: #fff; color: #1a1a1a; box-shadow: var(--shadow);
+  font-weight: 800; line-height: 1; flex: none;
+}
+.pc.red { color: #c0182f; }
+.pc .pc-r { font-size: 1.3rem; }
+.pc .pc-s { font-size: 1.4rem; }
+.pc.sm { width: 2.2rem; height: 3rem; border-radius: 6px; }
+.pc.sm .pc-r { font-size: .85rem; }
+.pc.sm .pc-s { font-size: .9rem; }
+.pc.big { width: 8rem; height: 11.2rem; border-radius: 14px; }
+.pc.big .pc-r { font-size: 2.8rem; }
+.pc.big .pc-s { font-size: 3.2rem; }
+.pc.back { background: repeating-linear-gradient(45deg, var(--accent) 0 6px, var(--accent-strong) 6px 12px); border-color: var(--accent-strong); }
+.pc.hot { outline: 3px solid var(--medium); outline-offset: 1px; }
+
+/* Kings */
+.kg-side { padding: .5rem .75rem; border-radius: var(--radius); background: var(--surface-2); margin-bottom: 1rem; }
+.kg-side p { margin: .25rem 0; }
+.kg-rules { margin: .25rem 0; padding-left: 1.3rem; }
+.kg-rules .btn { min-height: 32px; padding: 0 .4rem; }
+.kg-edit summary { cursor: pointer; font-weight: 700; min-height: var(--tap); display: flex; align-items: center; }
+.kg-rule { display: grid; grid-template-columns: 2rem 7rem 1fr; gap: .3rem; align-items: center; margin: .3rem 0; }
+.kg-rule input { min-height: 40px; padding: .3rem .5rem; border-radius: 8px; border: 1.5px solid var(--border); background: var(--surface); color: var(--text); font: inherit; min-width: 0; }
+.kg-rank { font-weight: 800; text-align: center; }
+
+/* Pyramid + river */
+.dk-pyr { display: flex; flex-direction: column; align-items: center; gap: .3rem; margin: .5rem 0; }
+.dk-prow { display: flex; gap: .3rem; align-items: center; }
+.dk-pval { width: 1.2rem; font-size: .8rem; color: var(--muted); text-align: right; }
+.rv { display: grid; grid-template-columns: repeat(5, 1fr); gap: .35rem; margin: .5rem 0; justify-items: center; }
+.rv-cell { display: flex; flex-direction: column; align-items: center; gap: .15rem; }
+.rv-lab { font-size: .75rem; font-weight: 700; color: var(--muted); }
+
+/* Horse race */
+.hr { display: grid; gap: .3rem; margin: .5rem 0; }
+.hr-lane { display: grid; grid-template-columns: 1.6rem 1fr; align-items: center; gap: .3rem; }
+.hr-name { font-size: 1.4rem; font-weight: 800; text-align: center; }
+.hr-name.red, .hr-suit.red { color: #c0182f; }
+.hr-track { display: grid; grid-template-columns: repeat(var(--n), 1fr); gap: 2px; }
+.hr-cell { height: 3.2rem; border-radius: 6px; background: var(--surface-2); display: grid; place-items: center; overflow: hidden; }
+.hr-cell.finish { background: repeating-linear-gradient(45deg, color-mix(in srgb, var(--text) 35%, transparent) 0 4px, var(--surface-2) 4px 8px); }
+.hr-cell .pc.sm { width: 100%; max-width: 2.2rem; }
+.hr-side { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem; margin: .5rem 0; }
+.hr-suit { font-size: 1.3rem; min-width: 52px; }
+
+/* Beat the dealer */
+.dk-ranks { display: grid; grid-template-columns: repeat(7, 1fr); gap: .3rem; margin: .5rem 0 1rem; }
+.dk-seen { display: grid; grid-template-columns: repeat(13, 1fr); gap: 2px; font-size: .8rem; text-align: center; }
+.dk-seen-r { display: flex; flex-direction: column; padding: .2rem 0; border-radius: 6px; background: var(--surface-2); min-height: 3rem; }
+.dk-seen-r.out { opacity: .45; text-decoration: line-through; }
+
+/* Rule roulette + Mexico */
+.rr.spinning { opacity: .75; }
+.mx-claims { display: grid; grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr)); gap: .3rem; margin-bottom: 1rem; }
+.mx-dice { display: flex; gap: .75rem; justify-content: center; }
+.ds-die.big { width: 64px; height: 64px; padding: 8px; border-radius: 12px; }
+.ds-die.big i { width: 10px; height: 10px; }
+.mx-val { font-weight: 800; font-size: 1.2rem; }
+.nv-sips { color: var(--accent-strong); font-variant-numeric: tabular-nums; }
