@@ -24,6 +24,7 @@ CGR.views = CGR.views || {};
       length: PL.FUSE[s.length] ? s.length : 'medium',
       letter: !!s.letter,
       sound: s.sound !== false,
+      drink: !!s.drink,
       recent: Array.isArray(s.recent) ? s.recent.slice(-30) : []
     };
   }
@@ -60,6 +61,7 @@ CGR.views = CGR.views || {};
           <span><strong>Add a starting letter</strong><br><span class="muted small">e.g. “Name an animal — starting with B”. Harder!</span></span></label>
         <label class="switch-row field"><input type="checkbox" id="hp-sound" role="switch" ${s.sound ? 'checked' : ''}>
           <span><strong>Ticking sound</strong><br><span class="muted small">Turn your volume up.</span></span></label>
+        ${P.drinkSwitchHTML('hp-drink', s.drink, 'Whoever is holding the phone when it blows drinks.')}
       </form>
       <div class="action-bar"><div class="action-bar-inner"><button type="button" class="btn" id="hp-start">Start game</button></div></div>`;
   }
@@ -85,7 +87,7 @@ CGR.views = CGR.views || {};
   function boomHTML() {
     const btns = state.players.map((n, i) => `<button type="button" class="btn btn-secondary" data-loser="${i}">${esc(n)}</button>`).join('');
     return `<div class="hp-boom"><p class="hp-bang" aria-hidden="true">💥</p><h1 tabindex="-1">BOOM!</h1>
-        <p>Who was holding the phone?</p></div>
+        <p>Who was holding the phone?${load().drink ? ' <strong>They drink! 🍺</strong>' : ''}</p></div>
       <div class="hp-losers">${btns}</div>
       <div class="action-bar"><div class="action-bar-inner"><button type="button" class="btn btn-secondary" id="hp-nobody">Skip — don’t record</button></div></div>`;
   }
@@ -126,10 +128,11 @@ CGR.views = CGR.views || {};
       s.length = l ? l.value : 'medium';
       s.letter = form.querySelector('#hp-letter').checked;
       s.sound = form.querySelector('#hp-sound').checked;
+      s.drink = form.querySelector('#hp-drink').checked;
       return s;
     };
     form.addEventListener('input', () => save(read()));
-    form.addEventListener('change', () => save(read()));
+    form.addEventListener('change', async (e) => { if (e.target.id === 'hp-drink') await P.drinkConfirm(e.target); save(read()); });
     P.wireSteppers(root, (key, d) => {
       const s = read();
       s.playerCount = P.clamp(s.playerCount + d, MIN, MAX);

@@ -9,7 +9,7 @@ CGR.data = (function () {
     'kids': 'Good for kids', 'party': 'Party', 'trick-taking': 'Trick-taking', 'rummy': 'Rummy-style',
     'patience': 'Patience', 'shedding': 'Shedding', 'bluffing': 'Bluffing', 'betting': 'Betting',
     'real-time': 'Real-time', 'partnership': 'Partnerships', 'push-your-luck': 'Push your luck',
-    'multi-deck': '2+ decks', 'special-equipment': 'Special equipment'
+    'multi-deck': '2+ decks', 'special-equipment': 'Special equipment', 'drinking': 'Drinking game'
   };
   let games = [];
   let byId = {};

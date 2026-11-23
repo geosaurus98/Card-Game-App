@@ -106,6 +106,7 @@ CGR.loadScripts = (function () {
 })();
 
 const PC = 'js/party-common.js';
+const DK = [PC, 'js/drink-logic.js', 'js/drink-data.js', 'js/drink-common.js'];
 CGR.PARTY_GAMES = [
   { id: 'impostor', emoji: '🕵️', name: 'Impostor', players: '3–12 players', desc: 'Everyone gets the secret word except the impostor. Give clues and find the bluffer.',
     files: ['js/impostor-words.js', 'js/impostor-logic.js', 'js/impostor.js'] },
@@ -131,6 +132,18 @@ CGR.PARTY_GAMES = [
     files: [PC, 'js/party-decks.js', 'js/party-more-logic.js', 'js/prompt-games.js'] },
   { id: 'never', emoji: '✋', name: 'Never Have I Ever', players: '2–16 players', desc: 'Done it? Lose a life. Last player with lives left wins. Family and grown-up packs.',
     files: [PC, 'js/party-decks.js', 'js/party-more-logic.js', 'js/prompt-games.js'] },
+  { id: 'kings', emoji: '👑', group: 'drink', name: 'Kings', players: '2–12 players', desc: 'Draw a card, follow its rule. The 4th King drinks the cup. Edit the rules to match your group.', files: DK.concat(['js/drink-cards.js']) },
+  { id: 'ride-the-bus', emoji: '🚌', group: 'drink', name: 'Ride the Bus', players: '2–8 players', desc: 'Red or black, higher or lower, inside or outside, suit. Optional Bus Driver pyramid, then someone rides the bus.', files: DK.concat(['js/drink-cards.js']) },
+  { id: 'higher-lower', emoji: '↕️', group: 'drink', name: 'Higher or Lower', players: '2–12 players', desc: 'Keep the streak alive. Break it and drink a sip for every card.', files: DK.concat(['js/drink-cards.js']) },
+  { id: 'pyramid-drink', emoji: '🔺', group: 'drink', name: 'Pyramid', players: '2–8 players', desc: 'Secret hands, a pyramid of cards, and bluffs. Call it — or drink double.', files: DK.concat(['js/drink-cards.js']) },
+  { id: 'horse-race', emoji: '🏇', group: 'drink', name: 'Horse Race', players: '2–12 players', desc: 'Bet sips on a suit and watch the Aces race. Winners hand out, losers drink.', files: DK.concat(['js/drink-cards.js']) },
+  { id: 'beat-the-dealer', emoji: '🃏', group: 'drink', name: 'Beat the Dealer', players: '3–10 players', desc: 'Guess the card in two tries. Get it and the dealer drinks; miss and you drink the difference.', files: DK.concat(['js/drink-cards.js']) },
+  { id: 'river', emoji: '🌊', group: 'drink', name: 'Up and Down the River', players: '2–8 players', desc: 'Ten river cards: going up, matching cards drink 1–5; coming down, they give 1–5.', files: DK.concat(['js/drink-cards.js']) },
+  { id: 'bust', emoji: '💥', group: 'drink', name: 'Bust! (21 or 7½)', players: '2–8 players', desc: 'Push your luck to 21 or 7½. Bust and drink; closest hands them out.', files: DK.concat(['js/drink-cards.js']) },
+  { id: 'truth-or-drink', emoji: '🗣️', group: 'drink', name: 'Truth or Drink', players: '2–12 players', desc: 'Answer honestly or drink. Mild, spicy and couples packs.', files: DK.concat(['js/drink-talk.js']) },
+  { id: 'paranoia', emoji: '🤫', group: 'drink', name: 'Paranoia', players: '3–12 players', desc: 'A secret question, a name said out loud. Drink and flip a coin to find out why.', files: DK.concat(['js/drink-talk.js']) },
+  { id: 'rule-roulette', emoji: '🎡', group: 'drink', name: 'Rule Roulette', players: '2–12 players', desc: 'Spin for challenges and rules that stick around: thumb master, no first names, waterfalls…', files: DK.concat(['js/drink-talk.js']) },
+  { id: 'mexico', emoji: '🎲', group: 'drink', name: 'Mexico', players: '2–10 players', desc: 'Roll in secret, claim a higher score, believe or call the bluff. Mexico (2-1) doubles it.', files: DK.concat(['js/drink-talk.js']) },
   { id: 'chooser', emoji: '👆', name: 'Finger chooser', players: 'Any group', desc: 'Everyone touches the screen; it picks a player or splits you into teams.',
     files: [PC, 'js/party-logic.js', 'js/party-tools.js'] },
   { id: 'toolkit', emoji: '🧰', name: 'Party toolkit', players: 'Any group', desc: 'Dice roller, coin flip and a quick scoreboard.',
@@ -206,6 +219,14 @@ function typeTabsHTML(type) {
     </nav>`;
 }
 
+function partyList(list) {
+  return `<ul class="game-list party-list">${list.map((g) => `<li class="game-item"><a href="#/${g.id}">
+        <span class="name"><span aria-hidden="true">${g.emoji}</span> ${CGR.esc(g.name)}</span>
+        <span class="meta">${CGR.esc(g.players)}</span>
+        <span class="party-desc">${CGR.esc(g.desc)}</span>
+      </a></li>`).join('')}</ul>`;
+}
+
 CGR.views.party = function () {
   CGR.state.lastCount = null;
   return {
@@ -214,11 +235,10 @@ CGR.views.party = function () {
     html: `${typeTabsHTML('party')}
       <div class="page-head"><h1 tabindex="-1">Party games</h1>
         <p class="muted">Play on one phone — pass it round. Everything works offline.</p></div>
-      <ul class="game-list party-list">${CGR.PARTY_GAMES.map((g) => `<li class="game-item"><a href="#/${g.id}">
-        <span class="name"><span aria-hidden="true">${g.emoji}</span> ${CGR.esc(g.name)}</span>
-        <span class="meta">${CGR.esc(g.players)}</span>
-        <span class="party-desc">${CGR.esc(g.desc)}</span>
-      </a></li>`).join('')}</ul>`
+      ${partyList(CGR.PARTY_GAMES.filter((g) => !g.group))}
+      <section class="section" aria-labelledby="drink-h"><h2 id="drink-h">🍻 Drinking games <span class="muted small">(18+)</span></h2>
+        <p class="muted small">For adults of legal drinking age. Everything counts sips, any drink works — and nobody has to drink.</p>
+        ${partyList(CGR.PARTY_GAMES.filter((g) => g.group === 'drink'))}</section>`
   };
 };
 
@@ -406,12 +426,13 @@ CGR.views.game = function (id) {
 
         <p class="also muted">Listed under: ${g.playerCounts.map((c) =>
           `<a href="${gBase}players/${encodeURIComponent(c)}">${esc(CGR.data.countLabel(c))}</a>`).join(' · ')}${gType === 'dice' ? ' (dice games)' : ''}</p>
+        ${g.play ? `<p class="muted small"><a href="#/score/${esc(g.id)}">${inProgress ? 'Resume the score tracker' : 'Open the score tracker'}</a></p>` : ''}
       </article>
       <div class="action-bar"><div class="action-bar-inner">
         <button type="button" class="btn btn-secondary fav-btn" id="fav-btn" aria-pressed="${fav}">
           <span class="star-icon" aria-hidden="true">${fav ? '★' : '☆'}</span><span>${fav ? 'Favourite' : 'Favourite'}</span>
         </button>
-        <a class="btn" href="#/score/${esc(g.id)}">${inProgress ? 'Resume scorekeeper' : 'Start scorekeeper'}</a>
+        ${g.play ? `<a class="btn" href="${esc(g.play)}">▶ Play on this phone</a>` : `<a class="btn" href="#/score/${esc(g.id)}">${inProgress ? 'Resume scorekeeper' : 'Start scorekeeper'}</a>`}
       </div></div>`,
     onMount(root) {
       const btn = root.querySelector('#fav-btn');
